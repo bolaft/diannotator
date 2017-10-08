@@ -18,7 +18,7 @@ class GraphicalUserInterface(Frame, Styles):
     __instance = None  # singleton
     __initialized = False  # prevents multiple initializations
 
-    window_title = "Dialogue Act Annotator"  # window title
+    window_title = "DiAnnotator"  # window title
 
     padding = 25  # padding for text area
     wrap_length = 960  # max length of labels before automatic newline
