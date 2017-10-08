@@ -1,6 +1,6 @@
 import random
 
-from tkinter import Tk, Button, Entry, Frame, Scrollbar, StringVar, Text, BOTH, DISABLED, END, LEFT, BOTTOM, NORMAL, N, X, WORD, NSEW, SUNKEN
+from tkinter import Tk, Button, Entry, Frame, Label, Scrollbar, StringVar, Text, BOTH, DISABLED, END, LEFT, BOTTOM, NORMAL, N, X, WORD, NSEW, SUNKEN
 from styles import Styles
 
 # colors
@@ -103,6 +103,10 @@ class GraphicalUserInterface(Frame, Styles):
         self.text.grid(row=0, column=0, sticky="nsew", padx=self.padding, pady=(self.padding, 0))
         self.text.config(font=(self.text_font_family, self.text_font_size), undo=True, wrap=WORD, bg=LIGHT_GRAY, fg=WHITE, highlightbackground=BLACK, highlightcolor=WHITE, state=DISABLED)
 
+        # status bar
+        self.status = Label(self.output_frame, height=0, wraplengt=self.wrap_length, font=(self.label_font_family, self.label_font_size))
+        self.status.grid(row=1, column=0, pady=0)
+
         # create a Scrollbar and associate it with text
         self.scrollbar = Scrollbar(self.output_frame, command=self.text.yview)
         self.scrollbar.grid(row=0, rowspan=3, column=1, sticky=NSEW)
@@ -179,6 +183,12 @@ class GraphicalUserInterface(Frame, Styles):
         self.free_input = False
         self.action(t)
         self.annotation_mode()
+
+    def update_status_message(self, text):
+        """
+        Status message
+        """
+        self.status.config(text=text)
 
     def update_special_commands(self):
         for button in self.special_commands.winfo_children():
@@ -441,5 +451,5 @@ class GraphicalUserInterface(Frame, Styles):
         r = (random.randrange(1, 256) + 255) / 2
         g = (random.randrange(1, 256) + 255) / 2
         b = (random.randrange(1, 256) + 255) / 2
-        print('#%02x%02x%02x' % (r, g, b))
+
         return '#%02x%02x%02x' % (r, g, b)

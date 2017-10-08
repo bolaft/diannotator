@@ -1,5 +1,22 @@
+GENERAL_PURPOSE = "general purpose"
+TASK = "task"
+FEEDBACK = "feedback"
+CONTACT_MANAGEMENT = "contact management"
+COMMUNICATION_MANAGEMENT = "communication management"
+DISCOURSE_STRUCTURE_MANAGEMENT = "discourse structure management"
+SOCIAL_OBLIGATIONS_MANAGEMENT = "social obligations management"
+KNOWLEDGE = "knowledge"
+OPINION = "opinion"
+SENTIMENT = "sentiment"
+EMOTION = "emotion"
+PROBLEM_MANAGEMENT = "problem management"
+PARTIALITY = "partiality"
+CONDITIONALITY = "conditionality"
+CERTAINTY = "certainty"
+IRONY = "irony"
+
 labels = {
-    "general_purpose": [
+    GENERAL_PURPOSE: [
         "inform",
         "confirm",
         "disconfirm",
@@ -10,28 +27,28 @@ labels = {
         "request information",
         "request directives"
     ],
-    "task": [
+    TASK: [
         "request help"
     ],
-    "feedback": [
+    FEEDBACK: [
         "acknowledge",
         "provide",
         "request"
     ],
-    "contact management": [
+    CONTACT_MANAGEMENT: [
         "check contact",
         "indicate contact"
     ],
-    "communication management": [
+    COMMUNICATION_MANAGEMENT: [
         "correct",
         "completion"
     ],
-    "discourse structure management": [
+    DISCOURSE_STRUCTURE_MANAGEMENT: [
         "announce",
         "preclose",
         "switch topic"
     ],
-    "social obligations management": [
+    SOCIAL_OBLIGATIONS_MANAGEMENT: [
         "greet",
         "self-introduce",
         "apologize",
@@ -40,15 +57,15 @@ labels = {
         "downplay thanks",
         "valediction"
     ],
-    "knowledge": [
+    KNOWLEDGE: [
     ],
-    "opinion": [
+    OPINION: [
     ],
-    "sentiment": [
+    SENTIMENT: [
     ],
-    "emotion": [
+    EMOTION: [
     ],
-    "problem management": [
+    PROBLEM_MANAGEMENT: [
         "describe context",
         "describe symptom",
         "describe process",
@@ -65,24 +82,37 @@ labels = {
         "propose search tip",
         "propose information",
         "propose instruction"
+    ],
+    PARTIALITY: [
+        "partial"
+    ],
+    CONDITIONALITY: [
+        "conditional"
+    ],
+    CERTAINTY: [
+        "certain",
+        "uncertain"
+    ],
+    IRONY: [
+        "ironic"
     ]
 }
 
 values = {
-    "feedback": [
+    FEEDBACK: [
         "perception",
         "interpretation",
         "evaluation"
     ],
-    "opinion": [
+    OPINION: [
         "depreciate",
         "promote"
     ],
-    "sentiment": [
+    SENTIMENT: [
         "satisfied",
         "unsatisfied"
     ],
-    "emotion": [
+    EMOTION: [
         "happy",
         "unhappy",
         "fearful",

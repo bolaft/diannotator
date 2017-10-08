@@ -1,4 +1,5 @@
 import styles
+import taxonomy
 
 from interface import GraphicalUserInterface
 from model import DialogueActCollection
@@ -40,21 +41,21 @@ class Annotator(GraphicalUserInterface):
         self.update_special_commands()  # initial update of the command list
 
         self.command = "annotation"
-        self.filter = False
+        self.dac.filter = False
         self.update()
 
     def annotation_mode(self):
         da = self.dac.get_current()
-        if self.dac.dimension in self.dac.values and self.dac.dimension in da.annotations and da.annotations[self.dac.dimension] in self.dac.labels[self.dac.dimension] + self.dac.labels["general_purpose"]:
+        if self.dac.dimension in self.dac.values and self.dac.dimension in da.annotations and da.annotations[self.dac.dimension] in self.dac.labels[self.dac.dimension] + self.dac.labels[taxonomy.GENERAL_PURPOSE]:
             self.input(self.dac.values[self.dac.dimension], self.annotate_qualifier, sort=False)
         else:
-            self.input(self.dac.labels[self.dac.dimension] + self.dac.labels["general_purpose"], self.annotate_label, sort=False)
+            self.input(self.dac.labels[self.dac.dimension] + self.dac.labels[taxonomy.GENERAL_PURPOSE], self.annotate_label, sort=False)
 
     def annotate_label(self, annotation):
         da = self.dac.get_current()
         da.annotations[self.dac.dimension] = annotation
 
-        if self.dac.dimension not in self.dac.values or self.dac.dimension not in da.annotations or da.annotations[self.dac.dimension] not in self.dac.labels[self.dac.dimension] + self.dac.labels["general_purpose"]:
+        if self.dac.dimension not in self.dac.values or self.dac.dimension not in da.annotations or da.annotations[self.dac.dimension] not in self.dac.labels[self.dac.dimension] + self.dac.labels[taxonomy.GENERAL_PURPOSE]:
             self.dac.next()
 
         self.update()
@@ -131,7 +132,7 @@ class Annotator(GraphicalUserInterface):
         self.update()
 
     def button_dimension(self, e):
-        self.input([dim for dim in self.dac.labels.keys() if dim != "general_purpose"], self.change_dimension)
+        self.input([dim for dim in self.dac.labels.keys() if dim != taxonomy.GENERAL_PURPOSE], self.change_dimension)
 
     def change_dimension(self, dimension):
         self.dac.dimension = dimension
@@ -184,16 +185,16 @@ class Annotator(GraphicalUserInterface):
     def button_filter(self, e):
         current_da = self.dac.get_current()
 
-        if not self.filter and (self.dac.dimension in current_da.annotations or self.dac.dimension in current_da.legacy):
+        if not self.dac.filter and (self.dac.dimension in current_da.annotations or self.dac.dimension in current_da.legacy):
             if self.dac.dimension in current_da.annotations:
-                self.dac.collection = [da for da in self.dac.full_collection if self.dac.dimension in da.annotations and da.annotations[self.dac.dimension] == current_da.annotations[self.dac.dimension]]
+                self.dac.collection = [da for da in self.dac.full_collection if self.dac.dimension in da.annotations and da.annotations[self.dac.dimension].startswith(current_da.annotations[self.dac.dimension].split(" ➔ ")[0])]
+                self.dac.filter = "[{}]".format(current_da.annotations[self.dac.dimension].split(" ➔ ")[0])
             elif self.dac.dimension in current_da.legacy:
-                self.dac.collection = [da for da in self.dac.full_collection if self.dac.dimension in da.legacy and da.legacy[self.dac.dimension] == current_da.legacy[self.dac.dimension]]
-
-            self.filter = True
+                self.dac.collection = [da for da in self.dac.full_collection if self.dac.dimension in da.legacy and da.legacy[self.dac.dimension].startswith(current_da.legacy[self.dac.dimension].split(" ➔ ")[0])]
+                self.dac.filter = "(({}))".format(current_da.legacy[self.dac.dimension].split(" ➔ ")[0])
         else:
             self.dac.collection = self.dac.full_collection.copy()
-            self.filter = False
+            self.dac.filter = False
 
         for i, da in enumerate(self.dac.collection):
             if da == current_da:
@@ -208,6 +209,9 @@ class Annotator(GraphicalUserInterface):
 
         for j in range(self.dac.i - n_previous, self.dac.i):
             self.output_da(j)
+
+        status = "Dimension: {}".format(self.dac.dimension.title()) if not self.dac.filter else "Dimension: {} - Filter: {}".format(self.dac.dimension.title(), self.dac.filter)
+        self.update_status_message(status)
 
         self.output_da(self.dac.i, current=True)
         self.dac.save()
@@ -226,32 +230,34 @@ class Annotator(GraphicalUserInterface):
 
         offset = len(text) + 1
 
-        shown_annotation = False
-
         colors = {
-            "task": styles.WHITE,
-            "feedback": styles.PROCESS,
-            "social obligations management": styles.OK,
-            "discourse structure management": styles.INFO,
-            "communication management": styles.DEBUG,
-            "contact management": styles.GREEN,
-            "opinion": styles.WARNING,
-            "sentiment": styles.WARNING,
-            "emotion": styles.WARNING,
-            "knowledge": styles.DIALOG,
-            "problem management": styles.FAIL
+            taxonomy.TASK: styles.WHITE,
+            taxonomy.FEEDBACK: styles.PROCESS,
+            taxonomy.SOCIAL_OBLIGATIONS_MANAGEMENT: styles.OK,
+            taxonomy.DISCOURSE_STRUCTURE_MANAGEMENT: styles.INFO,
+            taxonomy.COMMUNICATION_MANAGEMENT: styles.DEBUG,
+            taxonomy.CONTACT_MANAGEMENT: styles.GREEN,
+            taxonomy.OPINION: styles.WARNING,
+            taxonomy.SENTIMENT: styles.WARNING,
+            taxonomy.EMOTION: styles.WARNING,
+            taxonomy.KNOWLEDGE: styles.DIALOG,
+            taxonomy.PROBLEM_MANAGEMENT: styles.FAIL,
+            taxonomy.PARTIALITY: styles.PURPLE,
+            taxonomy.CONDITIONALITY: styles.PURPLE,
+            taxonomy.CERTAINTY: styles.PURPLE,
+            taxonomy.IRONY: styles.PURPLE
         }
 
         for dimension in reversed(sorted(da.annotations.keys())):
             addendum = " [{}]".format(da.annotations[dimension])
             self.add_to_last_line(addendum, style=colors[dimension], offset=offset)
             offset += len(addendum)
-            shown_annotation = True
 
-        if not shown_annotation and self.dac.dimension in da.legacy:
-            addendum = " (({}))".format(da.legacy[self.dac.dimension])
-            self.add_to_last_line(addendum, style=styles.WHITE, offset=offset)
-            offset += len(addendum)
+        for dimension in reversed(sorted(da.legacy.keys())):
+            if dimension not in da.annotations:
+                addendum = " (({}))".format(da.legacy[dimension])
+                self.add_to_last_line(addendum, style=colors[dimension], offset=offset)
+                offset += len(addendum)
 
         if da.link is not None:
             addendum = " ⟲ {}".format(self.dac.collection.index(da.link) + 1)

@@ -54,6 +54,7 @@ class DialogueAct:
         # copying attributes
         da1 = self.copy(" ".join(self.tokens[0:split_index]))
         da2 = self.copy(" ".join(self.tokens[split_index:]))
+        da2.link = None
 
         # preserves links
         for link in self.linked:
@@ -72,6 +73,10 @@ class DialogueAct:
         self.annotations.update(da.annotations)
         self.legacy.update(da.legacy)
         self.data += da.data
+
+        if da == self.link:
+            da.linked.remove(self)
+            self.link = da.link
 
         for linked_da in da.linked:
             linked_da.link = self
@@ -94,28 +99,27 @@ class DialogueActCollection:
         self.values = taxonomy.values  # label qualifier tagsets
 
         self.i = 0
-        self.dimension = "task"
+        self.dimension = taxonomy.TASK
+        self.filter = False
 
     def get_current(self):
         return self.collection[self.i]
 
     def next(self):
-        self.i = 0 if self.i + 1 == len(self.collection) else self.i + 1
+        self.i = self.i if self.i + 1 == len(self.collection) else self.i + 1
 
     def previous(self):
-        self.i = len(self.collection) - 1 if self.i - 1 < 0 else self.i - 1
+        self.i = 0 if self.i - 1 < 0 else self.i - 1
 
     def change_label(self, dimension, label, new_label):
         """
         Renames a label
         """
-        tagset = "general_purpose" if label not in self.labels[dimension] else dimension
+        tagset = taxonomy.GENERAL_PURPOSE if label not in self.labels[dimension] else dimension
         index = self.labels[tagset].index(label)
         self.labels[tagset].remove(label)
 
-        if new_label not in self.labels[tagset] and new_label not in self.labels["general_purpose"]:
-            print(new_label)
-            print(self.labels[tagset])
+        if new_label not in self.labels[tagset] and new_label not in self.labels[taxonomy.GENERAL_PURPOSE]:
             self.labels[tagset].insert(index, new_label)
 
         for da in self.collection:
@@ -172,22 +176,28 @@ class DialogueActCollection:
 
     def make_legacy_annotations(self, cols):
         keys = {
-            0: "contact",
-            2: "communication",
-            6: "social",
-            8: "task",
-            12: "feedback",
-            14: "sentiment",
-            17: "opinion",
-            20: "emotion",
-            23: "knowledge",
-            25: "discourse"
+            0: taxonomy.CONTACT_MANAGEMENT,
+            2: taxonomy.COMMUNICATION_MANAGEMENT,
+            6: taxonomy.SOCIAL_OBLIGATIONS_MANAGEMENT,
+            8: taxonomy.TASK,
+            (12, 11): taxonomy.FEEDBACK,
+            (14, 16): taxonomy.SENTIMENT,
+            (17, 19): taxonomy.OPINION,
+            (20, 22): taxonomy.EMOTION,
+            23: taxonomy.KNOWLEDGE,
+            25: taxonomy.DISCOURSE_STRUCTURE_MANAGEMENT,
+            31: taxonomy.PARTIALITY,
+            32: taxonomy.CONDITIONALITY,
+            33: taxonomy.CERTAINTY,
+            34: taxonomy.IRONY
         }
 
         legacy = {}
 
         for col in keys.keys():
-            if cols[col] != "":
+            if not isinstance(col, int) and cols[col[0]] != "" and cols[col[1]] != "":
+                legacy[keys[col]] = " ➔ ".join([cols[col[0]], cols[col[1]]])
+            elif (isinstance(col, int) and cols[col] != "") or (isinstance(col, tuple) and cols[col[0]] != ""):
                 legacy[keys[col]] = cols[col]
 
         return legacy

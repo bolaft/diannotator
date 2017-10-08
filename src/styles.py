@@ -15,6 +15,7 @@ WHITE = "WHITE"
 GRAY = "GRAY"
 LIGHT_GRAY = "LIGHT_GRAY"
 GREEN = "GREEN"
+PURPLE = "PURPLE"
 
 
 class Styles:
@@ -49,6 +50,11 @@ class Styles:
         self.add_tag(
             GREEN,
             foreground="#aacf8a"
+        )
+
+        self.add_tag(
+            PURPLE,
+            foreground="#db5cd7"
         )
 
         self.add_tag(
