@@ -18,6 +18,10 @@ La taxonomie est définie par défaut dans le fichier python taxonomy.py, mais p
 
 # Chargement et sauvegarde
 
+### Initialisation
+
 Une fois les données présentes dans le dossier data, il faut les charger dans l'application en exécutant le script initialize_collection.py. Les modifications effectuées en cours d'annotation sont automatiquement sauvegardées en tant qu'objet DialogueActCollection sérialisé avec pickle. Le fichier de sauvegarde est le fichier save.pic du dossier data. C'est ce fichier qui est chargé en mémoire automatiquement au lancement de l'application.
+
+### Backup
 
 Pour effectuer un backup de la sauvegarde, il faut exécuter le fichier save_backup.py. Ce programme créé un backup dans le dossier data, dont le nom correspond au nombre de secondes depuis l'époque Unix.
