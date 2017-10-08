@@ -80,7 +80,8 @@ class Annotator(GraphicalUserInterface):
             da = self.dac.get_current()
 
             if da.link is not None:  # removing link
-                da.link.linked.remove(da)
+                if da in da.link.linked:
+                    da.link.linked.remove(da)
                 da.link = None
                 self.update()
             else:  # adding link
@@ -225,11 +226,29 @@ class Annotator(GraphicalUserInterface):
 
         offset = len(text) + 1
 
-        if self.dac.dimension in da.annotations:
-            addendum = " [{}]".format(da.annotations[self.dac.dimension])
-            self.add_to_last_line(addendum, style=styles.WHITE, offset=offset)
+        shown_annotation = False
+
+        colors = {
+            "task": styles.WHITE,
+            "feedback": styles.PROCESS,
+            "social obligations management": styles.OK,
+            "discourse structure management": styles.INFO,
+            "communication management": styles.DEBUG,
+            "contact management": styles.GREEN,
+            "opinion": styles.WARNING,
+            "sentiment": styles.WARNING,
+            "emotion": styles.WARNING,
+            "knowledge": styles.DIALOG,
+            "problem management": styles.FAIL
+        }
+
+        for dimension in reversed(sorted(da.annotations.keys())):
+            addendum = " [{}]".format(da.annotations[dimension])
+            self.add_to_last_line(addendum, style=colors[dimension], offset=offset)
             offset += len(addendum)
-        elif self.dac.dimension in da.legacy:
+            shown_annotation = True
+
+        if not shown_annotation and self.dac.dimension in da.legacy:
             addendum = " (({}))".format(da.legacy[self.dac.dimension])
             self.add_to_last_line(addendum, style=styles.WHITE, offset=offset)
             offset += len(addendum)

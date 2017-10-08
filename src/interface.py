@@ -1,7 +1,5 @@
-import styles
 import random
 
-from time import sleep
 from tkinter import Tk, Button, Entry, Frame, Scrollbar, StringVar, Text, BOTH, DISABLED, END, LEFT, BOTTOM, NORMAL, N, X, WORD, NSEW, SUNKEN
 from styles import Styles
 
@@ -443,5 +441,5 @@ class GraphicalUserInterface(Frame, Styles):
         r = (random.randrange(1, 256) + 255) / 2
         g = (random.randrange(1, 256) + 255) / 2
         b = (random.randrange(1, 256) + 255) / 2
-
+        print('#%02x%02x%02x' % (r, g, b))
         return '#%02x%02x%02x' % (r, g, b)

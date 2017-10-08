@@ -8,10 +8,10 @@ labels = {
         "instruct",
         "suggest",
         "request information",
-        "request directives",
-        "request help",
+        "request directives"
     ],
     "task": [
+        "request help"
     ],
     "feedback": [
         "acknowledge",
