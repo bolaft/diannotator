@@ -1,0 +1,9 @@
+*.pyc
+*.pic
+*.log
+__pycache__/*
+tmp/*
+bin/*
+dist/*
+build/*
+doc/*
