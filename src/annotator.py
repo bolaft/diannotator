@@ -183,16 +183,20 @@ class Annotator(GraphicalUserInterface):
     def button_filter(self, e):
         current_da = self.dac.get_current()
 
-        if not self.filter and self.dac.dimension in current_da.annotations:
-            self.dac.collection = [da for da in self.dac.full_collection if self.dac.dimension in da.annotations and da.annotations[self.dac.dimension] == current_da.annotations[self.dac.dimension]]
-            self.filter = True
+        if not self.filter and (self.dac.dimension in current_da.annotations or self.dac.dimension in current_da.legacy):
+            if self.dac.dimension in current_da.annotations:
+                self.dac.collection = [da for da in self.dac.full_collection if self.dac.dimension in da.annotations and da.annotations[self.dac.dimension] == current_da.annotations[self.dac.dimension]]
+            elif self.dac.dimension in current_da.legacy:
+                self.dac.collection = [da for da in self.dac.full_collection if self.dac.dimension in da.legacy and da.legacy[self.dac.dimension] == current_da.legacy[self.dac.dimension]]
 
-            for i, da in enumerate(self.dac.collection):
-                if da == current_da:
-                    self.dac.i = i
+            self.filter = True
         else:
             self.dac.collection = self.dac.full_collection.copy()
             self.filter = False
+
+        for i, da in enumerate(self.dac.collection):
+            if da == current_da:
+                self.dac.i = i
 
         self.update()
 

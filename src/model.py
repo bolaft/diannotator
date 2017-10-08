@@ -81,7 +81,7 @@ class DialogueAct:
 
 class DialogueActCollection:
     # file for serialization
-    data_folder = "data/"
+    data_folder = "../data/"
     save_file = data_folder + "dialogue_act_collection.pic"
     default_raw_path = data_folder + "data.csv"
 
@@ -112,7 +112,11 @@ class DialogueActCollection:
         tagset = "general_purpose" if label not in self.labels[dimension] else dimension
         index = self.labels[tagset].index(label)
         self.labels[tagset].remove(label)
-        self.labels[tagset].insert(index, new_label)
+
+        if new_label not in self.labels[tagset] and new_label not in self.labels["general_purpose"]:
+            print(new_label)
+            print(self.labels[tagset])
+            self.labels[tagset].insert(index, new_label)
 
         for da in self.collection:
             if dimension in da.annotations and da.annotations[dimension] == label:
