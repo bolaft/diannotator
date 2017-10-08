@@ -1,10 +1,11 @@
 #!/bin/sh -x
 
 mkdir bin  # creates the bin folder in case it doesn't exist
+mkdir bin/data  # creates the bin folder in case it doesn't exist
 
 rm -r bin/*  # remove contents of the bin folder
 
-cp -r data bin/data  # copy data to dist data folder
+cp data/data.csv bin/data  # copy data to dist data folder
 cp README.md bin/README.md  # copy readme file to dist
 
 cp build.spec src/launcher.spec  # copy spec file to sources folder
