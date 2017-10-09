@@ -21,6 +21,9 @@ class Annotator(GraphicalUserInterface):
         # initializing the dialogue act collection
         self.dac = DialogueActCollection.load()
 
+        # make a backup of the collection
+        self.dac.save(name="auto-" + datetime.now().strftime("%d-%m-%y_%X"))
+
         # creating custom colors for each participant
         for participant in set([da.participant for da in self.dac.full_collection]):
             self.add_tag(
@@ -59,19 +62,19 @@ class Annotator(GraphicalUserInterface):
             button.destroy()
 
         buttons = {
-            "link": lambda n=0: self.button_link(n),
-            "remove": lambda n=0: self.button_remove(n),
-            "merge": lambda n=0: self.button_merge(n),
-            "split": lambda n=0: self.button_split(n),
-            "dimension": lambda n=0: self.button_dimension(n),
             "jump": lambda n=0: self.button_jump(n),
-            "update": lambda n=0: self.button_update(n),
+            "dimension": lambda n=0: self.button_dimension(n),
+            "remove": lambda n=0: self.button_remove(n),
+            "link": lambda n=0: self.button_link(n),
+            "split": lambda n=0: self.button_split(n),
+            "merge": lambda n=0: self.button_merge(n),
             "add": lambda n=0: self.button_add(n),
+            "update": lambda n=0: self.button_update(n),
             "filter": lambda n=0: self.button_filter(n),
             "comment": lambda n=0: self.button_comment(n)
         }
 
-        for text, function in buttons.items():
+        for text, function in sorted(buttons.items()):
             b = Button(
                 self.special_commands,
                 text="[{}]{}".format(text[0].upper(), text[1:]),

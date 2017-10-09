@@ -41,6 +41,7 @@ class DialogueAct:
         da.data = self.data.copy()
         da.link = self.link
         da.linked = self.linked
+        da.note = self.note
         da.tokenize()
 
         return da
@@ -74,6 +75,12 @@ class DialogueAct:
         self.legacy.update(da.legacy)
         self.data += da.data
 
+        if self.note is None:
+            if da.note is not None:
+                self.note = da.note
+        elif da.note is not None:
+            self.note = "{} / {}".format(da.note, self.note)
+
         if da == self.link:
             da.linked.remove(self)
             self.link = da.link
@@ -86,7 +93,7 @@ class DialogueAct:
 
 class DialogueActCollection:
     # file for serialization
-    data_folder = "../dat/"
+    data_folder = "../csv/"
     data_file = data_folder + "data.csv"
 
     save_folder = "../sav/"
