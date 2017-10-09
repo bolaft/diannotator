@@ -38,7 +38,12 @@ Les boutons noirs en bas de l'écran indiquent les annotations disponibles pour 
 
 ### Raccourcis clavier :
 
-#### Down Arrow, Enter
+
+#### Enter
+
+Valide une entrée dans le champs texte, sélectionne un bouton sur lequel le focus est placé, ou passe au segment suivant en mode annotation si le champs d'entrée de texte est vide.
+
+#### Down Arrow
 
 Passe au segment suivant.
 
@@ -46,11 +51,11 @@ Passe au segment suivant.
 
 Passe au segment précédent.
 
-#### Next
+#### Page Down
 
 Descend de dix segments.
 
-#### Prior
+#### Page Up
 
 Remonte de dix segments.
 
@@ -65,6 +70,10 @@ Alterne en le mode plein écran et le mode fenêtré.
 #### Escape
 
 Quite l'application. 
+
+#### Tab
+
+Passe le focus de bouton en bouton. 
 
 ### Commandes spéciales :
 
