@@ -38,11 +38,11 @@ Les boutons noirs en bas de l'écran indiquent les annotations disponibles pour 
 
 ### Raccourcis clavier :
 
-#### Down
+#### Down Arrow, Enter
 
 Passe au segment suivant.
 
-#### Up
+#### Up Arrow
 
 Passe au segment précédent.
 
