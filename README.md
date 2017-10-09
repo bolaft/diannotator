@@ -76,46 +76,46 @@ Passe le focus de bouton en bouton.
 
 ### Commandes spéciales :
 
-#### `Control-A` (Add)
+#### Add : `Control-A`
 
 La prochaine entrée créé un nouveau label ajouté en tant que fonction spécifique à la dimension active.
 
-#### `Control-C` (Comment)
+#### Comment : `Control-C`
 
 La prochaine entrée créé un commentaire joint au segment actif. Si un commentaire existe déjà pour le segment actif, il est supprimé.
 
-#### `Control-D` (Dimension)
+#### Dimension : `Control-D`
 
 Permet de choisir la dimension active.
 
-#### `Control-F` (Filter)
+#### Filter : `Control-F`
 
 Les segments sont filtrés pour ne plus afficher que les segments annotés avec le même label que le segment actif pour la dimension active. Si le segment n'est pas annoté pour la dimension active, le filtre est créé sur le label "legacy" du segment actif pour la dimension active.
 
-#### `Control-J` (Jump)
+#### Jump : `Control-J`
 
 Permet d'entrer l'index d'un segment et de s'y déplacer immédiatement.
 
-#### `Control-L` (Link)
+#### Link : `Control-L`
 
 Si le segment actif n'est lié à aucun autre segment, propose d'entrer l'index du segment cible puis créé le lien. Si le segment a déjà un lien vers un autre segment, le lien est supprimé.
 
-#### `Control-M` (Merge)
+#### Merge : `Control-M`
 
 Fusionne le segment actif à celui qui le précède. Les liens, commentaires, annotations et annotations "legacy" sont préservés.
 
-#### `Control-R` (Remove)
+#### Remove : `Control-R`
 
 Supprime l'annotation du segment actif pour la dimension active.
 
-#### `Control-S` (Split)
+#### Split : `Control-S`
 
 Divise le segment actif en deux, au niveau du mot choisi. Les liens, commentaires, annotations et annotations "legacy" sont préservés.
 
-#### `Control-U` (Update)
+#### Update : `Control-U`
 
 La prochaine entrée correspondra au nouveau nom du label du segment actif, pour la dimension active. Le renommage est appliqué à tous les segment de la collection. Si l'entrée est laissée vide, le label est supprimé de la taxonomie.
 
-#### `Control-Z` (Undo)
+#### Undo : `Control-Z`
 
 Annule la dernière action effectuée.
