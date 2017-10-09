@@ -38,7 +38,6 @@ class Annotator(GraphicalUserInterface):
         self.parent.bind("<Next>", lambda event, arg=10: self.command_continue(event, n=arg))
         self.parent.bind("<Prior>", lambda event, arg=10: self.command_return(event, n=arg))
         self.parent.bind("<Delete>", self.command_delete)
-        self.parent.bind("<Control-z>", self.command_undo)
 
         self.parent.bind("<Control-l>", self.button_link)
         self.parent.bind("<Control-r>", self.button_remove)
@@ -50,6 +49,7 @@ class Annotator(GraphicalUserInterface):
         self.parent.bind("<Control-a>", self.button_add)
         self.parent.bind("<Control-c>", self.button_comment)
         self.parent.bind("<Control-f>", self.button_filter)
+        self.parent.bind("<Control-z>", self.button_undo)
 
         self.undo_history = []  # initializes undo history
 
@@ -71,6 +71,7 @@ class Annotator(GraphicalUserInterface):
             "add": lambda n=0: self.button_add(n),
             "update": lambda n=0: self.button_update(n),
             "filter": lambda n=0: self.button_filter(n),
+            "z Undo": lambda n=0: self.button_undo(n),
             "comment": lambda n=0: self.button_comment(n)
         }
 
@@ -116,17 +117,6 @@ class Annotator(GraphicalUserInterface):
         self.dac.full_collection.remove(da)
 
         self.update()
-
-    def command_undo(self, e):
-        """
-        Command to undo changes
-        """
-        # if there is a previous state in history to go to
-        if len(self.undo_history) > 1:
-            del self.undo_history[-1]  # remove current state from history
-
-            self.dac = self.undo_history[-1]  # change to previous state in history
-            self.update(backup=False)  # update without saving state to history
 
     def button_link(self, e):
         """
@@ -321,6 +311,17 @@ class Annotator(GraphicalUserInterface):
                 self.dac.i = i
 
         self.update()
+
+    def button_undo(self, e):
+        """
+        Button to undo changes
+        """
+        # if there is a previous state in history to go to
+        if len(self.undo_history) > 1:
+            del self.undo_history[-1]  # remove current state from history
+
+            self.dac = self.undo_history[-1]  # change to previous state in history
+            self.update(backup=False)  # update without saving state to history
 
     def annotation_mode(self):
         """

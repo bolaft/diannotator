@@ -58,10 +58,6 @@ Remonte de dix segments.
 
 Supprime le segment actif.
 
-#### Control-Z (Undo)
-
-Annule la dernière action effectuée.
-
 #### F11
 
 Alterne en le mode plein écran et le mode fenêtré.
@@ -111,3 +107,7 @@ Divise le segment actif en deux, au niveau du mot choisi. Les liens, commentaire
 #### Control-U (Update)
 
 La prochaine entrée correspondra au nouveau nom du label du segment actif, pour la dimension active. Le renommage est appliqué à tous les segment de la collection. Si l'entrée est laissée vide, le label est supprimé de la taxonomie.
+
+#### Control-Z (Undo)
+
+Annule la dernière action effectuée.
