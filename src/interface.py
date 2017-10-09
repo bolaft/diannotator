@@ -151,6 +151,8 @@ class GraphicalUserInterface(Frame, Styles):
                 text = self.entry.get()
                 self.entry.delete(0, END)  # clears the entry field
                 self.process_input(text)
+            elif len(self.entry.get()) == 0:
+                self.button_continue(None)
             else:
                 # list of buttons in the button list
                 commands = self.commands.winfo_children()
@@ -189,110 +191,6 @@ class GraphicalUserInterface(Frame, Styles):
         Status message
         """
         self.status.config(text=text)
-
-    def update_special_commands(self):
-        for button in self.special_commands.winfo_children():
-            button.destroy()
-
-        b = Button(
-            self.special_commands,
-            text="[L]ink",
-            background=WHITE,
-            foreground=GRAY,
-            command=lambda n=0: self.button_link(n)
-        )
-
-        b.pack(side=LEFT)
-
-        b = Button(
-            self.special_commands,
-            text="[R]emove",
-            background=WHITE,
-            foreground=GRAY,
-            command=lambda n=0: self.button_remove(n)
-        )
-
-        b.pack(side=LEFT)
-
-        b = Button(
-            self.special_commands,
-            text="[M]erge",
-            background=WHITE,
-            foreground=GRAY,
-            command=lambda n=0: self.button_merge(n)
-        )
-
-        b.pack(side=LEFT)
-
-        b = Button(
-            self.special_commands,
-            text="[S]plit",
-            background=WHITE,
-            foreground=GRAY,
-            command=lambda n=0: self.button_split(n)
-        )
-
-        b.pack(side=LEFT)
-
-        b = Button(
-            self.special_commands,
-            text="[D]imension",
-            background=WHITE,
-            foreground=GRAY,
-            command=lambda n=0: self.button_dimension(n)
-        )
-
-        b.pack(side=LEFT)
-
-        b = Button(
-            self.special_commands,
-            text="[J]ump",
-            background=WHITE,
-            foreground=GRAY,
-            command=lambda n=0: self.button_jump(n)
-        )
-
-        b.pack(side=LEFT)
-
-        b = Button(
-            self.special_commands,
-            text="[U]pdate",
-            background=WHITE,
-            foreground=GRAY,
-            command=lambda n=0: self.button_update(n)
-        )
-
-        b.pack(side=LEFT)
-
-        b = Button(
-            self.special_commands,
-            text="[A]dd",
-            background=WHITE,
-            foreground=GRAY,
-            command=lambda n=0: self.button_add(n)
-        )
-
-        b.pack(side=LEFT)
-
-        b = Button(
-            self.special_commands,
-            text="[F]ilter",
-            background=WHITE,
-            foreground=GRAY,
-            command=lambda n=0: self.button_filter(n)
-        )
-
-        b.pack(side=LEFT)
-
-        b = Button(
-            self.special_commands,
-            text="[C]omment",
-            background=WHITE,
-            foreground=GRAY,
-            command=lambda n=0: self.button_comment(n)
-        )
-
-        b.pack(side=LEFT)
 
     def update_commands(self):
         """

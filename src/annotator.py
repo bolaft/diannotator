@@ -1,8 +1,11 @@
 import styles
 import taxonomy
 
-from interface import GraphicalUserInterface
+from copy import deepcopy
+from interface import GraphicalUserInterface, WHITE, GRAY
 from model import DialogueActCollection
+from datetime import datetime
+from tkinter import Button, LEFT
 
 
 class Annotator(GraphicalUserInterface):
@@ -15,18 +18,25 @@ class Annotator(GraphicalUserInterface):
         """
         GraphicalUserInterface.__init__(self)
 
+        # initializing the dialogue act collection
         self.dac = DialogueActCollection.load()
 
-        for participant in set([da.participant for da in self.dac.collection]):
+        # creating custom colors for each participant
+        for participant in set([da.participant for da in self.dac.full_collection]):
             self.add_tag(
                 participant,
                 foreground=self.generate_random_color()
             )
 
-        self.parent.bind("<Down>", self.button_continue)
-        self.parent.bind("<Up>", self.button_return)
-        self.parent.bind("<Next>", lambda event, arg=10: self.button_continue(event, n=arg))
-        self.parent.bind("<Prior>", lambda event, arg=10: self.button_return(event, n=arg))
+        # binding controls
+
+        self.parent.bind("<Down>", self.command_continue)
+        self.parent.bind("<Up>", self.command_return)
+        self.parent.bind("<Next>", lambda event, arg=10: self.command_continue(event, n=arg))
+        self.parent.bind("<Prior>", lambda event, arg=10: self.command_return(event, n=arg))
+        self.parent.bind("<Delete>", self.command_delete)
+        self.parent.bind("<Control-z>", self.command_undo)
+
         self.parent.bind("<Control-l>", self.button_link)
         self.parent.bind("<Control-r>", self.button_remove)
         self.parent.bind("<Control-m>", self.button_merge)
@@ -38,45 +48,87 @@ class Annotator(GraphicalUserInterface):
         self.parent.bind("<Control-c>", self.button_comment)
         self.parent.bind("<Control-f>", self.button_filter)
 
-        self.update_special_commands()  # initial update of the command list
+        self.undo_history = []  # initializes undo history
 
-        self.command = "annotation"
-        self.dac.filter = False
-        self.update()
+        self.make_special_buttons()  # makes special buttons
 
-    def annotation_mode(self):
-        da = self.dac.get_current()
-        if self.dac.dimension in self.dac.values and self.dac.dimension in da.annotations and da.annotations[self.dac.dimension] in self.dac.labels[self.dac.dimension] + self.dac.labels[taxonomy.GENERAL_PURPOSE]:
-            self.input(self.dac.values[self.dac.dimension], self.annotate_qualifier, sort=False)
-        else:
-            self.input(self.dac.labels[self.dac.dimension] + self.dac.labels[taxonomy.GENERAL_PURPOSE], self.annotate_label, sort=False)
+        self.update()  # display text
 
-    def annotate_label(self, annotation):
-        da = self.dac.get_current()
-        da.annotations[self.dac.dimension] = annotation
+    def make_special_buttons(self):
+        for button in self.special_commands.winfo_children():
+            button.destroy()
 
-        if self.dac.dimension not in self.dac.values or self.dac.dimension not in da.annotations or da.annotations[self.dac.dimension] not in self.dac.labels[self.dac.dimension] + self.dac.labels[taxonomy.GENERAL_PURPOSE]:
-            self.dac.next()
+        buttons = {
+            "link": lambda n=0: self.button_link(n),
+            "remove": lambda n=0: self.button_remove(n),
+            "merge": lambda n=0: self.button_merge(n),
+            "split": lambda n=0: self.button_split(n),
+            "dimension": lambda n=0: self.button_dimension(n),
+            "jump": lambda n=0: self.button_jump(n),
+            "update": lambda n=0: self.button_update(n),
+            "add": lambda n=0: self.button_add(n),
+            "filter": lambda n=0: self.button_filter(n),
+            "comment": lambda n=0: self.button_comment(n)
+        }
 
-        self.update()
+        for text, function in buttons.items():
+            b = Button(
+                self.special_commands,
+                text="[{}]{}".format(text[0].upper(), text[1:]),
+                background=WHITE,
+                foreground=GRAY,
+                command=function
+            )
 
-    def annotate_qualifier(self, annotation):
-        da = self.dac.get_current()
-        da.annotations[self.dac.dimension] = "{} ➔ {}".format(da.annotations[self.dac.dimension], annotation)
-        self.dac.next()
-        self.update()
+            b.pack(side=LEFT)
 
-    def button_continue(self, e, n=1):
+    def command_continue(self, e, n=1):
+        """
+        Command to continue to a next segment
+        """
+        # cycles through the collection
         for i in range(0, n):
             self.dac.next()
+
         self.update()
 
-    def button_return(self, e, n=1):
+    def command_return(self, e, n=1):
+        """
+        Command to return to a previous segment
+        """
+        # cycles backards through the collection
         for i in range(0, n):
             self.dac.previous()
+
         self.update()
 
+    def command_delete(self, e, n=1):
+        """
+        Command to delete a segment
+        """
+        da = self.dac.get_current()
+
+        # TODO: make a DialogueActCollection "remove" function
+        self.dac.collection.remove(da)
+        self.dac.full_collection.remove(da)
+
+        self.update()
+
+    def command_undo(self, e):
+        """
+        Command to undo changes
+        """
+        # if there is a previous state in history to go to
+        if len(self.undo_history) > 1:
+            del self.undo_history[-1]  # remove current state from history
+
+            self.dac = self.undo_history[-1]  # change to previous state in history
+            self.update(backup=False)  # update without saving state to history
+
     def button_link(self, e):
+        """
+        Button to link a segment to another
+        """
         if self.dac.i > 0:  # first DA can't be linked
             da = self.dac.get_current()
 
@@ -89,6 +141,9 @@ class Annotator(GraphicalUserInterface):
                 self.input(range(1, self.dac.i + 1), self.link)
 
     def link(self, number):
+        """
+        Links a segment to another
+        """
         number = int(number) - 1
         da = self.dac.get_current()
         da.link = self.dac.collection[number]
@@ -97,6 +152,9 @@ class Annotator(GraphicalUserInterface):
         self.update()
 
     def button_remove(self, e):
+        """
+        Button to remove annotations for the segment in the current dimension
+        """
         da = self.dac.get_current()
 
         if self.dac.dimension in da.annotations:
@@ -105,6 +163,9 @@ class Annotator(GraphicalUserInterface):
             self.update()
 
     def button_merge(self, e):
+        """
+        Button to merge two segments
+        """
         current = self.dac.get_current()
         previous = self.dac.collection[self.dac.i - 1]
 
@@ -113,14 +174,25 @@ class Annotator(GraphicalUserInterface):
 
             del self.dac.collection[self.dac.i - 1]
 
+            for i, act in enumerate(self.dac.full_collection):
+                if act == current:
+                    del self.dac.full_collection[i - 1]
+                    break
+
             self.dac.previous()
             self.update()
 
     def button_split(self, e):
+        """
+        Button to split a segment in two
+        """
         da = self.dac.get_current()
         self.input(da.tokens[:-1], self.split, sort=False)
 
     def split(self, token):
+        """
+        Splits a segment in two
+        """
         da = self.dac.get_current()
         splits = da.split(token)
 
@@ -129,29 +201,55 @@ class Annotator(GraphicalUserInterface):
         for split in reversed(splits):
             self.dac.collection.insert(self.dac.i, split)
 
+        for i, act in enumerate(self.dac.full_collection):
+            if act == da:
+                del self.dac.full_collection[i]
+
+                for split in reversed(splits):
+                    self.dac.full_collection.insert(i, split)
+                break
+
         self.update()
 
     def button_dimension(self, e):
+        """
+        Button to change the current dimension
+        """
         self.input([dim for dim in self.dac.labels.keys() if dim != taxonomy.GENERAL_PURPOSE], self.change_dimension)
 
     def change_dimension(self, dimension):
+        """
+        Changes the current dimension
+        """
         self.dac.dimension = dimension
         self.update()
 
     def button_jump(self, e):
+        """
+        Button to jump to a specific segment
+        """
         self.input(range(1, len(self.dac.collection)), self.jump)
 
     def jump(self, number):
+        """
+        Jumps to a specific segment
+        """
         self.dac.i = int(number) - 1
         self.update()
 
     def button_update(self, e):
+        """
+        Button to update (or delete) a label
+        """
         da = self.dac.get_current()
 
         if self.dac.dimension in da.annotations:
             self.input([], self.update_label, free=True)
 
     def update_label(self, label):
+        """
+        Updates (or deletes) a label
+        """
         da = self.dac.get_current()
 
         self.dac.change_label(
@@ -163,12 +261,21 @@ class Annotator(GraphicalUserInterface):
         self.update()
 
     def button_add(self, e):
+        """
+        Button to add a new label
+        """
         self.input([], self.add_label, free=True)
 
     def add_label(self, label):
+        """
+        Adds a new label
+        """
         self.dac.add_label(self.dac.dimension, label)
 
     def button_comment(self, e):
+        """
+        Button to add (or remove) a comment
+        """
         da = self.dac.get_current()
 
         if da.note is not None:
@@ -178,11 +285,21 @@ class Annotator(GraphicalUserInterface):
             self.input([], self.comment, free=True)
 
     def comment(self, note):
-        da = self.dac.get_current()
-        da.note = note
-        self.update()
+        """
+        Adds a new comment
+        """
+        if note != "":
+            da = self.dac.get_current()
+            da.note = note
+            self.update()
 
     def button_filter(self, e):
+        """
+        Button to filter segments by label
+        """
+        # save because filter tends to make the app bug
+        self.dac.save(name="auto-" + datetime.now().strftime("%d-%m-%y_%X"))
+
         current_da = self.dac.get_current()
 
         if not self.dac.filter and (self.dac.dimension in current_da.annotations or self.dac.dimension in current_da.legacy):
@@ -202,22 +319,66 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
-    def update(self, t=None):
+    def annotation_mode(self):
+        """
+        Resumes the annotation mode
+        """
+        da = self.dac.get_current()
+
+        if self.dac.dimension in self.dac.values and self.dac.dimension in da.annotations and da.annotations[self.dac.dimension] in self.dac.labels[self.dac.dimension] + self.dac.labels[taxonomy.GENERAL_PURPOSE]:
+            self.input(self.dac.values[self.dac.dimension], self.annotate_qualifier, sort=False)
+        else:
+            self.input(self.dac.labels[self.dac.dimension] + self.dac.labels[taxonomy.GENERAL_PURPOSE], self.annotate_label, sort=False)
+
+    def annotate_label(self, annotation):
+        """
+        Adds a label to the current segment annotations
+        """
+        da = self.dac.get_current()
+        da.annotations[self.dac.dimension] = annotation
+
+        if self.dac.dimension not in self.dac.values or self.dac.dimension not in da.annotations or da.annotations[self.dac.dimension] not in self.dac.labels[self.dac.dimension] + self.dac.labels[taxonomy.GENERAL_PURPOSE]:
+            self.dac.next()
+
+        self.update()
+
+    def annotate_qualifier(self, annotation):
+        """
+        Adds a qualifier to the current segment annotations
+        """
+        da = self.dac.get_current()
+        da.annotations[self.dac.dimension] = "{} ➔ {}".format(da.annotations[self.dac.dimension], annotation)
+        self.dac.next()
+        self.update()
+
+    def update(self, t=None, backup=True):
+        """
+        Updates the application state
+        """
         self.clear_screen()
 
         n_previous = self.dac.i if self.dac.i < 50 else 50
 
         for j in range(self.dac.i - n_previous, self.dac.i):
-            self.output_da(j)
+            self.output_segment(j)
 
         status = "Dimension: {}".format(self.dac.dimension.title()) if not self.dac.filter else "Dimension: {} - Filter: {}".format(self.dac.dimension.title(), self.dac.filter)
         self.update_status_message(status)
 
-        self.output_da(self.dac.i, current=True)
-        self.dac.save()
+        self.output_segment(self.dac.i, current=True)
         self.annotation_mode()
 
-    def output_da(self, i, current=False):
+        if backup:
+            if len(self.undo_history) == 100:
+                self.undo_history.pop(0)
+            self.undo_history.append(deepcopy(self.dac))
+
+        self.dac.save()
+
+    def output_segment(self, i, current=False):
+        """
+        Outputs a segment to the text field
+        """
         da = self.dac.collection[i]
 
         style = [da.participant]
@@ -260,11 +421,12 @@ class Annotator(GraphicalUserInterface):
                 offset += len(addendum)
 
         if da.link is not None:
-            addendum = " ⟲ {}".format(self.dac.collection.index(da.link) + 1)
+            if da.link in self.dac.collection:
+                addendum = " ⟲ {}".format(self.dac.collection.index(da.link) + 1)
+            else:
+                addendum = " ⟲"
             self.add_to_last_line(addendum, style=styles.WHITE, offset=offset)
             offset += len(addendum)
 
         if da.note is not None:
-            addendum = " {} {} {}".format(u"\u00AB", da.note, u"\u00BB")
-            self.add_to_last_line(addendum, style=styles.ITALIC, offset=offset)
-            offset += len(addendum)
+            self.output("\t\t\t\t ⤷ {}".format(da.note), style=styles.ITALIC)

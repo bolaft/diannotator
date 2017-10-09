@@ -41,6 +41,7 @@ class DialogueAct:
         da.data = self.data.copy()
         da.link = self.link
         da.linked = self.linked
+        da.tokenize()
 
         return da
 
@@ -66,10 +67,9 @@ class DialogueAct:
         """
         Merges the DA with another
         """
-        self.tokens = da.tokens + self.tokens
-
         join = "" if len(self.raw) == 0 or self.raw[0] in [",", "."] else " "
         self.raw = da.raw + join + self.raw
+        self.tokenize()
         self.annotations.update(da.annotations)
         self.legacy.update(da.legacy)
         self.data += da.data
@@ -86,9 +86,11 @@ class DialogueAct:
 
 class DialogueActCollection:
     # file for serialization
-    data_folder = "../data/"
-    save_file = data_folder + "dialogue_act_collection.pic"
-    default_raw_path = data_folder + "data.csv"
+    data_folder = "../dat/"
+    data_file = data_folder + "data.csv"
+
+    save_folder = "../sav/"
+    save_file = save_folder + "dialogue_act_collection.pic"
 
     def __init__(self):
         self.full_collection = []  # full collection of DA
@@ -119,12 +121,15 @@ class DialogueActCollection:
         index = self.labels[tagset].index(label)
         self.labels[tagset].remove(label)
 
-        if new_label not in self.labels[tagset] and new_label not in self.labels[taxonomy.GENERAL_PURPOSE]:
+        if new_label != "" and new_label not in self.labels[tagset] and new_label not in self.labels[taxonomy.GENERAL_PURPOSE]:
             self.labels[tagset].insert(index, new_label)
 
         for da in self.collection:
             if dimension in da.annotations and da.annotations[dimension] == label:
-                da.annotations[dimension] = new_label
+                if new_label != "":
+                    da.annotations[dimension] = new_label
+                else:
+                    del da.annotations[dimension]
 
     def add_label(self, dimension, label):
         """
@@ -212,7 +217,7 @@ class DialogueActCollection:
                 return pickle.load(f)
         except Exception:
             dac = DialogueActCollection()
-            dac.load_raw(DialogueActCollection.default_raw_path)
+            dac.load_raw(DialogueActCollection.data_file)
             return dac
 
     def save(self, name=None):

@@ -1,6 +1,8 @@
     Bugs:
 
-        ☐ bug when merging/splitting DA linked/connected by links
+        ☐ bug with undo when less than max backups
+        ✔ bug with filter, due to merge and split functions in annotator (doesn't affect "full_collection") @done (17-10-09 16:58)
+        ✔ bug when merging/splitting DA linked/connected by links @done (17-10-09 13:17)
         ✔ special buttons don't work @done (17-10-06 18:36)
         ✔ bug when leaving shift+C pressed @done (17-10-06 16:51)
         ✔ segmentation faults @done (17-10-06 16:51)
@@ -8,9 +10,9 @@
 
     Features:
 
-        ☐ jump to next note command
         ☐ export as json or csv
-        ☐ display current dimension
+        ✔ jump to next note command @done (17-10-09 16:59)
+        ✔ display current dimension @done (17-10-09 13:19)
         ✔ display all annotations, different color per annotation type @done (17-10-08 18:12)
         ✔ backup saves @done (17-10-08 11:02)
         ✔ auto-convert legacy annotations @done (17-10-06 18:36)

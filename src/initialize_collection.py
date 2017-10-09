@@ -4,5 +4,5 @@
 from model import DialogueActCollection
 
 dac = DialogueActCollection()
-dac.load_raw(dac.default_raw_path)
+dac.load_raw(DialogueActCollection.data_file)
 dac.save()
