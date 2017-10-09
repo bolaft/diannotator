@@ -1,4 +1,4 @@
-# Format de donées
+# Format de données
 
 ### Fichier de données :
 
@@ -24,7 +24,7 @@ Les modifications effectuées en cours d'annotation sont automatiquement sauvega
 
 ### Réinitialisation :
 
-Le script reset_collection.py permet de restaurer la collection d'actes de dialogue à son état initial. Attention : cette opération n'est pas réversible, assurez-vous d'avoir fait un backup auparavent.
+Le script reset_collection.py permet de restaurer la collection d'actes de dialogue à son état initial. Attention : cette opération n'est pas réversible, assurez-vous d'avoir fait un backup auparavant.
 
 ### Backup :
 
@@ -69,7 +69,7 @@ Alterne en le mode plein écran et le mode fenêtré.
 
 #### Escape
 
-Quite l'application. 
+Quitte l'application. 
 
 #### Tab
 
