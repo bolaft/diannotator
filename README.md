@@ -70,6 +70,8 @@ Alterne en le mode plein écran et le mode fenêtré.
 
 Quite l'application. 
 
+### Commandes spéciales :
+
 #### Control-A (Add)
 
 La prochaine entrée créé un nouveau label ajouté en tant que fonction spécifique à la dimension active.
