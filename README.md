@@ -30,7 +30,7 @@ Contains the **raw text** of the message.
 
 ##### `segment`
 
-Contains the **dialogue segment**. When there are more than one segment in a message (due to prior segmentation for example), the `raw` column should only be filled in the first row, and left empty in the following rows. Moreover, when there are more than one raw message for a single segment (due to prior mergin for example), the `segment` column should be filled only in the first row, and left empty in the following ones.
+Contains the **dialogue segment**. When there are more than one segment in a message (due to prior segmentation for example), the `raw` column should only be filled in the first row, and left empty in the following rows. Moreover, when there are more than one raw message for a single segment (due to prior merging for example), the `segment` column should be filled only in the first row, and left empty in the following ones.
 
 ##### `participant`
 
