@@ -6,7 +6,7 @@ DiAnnotator is a dialogue annotation tool. It is meant to reduce the need to use
 
 #### Python version:
 
-Python 3.4.3
+DiAnnotator is written in Python 3.4.3.
 
 #### Python modules:
 
