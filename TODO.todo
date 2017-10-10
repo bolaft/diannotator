@@ -12,6 +12,7 @@
 
         ☐ default taxonomies (ISO, DAMSL, MapTask...)
         ☐ export/import true DiAML
+        ☐ add a LICENSE file
         ☐ feature driven annotation
         ✔ import notes from data files @done (17-10-10 18:40)
         ✔ translate README @done (17-10-10 18:31)
@@ -34,4 +35,5 @@
  
     Refactoring:
 
+        ☐ separate into classes that make sense
         ✔ clean up code @done (17-10-10 09:48)

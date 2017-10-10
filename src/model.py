@@ -3,9 +3,14 @@ import pickle
 import os
 import csv
 import json
+import tempfile
 
 from nltk.tokenize import WhitespaceTokenizer
 from collections import OrderedDict
+
+
+# check if the current file is in a folder name "src"
+EXEC_FROM_SOURCE = os.path.dirname(os.path.abspath(__file__)).split("/")[-1] == "src"
 
 
 class DialogueAct:
@@ -131,11 +136,10 @@ class DialogueAct:
 
 class DialogueActCollection:
     # file for serialization
-
-    save_dir = "../sav/"
-    taxo_dir = "../tax/"
-    data_dir = "../out/"
-    temp_dir = "/tmp/diannotator/"
+    save_dir = "../sav/" if EXEC_FROM_SOURCE else "sav/"
+    taxo_dir = "../tax/" if EXEC_FROM_SOURCE else "tax/"
+    data_dir = "../out/" if EXEC_FROM_SOURCE else "out/"
+    temp_dir = "{}/diannotator/".format(tempfile.gettempdir())
 
     def __init__(self):
         self.save_file = os.path.abspath("{}tmp.pic".format(DialogueActCollection.save_dir))

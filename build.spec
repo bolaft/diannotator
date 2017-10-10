@@ -2,12 +2,9 @@
 
 block_cipher = None
 
-a = Analysis(['launcher.py'],
-             pathex=['/home/e056845n/workspace/ghost-trail/src'],
+a = Analysis(["launcher.py"],
+             pathex=["/home/e056845n/workspace/ghost-trail/src"],
              binaries=None,
-             datas=[
-                ("../data", "data")
-             ],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
