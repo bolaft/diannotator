@@ -12,13 +12,6 @@ APP_TITLE = "DiAnnotator"  # hardcoded game title
 VERSION_NUMBER = "alpha 17.10.6"  # hardcoded version number
 
 
-def on_closing():
-    """
-    Handles the window closing event
-    """
-    annotator.kill()
-
-
 def parse_args():
     """
     Parses command line options and arguments
@@ -35,7 +28,7 @@ def parse_args():
     op.add_option(
         "-f", "--fullscreen",
         dest="fullscreen",
-        default=True,
+        default=False,
         action="store_true",
         help="starts the game in fullscreen mode")
 
@@ -64,5 +57,5 @@ if __name__ == "__main__":
     if options.fullscreen:
         annotator.toggle_fullscreen()  # toggles fullscreen
 
-    annotator.parent.protocol("WM_DELETE_WINDOW", on_closing)  # quit event handler
+    annotator.parent.protocol("WM_DELETE_WINDOW", annotator.quit)  # quit event handler
     annotator.mainloop()  # runs the main tkinter loop

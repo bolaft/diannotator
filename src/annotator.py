@@ -5,7 +5,7 @@ from copy import deepcopy
 from interface import GraphicalUserInterface, WHITE, GRAY
 from model import DialogueActCollection
 from datetime import datetime
-from tkinter import Button, LEFT
+from tkinter import Button, filedialog, LEFT
 
 
 class Annotator(GraphicalUserInterface):
@@ -18,11 +18,15 @@ class Annotator(GraphicalUserInterface):
         """
         GraphicalUserInterface.__init__(self)
 
-        # initializing the dialogue act collection
-        self.dac = DialogueActCollection.load()
+        # tries to load previous save
+        self.dac = DialogueActCollection.load(DialogueActCollection.get_last_save())
+
+        if not self.dac:
+            # initializing the dialogue act collection
+            self.load()
 
         # make a backup of the collection
-        self.dac.save(name="auto-" + datetime.now().strftime("%d-%m-%y_%X"))
+        self.dac.save(name="auto-" + datetime.now().strftime("%d-%m-%y_%X"), backup=True)
 
         # creating custom colors for each participant
         for participant in set([da.participant for da in self.dac.full_collection]):
@@ -51,11 +55,33 @@ class Annotator(GraphicalUserInterface):
         self.parent.bind("<Control-f>", self.button_filter)
         self.parent.bind("<Control-z>", self.button_undo)
 
+        self.parent.bind("<Control-S>", lambda event, arg=None: self.save_as())
+        self.parent.bind("<Control-o>", lambda event, arg=None: self.load())
+
         self.undo_history = []  # initializes undo history
 
         self.make_special_buttons()  # makes special buttons
 
         self.update()  # display text
+
+    def load(self):
+        self.dac = DialogueActCollection.load(filedialog.askopenfilename(
+            initialdir=DialogueActCollection.save_dir,
+            title="Open",
+            filetypes=(("serialized saves", "*.pic"), ("data files", "*.csv"), ("all files", "*.*"))
+        ))
+
+        self.undo_history = []  # reinitializes undo history
+        self.update()
+
+    def save_as(self):
+        self.dac.save(name=filedialog.asksaveasfilename(
+            initialdir=DialogueActCollection.save_dir,
+            title="Save as",
+            filetypes=(("serialized saves", "*.pic"), ("all files", "*.*"))
+        ))
+
+        self.update()
 
     def make_special_buttons(self):
         for button in self.special_commands.winfo_children():
@@ -291,7 +317,10 @@ class Annotator(GraphicalUserInterface):
         Button to filter segments by label
         """
         # save because filter tends to make the app bug
-        self.dac.save(name="auto-" + datetime.now().strftime("%d-%m-%y_%X"))
+        self.dac.save(
+            name="{}auto-{}.pic".format(DialogueActCollection.save_dir, datetime.now().strftime("%d-%m-%y_%X")),
+            backup=True
+        )
 
         current_da = self.dac.get_current()
 
@@ -366,7 +395,16 @@ class Annotator(GraphicalUserInterface):
         for j in range(self.dac.i - n_previous, self.dac.i):
             self.output_segment(j)
 
-        status = "Dimension: {}".format(self.dac.dimension.title()) if not self.dac.filter else "Dimension: {} - Filter: {}".format(self.dac.dimension.title(), self.dac.filter)
+        # dimension in status
+        status = "Dimension: {}".format(self.dac.dimension.title())
+
+        # filter in status
+        if self.dac.filter:
+            status = "{} - Filter: {}".format(status, self.dac.filter)
+
+        # file in status
+        status = "{}\nFile: {}".format(status, self.dac.save_file)
+
         self.update_status_message(status)
 
         self.output_segment(self.dac.i, current=True)

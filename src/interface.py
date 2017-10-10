@@ -1,6 +1,6 @@
 import random
 
-from tkinter import Tk, Button, Entry, Frame, Label, Scrollbar, StringVar, Text, BOTH, DISABLED, END, LEFT, BOTTOM, NORMAL, N, X, WORD, NSEW, SUNKEN
+from tkinter import Tk, Button, Entry, Frame, Label, Scrollbar, StringVar, Text, Menu, BOTH, DISABLED, END, LEFT, BOTTOM, NORMAL, N, X, WORD, NSEW, SUNKEN
 from styles import Styles
 
 # colors
@@ -70,19 +70,30 @@ class GraphicalUserInterface(Frame, Styles):
         ws = self.parent.winfo_screenwidth()  # width of the screen
         hs = self.parent.winfo_screenheight()  # height of the screen
 
-        # calculate x and y coordinates for the Tk parent window
-        x = (ws / 2) - (w / 2)
-        # y = (hs / 2) - (h / 2)
-        y = (hs / 2)
-
-        self.parent.geometry("%dx%d+%d+%d" % (w, h, x, y))  # set the dimensions of the window
+        self.parent.geometry("%dx%d+0+0" % (ws, hs))  # set the dimensions of the window
         self.parent.minsize(w, h)  # minimum size of the window
 
         self.parent.bind("<F11>", self.toggle_fullscreen)
-        self.parent.bind("<Escape>", self.kill)
+        self.parent.bind("<Escape>", lambda event, arg=None: self.parent.quit())
 
         # window title
         self.parent.title(self.window_title)
+
+        # menu bar
+        menubar = Menu(self.parent)
+
+        filemenu = Menu(menubar, tearoff=0)
+        filemenu.add_command(label="Load", command=self.load)
+        filemenu.add_command(label="Save as", command=self.save_as)
+        filemenu.add_separator()
+        filemenu.add_command(label="Exit", command=self.parent.quit)
+
+        menubar.add_cascade(label="File", menu=filemenu)
+
+        # menubar.add_command(label="test1", command=self.test1)
+        # menubar.add_command(label="test2", command=self.test2)
+
+        self.parent.config(menu=menubar)
 
         # make the frame take the whole window
         self.pack(fill=BOTH, expand=1)
@@ -152,7 +163,7 @@ class GraphicalUserInterface(Frame, Styles):
                 self.entry.delete(0, END)  # clears the entry field
                 self.process_input(text)
             elif len(self.entry.get()) == 0:
-                self.button_continue(None)
+                self.command_continue(None)
             else:
                 # list of buttons in the button list
                 commands = self.commands.winfo_children()
@@ -338,12 +349,6 @@ class GraphicalUserInterface(Frame, Styles):
             self.add_text(line, style=style)
 
         self.add_blank_lines(blank_after, delay=delay)  # blank lines after the output
-
-    def kill(self, e=None):
-        """
-        Signals the GUI that it must stop
-        """
-        self.parent.destroy()  # closes the game window
 
     def generate_random_color(self):
         r = (random.randrange(1, 256) + 255) / 2

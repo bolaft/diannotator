@@ -16,20 +16,6 @@ Si le format de fichier est différent de celui de ce fichier Calc, le code sour
 
 La taxonomie est définie par défaut dans le fichier `taxonomy.py`, mais peut être modifiée en cours d'utilisation via différentes commandes détaillées plus bas.
 
-# Chargement et sauvegarde
-
-### Sauvegarde :
-
-Les modifications effectuées en cours d'annotation sont automatiquement sauvegardées en tant qu'objet `DialogueActCollection` sérialisé avec `pickle`. Le fichier de sauvegarde est le fichier `save.pic` du dossier `sav`. C'est ce fichier qui est chargé en mémoire automatiquement au lancement de l'application.
-
-### Réinitialisation :
-
-Le script `reset_collection.py` permet de restaurer la collection d'actes de dialogue à son état initial. Attention : cette opération n'est pas réversible, assurez-vous d'avoir fait un backup auparavant.
-
-### Backup :
-
-Pour effectuer un backup de la sauvegarde, il faut exécuter le fichier `save_backup.py`. Ce programme créé un backup dans le dossier `sav`. Le nom du fichier est constitué de la date et de l'heure de sa création.
-
 # Utilisation
 
 ### Annotation :
@@ -72,50 +58,58 @@ Quitte l'application.
 
 #### `Tab`
 
-Passe le focus de bouton en bouton. 
+Passe le focus de bouton en bouton.
+
+#### `Control Shift S`
+
+Ouvre le dialogue de sauvegarde de fichier.
+
+#### `Control O`
+
+Ouvre le dialogue de chargement de fichier.
 
 ### Commandes spéciales :
 
-#### Add : `Control-A`
+#### Add : `Control A`
 
 La prochaine entrée créé un nouveau label ajouté en tant que fonction spécifique à la dimension active.
 
-#### Comment : `Control-C`
+#### Comment : `Control C`
 
 La prochaine entrée créé un commentaire joint au segment actif. Si un commentaire existe déjà pour le segment actif, il est supprimé.
 
-#### Dimension : `Control-D`
+#### Dimension : `Control D`
 
 Permet de choisir la dimension active.
 
-#### Filter : `Control-F`
+#### Filter : `Control F`
 
 Les segments sont filtrés pour ne plus afficher que les segments annotés avec le même label que le segment actif pour la dimension active. Si le segment n'est pas annoté pour la dimension active, le filtre est créé sur le label "legacy" du segment actif pour la dimension active.
 
-#### Jump : `Control-J`
+#### Jump : `Control J`
 
 Permet d'entrer l'index d'un segment et de s'y déplacer immédiatement.
 
-#### Link : `Control-L`
+#### Link : `Control L`
 
 Si le segment actif n'est lié à aucun autre segment, propose d'entrer l'index du segment cible puis créé le lien. Si le segment a déjà un lien vers un autre segment, le lien est supprimé.
 
-#### Merge : `Control-M`
+#### Merge : `Control M`
 
 Fusionne le segment actif à celui qui le précède. Les liens, commentaires, annotations et annotations "legacy" sont préservés.
 
-#### Remove : `Control-R`
+#### Remove : `Control R`
 
 Supprime l'annotation du segment actif pour la dimension active.
 
-#### Split : `Control-S`
+#### Split : `Control S`
 
 Divise le segment actif en deux, au niveau du mot choisi. Les liens, commentaires, annotations et annotations "legacy" sont préservés.
 
-#### Update : `Control-U`
+#### Update : `Control U`
 
 La prochaine entrée correspondra au nouveau nom du label du segment actif, pour la dimension active. Le renommage est appliqué à tous les segment de la collection. Si l'entrée est laissée vide, le label est supprimé de la taxonomie.
 
-#### Undo : `Control-Z`
+#### Undo : `Control Z`
 
 Annule la dernière action effectuée.

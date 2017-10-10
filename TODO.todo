@@ -11,6 +11,11 @@
     Features:
 
         ☐ export as json or csv
+        ☐ generic input format (csv)
+        ☐ taxonomies as json
+        ☐ default taxonomies
+        ☐ feature driven annotation
+        ☐ menu bar (save / load)
         ✔ jump to next note command @done (17-10-09 16:59)
         ✔ display current dimension @done (17-10-09 13:19)
         ✔ display all annotations, different color per annotation type @done (17-10-08 18:12)
@@ -24,4 +29,4 @@
  
     Refactoring:
 
-        ☐ clean up code
+        ✔ clean up code @done (17-10-10 09:48)

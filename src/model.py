@@ -1,6 +1,7 @@
 import codecs
 import pickle
 import taxonomy
+import os
 
 from nltk.tokenize import WhitespaceTokenizer
 
@@ -93,13 +94,13 @@ class DialogueAct:
 
 class DialogueActCollection:
     # file for serialization
-    data_folder = "../csv/"
-    data_file = data_folder + "data.csv"
 
-    save_folder = "../sav/"
-    save_file = save_folder + "dialogue_act_collection.pic"
+    save_dir = "../sav/"
+    temp_dir = "/tmp/diannotator/"
 
     def __init__(self):
+        self.save_file = "{}tmp.pic".format(DialogueActCollection.save_dir)
+
         self.full_collection = []  # full collection of DA
         self.collection = []  # current collection used
         self.annotations = {}  # list of possible annotations
@@ -144,7 +145,7 @@ class DialogueActCollection:
         """
         self.labels[dimension].append(label)
 
-    def load_raw(self, path):
+    def load_csv(self, path):
         """
         Loads a new collection from a CSV file
         """
@@ -214,23 +215,49 @@ class DialogueActCollection:
 
         return legacy
 
-    @staticmethod
-    def load():
-        """
-        Loads a serialized DialogueActCollection
-        """
-        try:
-            with open(DialogueActCollection.save_file, "rb") as f:
-                return pickle.load(f)
-        except Exception:
-            dac = DialogueActCollection()
-            dac.load_raw(DialogueActCollection.data_file)
-            return dac
-
-    def save(self, name=None):
+    def save(self, name=None, backup=False):
         """
         Serializes the DialogueActCollection
         """
-        path = DialogueActCollection.save_file if name is None else DialogueActCollection.data_folder + name + ".pic"
-        with open(path, "wb") as f:
+        if name is not None and not backup:
+            self.save_file = name
+            self.update_last_save()
+
+        with open(self.save_file if not backup else name, "wb") as f:
             pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
+
+    def update_last_save(self):
+        if not os.path.exists(DialogueActCollection.temp_dir):
+            os.makedirs(DialogueActCollection.temp_dir)
+
+        with open("{}last_save.tmp".format(DialogueActCollection.temp_dir), "w") as tmp:
+            tmp.write(self.save_file)
+
+    @staticmethod
+    def get_last_save():
+        if not os.path.exists(DialogueActCollection.temp_dir):
+            os.makedirs(DialogueActCollection.temp_dir)
+
+        with open("{}last_save.tmp".format(DialogueActCollection.temp_dir), "r") as tmp:
+            tmp.seek(0)
+            return tmp.read().strip()
+
+    @staticmethod
+    def load(path):
+        """
+        Loads a serialized DialogueActCollection
+        """
+        if path.endswith(".pic"):
+            with open(path, "rb") as f:
+                dac = pickle.load(f)
+                dac.update_last_save()
+
+                return dac
+        elif path.endswith(".csv"):
+            dac = DialogueActCollection()
+            dac.load_csv(path)
+            dac.update_last_save()
+
+            return dac
+
+        return False
