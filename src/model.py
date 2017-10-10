@@ -196,6 +196,12 @@ class DialogueActCollection:
         """
         self.labels[dimension].append(label)
 
+    def add_qualifier(self, dimension, quaifier):
+        """
+        Adds a new qualifier to the tagset
+        """
+        self.values[dimension].append(quaifier)
+
     def load_csv(self, path):
         """
         Loads a new collection from a CSV file
@@ -318,6 +324,18 @@ class DialogueActCollection:
 
             for da in self.full_collection:
                 w.writerow(da.to_csv_dict())
+
+    def export_taxonomy(self, path):
+        taxonomy = {
+            "name": self.taxonomy,
+            "default": self.dimension,
+            "colors": self.colors,
+            "labels": self.labels,
+            "values": self.values
+        }
+
+        with open(path, "w") as f:
+            json.dump(taxonomy, f, indent=4, ensure_ascii=False)
 
     def update_last_save(self):
         if not os.path.exists(DialogueActCollection.temp_dir):

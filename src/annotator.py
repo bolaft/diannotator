@@ -26,7 +26,7 @@ class Annotator(GraphicalUserInterface):
 
             # choose a taxonomy if none is set
             if self.dac.taxonomy is None:
-                self.choose_taxonomy()
+                self.import_taxonomy()
                 self.generate_dimension_colors()
 
         # make a backup of the collection
@@ -81,10 +81,8 @@ class Annotator(GraphicalUserInterface):
                 dimension,
                 foreground=color
             )
-            print(dimension)
-            print(color)
 
-    def choose_taxonomy(self):
+    def import_taxonomy(self):
         taxonomy_path = filedialog.askopenfilename(
             initialdir=DialogueActCollection.taxo_dir,
             title="Open taxonomy file",
@@ -93,6 +91,15 @@ class Annotator(GraphicalUserInterface):
 
         self.dac.set_taxonomy(taxonomy_path)
         self.update()
+
+    def export_taxonomy(self):
+        taxonomy_path = filedialog.asksaveasfilename(
+            initialdir=DialogueActCollection.taxo_dir,
+            title="Export taxonomy as",
+            filetypes=(("JSON taxonomy file", "*.json"), ("all files", "*.*"))
+        )
+
+        self.dac.export_taxonomy(taxonomy_path)
 
     def load(self):
         loaded_dac = DialogueActCollection.load(filedialog.askopenfilename(
@@ -122,7 +129,7 @@ class Annotator(GraphicalUserInterface):
     def export_as(self):
         self.dac.export(filedialog.asksaveasfilename(
             initialdir=DialogueActCollection.data_dir,
-            title="Save as",
+            title="Export as",
             filetypes=(("JSON data files", "*.json"), ("CSV data files", "*.csv"))
         ))
 
@@ -338,13 +345,24 @@ class Annotator(GraphicalUserInterface):
         """
         Button to add a new label
         """
-        self.input([], self.add_label, free=True)
+        da = self.dac.get_current()
+
+        if self.dac.dimension in self.dac.values and self.dac.dimension in da.annotations and da.annotations[self.dac.dimension] in self.dac.labels[self.dac.dimension]:
+            self.input([], self.add_qualifier, free=True)
+        else:
+            self.input([], self.add_label, free=True)
 
     def add_label(self, label):
         """
         Adds a new label
         """
         self.dac.add_label(self.dac.dimension, label)
+
+    def add_qualifier(self, qualifier):
+        """
+        Adds a new label
+        """
+        self.dac.add_qualifier(self.dac.dimension, qualifier)
 
     def button_note(self, e):
         """

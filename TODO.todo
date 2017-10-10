@@ -10,11 +10,12 @@
 
     Features:
 
-        ☐ default taxonomies
-        ☐ feature driven annotation
+        ☐ default taxonomies (ISO, DAMSL, MapTask...)
         ☐ export/import true DiAML
-        ☐ export current taxonomy
         ☐ translate README
+        ☐ feature driven annotation
+        ✔ add qualifier values to current taxonomy @done (17-10-10 17:25)
+        ✔ export current taxonomy @done (17-10-10 17:20)
         ✔ taxonomies as json @done (17-10-10 16:33)
         ✔ generic input format (csv) @done (17-10-10 15:35)
         ✔ export as json or csv @done (17-10-10 13:20)

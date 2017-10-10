@@ -101,6 +101,12 @@ class GraphicalUserInterface(Frame, Styles):
 
         self.menu_bar.add_cascade(label="View", menu=view_menu)
 
+        taxonomy_menu = Menu(self.menu_bar, tearoff=0)
+        taxonomy_menu.add_command(label="Import taxonomy", command=self.import_taxonomy)
+        taxonomy_menu.add_command(label="Export taxonomy", command=self.export_taxonomy)
+
+        self.menu_bar.add_cascade(label="Taxonomy", menu=taxonomy_menu)
+
         filter_menu = Menu(self.menu_bar, tearoff=0)
         filter_menu.add_command(label="Filter current label", accelerator="Ctrl+F", command=lambda e=None: self.button_filter(e))
 

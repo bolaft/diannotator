@@ -18,7 +18,7 @@ Contient une chaîne de caractères représentant la date d'envoi du message.
 
 #### `segment`
 
-Contient le segment fonctionnel sur lequel s'appliquent les annotations. Si la colonne est vide pour un segment, cela doit signifier que le message (`raw`) a été fusionné avec le précédent (comme dans le format multi-tab de DiAML).
+Contient le segment dialogique sur lequel s'appliquent les annotations. Si la colonne est vide pour un segment, cela doit signifier que le message (`raw`) a été fusionné avec le précédent (comme dans le format multi-tab de DiAML).
 
 #### `raw`
 
@@ -116,7 +116,7 @@ Ouvre le dialogue d'export au format .json ou .csv.
 
 #### Add : `Control A`
 
-La prochaine entrée créé un nouveau label ajouté en tant que fonction spécifique à la dimension active.
+La prochaine entrée créé un nouveau label ajouté en tant que label spécifique à la dimension active, ou en tant que nouveau qualifieur possible pour la dimension active, le cas échéant.
 
 #### Dimension : `Control D`
 
