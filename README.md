@@ -24,7 +24,7 @@ Run the build.sh script at the root of the directory. A `bin` folder containing 
 
 ### Location:
 
-Raw data files should be placed in the `csv` at the root of the project directory.
+Raw data files should be placed in the `csv` folder at the root of the project directory.
 
 ### Format:
 
