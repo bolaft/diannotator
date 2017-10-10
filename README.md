@@ -40,7 +40,7 @@ Contains the **name** or **ID** of the speaker.
 
 Columns bearing a dimension name are used to load **legacy annotations**, which can serve as useful hints when producing new annotations. These column's names must follow the naming convention of the taxonomy's JSON file.
 
-##### `<nom de dimension>-value` (optional)
+##### `<dimension name>-value` (optional)
 
 Columns bearing a dimension name and suffixed by `-value` are used to load **legacy qualifiers** for that dimension. For example, if `emotion` is a dimension, `express` may be a label, and `happiness` might be the value present in the `emotion-value` column. These column's names must follow the naming convention of the taxonomy's JSON file.
 
@@ -48,9 +48,9 @@ Columns bearing a dimension name and suffixed by `-value` are used to load **leg
 
 | participant 	| date     	| time  	| segment                                                            	| raw                                                                	| activity 	| social 	| feedback    	| feedback-value 	|
 |-------------	|----------	|-------	|--------------------------------------------------------------------	|--------------------------------------------------------------------	|----------	|--------	|-------------	|----------------	|
-| manu        	| 11-05-17 	| 13:05 	| salut tout le monde !                                              	| salut tout le monde ! comment on installe un driver propriétaire ? 	|          	| greet  	|             	|                	|
-| manu        	| 11-05-17 	| 13:05 	| comment on installe un driver propriétaire ?                       	|                                                                    	| question 	|        	|             	|                	|
-| gabi        	| 11-05-17 	| 13:06 	| c'est dans "Logiciels et mise à jour" puis "pilotes propriétaires" 	| c'est dans "Logiciels et mise à jour" puis "pilotes propriétaires" 	| answer   	|        	|             	|                	|
+| manu        	| 11-05-17 	| 13:05 	| hi guys!                                              	| hi guys ! does anyone know how to install a proprietary graphics card driver? 	|          	| greet  	|             	|                	|
+| manu        	| 11-05-17 	| 13:05 	| does anyone know how to install a propietary graphics card driver?                       	|                                                                    	| question 	|        	|             	|                	|
+| gabi        	| 11-05-17 	| 13:06 	| search software sources, and then it's in the additional drivers tab | search software sources, and then it's in the additional drivers tab" 	| answer   	|        	|             	|                	|
 | manu        	| 11-05-17 	| 13:07 	| ah ok!                                                             	| ah ok!                                                             	|          	|        	| acknowledge 	| positive       	|
 
 # Taxonomy Format:
