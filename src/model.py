@@ -190,69 +190,91 @@ class DialogueActCollection:
         """
         Loads a new collection from a CSV file
         """
+        with open(path) as f:
+            rows = [{k: v for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True, delimiter="\t")]
+
         previous_da = None
         da = None
 
-        with codecs.open(path, "r", encoding="utf-8") as f:
-            for l in f:
-                cols = l.split("\t")
-                time = cols[49].strip()
-                date = cols[48].strip()
-                segment = cols[52].strip()
+        for row in rows:
+            time = row["time"].strip()
+            date = row["date"].strip()
+            segment = row["segment"].strip()
 
-                if cols[53] == "":
-                    da = DialogueAct(previous_da.raw, previous_da.participant, previous_da.time, previous_da.date)
-                    da.legacy = {}
+            if row["raw"] is None or row["raw"].strip() == "":
+                da = DialogueAct(
+                    previous_da.raw,
+                    previous_da.participant,
+                    previous_da.time,
+                    previous_da.date
+                )
 
-                    tokenizer = WhitespaceTokenizer()
-                    end_of_previous_da = tokenizer.tokenize(previous_da.segment)[-1]
-                    index = previous_da.raw.index(end_of_previous_da) + len(end_of_previous_da)
-                    da.raw = previous_da.raw[index:].strip()
-                    previous_da.raw = previous_da.raw[:index].strip()
-                    previous_da.tokenize()
-                    da.segment = segment
-                    da.tokenize()
-                    previous_da = da
-                else:
-                    raw = cols[53].strip()
-                    participant = cols[50].strip() if cols[50] != "\\" else da.participant
+                da.legacy = {}
 
-                    da = DialogueAct(raw, participant, time, date)
-                    da.segment = segment
-                    previous_da = da
+                tokenizer = WhitespaceTokenizer()
 
-                da.legacy = self.make_legacy_annotations(cols)
-                da.data = cols
+                # last token of the previous DA's segment
+                end_of_previous_da = tokenizer.tokenize(previous_da.segment)[-1]
 
-                self.full_collection.append(da)
+                # position of the last token of the previous DA's segment in the full raw
+                index = previous_da.raw.index(end_of_previous_da) + len(end_of_previous_da)
 
+                # ajust the raw of the current DA
+                da.raw = previous_da.raw[index:].strip()
+
+                # adjust the raw of the previous DA
+                previous_da.raw = previous_da.raw[:index].strip()
+
+                # update tokens of the previous DA
+                previous_da.tokenize()
+            else:
+                raw = row["raw"].strip()
+                participant = row["participant"].strip() if row["participant"].strip() != "\\" else da.participant
+
+                da = DialogueAct(
+                    raw,
+                    participant,
+                    time,
+                    date
+                )
+
+            # update the current DA's segment
+            da.segment = segment
+
+            # update the current DA's tokens
+            da.tokenize()
+
+            # set the current DA as the previous DA (for the next iteration)
+            previous_da = da
+
+            # makes legacy annotations for the DA
+            da.legacy = self.make_legacy_annotations(row)
+
+            # adds the DA to the full collection
+            self.full_collection.append(da)
+
+        # syncs the current collection to the full collection
         self.collection = self.full_collection.copy()
 
-    def make_legacy_annotations(self, cols):
-        keys = {
-            0: taxonomy.CONTACT_MANAGEMENT,
-            2: taxonomy.COMMUNICATION_MANAGEMENT,
-            6: taxonomy.SOCIAL_OBLIGATIONS_MANAGEMENT,
-            8: taxonomy.TASK,
-            (12, 11): taxonomy.FEEDBACK,
-            (14, 16): taxonomy.SENTIMENT,
-            (17, 19): taxonomy.OPINION,
-            (20, 22): taxonomy.EMOTION,
-            23: taxonomy.KNOWLEDGE,
-            25: taxonomy.DISCOURSE_STRUCTURE_MANAGEMENT,
-            31: taxonomy.PARTIALITY,
-            32: taxonomy.CONDITIONALITY,
-            33: taxonomy.CERTAINTY,
-            34: taxonomy.IRONY
-        }
-
+    def make_legacy_annotations(self, row):
         legacy = {}
 
-        for col in keys.keys():
-            if not isinstance(col, int) and cols[col[0]] != "" and cols[col[1]] != "":
-                legacy[keys[col]] = " ➔ ".join([cols[col[0]], cols[col[1]]])
-            elif (isinstance(col, int) and cols[col] != "") or (isinstance(col, tuple) and cols[col[0]] != ""):
-                legacy[keys[col]] = cols[col]
+        for key in row.keys():
+            if key not in ["segment", "raw", "time", "date", "participant"] and row[key] is not None and row[key].strip() != "":
+                if key.endswith("-value") and row[key]:
+                    dimension = key[:len(key) - len("-value")]
+
+                    # if the function is alreay set
+                    if key in legacy:
+                        legacy[dimension] = "{} ➔ {}".format(legacy[dimension], row[key])
+                    else:
+                        legacy[dimension] = row[key]
+                else:
+                    # if the qualifier is already set
+                    if key in legacy:
+                        legacy[key] = "{} ➔ {}".format(row[key], legacy[key])
+                    else:
+                        legacy[key] = row[key]
 
         return legacy
 
@@ -264,9 +286,8 @@ class DialogueActCollection:
             self.save_file = os.path.abspath(name)
             self.update_last_save()
 
-        if name:
-            with open(self.save_file if not backup else name, "wb") as f:
-                pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
+        with open(name if name is not None else self.save_file, "wb") as f:
+            pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
     def export(self, path):
         if path.endswith(".json"):
