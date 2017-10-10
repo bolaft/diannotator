@@ -2,6 +2,14 @@
 
 DiAnnotator is a dialogue annotation tool. It is meant to reduce the need to use the mouse to annotate dialogues and to improve keyboard-only annotation speed and reliability. DiAnnotator can be used to segment utterances, to apply dialogue act or sentiment-analysis labels, to link dialogue segments and to modify taxonomies. DiAnnotator is fully multi-dimensional, and therefore supports annotation schemes such as DAMSL and ISO 24617-2.
 
+# Run From Source
+
+Simply run the Python script `launcher.py` in the `src` folder.
+
+# Build Executable (optional)
+
+Run the build.sh script at the root of the directory. A bin folder containing an executable will be `created` at the root of the project directory.
+
 # Input Data Format
 
 ### Location:
