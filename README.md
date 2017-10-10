@@ -78,10 +78,6 @@ Ouvre le dialogue d'export au format .json ou .csv.
 
 La prochaine entrée créé un nouveau label ajouté en tant que fonction spécifique à la dimension active.
 
-#### Comment : `Control C`
-
-La prochaine entrée créé un commentaire joint au segment actif. Si un commentaire existe déjà pour le segment actif, il est supprimé.
-
 #### Dimension : `Control D`
 
 Permet de choisir la dimension active.
@@ -101,6 +97,10 @@ Si le segment actif n'est lié à aucun autre segment, propose d'entrer l'index 
 #### Merge : `Control M`
 
 Fusionne le segment actif à celui qui le précède. Les liens, commentaires, annotations et annotations "legacy" sont préservés.
+
+#### Note : `Control N`
+
+La prochaine entrée créé un commentaire joint au segment actif. Si un commentaire existe déjà pour le segment actif, il est supprimé.
 
 #### Remove : `Control R`
 

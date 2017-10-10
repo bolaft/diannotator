@@ -32,11 +32,7 @@ class Annotator(GraphicalUserInterface):
         )
 
         # creating custom colors for each participant
-        for participant in set([da.participant for da in self.dac.full_collection]):
-            self.add_tag(
-                participant,
-                foreground=self.generate_random_color()
-            )
+        self.generate_participant_colors()
 
         # binding controls
 
@@ -54,7 +50,7 @@ class Annotator(GraphicalUserInterface):
         self.parent.bind("<Control-j>", self.button_jump)
         self.parent.bind("<Control-u>", self.button_update)
         self.parent.bind("<Control-a>", self.button_add)
-        self.parent.bind("<Control-c>", self.button_comment)
+        self.parent.bind("<Control-n>", self.button_note)
         self.parent.bind("<Control-f>", self.button_filter)
 
         self.parent.bind("<Control-z>", lambda event, arg=None: self.command_undo())
@@ -68,15 +64,25 @@ class Annotator(GraphicalUserInterface):
 
         self.update()  # display text
 
+    def generate_participant_colors(self):
+        for participant in set([da.participant for da in self.dac.full_collection]):
+            self.add_tag(
+                participant,
+                foreground=self.generate_random_color()
+            )
+
     def load(self):
-        self.dac = DialogueActCollection.load(filedialog.askopenfilename(
+        loaded_dac = DialogueActCollection.load(filedialog.askopenfilename(
             initialdir=DialogueActCollection.save_dir,
             title="Open",
             filetypes=(("Pickle serialized files", "*.pic"), ("CSV data files", "*.csv"), ("all files", "*.*"))
         ))
 
-        self.undo_history = []  # reinitializes undo history
-        self.update()
+        if loaded_dac:
+            self.dac = loaded_dac
+
+            self.undo_history = []  # reinitializes undo history
+            self.update()
 
     def save_as(self):
         self.dac.save(name=filedialog.asksaveasfilename(
@@ -110,7 +116,7 @@ class Annotator(GraphicalUserInterface):
             "add": lambda n=0: self.button_add(n),
             "update": lambda n=0: self.button_update(n),
             "filter": lambda n=0: self.button_filter(n),
-            "comment": lambda n=0: self.button_comment(n)
+            "note": lambda n=0: self.button_note(n)
         }
 
         for text, function in sorted(buttons.items()):
@@ -257,7 +263,7 @@ class Annotator(GraphicalUserInterface):
         """
         Button to change the current dimension
         """
-        self.input([dim for dim in self.dac.labels.keys() if dim != taxonomy.GENERAL_PURPOSE], self.change_dimension)
+        self.input(self.dac.labels.keys(), self.change_dimension)
 
     def change_dimension(self, dimension):
         """
@@ -314,9 +320,9 @@ class Annotator(GraphicalUserInterface):
         """
         self.dac.add_label(self.dac.dimension, label)
 
-    def button_comment(self, e):
+    def button_note(self, e):
         """
-        Button to add (or remove) a comment
+        Button to add (or remove) a note
         """
         da = self.dac.get_current()
 
@@ -324,11 +330,11 @@ class Annotator(GraphicalUserInterface):
             da.note = None
             self.update()
         else:
-            self.input([], self.comment, free=True)
+            self.input([], self.note, free=True)
 
-    def comment(self, note):
+    def note(self, note):
         """
-        Adds a new comment
+        Adds a new note
         """
         if note != "":
             da = self.dac.get_current()
@@ -364,10 +370,10 @@ class Annotator(GraphicalUserInterface):
         """
         da = self.dac.get_current()
 
-        if self.dac.dimension in self.dac.values and self.dac.dimension in da.annotations and da.annotations[self.dac.dimension] in self.dac.labels[self.dac.dimension] + self.dac.labels[taxonomy.GENERAL_PURPOSE]:
+        if self.dac.dimension in self.dac.values and self.dac.dimension in da.annotations and da.annotations[self.dac.dimension] in self.dac.labels[self.dac.dimension]:
             self.input(self.dac.values[self.dac.dimension], self.annotate_qualifier, sort=False)
         else:
-            self.input(self.dac.labels[self.dac.dimension] + self.dac.labels[taxonomy.GENERAL_PURPOSE], self.annotate_label, sort=False)
+            self.input(self.dac.labels[self.dac.dimension], self.annotate_label, sort=False)
 
     def annotate_label(self, annotation):
         """
@@ -376,7 +382,7 @@ class Annotator(GraphicalUserInterface):
         da = self.dac.get_current()
         da.annotations[self.dac.dimension] = annotation
 
-        if self.dac.dimension not in self.dac.values or self.dac.dimension not in da.annotations or da.annotations[self.dac.dimension] not in self.dac.labels[self.dac.dimension] + self.dac.labels[taxonomy.GENERAL_PURPOSE]:
+        if self.dac.dimension not in self.dac.values or self.dac.dimension not in da.annotations or da.annotations[self.dac.dimension] not in self.dac.labels[self.dac.dimension]:
             self.dac.next()
 
         self.update()

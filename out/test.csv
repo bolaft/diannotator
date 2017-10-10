@@ -1,0 +1,1094 @@
+id	raw	participant	date	time	note	link	knowledge	irony	partiality	opinion	feedback	general purpose	problem management	communication management	sentiment	conditionality	certainty	task	discourse structure management	contact management	social obligations management	emotion
+140586088473264	Bonsoir	tijul	sam. nov. 01 2014	00:54																		
+140586088473656	J'ai un probleme lors de l'installation de Ubuntu sur mon fujitsu lifebook q530.	tijul	sam. nov. 01 2014	00:58														inform				
+140586088474496	Je cree comme indiquer une partition libre pour installer Ubuntu mais lorsaue je le lance l'installation, celui ci me dit que je ne dispose d'aucun systeme d'exploitation alors que j'ai windows 7 x64 sur ma machine.	tijul																inform				
+140586088476344	que faire?	tijul																request directives				
+140586088489144	Bonsoir,	tijul	sam. nov. 01 2014	01:03																		
+140586088489424	J'ai un probleme lors de l'installation de Ubuntu sur mon fujitsu lifebook q530.	tijul																inform				
+140586088490264	Je cree comme indiquer une partition libre pour installer Ubuntu mais lorsaue je le lance l'installation, celui ci me dit que je ne dispose d'aucun systeme d'exploitation alors que j'ai windows 7 x64 sur ma machine.	tijul																inform				
+140586088492112	que faire?	tijul																request directives				
+140586088492224	Bonsoir,	tijul	sam. nov. 01 2014	01:32																		
+140586088492616	J'ai un probleme lors de l'installation de Ubuntu sur mon fujitsu lifebook q530.	tijul																inform				
+140586088505920	Je cree comme indiquer une partition libre pour installer Ubuntu mais lorsaue je le lance l'installation, celui ci me dit que je ne dispose d'aucun systeme d'exploitation alors que j'ai windows 7 x64 sur ma machine.	tijul																inform				
+140586088507880	que faire?	tijul																request directives				
+140586088508496	lis la doc.	Corwin_	sam. nov. 01 2014	01:35		140586088507880												instruct				
+140586088509224	Je l'ai lu et respecte a la lettre et pourtant ce n'est toujours pas bon	tijul	sam. nov. 01 2014	01:36																		
+140586088514448	j'imagine que tu dois avoir un choix d'install manuelle pour avoir le choix de la partition	Corwin_	sam. nov. 01 2014	01:39														inform				
+140586088515568	fais ça et installe ubuntu sur la partition que tu as créée avant	Corwin_	sam. nov. 01 2014	01:40														instruct				
+140586088516576	Et bien en faite lors de l'installation, j'ai le choix entre formater le disque ou creer de nouvelle partition.	tijul	sam. nov. 01 2014	01:43														inform				
+140586088526064	Mais je ne sais pas si creer de nouvelle partition supprimerra windows de sur ma machine	tijul																inform				
+140586088527184	et dans la doc, sur les images, l'installateur presente trois choix dont celui d'installer ubuntu a cote des autres systemes d'exploitation.	tijul																inform				
+140586088528528	Mais moi je n'ai pas ce choix.	tijul																inform				
+140586088529368	ah ouais d'accord.	Corwin_	sam. nov. 01 2014	01:46	feedback link? also: link to turn, or to segment?	140586088528528																
+140586088538800	"Donc tu as peur qu'une option qui s'appelle ""creer"" supprime un truc"	Corwin_	sam. nov. 01 2014	01:46														inform				
+140586088539528	xD	Twoll	sam. nov. 01 2014	01:46																		
+140586088539976	J'ai peur que lors de la creation, il decide de supprimer windows oui.	tijul	sam. nov. 01 2014	01:47	link for confirm? feels like needed, even without elicitation	140586088538800												confirm				
+140586088541096	nan mais non. Il fait rien tout seul, ok y'a des boutons c'est fancy et tout, mais il va pas décider de supprimer Windows	Corwin_	sam. nov. 01 2014	01:49																		
+140586088543512	Il fait rien tout seul, ok y'a des boutons c'est fancy et tout, mais il va pas décider de supprimer Windows,	Corwin_	sam. nov. 01 2014	01:49														inform				
+140586088543736	Ubuntu c'est pas la meilleure distrib, mais ils ont pas codé le délit de sale gueule dans l'installateur :D	Corwin_	sam. nov. 01 2014	01:49																		
+140586088544128	il se peut qu'il te demande de supprimer une partition	Corwin_	sam. nov. 01 2014	01:50														inform				
+140586088544744	mais seulement si tu as une partition table en MBR et que t'as déjà 4 partitions	Corwin_	sam. nov. 01 2014	01:50														inform				
+140586088542560	Il me demande de selectionner un peripherique pour l'installation du programme de demarrage	tijul	sam. nov. 01 2014	01:51														inform				
+140586088551200	donc là tu dois sélectionner un disque dur	Corwin_	sam. nov. 01 2014	01:52														instruct				
+140586088551704	(ou autre chose mais un dd c'est bien)	Corwin_	sam. nov. 01 2014	01:52														inform				
+140586088552600	Je choisi quoi?	tijul	sam. nov. 01 2014	01:52														request directives				
+140586088554168	Sachant que j'ai un partition system (pour windows) une data et un espace libre creer comme demader dans le tuto	tijul	sam. nov. 01 2014	01:52														inform				
+140586088553720	donc là tu dois sélectionner un disque dur	Corwin_	sam. nov. 01 2014	01:53		140586088552600												instruct				
+140586088563376	J'ai deja choisi le dd,	tijul	sam. nov. 01 2014	01:55	link for feedback?	140586088553720												inform				
+140586088565168	mais comme il s'apelle espace libre, l'installateur n'en veut pas.	tijul	sam. nov. 01 2014	01:55														inform				
+140586088565504	Je dois le mettre sous quel format pour qu'il l'accepte?	tijul	sam. nov. 01 2014	01:55														request directives				
+140586088566120	wat	Corwin_	sam. nov. 01 2014	01:55	link for feedback?	140586088565504																
+140586088564216	je te parle d'un périphérique physique, pas d'une partition.	Corwin_	sam. nov. 01 2014	01:56														inform				
+140586088575888	Ah ok	tijul	sam. nov. 01 2014	01:56	link for feedback?	140586088564216																
+140586088576504	Quelque soit ce que je choisi, il me dit qu'aucun systeme de fichiers n'a ete choisi comme racine.	tijul	sam. nov. 01 2014	01:58														inform				
+140586088577848	alors choisi un système de fichier comme racine	Corwin_	sam. nov. 01 2014	01:58														instruct				
+140586088578744	t'as des boutons pour ça	Corwin_	sam. nov. 01 2014	01:59														inform				
+140586088595976	y'a des boutons partout, c'est horrible cette distrib	Corwin_	sam. nov. 01 2014	01:59																		
+140586088596704	Je met le disque en fat 32?	tijul	sam. nov. 01 2014	02:01														request directives				
+140586088597768	enfin la partition que je selectionne pour installer.	tijul	sam. nov. 01 2014	02:01	"not ""inform"" in the information-state update sense, new label? ""specify""?"													specify				
+140586088598216	mais t'as pas un tuto pour ça ?	Corwin_	sam. nov. 01 2014	02:03		140586088596704												request information				
+140586088599168	Je te conseille plutôt de l'ext4 mais bon.	Corwin_	sam. nov. 01 2014	02:03	"again, not ""inform"" in the information-state update sense, new label? ""advise""?"													advise				
+140586088597264	Si	tijul	sam. nov. 01 2014	02:04	again, links for confirmations feel necessary	140586088598216												confirm				
+140586088601192	mais j'ai pas vu tout sa dans le tuto et je parle par mon telephone pour le faire en meme temps.	tijul	sam. nov. 01 2014	02:04														inform				
+140586088601640	Je met quoi comme point de montage.	tijul	sam. nov. 01 2014	02:04														request directives				
+140586088602200	?	tijul	sam. nov. 01 2014	02:04	hard to annotate, what is this? contact check? another request for directives?																	
+140586088602592	tu installes ubuntu sur une seule partition ?	Corwin_	sam. nov. 01 2014	02:06		140586088601640												request information				
+140586088603376	Oui, je veux conserver windows quand meme pour le moment	tijul	sam. nov. 01 2014	02:07		140586088602592												confirm				
+140586088608432	donc tu mets le point de montage sur la partition en question	Corwin_	sam. nov. 01 2014	02:10														instruct				
+140586088609440	Lequel?	tijul	sam. nov. 01 2014	02:10														request information				
+140586088609888	comment ça lequel ?	Corwin_	sam. nov. 01 2014	02:11		140586088609440												request information				
+140586088610336	Pour le point de montage, j'ai le choix entre plusieurs point de montages	tijul	sam. nov. 01 2014	02:12		140586088609888												inform				
+140586088611568	/ ?	Corwin_	sam. nov. 01 2014	02:12	What is this?																	
+140586088620216	j'ai different choix	tijul	sam. nov. 01 2014	02:13		140586088611568												inform				
+140586088620720	je met quoi?	tijul	sam. nov. 01 2014	02:13														request information				
+140586088621056	( /, /home, /boot et etc)	tijul	sam. nov. 01 2014	02:14	again, specify instead of inform?													specify				
+140586088621728	desole mauvaise manip	tijul	sam. nov. 01 2014	02:16																		
+140586088622512	/ ?	Corwin_	sam. nov. 01 2014	02:21	again, what is this?																	
+140586088623128	hi	plaosap	sam. nov. 01 2014	03:06	english language: to be annotated normally?																	
+140586088623576	i'm a new user of lubuntu	plaosap	sam. nov. 01 2014	03:07														inform				
+140586088624760	and i use the console mode but have some difficulties	plaosap	sam. nov. 01 2014	03:07														inform				
+140586088625208	someone can help ?	plaosap	sam. nov. 01 2014	03:07														request help				
+140586088625992	salut	gaara	sam. nov. 01 2014	10:05																		
+140586088626384	le forum n'est plus accessible ?	gaara	sam. nov. 01 2014	10:08														request information				
+140586088626944	on dirait	nW44b	sam. nov. 01 2014	10:09		140586088626384												confirm				
+140586088627448	ça va surement vite revenir	nW44b	sam. nov. 01 2014	10:09														inform				
+140586088628120	ok	gaara	sam. nov. 01 2014	10:10	link for feedback?	140586088627448																
+140586088636824	merci	gaara	sam. nov. 01 2014	10:10																		
+140586088637216	petit soucis de sql	nesthib	sam. nov. 01 2014	10:10														inform				
+140586088637832	j'essaie de voir ce qui ne va pas	nesthib	sam. nov. 01 2014	10:11														commit				
+140586088638560	Bonjour,	davlefou	sam. nov. 01 2014	10:22																		
+140586088639176	sql?	davlefou	sam. nov. 01 2014	10:22														request information				
+140586088639512	Es ce que firefox os marche bien avec linux?	davlefou	sam. nov. 01 2014	10:22														request information				
+140586088640352	sql c'est un langage servant à exploiter des bases de données	nW44b	sam. nov. 01 2014	10:34		140586088639176												inform				
+140586088645520	les pauvres bases de données !	nesthib	sam. nov. 01 2014	10:34	"other ""opinion"" qualifier, beyond good and bad?"																	
+140586088646360	LIBÉREZ LES BASES DE DONNÉES !	nW44b	sam. nov. 01 2014	10:36	irony + instruct? or specific function?													instruct				
+140586088647032	le forum devrait être à nouveau opérationnel	nesthib	sam. nov. 01 2014	10:44														inform				
+140586088647760	j'ai cette erreur:	gaara	sam. nov. 01 2014	10:46	discourse structure management?																	
+140586088657024	"""Error: Unable to delete expired ban."""	gaara	sam. nov. 01 2014	10:46	code / reported speech, specific function? how to annotate?																	
+140586088657136	Je suis banni ?	gaara	sam. nov. 01 2014	10:46														request information				
+140586088657304	:o	gaara	sam. nov. 01 2014	10:46																		
+140586088657584	non gaara, c'était la cause du blocage	nesthib	sam. nov. 01 2014	10:54		140586088657136												disconfirm				
+140586088659208	rien à voir avec toi ;)	nesthib	sam. nov. 01 2014	10:54														inform				
+140586088659880	toutefois si tu avais à nouveau des erreurs, tu peux le signaler	nesthib	sam. nov. 01 2014	10:55	instruct + conditional, or suggest?													suggest				
+140586088660944	le forum est encore down ici aussi	yann2	sam. nov. 01 2014	10:56														inform				
+140586088661848	tu peux fermer ton navigateur (éventuellement vider le cache) et recommencer ?	nesthib	sam. nov. 01 2014	10:56	instruct or suggest?													instruct				
+140586088662800	je vais essayer aussi	gaara	sam. nov. 01 2014	10:57														commit				
+140586088663472	ah oui tiens	nesthib	sam. nov. 01 2014	10:57	link for confirmation	140586088662800												confirm				
+140586088664088	yup essayé avec un autre browser	yann2	sam. nov. 01 2014	10:57																		
+140586088673912	yup essayé avec un autre browser, meme chose	yann2	sam. nov. 01 2014	10:57	link for confirmation	140586088661848												confirm				
+140586088674192	- nesthib c est peut etre du au fait que je ne suis pas logué et toi si?	yann2	sam. nov. 01 2014	10:57																		
+140586088674584	quand je me connecte depuis une autre session j'ai la même chose	nesthib	sam. nov. 01 2014	10:58														inform				
+140586088675760	toujours la même erreur chez moi	gaara	sam. nov. 01 2014	10:59														inform				
+140586088676432	oui je viens de voir ça	nesthib	sam. nov. 01 2014	11:00		140586088675760												confirm				
+140586088677216	alors que ça fonctionne parfaitement depuis une session toujours connectée	nesthib	sam. nov. 01 2014	11:00														inform				
+140586088686200	http://fluxbb.org/forums/viewtopic.php?id=8001	yann2	sam. nov. 01 2014	11:01	how to annotate urls?													link resource				
+140586088686872	j espere que le forum est bien a jour :)	yann2	sam. nov. 01 2014	11:02	"""wish"" function? new ""emotion"" function?"																	
+140586088687712	bonjour a tous	obirage	sam. nov. 01 2014	11:06																		
+140586088688384	salut	gaara	sam. nov. 01 2014	11:06																		
+140586088688776	est il possible de détecter si une fenetre est maximisée avec devilspie?	obirage	sam. nov. 01 2014	11:06														request information				
+140586088689848	(je voudrais retirer la bordure si elle est maximisée)	obirage	sam. nov. 01 2014	11:06														inform				
+140586088690576	je ne sais pas obirage	gaara	sam. nov. 01 2014	11:09																		
+140586088691360	ah bon ca remarche :)	yann2	sam. nov. 01 2014	11:13														inform				
+140586088692144	enfin la page d acceuil du forum juste :D	yann2	sam. nov. 01 2014	11:14														inform				
+140586088692984	ddosez pas	nW44b	sam. nov. 01 2014	11:14														instruct				
+140586088693488	le forum à coup de f5	nW44b	sam. nov. 01 2014	11:14	merge with previous?																	
+140586071683592	1	nesthib	sam. nov. 01 2014	11:15	what is this?																	
+140586071684096	j'arrive même pas à voir les logs	nesthib	sam. nov. 01 2014	11:15														inform				
+140586071685048	:p	nesthib	sam. nov. 01 2014	11:15																		
+140586071685440	sinon ya fping pour ça hein	nW44b	sam. nov. 01 2014	11:15	suggest or inform?													suggest				
+140586071686280	un truc comme ça ? https://code.google.com/p/devilspie-star/issues/detail?id=1	Marmotte	sam. nov. 01 2014	11:16	split this? discourse structure management?																	
+140586071686896	j'ai pas testé, mais ça semble correspondre, si c'est valide :D	Marmotte	sam. nov. 01 2014	11:16														inform				
+140586071696160	j'ai toujours un 502 moi	gaara	sam. nov. 01 2014	11:17														inform				
+140586071696832	merci,	obirage	sam. nov. 01 2014	11:17																		
+140586071697392	je teste :)	obirage	sam. nov. 01 2014	11:17														commit				
+140586071697952	ah non c'est bon, ça remarche aussi	gaara	sam. nov. 01 2014	11:19	self-disconfirm, with link?	140586071696160												disconfirm				
+140586071698848	visiblement, ça ne fonctionne pas...	obirage	sam. nov. 01 2014	11:20														inform				
+140586071703736	bon ça a l'air de fonctionner, dernier message hier à 22h59.	gaara	sam. nov. 01 2014	11:25														inform				
+140586071704520	Merci nesthib	gaara	sam. nov. 01 2014	11:25																		
+140586071704016	non c'est pas bon gaara il y a toujours des 502	nesthib	sam. nov. 01 2014	11:26	link for disconfirm segments	140586071703736												disconfirm				
+140586071706032	ah oui, sur certains fils	gaara	sam. nov. 01 2014	11:27	again, link for confirm	140586071704016												confirm				
+140586071706872	partout en fait, c'est aléatoire	nesthib	sam. nov. 01 2014	11:29	again, link for disconfirm	140586071706032												disconfirm				
+140586071707544	ça va mieux là, non ?	olive	sam. nov. 01 2014	11:39														request information				
+140586071716472	Bonjour	Scorp-	sam. nov. 01 2014	11:52																		
+140586071717032	salut	Calinou	sam. nov. 01 2014	11:52																		
+140586071717424	hello, hello, hello !	aDrz	sam. nov. 01 2014	11:56																		
+140586071717984	bonne journée à vous,	aDrz	sam. nov. 01 2014	11:57	"how to annotate such things? new function, ""wish"" in social obligations management?"																	
+140586071718712	je chercherais un petit coup de pouce	aDrz	sam. nov. 01 2014	11:57														request help				
+140586071719160	j'ai ce message suivant http://paste.ubuntu-fr-secours.org/src-139209	aDrz	sam. nov. 01 2014	11:58	segment here? discourse structure management + specific link resource function?													link resource				
+140586071719888	mhhhh,	nW44b	sam. nov. 01 2014	11:59																		
+140586071728648	essaie de supprimer le fichier ubuntu-mate-default-settings_0.3.9~trusty2_all.deb	nW44b	sam. nov. 01 2014	11:59														instruct				
+140586071729152	et forcéement je n'arrive pas à m'en débarrasser	aDrz	sam. nov. 01 2014	11:59														inform				
+140586071729880	apt-get remove ubuntu-mate-default	aDrz	sam. nov. 01 2014	12:00	how to annotate code? implicit instruct? or specific function?													command				
+140586071730384	il est pas installer	aDrz	sam. nov. 01 2014	12:00														inform				
+140586071730944	sudo rm /var/cache/apt/archives/ubuntu-mate-default-settings_0.3.9~trusty2_all.deb	nW44b	sam. nov. 01 2014	12:00	again, how to annotate code? implicit instruct or specific function?													command				
+140586071731560	okay	aDrz	sam. nov. 01 2014	12:00	link to specific utterance or speech turn?	140586071728648																
+140586071732008	thx	aDrz	sam. nov. 01 2014	12:00																		
+140586071740712	ensuite réessaie de l'installer	nW44b	sam. nov. 01 2014	12:00														instruct				
+140586071741328	on dirait que le paquet n'a pas été bien téléchargé	nW44b	sam. nov. 01 2014	12:00														inform				
+140586071742168	enfin c'est l'impression que j'ai	nW44b	sam. nov. 01 2014	12:00														inform				
+140586071743064	nope	aDrz	sam. nov. 01 2014	12:00	link for disconfirm, also link to segment or turn?	140586071741328												disconfirm				
+140586071743568	retelecharger	aDrz	sam. nov. 01 2014	12:01														inform				
+140586071744128	même erreur	aDrz	sam. nov. 01 2014	12:01														inform				
+140586071748960	ok	nW44b	sam. nov. 01 2014	12:01	link for feedback, also link to segment or turn?	140586071744128																
+140586071749520	et si tu fais un : sudo apt-get install -f	nW44b	sam. nov. 01 2014	12:01	segment here? discourse structure managment, then implicit instruct?													command				
+140586071750472	il te dit la même chose ?	nW44b	sam. nov. 01 2014	12:01														request information				
+140586071751144	exactement	aDrz	sam. nov. 01 2014	12:01		140586071750472												confirm				
+140586071751592	tu as installé mate via les dépots officiels et tu retentes une autre install via un ppa ?	nW44b	sam. nov. 01 2014	12:02														request information				
+140586071761080	alors	aDrz	sam. nov. 01 2014	12:02	how to annotate this? discourse management?																	
+140586071761248	c'était pendant un upgrade	aDrz	sam. nov. 01 2014	12:02		140586071751592												inform				
+140586071761752	et j'ai du installer le ppa	aDrz	sam. nov. 01 2014	12:03														inform				
+140586071762200	il y a longtemps	aDrz	sam. nov. 01 2014	12:03														inform				
+140586071762760	c'est bizare ce conflit, je ne capte pas	nW44b	sam. nov. 01 2014	12:03																		
+140586071763712	ah ben moi non plus	aDrz	sam. nov. 01 2014	12:04																		
+140586071764272	j'ai essayé	aDrz	sam. nov. 01 2014	12:04	merge this to next segments?													inform				
+140586071764496	de supprimer mate	aDrz	sam. nov. 01 2014	12:04														inform				
+140586071764776	le reinstaller	aDrz	sam. nov. 01 2014	12:04														inform				
+140586071769496	toujours présent le truc	aDrz	sam. nov. 01 2014	12:04														inform				
+140586071770112	condamné à errer dans l'ignorance pour une fichier de 7ko	aDrz	sam. nov. 01 2014	12:10														inform				
+140586071770896	sudo dpkg -i --force-overwrite /var/cache/apt/archives/ubuntu-mate-default-settings_0.3.9~trusty2_all.deb	mezen	sam. nov. 01 2014	12:11	implicit instruct or new function?													command				
+140586071771512	puis sudo apt-get install -f	mezen	sam. nov. 01 2014	12:11	idem, implicit instruct or new function?													command				
+140586071772352	woa merci	aDrz	sam. nov. 01 2014	12:14																		
+140586071773136	impec	aDrz	sam. nov. 01 2014	12:14																		
+140586071781840	d'où vient le problème ?	nW44b	sam. nov. 01 2014	12:17														request information				
+140586071782344	du fait que le paquet a été mal fait	mezen	sam. nov. 01 2014	12:18														inform				
+140586071783128	arf, sérieux ?	nW44b	sam. nov. 01 2014	12:18	not really req for info, right?	140586071782344																
+140586071783744	Et ya pas un bug reporté ?	nW44b	sam. nov. 01 2014	12:18														request information				
+140586071784136	je suis dessus effectivement	mezen	sam. nov. 01 2014	12:19	link for confirmation	140586071783744												confirm				
+140586071784808	je cherche	mezen	sam. nov. 01 2014	12:19	commit or inform?													commit				
+140586071785424	j'ai trouvé la solution ici en fait	mezen	sam. nov. 01 2014	12:20	discourse structure management ou inform?																	
+140586071786216	http://askubuntu.com/questions/405862/trying-to-overwrite-file-already-in-shotwell-common-package-while-installing-s	mezen	sam. nov. 01 2014	12:20	how to annotate urls?													link resource				
+140586071786608	mais c'est pour le paquet shotwell	mezen	sam. nov. 01 2014	12:20														inform				
+140586071787448	un gars dit: You should report such things to the PPA owner. He's not separating non-architecture specific files or setting that shotwell breaks/has conflicts with the shotwell-common package.	mezen	sam. nov. 01 2014	12:21	how to annotate reported speech? segmentation, first discourse structure management then specific function?													confirm				
+140586071789016	ouais logique, c'est un ppa …	nW44b	sam. nov. 01 2014	12:23	link confirm?	140586071787448																
+140586071793848	peut etre que c'est interessant de mettre dans la doc ce qui est expliqué ici	mezen	sam. nov. 01 2014	12:23	announce or not?													inform				
+140586071795024	http://www.webupd8.org/2011/02/fix-dpkg-error-trying-to-overwrite-x.html	mezen	sam. nov. 01 2014	12:23														link resource				
+140586071795416	https://doc.ubuntu-fr.org/probleme_apt	mezen	sam. nov. 01 2014	12:24														link resource				
+140586071796032	<- ne le pointe pas ou partiellement	mezen	sam. nov. 01 2014	12:24	what is this?																	
+140586071796592	bonne suggestion mezen ;)	nesthib	sam. nov. 01 2014	12:25	"""congratulate"" in social obligations management?"																	
+140586071797152	(re)bonjour	obirage	sam. nov. 01 2014	12:29																		
+140586071797544	est ce que quelqu'un sait comment, avec devilspie, on peut masquer la barre de titre quand l'application est maximisée	obirage	sam. nov. 01 2014	12:30														request information				
+140586071807032	ehlo o/	zmo	sam. nov. 01 2014	12:34																		
+140586071807592	j'ai un petit problème:	zmo	sam. nov. 01 2014	12:37	inform + announce?													inform				
+140586071809888	il y a de nombreuses années j'ai installé ubuntu à ma cousine (musicienne, qui panne que dalle aux ordis), elle était très heureuse avec, je lui ai fait une mise à jour il y a plus longtemps que je m'en rappelle (certainement vers une ubuntu 10.10), et ça juste marche…	zmo	sam. nov. 01 2014	12:37	split this into bits?																	
+140586071814384	"Sauf que là c'est le drame, elle a du faire un raccourci alacon, et activé par mégarde des trucs d'accessibilité qui fait que son ordi ""parle"" et ""que tout son bureau a disparu"""	zmo	sam. nov. 01 2014	12:37	reported speech? split this into bits?													inform				
+140586071816456	sauf que moi je suis sous debian, pas ubuntu, et je suis pas à proximité de son ordi.	zmo	sam. nov. 01 2014	12:38														inform				
+140586071827456	Donc mis à part venir la bouche en coeur le 15/11 à la cité des sciences pour quémander de l'aide, quelqu'un saurait me dire quoi lui dire de chercher (ou quel raccourci clavier faire) pour résoudre son problème?	zmo	sam. nov. 01 2014	12:38	split this also?													request help				
+140586071827736	ce serait über gentil :-)	zmo	sam. nov. 01 2014	12:38	what is this? advance thanks?																	
+140586071828296	c'est dans les options d'accessibilité	nW44b	sam. nov. 01 2014	12:45														inform				
+140586071828912	c'est un truc pour les mal voyants	nW44b	sam. nov. 01 2014	12:45														inform				
+140586071829696	je ne connais pas le raccourci clavier	nW44b	sam. nov. 01 2014	12:45																		
+140586071826952	!wiki options d'accessibilité	nW44b	sam. nov. 01 2014	12:45	irc command, specific function?																	
+140586071835256	[Seeks] :	@uBOTu-fr	sam. nov. 01 2014	12:45	how to annotate this?																	
+140586071835592	http://www.ubuntu-fr.org / http://www.ubuntu-fr.org/telechargement / http://www.ubuntu-fr.org/accueil / http://fr.wikipedia.org/wiki/hypertext_transfer_protocol	@uBOTu-fr	sam. nov. 01 2014	12:45	split this into URLs? How to annotate URLs? this is a bot talking, does this change anything?													link resource				
+140586071836152	damn !	nW44b	sam. nov. 01 2014	12:46																		
+140586071836656	Alt+Super+s ?	Coninox	sam. nov. 01 2014	12:46	suggest or insruct with uncertainty?													suggest				
+140586071837104	https://doc.ubuntu-fr.org/orca	nW44b	sam. nov. 01 2014	12:46														link resource				
+140586071837608	est ce que tu vois les changements ici?	mezen	sam. nov. 01 2014	13:03														request information				
+140586071838280	https://doc.ubuntu-fr.org/probleme_apt	mezen	sam. nov. 01 2014	13:03														link resource				
+140586071838000	ok :-)	zmo	sam. nov. 01 2014	13:04	ok to who ?																	
+140586071843784	quels changements ?	nW44b	sam. nov. 01 2014	13:04		140586071837608												request information				
+140586071844288	ah	nW44b	sam. nov. 01 2014	13:04																		
+140586071844736	le point 3 ?	nW44b	sam. nov. 01 2014	13:04		140586071837608												request information				
+140586071845128	la section 3	mezen	sam. nov. 01 2014	13:04		140586071844736												inform				
+140586071845744	oui oui	nW44b	sam. nov. 01 2014	13:04	link to original question?	140586071837608												confirm				
+140586071846248	sauf que je crois qu'elle est sous unity, pas gnome3	zmo	sam. nov. 01 2014	13:04														inform				
+140586071851416	par contre je dois afk,	zmo	sam. nov. 01 2014	13:05																		
+140586071852312	mais je lirai le backlog (mode async+1)	zmo	sam. nov. 01 2014	13:05														commit				
+140586071852704	(thanks!)	zmo	sam. nov. 01 2014	13:05																		
+140586071851976	ok parfait,	mezen	sam. nov. 01 2014	13:05		140586071852312																
+140586071853600	merci	mezen	sam. nov. 01 2014	13:05																		
+140586071854104	j'ai repris ton problème dans la doc, ça va aider les gens avec un problème similaire	mezen	sam. nov. 01 2014	13:14														inform				
+140586071859384	en section 3 ici:	mezen	sam. nov. 01 2014	13:15																		
+140586071859888	https://doc.ubuntu-fr.org/probleme_apt	mezen	sam. nov. 01 2014	13:15														link resource				
+140586071860336	content d'avoir pu faire remonter un probleme	aDrz	sam. nov. 01 2014	13:16																		
+140586071861176	:)	mezen	sam. nov. 01 2014	13:16																		
+140586071861624	bonjour	ben123	sam. nov. 01 2014	13:29																		
+140586071862072	quelqu'un peu m'aider ?	ben123	sam. nov. 01 2014	13:29														request help				
+140586071862408	je suis pas jongleur	davlefou	sam. nov. 01 2014	13:30																		
+140586071862856	je suis pas jongleur, désolé	davlefou	sam. nov. 01 2014	13:30																		
+140586071871560	peut ou peu ?	mezen	sam. nov. 01 2014	13:32		140586071862072												request information				
+140586071872120	:)	mezen	sam. nov. 01 2014	13:32																		
+140586071871672	je peux aider un peu	mezen	sam. nov. 01 2014	13:32	commit or inform?													commit				
+140586071873072	moi je sais pas si je peux aider… ça dépend de la question et du domaine d'expertise requis	gniourf	sam. nov. 01 2014	13:33																		
+140586071874248	et du niveau d'expertise requis, aussi	gniourf	sam. nov. 01 2014	13:34	idem																	
+140586071874920	enfin bref, je suis dans le doute quant à ma possibilité de fournir de l'aide	gniourf	sam. nov. 01 2014	13:34	"""enfin bref"", summary? segmentation here? how to annotate the rest of the segment?"																	
+140586071880200	pour moi, ça va dépendre si la question va etre posée ou pas	mezen	sam. nov. 01 2014	13:34																		
+140586071881152	c'est pour kubuntu 14.10 avec dolphin lire une vidéo,	ben123	sam. nov. 01 2014	13:34																		
+140586071882608	l'écran gèle et double c'est impossible ce bug est répertorié?	ben123	sam. nov. 01 2014	13:34																		
+140586071882888	y a t-il une façon de le corriger ?	ben123	sam. nov. 01 2014	13:34																		
+140586071883280	Si l'écran gèle c'est qu'il fait trop froid	gniourf	sam. nov. 01 2014	13:35																		
+140586071882160	. Augmente un peu le chauffage.	gniourf	sam. nov. 01 2014	13:35																		
+140586071881656	a tu essayé un autre lecteur, vlan par exemple?	davlefou	sam. nov. 01 2014	13:35																		
+140586071889232	c'est la cause de dragon player ?	ben123	sam. nov. 01 2014	13:35																		
+140586071890632	comment faire pour corrigé ce bug	ben123	sam. nov. 01 2014	13:35																		
+140586071890912	y a t-il un ppa pour dolphin pour une version plus évolué	ben123	sam. nov. 01 2014	13:35																		
+140586071891472	S'il double c'est que t'as trop bu	gniourf	sam. nov. 01 2014	13:35																		
+140586071892544	. Modère un peu ta boisson.	gniourf	sam. nov. 01 2014	13:35																		
+140586071890016	Es ce que ta cg est correctement installé?	davlefou	sam. nov. 01 2014	13:35																		
+140586071893664	même si ben123 aurait pu être un peu plus explicite, évite les moqueries	nesthib	sam. nov. 01 2014	13:35																		
+140586071894616	sinon ?	gniourf	sam. nov. 01 2014	13:35																		
+140586071895008	y'a pas de sinon, c'est juste de la politesse	nesthib	sam. nov. 01 2014	13:36																		
+140586071895904	est ce qu'avec vlc tu as le même problème ?	mezen	sam. nov. 01 2014	13:36																		
+140586071900848	(juste pour isoler la cause de l'erreur)	mezen	sam. nov. 01 2014	13:37																		
+140586071901520	sudo lspci | grep VGA	davlefou	sam. nov. 01 2014	13:37																		
+140586071902136	"ensuite, est ce que tu as un message d'erreur quand tu lance ce ""dragon player"" à partir d'un terminal ?"	mezen	sam. nov. 01 2014	13:38																		
+140586071903480	ça peut nous aider	mezen	sam. nov. 01 2014	13:38																		
+140586071903984	bonjour	vero	sam. nov. 01 2014	13:42																		
+140586071902584	vous êtes tous mort?	ben123	sam. nov. 01 2014	13:42																		
+140586071903144	suicide collectif ?	ben123	sam. nov. 01 2014	13:42																		
+140586071905560	j'aurai besoin d'un coup de pouce pour une installation ubuntu sur une vieille tour	vero	sam. nov. 01 2014	13:43																		
+140586071906848	t'as un problème toi avec ton logiciel de chat	mezen	sam. nov. 01 2014	13:43																		
+140586071907744	je pense avoir un problème de pilota de carte graphique	vero	sam. nov. 01 2014	13:44																		
+140586071404952	l'affichage est saccadé	vero	sam. nov. 01 2014	13:44																		
+140586071405456	quelle carte graphique ?	mezen	sam. nov. 01 2014	13:44																		
+140586071405904	il s'agit d'une ati radeon 9200	vero	sam. nov. 01 2014	13:44																		
+140586071406632	la distribution installée est unbuntu 14.0	vero	sam. nov. 01 2014	13:45																		
+140586071407248	j'ai essayé aussi ubuntu 14.10	vero	sam. nov. 01 2014	13:45																		
+140586071408144	14.04	vero	sam. nov. 01 2014	13:45																		
+140586071408536	c'est a cause de halloween?	ben123	sam. nov. 01 2014	13:46																		
+140586071409160	c'est un canal de support,	nesthib	sam. nov. 01 2014	13:46																		
+140586071409832	évite le HS	nesthib	sam. nov. 01 2014	13:46																		
+140586071409440	euh, je ne pense pas	vero	sam. nov. 01 2014	13:46																		
+140586071410952	je suis hors sujet ?	vero	sam. nov. 01 2014	13:46																		
+140586071411624	c'est quoi ton pilote ?	mezen	sam. nov. 01 2014	13:46																		
+140586071412296	sudo lshw -c display	mezen	sam. nov. 01 2014	13:46																		
+140586071429696	non pas toi ;)	nesthib	sam. nov. 01 2014	13:46																		
+140586071430312	puis regarde dans la ligne configuration	mezen	sam. nov. 01 2014	13:46																		
+140586071430984	celui installé par défaut par la distribution	vero	sam. nov. 01 2014	13:47																		
+140586071431712	oui mais lequel ?	mezen	sam. nov. 01 2014	13:47																		
+140586071432272	radeon ?	mezen	sam. nov. 01 2014	13:47																		
+140586071432664	chais pas comment le savoir ?	vero	sam. nov. 01 2014	13:47																		
+140586071437496	sudo lshw -c display	mezen	sam. nov. 01 2014	13:48																		
+140586071438112	puis regarde dans la ligne configuration	mezen	sam. nov. 01 2014	13:48																		
+140586071438952	ok, mon ubuntu redémarre, mais c'est long	vero	sam. nov. 01 2014	13:49																		
+140586071439680	pourquoi n'installe tu pas un lubuntu?	davlefou	sam. nov. 01 2014	13:50																		
+140586071440520	ahahaha	vero	sam. nov. 01 2014	13:51																		
+140586071440968	http://forum.ubuntu-fr.org/viewtopic.php?pid=18087801	ben123	sam. nov. 01 2014	13:51																		
+140586071441360	qui a la solution please	ben123	sam. nov. 01 2014	13:51																		
+140586071462632	c'est plus léger, sur un machine plus ancienne, ce sera probablement meiux	davlefou	sam. nov. 01 2014	13:53																		
+140586071463864	ah bon	vero	sam. nov. 01 2014	13:53																		
+140586071464480	"peut tu pastebiner ""sudo lspci"""	davlefou	sam. nov. 01 2014	13:53																		
+140586071465208	je me demandais justement si une plus ancienne version d'ubuntu réglerai le problème	vero	sam. nov. 01 2014	13:53																		
+140586071441480	mais la quelles ?	vero	sam. nov. 01 2014	13:54																		
+140586071442096	Tu peux pastebiner?	davlefou	sam. nov. 01 2014	13:55																		
+140586071442600	-display                       description: VGA compatible controller        produit: RV280 [Radeon 9200]        fabriquant: Advanced Micro Devices, Inc. [AMD/ATI]        identifiant matériel: 0        information bus: pci@0000:01:00.0        version: 01        bits: 32 bits        horloge: 66MHz        fonctionnalités: agp agp-3.0 pm vga_controller bus_master cap_list rom        configuration: driver=radeon latency=64 mingnt=8	VERO_	sam. nov. 01 2014	13:56																		
+140586071444000	faut pas coller ici	nW44b	sam. nov. 01 2014	13:56																		
+140586071444784	pastbin.com	davlefou	sam. nov. 01 2014	13:56																		
+140586071445344	http://pastebin.com/index.php	davlefou	sam. nov. 01 2014	13:56																		
+140586071474528	!paste VERO_	nW44b	sam. nov. 01 2014	13:56																		
+140586071475088	Utilisez http://paste.ubuntu-fr-secours.org/ pour les copiés/collés,	@uBOTu-fr	sam. nov. 01 2014	13:56																		
+140586071475928	mettez votre pseudonyme dans le champ idoine, merci !	@uBOTu-fr	sam. nov. 01 2014	13:56																		
+140586071476488	et sinon, si c'est une machine pas puissante je te recommande aussi lubuntu	nW44b	sam. nov. 01 2014	13:56																		
+140586071477664	idem, pastebin lspci pour commencer,	davlefou	sam. nov. 01 2014	13:57																		
+140586071478224	tu as quoi comme ram et cpu ?	nW44b	sam. nov. 01 2014	13:57																		
+140586071483168	ram je crois 3go	VERO_	sam. nov. 01 2014	13:57																		
+140586071483840	cpu je ne sais plus	VERO_	sam. nov. 01 2014	13:57																		
+140586071484680	pastebin, c'est mieux!	davlefou	sam. nov. 01 2014	13:57																		
+140586071485184	cat /proc/cpuinfo	lyntoo	sam. nov. 01 2014	13:59																		
+140586071485744	je regarde comment utiliser pastebin	VERO_	sam. nov. 01 2014	13:59																		
+140586071486360	free -m	lyntoo	sam. nov. 01 2014	13:59																		
+140586071491304	c'est surtout un service externe ;)	nesthib	sam. nov. 01 2014	13:59																		
+140586071492032	cat /proc/meminfo	lyntoo	sam. nov. 01 2014	14:00																		
+140586071492592	pardon?	davlefou	sam. nov. 01 2014	14:00																		
+140586071493040	http://paste.ubuntu-fr-secours.org/ est fourni par ubuntu-fr	nesthib	sam. nov. 01 2014	14:00																		
+140586071493600	Paste de VERO : http://paste.ubuntu-fr-secours.org/src-139210	@uBOTu-fr	sam. nov. 01 2014	14:00																		
+140586071494160	je lui en donné un à titre indicatif, pas obligatoir,	davlefou	sam. nov. 01 2014	14:01																		
+140586071503144	e	davlefou	sam. nov. 01 2014	14:01																		
+140586071503536	Paste de VERO :	@uBOTu-fr	sam. nov. 01 2014	14:02																		
+140586071504096	http://paste.ubuntu-fr-secours.org/src-139211	@uBOTu-fr	sam. nov. 01 2014	14:02																		
+140586071504600	je viens de poster les infos concernant le cpu	VERO_	sam. nov. 01 2014	14:02																		
+140586071505552	lubuntu	davlefou	sam. nov. 01 2014	14:04																		
+140586071505888	et peut être aussi un coup de soufflet dans la caisse,	davlefou	sam. nov. 01 2014	14:05																		
+140586071506896	d'accord, je vais essayer une nouvelle installation avec lubuntu	VERO_	sam. nov. 01 2014	14:05																		
+140586071516048	xubuntu peut aussi faire l'affaire,	davlefou	sam. nov. 01 2014	14:06																		
+140586071516776	Tiens, un cg agp, cela faisait longtemps!	davlefou	sam. nov. 01 2014	14:06																		
+140586071517672	https://help.ubuntu.com/community/RadeonDriver <- il dit a lighter desktop (such as xfce or lxde, found in Xubuntu and Lubuntu respectively) is recommended.	mezen	sam. nov. 01 2014	14:06																		
+140586071519128	donc voila :)	mezen	sam. nov. 01 2014	14:06																		
+140586071527944	il tournait encore il n'y a pas longtemps sous xp	VERO_	sam. nov. 01 2014	14:07																		
+140586071528840	puis pfff plus de son	VERO_	sam. nov. 01 2014	14:07																		
+140586071529680	bah elle a plus de bogomips que moi et je suis sous Ubuntu	gniourf	sam. nov. 01 2014	14:07																		
+140586071530744	c'est dit dans Supported, but Hardware is Too Old for Unity	mezen	sam. nov. 01 2014	14:07																		
+140586071535968	avec un cd live d'ubuntu c'était ok	VERO_	sam. nov. 01 2014	14:07																		
+140586071536808	euh, xp c'est 2001!!	davlefou	sam. nov. 01 2014	14:09																		
+140586071537592	si si!	davlefou	sam. nov. 01 2014	14:09																		
+140586071538152	je n'y connais rien à linux mais j'avais compris qu'entre ubuntu et xubuntu c'était une question d'interface graphique.	VERO_	sam. nov. 01 2014	14:09																		
+140586071539216	Faux ?	VERO_	sam. nov. 01 2014	14:09																		
+140586071539552	es ce que un twingo et renault espace se résume à un carrosserie?	davlefou	sam. nov. 01 2014	14:10																		
+140586071539896	La surcouche a Xwindows est différente, donc le la charge machine aussi.	davlefou	sam. nov. 01 2014	14:11																		
+140586071541464	je suppose que non	VERO_	sam. nov. 01 2014	14:11																		
+140586071542248	Avec linux, tu fais ton menu.	davlefou	sam. nov. 01 2014	14:12																		
+140586071543088	donc vous me recommendez lubuntu sur cette vieille machine	VERO_	sam. nov. 01 2014	14:13																		
+140586071548088	http://fr.wikipedia.org/wiki/Lubuntu	davlefou	sam. nov. 01 2014	14:13																		
+140586071548536	bah, je vais essayer	VERO_	sam. nov. 01 2014	14:14																		
+140586071549208	sauf si t'achetes une meilleure carte graphique	mezen	sam. nov. 01 2014	14:14																		
+140586071549768	Oui,	davlefou	sam. nov. 01 2014	14:14																		
+140586071550664	la cg est de l'utra bas de gamme	davlefou	sam. nov. 01 2014	14:14																		
+140586071551056	ah ben non, j'achète rien	VERO_	sam. nov. 01 2014	14:15																		
+140586071564360	j'ai un matériel qui devrait arriver à fonctionner	VERO_	sam. nov. 01 2014	14:15																		
+140586071564640	car unity va demander de la puissance pour la 3D, il va en tirer 20% de cette carte et le reste c'est ton cpu qui va galérer	mezen	sam. nov. 01 2014	14:15																		
+140586071566824	pas jeter un truc qui n'est pas complètement mort	VERO_	sam. nov. 01 2014	14:15																		
+140586071567720	gnome shell pompe à mort sur la cg!	davlefou	sam. nov. 01 2014	14:15																		
+140586071572832	alors tu dois passe à lubuntu qui consomme moins!	davlefou	sam. nov. 01 2014	14:16																		
+140586071573672	je vais tester lubuntu,	VERO_	sam. nov. 01 2014	14:17																		
+140586071574288	merci du conseil	VERO_	sam. nov. 01 2014	14:17																		
+140586071574064	je repasserai plus tard dire ce qu'il en est	VERO_	sam. nov. 01 2014	14:17																		
+140586071575856	sur un p4, cela va passer même xubuntu	davlefou	sam. nov. 01 2014	14:17																		
+140586071580800	installer unity c'est comme si tu voulais installer windows 7 ou 8 sur cette machine	mezen	sam. nov. 01 2014	14:17																		
+140586071581808	merci de votre aide,	VERO_	sam. nov. 01 2014	14:18																		
+140586071582368	à plus	VERO_	sam. nov. 01 2014	14:18																		
+140586071581976	installer unity (vs lxde ou xfce) c'est comme si tu voulais installer windows 7 ou 8 (vs XP) sur cette machine	mezen	sam. nov. 01 2014	14:18																		
+140586071584216	j'ai rectifié	mezen	sam. nov. 01 2014	14:18																		
+140586071584952	ok	VERO_	sam. nov. 01 2014	14:18																		
+140586071585624	sinon je remettrai xp tant pis	VERO_	sam. nov. 01 2014	14:19																		
+140586071586576	eurk xp	lyntoo	sam. nov. 01 2014	14:22																		
+140586071587248	parfois, je me demande si les gens savent vraiment lire.	davlefou	sam. nov. 01 2014	14:24																		
+140586071588312	hehe effectivement ;-)	lyntoo	sam. nov. 01 2014	14:24																		
+140586071601224	c'est moi qui ne sais pas lire ?	vero	sam. nov. 01 2014	14:26																		
+140586071602400	x')	beaver	sam. nov. 01 2014	14:26																		
+140586071602792	il y a littérature et jargon de connaisseur	vero	sam. nov. 01 2014	14:28																		
+140586071603408	un langage auquel je ne suis pas habituée	vero	sam. nov. 01 2014	14:28																		
+140586071604192	Quand as tu installé ton premier linux?	davlefou	sam. nov. 01 2014	14:29																		
+140586071604920	avec xp tu risque de lire les virus et le non support de micro$oft	lyntoo	sam. nov. 01 2014	14:29																		
+140586071610144	il y a 3 ou 4 ans en dualboot sur un portable	vero	sam. nov. 01 2014	14:30																		
+140586071611208	risque avec un s désolé	lyntoo	sam. nov. 01 2014	14:30																		
+140586071611656	94	davlefou	sam. nov. 01 2014	14:30																		
+140586071612048	mais justement le but était de me débarraser de xp	vero	sam. nov. 01 2014	14:30																		
+140586071612776	via un montage hdd et aprés quad boot	davlefou	sam. nov. 01 2014	14:30																		
+140586071613792	lubuntu fera l'affaire, hop hop hop	nW44b	sam. nov. 01 2014	14:31																		
+140586071614632	(houblon houblon houblon)	nW44b	sam. nov. 01 2014	14:31																		
+140586071615304	je pense  si les gens du canal te dise en coeur de lubuntu, c'est simple la solution.	davlefou	sam. nov. 01 2014	14:32																		
+140586071616536	ah mais je fais ce qu'on me dis !	vero	sam. nov. 01 2014	14:32																		
+140586071617376	j'ai téléchargé l'image	vero	sam. nov. 01 2014	14:32																		
+140586071617040	plus qu'à trouver un support pour la graver	vero	sam. nov. 01 2014	14:33																		
+140586071622880	cle usb	davlefou	sam. nov. 01 2014	14:33																		
+140586071623496	a l'époque de xp le usb existait?	lyntoo	sam. nov. 01 2014	14:34																		
+140586071624448	ahah j'men souviens plus cé tellement loin	lyntoo	sam. nov. 01 2014	14:34																		
+140586071624840	c'était avec 2k un support natif,	davlefou	sam. nov. 01 2014	14:35																		
+140586071625680	ah cle usb	vero	sam. nov. 01 2014	14:35																		
+140586071630400	usb date de 96 environ	davlefou	sam. nov. 01 2014	14:35																		
+140586071631128	ooui oui, il y a des prises....	vero	sam. nov. 01 2014	14:35																		
+140586071632024	ouais je blague ;)	lyntoo	sam. nov. 01 2014	14:35																		
+140586071632752	j'ai quand meme connu le disque souple...soit disant floppy disk	lyntoo	sam. nov. 01 2014	14:36																		
+140586071633704	eh bien oui il a aussi un lecteur de disquettes	vero	sam. nov. 01 2014	14:37																		
+140586071638704	comment rendre la cle bootable ?	vero	sam. nov. 01 2014	14:37																		
+140586071639544	eh oui, je suis une boulette	vero	sam. nov. 01 2014	14:38																		
+140586071640216	ya des programmes qui la format et la rende bootable	lyntoo	sam. nov. 01 2014	14:39																		
+140586071641224	xp?	davlefou	sam. nov. 01 2014	14:39																		
+140586071641784	c'est bon, j'ai demandé à google, je vais me débrouiller sur ce coup là	vero	sam. nov. 01 2014	14:39																		
+140586071655200	pourquoi tu passes ton temps à tout réinstaller?	mezen	sam. nov. 01 2014	14:40																		
+140586071656040	bonne initiative, te vla sur le bon pas	lyntoo	sam. nov. 01 2014	14:40																		
+140586071657664	avec linux tu risque de googler quelques fois mais tout y es...suffit d'avoir un brin de patience	lyntoo	sam. nov. 01 2014	14:40																		
+140586071658168	mais non,	vero	sam. nov. 01 2014	14:40																		
+140586071658904	mais non, ça fait une semaine que je m'obstine à installer linux, je vais aps abandonner	vero	sam. nov. 01 2014	14:40																		
+140586071659744	il faut juste installer le meta paquet lubuntu-desktop	mezen	sam. nov. 01 2014	14:40																		
+140586071660416	oh ça j'ai googolé et regoogolé	vero	sam. nov. 01 2014	14:40																		
+140586071661144	ah je ne suis pas obligée de tout réinstaller ?	vero	sam. nov. 01 2014	14:41																		
+140586071662040	Ca m'interesse	vero	sam. nov. 01 2014	14:41																		
+140586071662432	non, tu peux changer à chaud,	davlefou	sam. nov. 01 2014	14:42																		
+140586071147128	apres coup, tu voudras plus rien savoir de windows, linux es très fiable et pas de crash une fois le setup complété	lyntoo	sam. nov. 01 2014	14:42																		
+140586071148584	tu peux virer le bureau et installe celui de lubuntu si tu te sens	davlefou	sam. nov. 01 2014	14:43																		
+140586071149760	https://doc.ubuntu-fr.org/lubuntu#par_paquet	mezen	sam. nov. 01 2014	14:43																		
+140586071150152	http://doc.ubuntu-fr.org/migration_vers_xubuntu	davlefou	sam. nov. 01 2014	14:43																		
+140586071154816	ok	vero	sam. nov. 01 2014	14:44																		
+140586071155264	merci	vero	sam. nov. 01 2014	14:44																		
+140586071155880	si tu es néophyte, je te conseil une installe, c'est a mon avis plus simple.	davlefou	sam. nov. 01 2014	14:45																		
+140586071157000	autant l'essayer d'abord	mezen	sam. nov. 01 2014	14:46																		
+140586071157504	en installant le paquet, elle peut l'essayer et voir si ça saccade ou pas	mezen	sam. nov. 01 2014	14:46																		
+140586071158512	et puis, elle peut aussi essayer le pilote proprio	mezen	sam. nov. 01 2014	14:46																		
+140586071171760	ensuite c'est une histoire de gout, si elle l'aime pas, qu'est ce qu'on fait ? :)	mezen	sam. nov. 01 2014	14:47																		
+140586071173104	si je n'ai plus de problème d'affichage, je vais l'aimer	vero	sam. nov. 01 2014	14:50																		
+140586071174000	le pilote proprio justement je ne suis pas arrivée à l'installer	vero	sam. nov. 01 2014	14:56																		
+140586071174840	l'installation lubuntu-desktop est en train de se faire via ubuntu	vero	sam. nov. 01 2014	14:56																		
+140586071179784	hihihi,	blacksatin	sam. nov. 01 2014	15:12																		
+140586071180344	y'a plus personne ici	blacksatin	sam. nov. 01 2014	15:12																		
+140586071180960	voilà, le pc est redémarré avec lubuntu, l'affichage est fluide, il y a du son	vero	sam. nov. 01 2014	15:19																		
+140586071181968	tout parfait quoi	vero	sam. nov. 01 2014	15:19																		
+140586071182752	ah super,	lyntoo	sam. nov. 01 2014	15:20																		
+140586071183936	en espérant que tu sache apprécié et en tombe follement amoureuse ahah	lyntoo	sam. nov. 01 2014	15:20																		
+140586071184328	merci davleloup, lyntoo, mezen... pour votre aide et votre patience	vero	sam. nov. 01 2014	15:21																		
+140586071185168	bon week-end à tous	vero	sam. nov. 01 2014	15:21																		
+140586071185672	bye bye a une prochaine alors	lyntoo	sam. nov. 01 2014	15:22																		
+140586071186456	bye	vero	sam. nov. 01 2014	15:22																		
+140586071187072	daveleloup, lol	mezen	sam. nov. 01 2014	15:34																		
+140586071200040	lol	mezen	sam. nov. 01 2014	15:48																		
+140586071200544	les pingouins sont silencieux	lyntoo	sam. nov. 01 2014	15:52																		
+140586071200992	bonjour tout le monde	noobuntu	sam. nov. 01 2014	16:04																		
+140586071201664	@wl_dev_intvar_get : error (-1) ca vous parle ????	noobuntu	sam. nov. 01 2014	16:05																		
+140586071202336	mon tty dit ca en boucle	noobuntu	sam. nov. 01 2014	16:05																		
+140586071203064	ca ressemble a un erreur de  carte reseau sans fil	lyntoo	sam. nov. 01 2014	16:09																		
+140586071212216	apparament la broadcom	lyntoo	sam. nov. 01 2014	16:09																		
+140586071212608	une erreur !	noobuntu	sam. nov. 01 2014	16:09																		
+140586071213336	pourtant mon wifi fonctionne  enfin je crois ^^	noobuntu	sam. nov. 01 2014	16:09																		
+140586071213672	comment faire pour faire disparaitre cette erreur	noobuntu	sam. nov. 01 2014	16:10																		
+140586071214344	j'ai lu sur un forum qu'on suggère d'elenever le package dkms-broadcom-wl-6  et réinstaller le dkms-broadcom-wl-legacy-5,	lyntoo	sam. nov. 01 2014	16:12																		
+140586071228992	et apparament lusager n'a plus cette erreur,	lyntoo	sam. nov. 01 2014	16:12																		
+140586071216080	mais ce n'est qu'un diagnostique de surface, si tu le fais, fait le en bonne conscience et assume ce qui se passe ;)	lyntoo	sam. nov. 01 2014	16:12																		
+140586071215856	oui en effet	noobuntu	sam. nov. 01 2014	16:13																		
+140586071230280	au dela de 5 metre le wifi saute mais de pres ca fonctionne	noobuntu	sam. nov. 01 2014	16:13																		
+140586071229048	quel sont les riques ?	noobuntu	sam. nov. 01 2014	16:13																		
+140586071229832	risques?	noobuntu	sam. nov. 01 2014	16:14																		
+140586071232184	que tu perde le wifi temporairement si jamais ca fonctionne pas	lyntoo	sam. nov. 01 2014	16:14																		
+140586071233144	bonjoura tousse	alcidi	sam. nov. 01 2014	16:14																		
+140586071233704	salut	noobuntu	sam. nov. 01 2014	16:14																		
+140586071234096	de l'aide via team viver ?	noobuntu	sam. nov. 01 2014	16:14																		
+140586071234712	en fillaire	noobuntu	sam. nov. 01 2014	16:14																		
+140586071235160	je voulais savoir comment lire les fichiers wav avec totem,	alcidi	sam. nov. 01 2014	16:14																		
+140586071236448	le mien ne les lit pas , contrairement à smplayer	alcidi	sam. nov. 01 2014	16:14																		
+140586071235832	surement un codec de plus à installer , mais lequel ?	alcidi	sam. nov. 01 2014	16:15																		
+140586071241280	wavpack	lyntoo	sam. nov. 01 2014	16:16																		
+140586071242176	oki docki ,	alcidi	sam. nov. 01 2014	16:16																		
+140586071242848	je regarde dans le synaptic	alcidi	sam. nov. 01 2014	16:16																		
+140586071243408	bizarre que ce soit pas lu par défaut , du fait que j'ai déjà libwavpack1 d'installé	alcidi	sam. nov. 01 2014	16:17																		
+140586071244360	tu veut bienn m'aider par teamviver stp	noobuntu	sam. nov. 01 2014	16:17																		
+140586071261480	je ne connais pas ce logiciel	alcidi	sam. nov. 01 2014	16:17																		
+140586071262264	ouais étrange,	lyntoo	sam. nov. 01 2014	16:18																		
+140586071263888	je suis pas trop bidouilleur des .wav mais je sais que vlc lit pas mal tout ce qui se fait	lyntoo	sam. nov. 01 2014	16:18																		
+140586071264280	deuxième question,	alcidi	sam. nov. 01 2014	16:18																		
+140586071277808	parfois j'ai des cadenas sur certains fichiers que je peux pourtant lire sans probleme, type des mp3, pourquoi ces cadenas et qu'impiquent-ils ?	alcidi	sam. nov. 01 2014	16:18																		
+140586071278144	surment que le fichier es protéger en écriture mais pas en lecture	lyntoo	sam. nov. 01 2014	16:19																		
+140586071279152	je vais plutôt tenter l'installe de totem-plugins-extra	alcidi	sam. nov. 01 2014	16:19																		
+140586071279992	bizarre de protéger un fichier mp3 en écriture sachant qu'en général on écrit pas sur son tube préféré du moment	alcidi	sam. nov. 01 2014	16:20																		
+140586071281336	bien,	lyntoo	sam. nov. 01 2014	16:20																		
+140586071282296	fais moi savoir si ca fonctionne	lyntoo	sam. nov. 01 2014	16:20																		
+140586071282688	j'suis quand meme curieux	lyntoo	sam. nov. 01 2014	16:20																		
+140586071283248	la curiosité est un vilain défaut ,	alcidi	sam. nov. 01 2014	16:20																		
+140586071284312	mais j'ai le même , je tente et je te dis	alcidi	sam. nov. 01 2014	16:20																		
+140586071284816	bien	lyntoo	sam. nov. 01 2014	16:20																		
+140586071285600	tu peux modifier la database du mp3, le genre l'artiste etc	lyntoo	sam. nov. 01 2014	16:20																		
+140586071290208	bon merci quand meme !	noobuntu	sam. nov. 01 2014	16:21																		
+140586071291160	je reviendrais !	noobuntu	sam. nov. 01 2014	16:21																		
+140586071291440	bonne soirée bon courage	noobuntu	sam. nov. 01 2014	16:21																		
+140586071291720	est encore merci !	noobuntu	sam. nov. 01 2014	16:21																		
+140586071290488	ah oui lyntoo	alcidi	sam. nov. 01 2014	16:21																		
+140586071293456	j'avais pas pensé à ça, dans le sens ou je ne fais jamais ce genre de choses	alcidi	sam. nov. 01 2014	16:21																		
+140586071293232	marche po	alcidi	sam. nov. 01 2014	16:24																		
+140586071302720	mais en fait j'ai un message surprenant de totem : fichier spécifié non trouvé	alcidi	sam. nov. 01 2014	16:25																		
+140586071303840	plus spécialement le film spécifié n'a pu être trouvé , quand je tente un wav	alcidi	sam. nov. 01 2014	16:25																		
+140586071304792	un wav depuis un cd	alcidi	sam. nov. 01 2014	16:25																		
+140586071305464	ah c'est déja un indice	lyntoo	sam. nov. 01 2014	16:25																		
+140586071306080	essaye de copier le fichier sur ton disque dure et de le lire a partir de	lyntoo	sam. nov. 01 2014	16:26																		
+140586071315680	oui ça marche dans ce cas	alcidi	sam. nov. 01 2014	16:27																		
+140586071316464	la gestion des cd est pas au point on dirait	alcidi	sam. nov. 01 2014	16:27																		
+140586071317528	pourtant les .wav c'est tres basique, ca devrais etre lu par défaut	lyntoo	sam. nov. 01 2014	16:27																		
+140586071322752	problème résolu puisque ce sont des fichiers que je devais les copier sur mon DD	alcidi	sam. nov. 01 2014	16:27																		
+140586071323760	un autre truc tant que j'y pense,	alcidi	sam. nov. 01 2014	16:28																		
+140586071325496	qui utilise mtink ?	alcidi	sam. nov. 01 2014	16:28																		
+140586071325888	moi depuis la 14.04 ça ne reconnait pas mon imprimante alors que ça fonctionnait depuis des années sur les précédentes versions d'ubuntu depuis la 06.06	alcidi	sam. nov. 01 2014	16:28																		
+140586071326224	connais pas mtink,	lyntoo	sam. nov. 01 2014	16:28																		
+140586071324992	c'est un gestionnaire d'imprimante?	lyntoo	sam. nov. 01 2014	16:28																		
+140586071326448	oui,	alcidi	sam. nov. 01 2014	16:29																		
+140586071333184	c'est très chiant parce que pour nettoyer les têtes de lecture sans le logiciel c'est difficile et escputil ne semble pas savoir le faire donc il ne me reste plus que mtink	alcidi	sam. nov. 01 2014	16:29																		
+140586071333576	surment que ca te prends le driver pour ton imprimante alors quelque chose du genre	lyntoo	sam. nov. 01 2014	16:30																		
+140586071343176	en ligne de commande j'ai accès aux niveau d'encre depuis escputil mais pas au nettoyage des têtes  , j'ai le message comme quoi il nettoie mais ça ne fait rien du tout	alcidi	sam. nov. 01 2014	16:30																		
+140586071344968	logiquement le driver est installé puisque l'imprimante est reconnue par le systeme, et de plus il s'est toujours installé par défaut sans que je ne fasse rien de spécial à l'installe d'ubuntu	alcidi	sam. nov. 01 2014	16:31																		
+140586071346648	méfie toi, cest peut-etre un driver générique qui prends pas en considération les options spécialisé	lyntoo	sam. nov. 01 2014	16:31																		
+140586071351816	avant mtink faisait l'essentiel , niveau d'encre, nettoyage des têtes et impression page de test , moi je n'en demande pas plus	alcidi	sam. nov. 01 2014	16:33																		
+140586071353160	c'est quand même très génant quand on utilise bcp le traitement de texte et qu'on a souvent des choses à imprimer, comme c'est mon cas, c'est une vraie galère à chaque fois que j'ai une cartouche encrassée ou à changer	alcidi	sam. nov. 01 2014	16:35																		
+140586071355120	j'ai vu que le cups driver n'utilise plus le module usbpl maintenant ca peut etre relié	lyntoo	sam. nov. 01 2014	16:36																		
+140586071356304	oui ça se peut en effet ,	alcidi	sam. nov. 01 2014	16:36																		
+140586071357256	parce qu'avant ubuntu 14.04; j'avais aucun probleme	alcidi	sam. nov. 01 2014	16:36																		
+140586071357648	sudo modprobe usbpl	lyntoo	sam. nov. 01 2014	16:36																		
+140586071358208	mtink et ensuite sudo modprobe -r usbpl	lyntoo	sam. nov. 01 2014	16:37																		
+140586071358992	pour faire quoi ?	alcidi	sam. nov. 01 2014	16:37																		
+140586071368256	je ne suis pas un pro de la ligne de commande	alcidi	sam. nov. 01 2014	16:37																		
+140586071368648	Bonjour,	Alonzo	sam. nov. 01 2014	16:39																		
+140586071369544	tout nouveau sur ubuntu	Alonzo	sam. nov. 01 2014	16:39																		
+140586071368312	je viens soliciter votre aide pour un petit problème	Alonzo	sam. nov. 01 2014	16:39																		
+140586071370104	Ma logitèque ubuntu ne marche plus, et j'ai un panneau sens interdit dans mon tableau de bord	Alonzo	sam. nov. 01 2014	16:39																		
+140586071371504	J'ai voulu mettre à jour les paquets	Alonzo	sam. nov. 01 2014	16:46																		
+140586071371560	voilà le message d'erreur	Alonzo	sam. nov. 01 2014	16:46																		
+140586071380768	Lecture des listes de paquets... Erreur ! E: Encountered a section with no Package: header E: Problem with MergeList /var/lib/apt/lists/fr.archive.ubuntu.com_ubuntu_dists_precise_universe_i18n_Translation-en E: Les listes de paquets ou le fichier « status » ne peuvent être analysés ou lus.	Alonzo	sam. nov. 01 2014	16:46																		
+140586071382672	Quelqu'un a une idée svp ?	Alonzo	sam. nov. 01 2014	16:47																		
+140586071383176	Alonzo:  tu as bidouillé	alcidi	sam. nov. 01 2014	16:55																		
+140586071383736	oupas pas eu le temps de répondre	alcidi	sam. nov. 01 2014	16:55																		
+140586071388736	Salut,	samp	sam. nov. 01 2014	17:00																		
+140586071389912	quelqu'un serait dispo pour me filer un coup de main a config mon serveur apache2 svp ?	samp	sam. nov. 01 2014	17:00																		
+140586071390360	hellow!	Asharas	sam. nov. 01 2014	17:07																		
+140586071390864	salut	samp	sam. nov. 01 2014	17:12																		
+140586071391424	j'aurai besoin d'un petit coup de pied pour config mon serveur apache2 en virtualhost svp	samp	sam. nov. 01 2014	17:13																		
+140586071396760	dis toujours	Asharas	sam. nov. 01 2014	17:17																		
+140586071397488	toujours	gniourf	sam. nov. 01 2014	17:18																		
+140586071397936	http://forum.ubuntu-fr.org/viewtopic.php?pid=18438441#p18438441	samp	sam. nov. 01 2014	17:20																		
+140586071398552	y a pas trop de question la ....	Oleti	sam. nov. 01 2014	17:23																		
+140586071399280	hum cad ?	samp	sam. nov. 01 2014	17:23																		
+140586071399896	je ne sais pas quoi toucher pour configurer mon 2nd site	samp	sam. nov. 01 2014	17:23																		
+140586070880888	j'ai bien peur de tout faire planter	samp	sam. nov. 01 2014	17:24																		
+140586070881728	si tu as fait des copies des fchiers, tu ne fais pas tout planter	Oleti	sam. nov. 01 2014	17:24																		
+140586070882904	si j'ai fais un backup ?	samp	sam. nov. 01 2014	17:24																		
+140586070883632	les sites doivent etre configurer dans sites-available	Oleti	sam. nov. 01 2014	17:25																		
+140586070884024	et activé dans sites-enabled	Oleti	sam. nov. 01 2014	17:25																		
+140586070892840	pourtant dans ma config si tu regardes le fichier apache2.conf tu vois que mes virtual hosts sont tout en bas	samp	sam. nov. 01 2014	17:26																		
+140586070894296	j'ai vu	Oleti	sam. nov. 01 2014	17:27																		
+140586070894968	et j'ai mis a jour le post avec le contenu de mon fichier sites-available/default	samp	sam. nov. 01 2014	17:27																		
+140586070896032	il n'y a rien dedans	samp	sam. nov. 01 2014	17:27																		
+140586070896712	rien de spécifique à mon premier site	samp	sam. nov. 01 2014	17:28																		
+140586070897384	alors je commence par activer mon mod userdir ?	samp	sam. nov. 01 2014	17:30																		
+140586070898168	oleti tu ferai comment ?	samp	sam. nov. 01 2014	17:44																		
+140586070898952	j'aurai besoin d'un petit coup de pied pour config mon serveur apache2 en virtualhost svp	samp	sam. nov. 01 2014	17:44																		
+140586070900128	bonsoir,	samp	sam. nov. 01 2014	18:26																		
+140586070904904	je cherche à désinstaller apache2, j'utilise la commande sudo apt-get purge apache2	samp	sam. nov. 01 2014	18:26																		
+140586070905744	lyntoo je crois qu'elle n'utilise pas tab!	davlefou	sam. nov. 01 2014	18:26																		
+140586070906528	et donc?	davlefou	sam. nov. 01 2014	18:26																		
+140586070907032	et bien mon serveur web est toujours la	samp	sam. nov. 01 2014	18:27																		
+140586070907760	sudo /etc/init.d/apache2 start	samp	sam. nov. 01 2014	18:27																		
+140586070908264	et mon site fonctionne a nouveau	samp	sam. nov. 01 2014	18:27																		
+140586070908880	tu l'install et aprés tu veux purger?	davlefou	sam. nov. 01 2014	18:27																		
+140586070917976	je veux le réinstaller avec la configuration de base	samp	sam. nov. 01 2014	18:27																		
+140586070918816	donc je suis parti sur le désinstaller avec sudo apt-get purge apache2	samp	sam. nov. 01 2014	18:28																		
+140586070919824	pour le désinsataller mais il est toujours la ...	samp	sam. nov. 01 2014	18:28																		
+140586070920608	il doit y avoir des erreurs affichées lors du purge, non ?	Marmotte	sam. nov. 01 2014	18:33																		
+140586070929872	non	samp	sam. nov. 01 2014	18:33																		
+140586070930208	comment vérifies-tu qu'il est toujours là ? :D	Marmotte	sam. nov. 01 2014	18:33																		
+140586070930824	tu as stoppé le service avant d'effacer?	lyntoo	sam. nov. 01 2014	18:33																		
+140586070931440	(parfois, on a des surprises... ^^)	Marmotte	sam. nov. 01 2014	18:33																		
+140586070932000	sudo service apache2 stop	lyntoo	sam. nov. 01 2014	18:33																		
+140586070932728	oui	samp	sam. nov. 01 2014	18:33																		
+140586070933064	tu peux donner le résultat du purge ?	Marmotte	sam. nov. 01 2014	18:34																		
+140586070950240	sudo apt-get purge apache2 apache2-utils apache2.2-bin apache2-common	lyntoo	sam. nov. 01 2014	18:34																		
+140586070950856	sudo apt-get autoremove --purge	lyntoo	sam. nov. 01 2014	18:34																		
+140586070951416	!paste samp	Marmotte	sam. nov. 01 2014	18:34																		
+140586070951976	Utilisez http://paste.ubuntu-fr-secours.org/ pour les copiés/collés,	@uBOTu-fr	sam. nov. 01 2014	18:34																		
+140586070952872	mettez votre pseudonyme dans le champ idoine, merci !	@uBOTu-fr	sam. nov. 01 2014	18:34																		
+140586070953432	!paste	samp	sam. nov. 01 2014	18:34																		
+140586070953768	Utilisez http://paste.ubuntu-fr-secours.org/ pour les copiés/collés,	@uBOTu-fr	sam. nov. 01 2014	18:34																		
+140586070962864	mettez votre pseudonyme dans le champ idoine, merci	@uBOTu-fr	sam. nov. 01 2014	18:34																		
+140586070963256	sudo rm -Rf /etc/apache2 /usr/lib/apache2 /usr/include/apache2	lyntoo	sam. nov. 01 2014	18:34																		
+140586070963928	http://paste.ubuntu-fr-secours.org/src-139212	samp	sam. nov. 01 2014	18:34																		
+140586070964376	pas bonne idée, le rm si on est pas certain que le paquet est désinstallé correctement...	Marmotte	sam. nov. 01 2014	18:34																		
+140586070965664	fais donc la seconde commande de lyntoo : sudo apt-get autoremove --purge	Marmotte	sam. nov. 01 2014	18:35																		
+140586070966568	Bonsoir !	tobiasBora	sam. nov. 01 2014	18:35																		
+140586070967128	le paquet apache2 tout court ne contient pas grand chose lui même	Marmotte	sam. nov. 01 2014	18:35																		
+140586070968080	sans préciser apache2 dedans ?	samp	sam. nov. 01 2014	18:35																		
+140586070968584	sans préciser, oui	Marmotte	sam. nov. 01 2014	18:35																		
+140586070969088	ok daccord avec Marmotte	lyntoo	sam. nov. 01 2014	18:36																		
+140586070969816	0 à enlever	samp	sam. nov. 01 2014	18:36																		
+140586070974592	bon, alors purge apache2-common :)	Marmotte	sam. nov. 01 2014	18:36																		
+140586070975320	Je voudrais savoir, je viens de m'acheter un casque bluetooth (j'ai longtemps hésité mais y'avait que ça et j'avais un besoin urgent d'écouter de la musique),	tobiasBora	sam. nov. 01 2014	18:37																		
+140586070977672	le problème étant que les basses sont trop fortes, savez vous comment les réduire ?	tobiasBora	sam. nov. 01 2014	18:37																		
+140586070978120	(Je suis sous KDE si ça peut aider)	tobiasBora	sam. nov. 01 2014	18:37																		
+140586070978512	sudo apt-get autoremove --purge apache2-common ?	samp	sam. nov. 01 2014	18:37																		
+140586070976944	non :	Marmotte	sam. nov. 01 2014	18:37																		
+140586070976160	sudo apt-get purge apache2-common	Marmotte	sam. nov. 01 2014	18:37																		
+140586070987496	OMG	samp	sam. nov. 01 2014	18:37																		
+140586070987832	utilises un gestionnaire de sond alors	lyntoo	sam. nov. 01 2014	18:38																		
+140586070989568	http://paste.ubuntu-fr-secours.org/src-139213	samp	sam. nov. 01 2014	18:38																		
+140586070989904	ah tiens, il ne part pas tout seul, lui...	Marmotte	sam. nov. 01 2014	18:39																		
+140586070999112	Comme ?	tobiasBora	sam. nov. 01 2014	18:39																		
+140586071000568	J'ai essayé pulseaudio equalizer mais il renvoit la musique sur la carte son de l'ordi et j'arrive pas à lui dire de viser le BT	tobiasBora	sam. nov. 01 2014	18:39																		
+140586071001072	"que te raconte : dpkg -l ""apache2*"""	Marmotte	sam. nov. 01 2014	18:39																		
+140586071001800	http://paste.ubuntu-fr-secours.org/src-139214	samp	sam. nov. 01 2014	18:40																		
+140586071002304	ok,	Marmotte	sam. nov. 01 2014	18:41																		
+140586071003320	donc : sudo apt-get purge apache2.2-bin (proposé par lyntoo plus haut ^^)	Marmotte	sam. nov. 01 2014	18:41																		
+140586071003656	(j'étais pas certain que ce soit toujours 2.2, donc je préfère vérifier)	Marmotte	sam. nov. 01 2014	18:41																		
+140586071004496	sudo apt-get purge apache2*	mezen	sam. nov. 01 2014	18:41																		
+140586071005056	avec des quotes c'est mieux	gniourf	sam. nov. 01 2014	18:42																		
+140586071005728	1	Marmotte	sam. nov. 01 2014	18:42																		
+140586071006120	qu'es ce qui ne va pas avec ta config?	davlefou	sam. nov. 01 2014	18:42																		
+140586071006960	sans quotes, il arrive que le shell évalue l'astérisque ^^	Marmotte	sam. nov. 01 2014	18:42																		
+140586071007808	et ça donne n'importe quoi, du coup :P	Marmotte	sam. nov. 01 2014	18:42																		
+140586071008536	un glob quoi :D	gniourf	sam. nov. 01 2014	18:42																		
+140586071009152	attend davlefou cest trop tard maintenant je réinstalle tout	samp	sam. nov. 01 2014	18:43																		
+140586071009880	n'oublie pas de vérifier que /etc/apache2 est bien vide, après désinstallation complète, si tu veux vraiment supprimer toute trace de ta précédente configuration :P	Marmotte	sam. nov. 01 2014	18:43																		
+140586071011112	ouaip	samp	sam. nov. 01 2014	18:44																		
+140586071023912	merci	samp	sam. nov. 01 2014	18:44																		
+140586071024472	j'ai tout de meme un probleme lors de la désinstallation	samp	sam. nov. 01 2014	18:44																		
+140586071025704	je te colle le log	samp	sam. nov. 01 2014	18:44																		
+140586071026152	re à tous	alcidi	sam. nov. 01 2014	18:44																		
+140586071025088	http://paste.ubuntu-fr-secours.org/src-139215	samp	sam. nov. 01 2014	18:45																		
+140586071027216	ce log est arrivé en utilisant la commande de Mezen	samp	sam. nov. 01 2014	18:46																		
+140586071028064	apt-get autoremove aprés	davlefou	sam. nov. 01 2014	18:46																		
+140586071028456	avec un sudo et il va purger pour de bon	davlefou	sam. nov. 01 2014	18:46																		
+140586071029352	Bon aprés tu va reinstaller et probablement avoir le même pb,	davlefou	sam. nov. 01 2014	18:46																		
+140586071030304	hum	samp	sam. nov. 01 2014	18:47																		
+140586071030696	merci Marmotte	samp	sam. nov. 01 2014	18:47																		
+140586071031144	bizzarre moi quand je change de périfiérique de sond automatiquement l'équilizer sajuste au device en cours	lyntoo	sam. nov. 01 2014	18:47																		
+140586071044560	je désinstalle pas parce que j'avais un problème	samp	sam. nov. 01 2014	18:47																		
+140586071045288	Et tu utilises pavucontrol aussi ?	tobiasBora	sam. nov. 01 2014	18:47																		
+140586071046016	je désinstalle parce que je veux mettre plusieurs sites sur mon serveur et donc faire ce tuto http://doc.ubuntu-fr.org/tutoriel/virtualhosts_avec_apache2	samp	sam. nov. 01 2014	18:48																		
+140586071047248	pulseaudio et le gestionnaire de sond par défaut ubuntu 14.04	lyntoo	sam. nov. 01 2014	18:48																		
+140586071048032	et j'avais deja fais une configuration mais j'avais bidouillé de partout	samp	sam. nov. 01 2014	18:48																		
+140586071053088	suffisait de demander pour les vhost,	davlefou	sam. nov. 01 2014	18:49																		
+140586071053704	c'est bizarre qu'il te dise que certains paquets ne sont pas présents, hors ils sont présents quand tu les listes avec dpkg	gniourf	sam. nov. 01 2014	18:49																		
+140586071055160	je ne fais que ca depuis une semaine	samp	sam. nov. 01 2014	18:49																		
+140586071056168	on peut voir cela ensemble tout à l'heure,	davlefou	sam. nov. 01 2014	18:50																		
+140586071061000	oui avec plaisir	samp	sam. nov. 01 2014	18:50																		
+140586071061560	tout a lheure ?	samp	sam. nov. 01 2014	18:50																		
+140586071062456	je peux commencer la doc du site ?	samp	sam. nov. 01 2014	18:50																		
+140586071062736	assure toi que dans puseaudio mixer tu as coché EQ enable	samp																				
+140586071063632	sinon rien se passes ;-)	lyntoo	sam. nov. 01 2014	18:51																		
+140586071064304	"Et tu as essayé de switcher entre deux cartes, pas seulement entre deux ""sorties"" (haut parleur/casque) ?"	tobiasBora	sam. nov. 01 2014	18:51																		
+140586071069416	oui pour moi ca fonctionne tres bien	lyntoo	sam. nov. 01 2014	18:52																		
+140586071070088	Tu as quel version de ubuntu?	davlefou	sam. nov. 01 2014	18:52																		
+140586071070984	12.04	samp	sam. nov. 01 2014	18:52																		
+140586071071544	ok,	davlefou	sam. nov. 01 2014	18:52																		
+140586071071936	autant le sond usb, hdmi, digital, analog, bluetooth,	lyntoo	sam. nov. 01 2014	18:53																		
+140586071072664	tout a l'heure, c'est quand ?	samp	sam. nov. 01 2014	18:53																		
+140586071077440	(je vais fumer une clope et je reviens)	samp	sam. nov. 01 2014	18:53																		
+140586071078168	Dans une ou deux heures,	davlefou	sam. nov. 01 2014	18:54																		
+140586071078840	le tabac c'est tabou, on en viendra tous à bout	alcidi	sam. nov. 01 2014	18:54																		
+140586071079848	Hum...	tobiasBora	sam. nov. 01 2014	18:55																		
+140586071090008	"Voici une impression d'écran, quand je clique sur ""Apply Settings"" la sortie passe de BT2 (ma carte actuelle) à LADSPA et le son se met à sortir des hauts parleurs de mon ordi"	tobiasBora	sam. nov. 01 2014	18:55																		
+140586071090456	euh par contre moi jai alsa comme gestionnaire de sound jviens de remarquer,	samp	sam. nov. 01 2014	18:55																		
+140586071091856	jai jamais eu de probleme avec alsa	samp	sam. nov. 01 2014	18:55																		
+140586071092192	lol pas facile je dois rester à regarder le tchat pendant tout ce temps ?	davlefou	sam. nov. 01 2014	18:55																		
+140586071091240	je te ping quand je suis dispo,	lyntoo	sam. nov. 01 2014	18:56																		
+140586071094048	alsa-base, alsa-utils, libasound2-data, libasound2-plugins, libsdl1.2debian	tobiasBora	sam. nov. 01 2014	18:57																		
+140586071094440	C'est toi qui l'a choisi ou c'est par défaut ?	samp	sam. nov. 01 2014	18:58																		
+140586071095448	ok	lyntoo	sam. nov. 01 2014	18:58																		
+140586071095840	c'est ce qui mas mis dans le doute,	alcidi	sam. nov. 01 2014	19:03																		
+140586071097240	moi j'ai updaté  ubuntu pas réinstaller depuis le début, j'peux pas te certifier, faudrais voir les packages par défaut d'ubuntu	alcidi	sam. nov. 01 2014	19:03																		
+140586071096960	bonjour	alcidi	sam. nov. 01 2014	19:05																		
+140586071111496	mon imprimante se connecte en dev/usb/lp1 et je voudrais la voir en dev/usb/lp0 pour qu'elle soit mieux reconnue,	alcidi	sam. nov. 01 2014	19:05																		
+140586071111776	existe-t-il une solution pour cela ?	alcidi	sam. nov. 01 2014	19:05																		
+140586071112224	ou éventuellement je voudrais savoir quel matériel occupe le port lp0	alcidi																				
+140586071110208	il ya surement une commande pour ça	alcidi	sam. nov. 01 2014	19:05																		
+140586071121992	d'acc.	tobiasBora	sam. nov. 01 2014	19:07																		
+140586071123112	J'ai quand même peur de changer tout le système de son de mon ordi, d'autant qu'il fonctionnait bien	tobiasBora	sam. nov. 01 2014	19:07																		
+140586071123504	c'est toi qui vois,	lyntoo	sam. nov. 01 2014	19:09																		
+140586071125464	moi j'utlises alsa depuis des lunes je trouves que c'est le meilleur mais bon ....c'est a mon avis,	lyntoo	sam. nov. 01 2014	19:09																		
+140586071125744	et oui des fois ca peut causer quelques soucis faire des changements sous linux	lyntoo	sam. nov. 01 2014	19:09																		
+140586071125184	Bonsoir tout le monde	Pedro	sam. nov. 01 2014	19:55																		
+140586071124792	tu es là?	davlefou	sam. nov. 01 2014	19:55																		
+140586071126312	Bonsoir,	davlefou	sam. nov. 01 2014	19:57																		
+140586071126704	Davlefou oui	SAmp	sam. nov. 01 2014	20:01																		
+140586071128216	je suis la	samp_	sam. nov. 01 2014	20:04																		
+140586071128720	hello hello	dadada___	sam. nov. 01 2014	20:04																		
+140586071129224	Désolé,	davlefou	sam. nov. 01 2014	20:07																		
+140586071129952	le repas est prés, donne mois 20 minutes	davlefou	sam. nov. 01 2014	20:07																		
+140586071138600	ok ok meme 30 stu veux	samp_	sam. nov. 01 2014	20:07																		
+140586071139552	go	davlefou	sam. nov. 01 2014	20:30																		
+140586071140168	ouep	samp_	sam. nov. 01 2014	20:31																		
+140586071140504	Explique ton pb?	davlefou	sam. nov. 01 2014	20:31																		
+140586071141120	?	davlefou	sam. nov. 01 2014	20:34																		
+140586071141680	oui	samp_	sam. nov. 01 2014	20:34																		
+140586071142240	je t'ai ecris en pv	samp_	sam. nov. 01 2014	20:34																		
+140586070622896	tu ne vois pas ?	samp_	sam. nov. 01 2014	20:34																		
+140586070623456	Comment faire que le manager arrête de me demander de reboot?	davlefou	sam. nov. 01 2014	21:05																		
+140586070624464	Cela m'horripile ua plus au point!	davlefou	sam. nov. 01 2014	21:06																		
+140586070625024	reboot ?	flo|va-nu-pied	sam. nov. 01 2014	21:08																		
+140586070625472	non, ca va pas! j'ai pas le temps!	davlefou	sam. nov. 01 2014	21:09																		
+140586070626256	alors acceptes :)	flo|va-nu-pied	sam. nov. 01 2014	21:10																		
+140586070635464	sinon doit y avoir moyen de stopper le manager de mes souvenirs	flo|va-nu-pied	sam. nov. 01 2014	21:10																		
+140586070635856	davlefou : sur askbuntu.	Ezael	sam. nov. 01 2014	21:15																		
+140586070637032	com, pour un problème similaire, une des réponses suggère de faire un ls /var/run/reboot-required et de le supprimer s'il existe.	Ezael	sam. nov. 01 2014	21:15																		
+140586070637480	merci, je vais voir	davlefou	sam. nov. 01 2014	21:16																		
+140586070638264	Hi	learner	sam. nov. 01 2014	23:56																		
+140586070650952	Bonsoir à tous	Dae-	dim. nov. 02 2014	00:08																		
+140586070652520	(Lubuntu 14.04 On HP) je cherche un utilitaire pour Permutation automatique sortie son des que le PC detecte une sortie Jack ou usb	Dae-	dim. nov. 02 2014	00:08																		
+140586070652856	d'avance merci	Dae-	dim. nov. 02 2014	00:09																		
+140586070653416	mezen ?	Dae-	dim. nov. 02 2014	00:23																		
+140586070652184	gniourf ?	Dae-	dim. nov. 02 2014	00:24																		
+140586070654368	piti  ?	Dae-	dim. nov. 02 2014	00:24																		
+140586070654760	vous dormez les gars ?	Dae-	dim. nov. 02 2014	00:24																		
+140586070655384	Moi je suis la	kD|	dim. nov. 02 2014	00:25																		
+140586070656504	, si jamais t'a envie de te faire une belote, fait signe	kD|	dim. nov. 02 2014	00:25																		
+140586070656896	il faut être quatre pour une belote	SurcouF	dim. nov. 02 2014	00:26																		
+140586070656280	bah voila on est deja trois	kD|	dim. nov. 02 2014	00:26																		
+140586070658408	trois, tu peux faire un tarot	SurcouF	dim. nov. 02 2014	00:26																		
+140586070663296	sinon on se fait un poker	kD|	dim. nov. 02 2014	00:28																		
+140586070664248	si tu veux vraiment faire un jeu je cherche deux compagnon pour terminé nox je bloqué au lvl 6 depuis un mois :D	Dae-	dim. nov. 02 2014	00:31																		
+140586070665648	a quellequ'un	The_Glace	dim. nov. 02 2014	00:31																		
+140586070666208	sinon se serais cool si quelqu'un aurrais une idée pour que le switch se fasse tout seul sansq ue 'jai besoin d'ouvrir alsamixer et de faire les modif en manuel	Dae-	dim. nov. 02 2014	00:32																		
+140586070672216	bonjour	The_Glace	dim. nov. 02 2014	00:32																		
+140586070673000	je voudrais savoir comment on desinstalle un progremme	The_Glace	dim. nov. 02 2014	00:32																		
+140586070673504	salut	Dae-	dim. nov. 02 2014	00:32																		
+140586070673840	programme*	The_Glace	dim. nov. 02 2014	00:32																		
+140586070674176	sudo apt-get remove <name> && sudo apt-get autoclean && sudo apt-get autoremove	Dae-	dim. nov. 02 2014	00:33																		
+140586070675072	mais moi apres faut je mette mon mdp mais je peux rien fair	The_Glace	dim. nov. 02 2014	00:33																		
+140586070676312	The_Glace c'est normal que ca n'écrit rien pour le mdp	kD|	dim. nov. 02 2014	00:34																		
+140586070677152	pourquoi donc ?	Dae-	dim. nov. 02 2014	00:34																		
+140586070677824	tu n'a pas ton mdp root ?	Dae-	dim. nov. 02 2014	00:34																		
+140586070678272	pk	The_Glace	dim. nov. 02 2014	00:34																		
+140586070678608	protection	Dae-	dim. nov. 02 2014	00:34																		
+140586070679000	sa tappe en invisible	Dae-	dim. nov. 02 2014	00:34																		
+140586070679504	ben ses le mdp duutilisateur	The_Glace	dim. nov. 02 2014	00:34																		
+140586070688320	apres quand j'ai rentre mdp je fais entre puis apres	The_Glace	dim. nov. 02 2014	00:35																		
+140586070689272	tu trouvera tous les details sur http://openclassrooms.com/informatique/exportPdf/reprenez-le-controle-a-l-aide-de-linux	Dae-	dim. nov. 02 2014	00:35																		
+140586070689944	après tu laisse la magie faire	kD|	dim. nov. 02 2014	00:35																		
+140586070690728	ok	The_Glace	dim. nov. 02 2014	00:36																		
+140586070691176	att	The_Glace	dim. nov. 02 2014	00:36																		
+140586070691624	apres tu fait sudo apt-get remove -y <name> (name est le nom de ton paquet	Dae-	dim. nov. 02 2014	00:36																		
+140586070705264	puis tu fait apt-get update -y && apt-get upgrade -y && apt-get autoclean -y && apt-get autoremove -y && apt-get clean -y	Dae-	dim. nov. 02 2014	00:36																		
+140586070706776	tu copie colle cela	Dae-	dim. nov. 02 2014	00:36																		
+140586070707560	mais le plus simple c'est de te faire un alias	Dae-	dim. nov. 02 2014	00:37																		
+140586070708632	un alias c'est un raccourcis court par exemple tmoi apt-get1 me lance toute la ligne au dessus	Dae-	dim. nov. 02 2014	00:37																		
+140586070709864	donc plus rapide a faire	Dae-	dim. nov. 02 2014	00:37																		
+140586070710480	kD| tu connais nox ?	Dae-	dim. nov. 02 2014	00:37																		
+140586070711040	Dae- du tout	kD|	dim. nov. 02 2014	00:38																		
+140586070711600	quand j'ai fais sudo apt-get remove sunrice je mais mdp je fais quoi le programme ses desinstaller	The_Glace	dim. nov. 02 2014	00:39																		
+140586070721256	kD| je te prend en MP pour le ot	Dae-	dim. nov. 02 2014	00:39																		
+140586070722208	"The_Glace éssaye la commande "" sudo shutdown -P now ""  pour voir ce que ça dit"	kD|	dim. nov. 02 2014	00:39																		
+140586070723104	s'il t'affiche une nouvelles ligne vide oui	Dae-	dim. nov. 02 2014	00:39																		
+140586070723776	d'abord tu fait un update et auto remove	Dae-	dim. nov. 02 2014	00:40																		
+140586070724736	puis tu fait sudo shutdown -r (et pas P )	Dae-	dim. nov. 02 2014	00:41																		
+140586070725464	roo ses mon beau-pere qui ma mi ubuntu sur mon ordi pfff depuis je peux plus joue a mon jeux	The_Glace	dim. nov. 02 2014	00:41																		
+140586070726864	The_Glace => crossover , playonlinux, wineHQ	Dae-	dim. nov. 02 2014	00:42																		
+140586070727536	:-( sa veux dire	The_Glace	dim. nov. 02 2014	00:42																		
+140586070728096	ce sont des nom de d'application a rechercher sur le web	Dae-	dim. nov. 02 2014	00:43																		
+140586070741232	sa fais quoi	The_Glace	dim. nov. 02 2014	00:43																		
+140586070741736	ils permetent d'installer des jeux ou application windows	Dae-	dim. nov. 02 2014	00:43																		
+140586070742184	simplement	Dae-	dim. nov. 02 2014	00:43																		
+140586070742576	tu a fait le autoclean ?	Dae-	dim. nov. 02 2014	00:43																		
+140586070743080	serieux je pourais telecharge exemple minecraft	The_Glace	dim. nov. 02 2014	00:43																		
+140586070743808	oui	The_Glace	dim. nov. 02 2014	00:43																		
+140586070744200	minecraft est un jeux linux a l'origine	Dae-	dim. nov. 02 2014	00:44																		
+140586070744984	techniquement il tourne bien mieux puisqu'il est natif linux	Dae-	dim. nov. 02 2014	00:44																		
+140586070749984	par contre pour tous se qui est demande d'aide officiel (ubuntu ou deviante) il est conseiller de rester dans ce chan et non en private	Dae-	dim. nov. 02 2014	00:45																		
+140586070751552	mais ses pour tu me dit tout depuis le debut	The_Glace	dim. nov. 02 2014	00:45																		
+140586070752560	pour commencer, tu a quoi comme PC ?	Dae-	dim. nov. 02 2014	00:45																		
+140586070757504	un fixe ou un portable ?	Dae-	dim. nov. 02 2014	00:45																		
+140586070757672	fixe	The_Glace	dim. nov. 02 2014	00:45																		
+140586070758064	dans les outils systems tu doit avoir un outils qui te diras combien tu as de memoire total sur ton disk dur, et de ram	Dae-	dim. nov. 02 2014	00:46																		
+140586070760080	tu trouve ca ou outil system	The_Glace	dim. nov. 02 2014	00:47																		
+140586070760808	dans le menu ...	Dae-	dim. nov. 02 2014	00:47																		
+140586070761368	j'ai ubuntu 12.04	The_Glace	dim. nov. 02 2014	00:47																		
+140586070770296	j'en n'est marre	The_Glace	dim. nov. 02 2014	00:48																		
+140586070771080	courrage =D	Dae-	dim. nov. 02 2014	00:49																		
+140586070771528	bon aller on reprend simplement	Dae-	dim. nov. 02 2014	00:49																		
+140586070772144	dans ton temrinal (console) si tu tape Sysinfo	Dae-	dim. nov. 02 2014	00:49																		
+140586070772872	il t'affiche une fenetre ?	Dae-	dim. nov. 02 2014	00:49																		
+140586070773432	non sa mais error	The_Glace	dim. nov. 02 2014	00:50																		
+140586070778208	HardInfo	Dae-	dim. nov. 02 2014	00:50																		
+140586070778600	non plus ?	Dae-	dim. nov. 02 2014	00:50																		
+140586070779104	The program 'hardinfo' is currently not installed. You can install it by typing: sudo apt-get install hardinfo	The_Glace	dim. nov. 02 2014	00:51																		
+140586070780224	regarde cette page	Dae-	dim. nov. 02 2014	00:51																		
+140586070780840	http://doc.ubuntu-fr.org/connaitre_son_materiel	Dae-	dim. nov. 02 2014	00:51																		
+140586070781232	et dit moi si tu trouve l'outils dont ils parlent	Dae-	dim. nov. 02 2014	00:52																		
+140586070790552	kD| tu repond pas a tes MP ?	Dae-	dim. nov. 02 2014	00:52																		
+140586070791168	de sysinfor	The_Glace	dim. nov. 02 2014	00:53																		
+140586070791672	sinon au pire tu fait sudo apt-get install -y HardInfo	Dae-	dim. nov. 02 2014	00:53																		
+140586070792568	comme cela on verra la meme chose (j'ai egalement cette outils)	Dae-	dim. nov. 02 2014	00:53																		
+140586070793520	une fois qu'il est installer tu le lance en tapant simplement HardInfo (attention aux majuscule )	Dae-	dim. nov. 02 2014	00:54																		
+140586070794704	ses bon	The_Glace	dim. nov. 02 2014	00:54																		
+140586070795320	donc	Dae-	dim. nov. 02 2014	00:55																		
+140586070795488	navigue dans les menu a gauche et dit moi	Dae-	dim. nov. 02 2014	00:56																		
+140586070796272	computer devices benchmarks	The_Glace	dim. nov. 02 2014	00:56																		
+140586070796720	combient tu a de CPU (en Ghz) de ram (en Mb) et de capacité de disque dur (en Gb)	Dae-	dim. nov. 02 2014	00:56																		
+140586070797896	je trouve ca ou	The_Glace	dim. nov. 02 2014	00:57																		
+140586070806768	moi par exemple , 1,86Ghz , 1Go ram et 60Go disque dur	Dae-	dim. nov. 02 2014	00:57																		
+140586070807664	dans le panneau hardinfo	Dae-	dim. nov. 02 2014	00:57																		
+140586070808336	summary	Dae-	dim. nov. 02 2014	00:57																		
+140586070808728	et filessystem	Dae-	dim. nov. 02 2014	00:57																		
+140586070809232	The_Glace th trouve  ?	Dae-	dim. nov. 02 2014	00:58																		
+140586070809680	1.80 ghz 2064 rm	The_Glace	dim. nov. 02 2014	00:59																		
+140586070810296	et combiens pur disque dure ?	Dae-	dim. nov. 02 2014	01:00																		
+140586070814960	-e	Dae-	dim. nov. 02 2014	01:00																		
+140586070815632	:-(	The_Glace	dim. nov. 02 2014	01:00																		
+140586070815968	ses ou disque dure	The_Glace	dim. nov. 02 2014	01:00																		
+140586070816528	et filessystem	Dae-	dim. nov. 02 2014	01:01																		
+140586070816976	suis un peu ...	Dae-	dim. nov. 02 2014	01:02																		
+140586070817536	j'ai plein truc usage	The_Glace	dim. nov. 02 2014	01:02																		
+140586070818152	la premiee ligne t doit avoir /dev ... ubunu	Dae-	dim. nov. 02 2014	01:03																		
+140586070827136	+u	Dae-	dim. nov. 02 2014	01:03																		
+140586070827472	oui j'ai sa	The_Glace	dim. nov. 02 2014	01:04																		
+140586070827976	456.4 gib	The_Glace	dim. nov. 02 2014	01:04																		
+140586070828704	re	Dae-	dim. nov. 02 2014	01:05																		
+140586070828872	kD| tu es là ?	Dae-	dim. nov. 02 2014	01:05																		
+140586070829488	The_Glace idem ?	Dae-	dim. nov. 02 2014	01:05																		
+140586070830048	oui	The_Glace	dim. nov. 02 2014	01:06																		
+140586070830384	456.4 gib	The_Glace	dim. nov. 02 2014	01:06																		
+140586070830888	Ok 500Go	Dae-	dim. nov. 02 2014	01:06																		
+140586070835552	ensuite minecraft, tu joue sur un serveur particulier ou tu veux uste jou� a une jeu type minecraft ?	Dae-	dim. nov. 02 2014	01:06																		
+140586070836616	serveur particulier sunrice	The_Glace	dim. nov. 02 2014	01:07																		
+140586070837064	sunrice ses un luncher	The_Glace	dim. nov. 02 2014	01:08																		
+140586070837680	tu sais pas te connecter sans le luncher ?	Dae-	dim. nov. 02 2014	01:08																		
+140586070838352	non on peux pas on peux que se co sur le luncher	The_Glace	dim. nov. 02 2014	01:08																		
+140586070847672	sa fait un bout de temps que je n'ai pas lancer le jeu	Dae-	dim. nov. 02 2014	01:10																		
+140586070849688	"mais si tu entre directement l'ip du serveur (ou sont nom de domaine) dans ""rejoindre un serveur"" tu arrive pareille sur le serveur"	Dae-	dim. nov. 02 2014	01:10																		
+140586070850136	bref bouge pas	Dae-	dim. nov. 02 2014	01:10																		
+140586070850752	bon etape 1 tu telecharge le PDF dont je t'ai donner le site y a quelques instants il te donnera de tres bonne base pour utiliser ubuntu	Dae-	dim. nov. 02 2014	01:11																		
+140586070852496	pdf =	The_Glace	dim. nov. 02 2014	01:12																		
+140586070852944	etape 2 des que tu a une question google => ubuntu <nom > tu a de grande chance de trouv� la reponse	Dae-	dim. nov. 02 2014	01:12																		
+140586070854232	PDF est un format	Dae-	dim. nov. 02 2014	01:12																		
+140586070854904	http://openclassrooms.com/informatique/exportPdf/reprenez-le-controle-a-l-aide-de-linux	Dae-	dim. nov. 02 2014	01:12																		
+140586070855352	ses bon	The_Glace	dim. nov. 02 2014	01:12																		
+140586070864112	tu t'inscrit tu telecharge le PDF et tu le lira a ton rythme	Dae-	dim. nov. 02 2014	01:13																		
+140586070865064	etape 3 http://doc.ubuntu-fr.org/alias	Dae-	dim. nov. 02 2014	01:13																		
+140586070865568	ses bon	The_Glace	dim. nov. 02 2014	01:13																		
+140586070866128	tu cree l'alias apt-get1='apt-get update -y && apt-get upgrade -y && apt-get autoclean -y && apt-get autoremove -y && apt-get clean -y' (evidement tu peu l'appeler autrement que apt-get1)	Dae-	dim. nov. 02 2014	01:13																		
+140586070867752	celui la tu t'en servira souvent	Dae-	dim. nov. 02 2014	01:13																		
+140586070872696	Dae- désoler je fumer une clope	kD|	dim. nov. 02 2014	01:14																		
+140586070873312	ok ses bon	The_Glace	dim. nov. 02 2014	01:14																		
+140586070873872	une autre commande qui te sera TRES utiles dans ton cas c'est sudo apt-get dist-upgrade, si tu veux utilisez des logiciel et materiel r�cent	Dae-	dim. nov. 02 2014	01:15																		
+140586070875440	ok	The_Glace	dim. nov. 02 2014	01:15																		
+140586070875832	et pour finir http://korben.info/installer-minecraft-ubuntu.html mais cela ne fonctionnera correctement qu'une fois que t'auras fais le apt-get1 et le apt-get dist-upgrade	Dae-	dim. nov. 02 2014	01:16																		
+140586070868936	voila apres si tu a d'autre probleme (son clavier ou autre) tu refaire la chaine	Dae-	dim. nov. 02 2014	01:16																		
+140586070870056	1 google Ubuntu	Dae-	dim. nov. 02 2014	01:16																		
+140586070870560	2 le manuel (man dans le terminal)	Dae-	dim. nov. 02 2014	01:16																		
+140586070871400	att non je sis telecharger minecraft je veux supprimme un minecdraft	The_Glace	dim. nov. 02 2014	01:16																		
+140586070360248	3 ici en formulant correctement ta question et en étant patient , courtois et polis	Dae-	dim. nov. 02 2014	01:17																		
+140586070361144	exemple je veux supprimer sunrice mais j'arrive pas	The_Glace	dim. nov. 02 2014	01:17																		
+140586070361928	comment peuvent fair	The_Glace	dim. nov. 02 2014	01:17																		
+140586070362264	sudo apt-get remove -y sun*tab*	Dae-	dim. nov. 02 2014	01:18																		
+140586070362936	puis apt-get1	Dae-	dim. nov. 02 2014	01:18																		
+140586070363384	pour tout nettoyé	Dae-	dim. nov. 02 2014	01:18																		
+140586070364000	alors	The_Glace	dim. nov. 02 2014	01:18																		
+140586070376744	lis le manuel PDF et fait ton dist-upgrade	Dae-	dim. nov. 02 2014	01:18																		
+140586070377584	pour coller dans le terminal faut faire [Ctrl]+[Maj]+V	Dae-	dim. nov. 02 2014	01:19																		
+140586070378312	si tu utilise Xchat pour afficher ce chan d'aide e t'invite fortement dans les parametre a activé l'historique	Dae-	dim. nov. 02 2014	01:19																		
+140586070379264	cela t'evitera de posé plusieur fois la meme question	Dae-	dim. nov. 02 2014	01:20																		
+140586070379936	au debut sa fait beaucoup de chose a faire	Dae-	dim. nov. 02 2014	01:20																		
+140586070380496	et a apprendre	Dae-	dim. nov. 02 2014	01:20																		
+140586070372760	dae merci de ton aide	The_Glace	dim. nov. 02 2014	01:22																		
+140586070373432	je t'en pris	Dae-	dim. nov. 02 2014	01:22																		
+140586070374048	mais bon ubuntu = trop compliquer pour quelqu'un comme moi	The_Glace	dim. nov. 02 2014	01:23																		
+140586070374888	pense bien a lire le manuel PDF et a faire sudo apt-get dist-upgrade	Dae-	dim. nov. 02 2014	01:23																		
+140586070375840	non c'est l'une des distribution les plus simple c'est juste que tu a trop l'habitude de windows	Dae-	dim. nov. 02 2014	01:23																		
+140586070397616	tu va voir apres une semaine a tester tu trouvera cela simple	Dae-	dim. nov. 02 2014	01:24																		
+140586070398512	mais enfaite j'ai que 15 ans puis ubuntu a etait telecharger pare mon beau pere sans me le dire	The_Glace	dim. nov. 02 2014	01:24																		
+140586070399968	ubuntu a une communote tres gentil	The_Glace	dim. nov. 02 2014	01:25																		
+140586070400584	ta perdu beaucoup de donnée du coup ?	Dae-	dim. nov. 02 2014	01:26																		
+140586070401376	tres	The_Glace	dim. nov. 02 2014	01:26																		
+140586070401768	il a pas fait de save je suppose ?	Dae-	dim. nov. 02 2014	01:26																		
+140586070402608	non	The_Glace	dim. nov. 02 2014	01:26																		
+140586070403168	c'est vraiment pas cool de sa par	Dae-	dim. nov. 02 2014	01:26																		
+140586070403952	ben voila bon j'ai cherche plein de truc pour enelve ubuntu mais sa vas me couter encore des sous	The_Glace	dim. nov. 02 2014	01:27																		
+140586070405472	te couté encore moins de sous ???	Dae-	dim. nov. 02 2014	01:27																		
+140586070406088	non il avait les cd de ubuntu mais la faut je rachete les cd wind	The_Glace	dim. nov. 02 2014	01:28																		
+140586070407376	si tu fait dans le terminal Ls -ll /home/	Dae-	dim. nov. 02 2014	01:28																		
+140586070408160	sa te donne quoi ? (si y a plus de 4 ligne a copier coller passe par pasteubuntu	Dae-	dim. nov. 02 2014	01:28																		
+140586070417592	)	Dae-	dim. nov. 02 2014	01:28																		
+140586070417984	si tu doit VRAIMENT repasser sur win je te conseille XP pro ou seven,	Dae-	dim. nov. 02 2014	01:29																		
+140586070419272	mais test pendant une petite semaine Ubuntu	Dae-	dim. nov. 02 2014	01:29																		
+140586070419888	tu trouvera vraiment cela cool	Dae-	dim. nov. 02 2014	01:29																		
+140586070420336	SA FAIS 2 MOIS	The_Glace	dim. nov. 02 2014	01:29																		
+140586070419048	dzl maj	The_Glace	dim. nov. 02 2014	01:30																		
+140586070421456	donc ls -ll /home/	Dae-	dim. nov. 02 2014	01:30																		
+140586070421912	sa te donne quoi ?	Dae-	dim. nov. 02 2014	01:30																		
+140586070422416	Ls -ll /home/	The_Glace	dim. nov. 02 2014	01:30																		
+140586070422920	total 4 drwxr-xr-x 33 alexis alexis 4096 nov.   2 00:54 alexis	The_Glace	dim. nov. 02 2014	01:30																		
+140586070423928	je re	The_Glace	dim. nov. 02 2014	01:31																		
+140586070424600	re sa me dit sa total 4 drwxr-xr-x 33 alexis alexis 4096 nov.   2 00:54 alexis	The_Glace	dim. nov. 02 2014	01:33																		
+140586070433976	dans ton terminal	Dae-	dim. nov. 02 2014	01:34																		
+140586070434648	oui	The_Glace	dim. nov. 02 2014	01:34																		
+140586070435096	tu tappe sudo passwd (avec le nouveau mot de passe root)	Dae-	dim. nov. 02 2014	01:34																		
+140586070436104	comme cela tu restera le seul a pouvoir modifier le PC	Dae-	dim. nov. 02 2014	01:34																		
+140586070437000	par contre le perd pas	Dae-	dim. nov. 02 2014	01:34																		
+140586070437784	sa sera tres chiant a modifier par la suite	Dae-	dim. nov. 02 2014	01:34																		
+140586070446768	tkt je sais mdp mais il el sais pas	The_Glace	dim. nov. 02 2014	01:35																		
+140586070447608	mais parcontre je peux reprendre wind¿¿	The_Glace	dim. nov. 02 2014	01:35																		
+140586070448168	tu fait se que tu veux mais tu n'aura spas d'aide de notre par ici	Dae-	dim. nov. 02 2014	01:36																		
+140586070449456	ok	The_Glace	dim. nov. 02 2014	01:36																		
+140586070450016	merci de votre service	The_Glace	dim. nov. 02 2014	01:36																		
+140586070454568	passwd root	Dae-	dim. nov. 02 2014	01:36																		
+140586070455072	le root c'est un peu comme l'administrateur	Dae-	dim. nov. 02 2014	01:37																		
+140586070455744	une derniere question on peux fair un %appdata% ¿¿¿	The_Glace	dim. nov. 02 2014	01:38																		
+140586070456416	/home/.minecraft/ si je me souviens bien	Dae-	dim. nov. 02 2014	01:39																		
+140586070457088	mais je me suis peut etre trompé	Dae-	dim. nov. 02 2014	01:40																		
+140586070457816	mais normalement le jeu te propose d'acceder directement au fichier de sauvegarde dans les option de texture pack	Dae-	dim. nov. 02 2014	01:40																		
+140586070463096	bon je te laisse	The_Glace	dim. nov. 02 2014	01:41																		
+140586070463880	merci de ton service	The_Glace	dim. nov. 02 2014	01:41																		
+140586070464216	bye	The_Glace	dim. nov. 02 2014	01:41																		
+140586070463208	je t'en pris	Dae-	dim. nov. 02 2014	01:42																		
+140586070465448	pffiouu	Dae-	dim. nov. 02 2014	01:42																		
+140586070465952	allez on essaye vivid, avec le kernel 3.18 RC2, vivi mon gars	beaver	dim. nov. 02 2014	02:16																		
+140586070471176	salut beaver	Dae-	dim. nov. 02 2014	02:17																		
+140586070471680	hello Dae- ,	beaver	dim. nov. 02 2014	02:18																		
+140586070473024	wah, on est sur du kernel custom by canonical les gars à partir de la 15.04, huhuhu	beaver	dim. nov. 02 2014	02:18																		
+140586070473472	bref, je vais voir si ça corrige mon bogue au moins	beaver	dim. nov. 02 2014	02:18																		
+140586070474480	15.04 ?	Dae-	dim. nov. 02 2014	02:19																		
+140586070491880	mais la 14.10 viens juste de sortir Oo	Dae-	dim. nov. 02 2014	02:19																		
+140586070492384	et oui,	beaver	dim. nov. 02 2014	02:20																		
+140586070493616	et oui, plus vite que la musique, elle est déjà dispo' en version daily build	beaver	dim. nov. 02 2014	02:20																		
+140586070494120	donc un maximum de bogues,	beaver	dim. nov. 02 2014	02:21																		
+140586070496144	donc aucun support officiel sur ce channel,	beaver	dim. nov. 02 2014	02:21																		
+140586070496536	mais faut que ça corrige mon bogue, de Fedora à Ubuntu, j'ai rien qui fonctionne correctement avec ma Nvidia 8600	beaver	dim. nov. 02 2014	02:21																		
+140586070497040	je me tape des freezes pendant une lecture video … ça freeze, ça freeze … que ça soit avec nouveau, ou le driver privateur même combat donc on verra	beaver	dim. nov. 02 2014	02:23																		
+140586070498720	me suis dit … bon bein je suis dingue, c'est mon gpu il va mourir, c'est pas possible qu'aucun o/s de Debian Stable puis ensuite Testing, puis ensuite Fedora, puis Ubuntu … me suis dit impossible que le bogue soit présent sur toutes les distributions	beaver	dim. nov. 02 2014	02:30																		
+140586070510056	, donc bein je fout Windows, et magie …	beaver	dim. nov. 02 2014	02:30																		
+140586070510448	une magie totalement privatrice,	beaver	dim. nov. 02 2014	02:30																		
+140586070510672	mais magie quand même, ça fonctionne parfaitement	beaver	dim. nov. 02 2014	02:30																		
+140586070507592	même sous Crunchbang j'ai ce bogue,	beaver	dim. nov. 02 2014	02:30																		
+140586070508208	bon bref, bye	beaver	dim. nov. 02 2014	02:30																		
+140586070508656	c'est quoi ton bug mec ?	Dae-	dim. nov. 02 2014	02:33																		
+140586070509440	beaver	Dae-	dim. nov. 02 2014	02:34																		
+140586070511912	bein imagine gars, tu ouvres ton Firefox/Google Chrome / Opera / Ce que tu veux, tu vas sous Youtube, tu fais une recherche de video, genre fu** the mainstream (qui est pas mal :D), tu regardes ta video 10 secondes, et ça freeze, tu dois bouger ta souris pour défreezer	beaver	dim. nov. 02 2014	02:35																		
+140586070525040	et ça, c'est non stop	beaver	dim. nov. 02 2014	02:35																		
+140586070525768	donc tu regardes les logs, rien apparait	beaver	dim. nov. 02 2014	02:36																		
+140586070526552	tu consultes ta boule de cristal, elle veut pas te parler non plus	beaver	dim. nov. 02 2014	02:36																		
+140586070527672	j'avais se probleme avant	Dae-	dim. nov. 02 2014	02:43																		
+140586070532392	t'as fait quoi pour le résoudre ?	beaver	dim. nov. 02 2014	02:44																		
+140586070533064	j'ai reinitialisé firefox, mis a jour la carte graphique, verifier qu'il utilisais bien l'accélération materiel, virré quelques plug in/ addon que j'utilisais pas	Dae-	dim. nov. 02 2014	02:44																		
+140586070534464	et j'ai vu ma consomation CPU/ram baisser radiqualement	Dae-	dim. nov. 02 2014	02:44																		
+140586070534912	plus quelques scripte pour simplifier les page web	Dae-	dim. nov. 02 2014	02:44																		
+140586070533680	j'avais se probleme essenciellement avec les page en HTML5	Dae-	dim. nov. 02 2014	02:44																		
+140586070520328	(désolé pour les fautes )	Dae-	dim. nov. 02 2014	02:45																		
+140586070521000	ok,	beaver	dim. nov. 02 2014	02:46																		
+140586070522568	mais même sous vlc, le probleme se presente dans mon cas et … même sous le kernel 3.16.0-24-generic rien à faire (je suis en live usb la)	beaver	dim. nov. 02 2014	02:46																		
+140586070522960	si tu télécharge les video (via https://addons.mozilla.org/fr/firefox/user/download-flash-and-video/?src=api) et que tu la regarced (sans firefox	Dae-	dim. nov. 02 2014	02:46																		
+140586070523744	ta toujours les freeze ?	Dae-	dim. nov. 02 2014	02:46																		
+140586070561400	oui :'<	beaver	dim. nov. 02 2014	02:47																		
+140586070562016	alors c'est que ta carte graphique fonctionne pas correctement,	Dae-	dim. nov. 02 2014	02:47																		
+140586070563360	moi si j'aggrendissai une video mon PC supportai pas et rebootais	Dae-	dim. nov. 02 2014	02:47																		
+140586070563864	si c'était un probleme matériel, pourquoi le probleme ne se presente pas sous Windows 7 :<	Dae-	dim. nov. 02 2014	02:48																		
+140586070564648	parsque W7 detecte et install par defaul la quasi totalité des carte graphique	Dae-																				
+140586070573912	au pire t'attend avril et tous changera	Dae-	dim. nov. 02 2014	02:49																		
+140586070574752	voilà, le support de mon driver est meilleur sous Windows à mon plus grand desespoir	beaver	dim. nov. 02 2014	02:49																		
+140586070575816	http://www.developpez.net/forums/d1323949/systemes/linux/distributions/ubuntu/ubuntu-devient-l-os-officiel-chine/	Dae-	dim. nov. 02 2014	02:49																		
+140586070576432	mouais	beaver	dim. nov. 02 2014	02:51																		
+140586070576880	ou je vais vendre ce laptop sur leboncoin, et m'en acheter un autre	beaver	dim. nov. 02 2014	02:51																		
+140586070582160	non c'est normale, les consépteur de programme lier a du materiel cher on aucun avantage a créer des driver gratuitement ou compatible a 100%	Dae-	dim. nov. 02 2014	02:51																		
+140586070583280	il a quoi comme config ?	Dae-	dim. nov. 02 2014	02:51																		
+140586070583896	dual core … 2.50 ghz ..	beaver	dim. nov. 02 2014	02:55																		
+140586070586200	3 GO de ram, Nvidia 8600 …	beaver	dim. nov. 02 2014	02:55																		
+140586070586592	il part à 150€ je pense … j'en ajoute 20 30, et hop, je vais pouvoir m'en prendre un autre plus ou moins compatible Ubuntu … 'fin G/Linux en general	beaver	dim. nov. 02 2014	02:55																		
+140586070587152	!paste	beaver	dim. nov. 02 2014	03:02																		
+140586070587488	Utilisez http://paste.ubuntu-fr-secours.org/ pour les copiés/collés,	@uBOTu-fr	dim. nov. 02 2014	03:02																		
+140586070585808	mettez votre pseudonyme dans le champ idoine, merci	@uBOTu-fr	dim. nov. 02 2014	03:02																		
+140586070588720	Paste de beaver :	@uBOTu-fr	dim. nov. 02 2014	03:03																		
+140586070589280	http://paste.ubuntu-fr-secours.org/src-139216	@uBOTu-fr	dim. nov. 02 2014	03:03																		
+140586070601856	il y'a strictement rien.	beaver	dim. nov. 02 2014	03:03																		
+140586070602584	Paste de beaver :	@uBOTu-fr	dim. nov. 02 2014	03:04																		
+140586070603144	http://paste.ubuntu-fr-secours.org/src-139217	@uBOTu-fr	dim. nov. 02 2014	03:04																		
+140586070602808	le Xorg …	beaver	dim. nov. 02 2014	03:04																		
+140586070604040	Paste de beaver :	@uBOTu-fr	dim. nov. 02 2014	03:05																		
+140586070604600	http://paste.ubuntu-fr-secours.org/src-139218	@uBOTu-fr	dim. nov. 02 2014	03:05																		
+140586070604264	le .xsession-errors …	beaver	dim. nov. 02 2014	03:05																		
+140586070605440	sudo apt-get install -y flashplugin-installer && sudo apt-get install -y freshplayerplugin && sudo apt-get install -y libflash-mozplugin && apt-get update && apt-get autoremove && apt-get autoclean	Dae-	dim. nov. 02 2014	03:05																		
+140586070611168	http://doc.ubuntu-fr.org/nvidia y a une ligne justement sur ta carte graphique 8600	Dae-	dim. nov. 02 2014	03:06																		
+140586070611952	oui,	beaver	dim. nov. 02 2014	03:07																		
+140586070613968	le résultat d'un lspci | grep VGA, et un check OpenGL, ça traite en aucun cas mon probleme :<,	beaver	dim. nov. 02 2014	03:07																		
+140586070094176	mais Dae-, si le probleme se presente aussi sous VLC, c'est pas un probleme de flash	beaver	dim. nov. 02 2014	03:07																		
+140586070613240	http://doc.ubuntu-fr.org/nvidia#acceleration_materielle_du_decodage_des_videos_vdpauvaapi  et http://doc.ubuntu-fr.org/nvidia#impossible_de_beneficier_de_l_acceleration_graphique_avec_les_pilotes_proprietaires	Dae-	dim. nov. 02 2014	03:08																		
+140586070094288	en quoi ça me concerne Dae-	beaver	dim. nov. 02 2014	03:10																		
+140586070094960	? j'arrive pas à comprendre	beaver	dim. nov. 02 2014	03:10																		
+140586070095464	"si tu fait  glxinfo | grep ""direct rendering"""	Dae-	dim. nov. 02 2014	03:11																		
+140586070097032	sa te donne quoi ?	Dae-	dim. nov. 02 2014	03:11																		
+140586070097592	le module nvidia se charge Dae	beaver	dim. nov. 02 2014	03:13																		
+140586070106968	- j'ai check via lsmod auparavant, nouveau est bien blacklisté, et j'ai l'acceleration materiel	beaver	dim. nov. 02 2014	03:13																		
+140586070107472	tu sais, ça fait quoi, ~ 5 ans que je suis sous Ubuntu (sans aucun dual boot Windows ou que sais je), ~ 5 ans avec du full G/Linux sur mes becannes, si j'en suis rendu à retourner sous Windows, c'est qu'il y'a quasi plus rien à faire	beaver	dim. nov. 02 2014	03:18																		
+140586070109992	mon dernier espoir, c'était d'utiliser le dernier kernel en date (ou quasi)	beaver	dim. nov. 02 2014	03:19																		
+140586070119200	3.16.0-24-generic	beaver	dim. nov. 02 2014	03:19																		
+140586070119704	mais idem.	beaver	dim. nov. 02 2014	03:19																		
+140586070120208	nouveau 1.0.11	beaver	dim. nov. 02 2014	03:20																		
+140586070120824	et toujours le même probleme	beaver	dim. nov. 02 2014	03:20																		
+140586070121328	donc je suppose que je peux rien dire et que ta déja lu toute la doc ubuntu fr/en ?	dae_	dim. nov. 02 2014	03:21																		
+140586070130872	bein si totalement dae_	beaver	dim. nov. 02 2014	03:21																		
+140586070131656	si t'as des pistes, n'hesites pas :)	beaver	dim. nov. 02 2014	03:21																		
+140586070132048	mais par exemple plus haut, tu as mes logs	beaver	dim. nov. 02 2014	03:21																		
+140586070132888	hey tu sais y a des million de personne qui utilise windows et qui s'en contente tres bien c'est pas la mort	dae_	dim. nov. 02 2014	03:21																		
+140586070134288	pour moi c'est la mort, ça va contre mon ethique	beaver	dim. nov. 02 2014	03:22																		
+140586070114880	et je disais avant mon forcereboot	dae_	dim. nov. 02 2014	03:22																		
+140586070115328	que c'etais peut tre un probleme de mémoire tampons	dae_	dim. nov. 02 2014	03:22																		
+140586070115944	ou swap	dae_	dim. nov. 02 2014	03:22																		
+140586070116448	sa freeze parsque y a un decalage entre les donnée chargé et lue	dae_	dim. nov. 02 2014	03:22																		
+140586070117288	OU ta un probleme materiel (carte graphique / ram)	dae_	dim. nov. 02 2014	03:23																		
+140586070117960	vu que windows gerre differement le materiel	dae_	dim. nov. 02 2014	03:23																		
+140586070126888	bein, hm ou pas dae_, si t'as un probleme matériel sous Windows, ça se résulte par un Bsod en general	beaver	dim. nov. 02 2014	03:24																		
+140586070128120	sans les abréaviation svp	dae_	dim. nov. 02 2014	03:24																		
+140586070128960	"""svp"" n'est pas une abréviation"	beaver	dim. nov. 02 2014	03:24																		
+140586070129464	;)	beaver	dim. nov. 02 2014	03:25																		
+140586070129968	bsod blue screen of death	beaver	dim. nov. 02 2014	03:25																		
+140586070151352	si tu preferes.	beaver	dim. nov. 02 2014	03:25																		
+140586070151912	Svp est une abréviation courrante de la langue francaise là e te parled 'abréviation technique que je ne connais pas	dae_	dim. nov. 02 2014	03:25																		
+140586070153256	ha ok	dae_	dim. nov. 02 2014	03:25																		
+140586070153928	justement windows est (presque) plus tollerent avec le materiel	dae_	dim. nov. 02 2014	03:26																		
+140586070154600	si j'avais un probleme matériel, sous Ubuntu, à mon avis j'aurai eu des kernel panic	beaver	dim. nov. 02 2014	03:26																		
+140586070163920	non dae_ ^^	beaver	dim. nov. 02 2014	03:26																		
+140586070164480	si ton matériel a des defaillances, windows n'est pas magicien	beaver	dim. nov. 02 2014	03:27																		
+140586070165208	ça va planter d'une maniere ou d'une autre,	beaver	dim. nov. 02 2014	03:27																		
+140586070166608	il va te faire comprendre qu'il y'a un truc, c'est G/Linux qui est justement plus tollérant	beaver	dim. nov. 02 2014	03:27																		
+140586070167000	magicien non, mais ils a plus de driver et des gens payé pour resoudre les problemes	dae_	dim. nov. 02 2014	03:27																		
+140586070166272	Err :508	dae_	dim. nov. 02 2014	03:27																		
+140586070168352	chose qui changera en avril	dae_	dim. nov. 02 2014	03:27																		
+140586070169024	ta essayer d'installer les paquet comme ils disent sur doc.ubuntu ?	dae_	dim. nov. 02 2014	03:29																		
+140586070169864	et le ppa nvidia ?	dae_	dim. nov. 02 2014	03:29																		
+140586070170592	une meilleur prise en charge de ton matériel sur un o/s prédéfini, ne veut pas dire qu'il sera plus tollérent aux pannes dae_ :/,	beaver	dim. nov. 02 2014	03:30																		
+140586070185128	le ppa nvidia, c'est quoi au juste ?	beaver	dim. nov. 02 2014	03:30																		
+140586070185296	il te propose la derniere version de ton driver ?	beaver	dim. nov. 02 2014	03:30																		
+140586070171488	meilleure(*)	beaver	dim. nov. 02 2014	03:30																		
+140586070185688	je suppose	dae_	dim. nov. 02 2014	03:31																		
+140586070185184	je suis sous intel moi	dae_	dim. nov. 02 2014	03:31																		
+140586070184064	tolérent(*) :),	beaver	dim. nov. 02 2014	03:31																		
+140586070192704	mh, bein j'ai essayé via le .run en fait aussi, le probleme est le meme	beaver	dim. nov. 02 2014	03:31																		
+140586070193040	le .run que j'ai téléchargé propose la derniere version de mon driver	beaver	dim. nov. 02 2014	03:31																		
+140586070194216	ça démarre tout ça … mais le probleme persiste	beaver	dim. nov. 02 2014	03:32																		
+140586070195056	ok	beaver	dim. nov. 02 2014	03:32																		
+140586070195224	c'est desesperant..	beaver	dim. nov. 02 2014	03:35																		
+140586070195784	tu veux un truc vraiment désesperant ?	dae_	dim. nov. 02 2014	03:37																		
+140586070209032	mon frigo/placard /compte en banque vide	dae_	dim. nov. 02 2014	03:37																		
+140586070209368	"je sort une boule de patte brisé de mon freeze que j'avais préparré ""au cas ou"" une envis de tarte me prenne"	dae_	dim. nov. 02 2014	03:37																		
+140586070211048	bah elle a moisie dans mon freeze cette salope !!	dae_	dim. nov. 02 2014	03:38																		
+140586070212056	je te rassure dae_ c'est un probleme de plus me concernant, il manque 150€ pour mon loyer, je trouve pas … c'est la rue en hiver	beaver	dim. nov. 02 2014	03:38																		
+140586070230296	ça c'est vraiment desesperent	dae_	dim. nov. 02 2014	03:38																		
+140586070230800	legalement ta un bon delais avant de te faire expulsé	dae_	dim. nov. 02 2014	03:38																		
+140586070231864	sauf, si t'es pas déclaré que t'as aucun bail :), bref	beaver	dim. nov. 02 2014	03:39																		
+140586070232984	si ta besoin de conseil la dessus je peux te donner quelques info en privat	dae_	dim. nov. 02 2014	03:39																		
+140586070234224	beins viens si tu veux	beaver	dim. nov. 02 2014	03:39																		
+140586070234952	tu es abs	dae_	dim. nov. 02 2014	03:41																		
+140586070235680	bon donc pour mon probleme nvidia, on a fait le tour je pense :)	beaver	dim. nov. 02 2014	04:18																		
+140586070236688	bonjour aux lève tôt	soulseek	dim. nov. 02 2014	06:20																		
+140586070241464	je  cherhce à intaller sousseek sur ubuntu	soulseek	dim. nov. 02 2014	06:21																		
+140586070242024	ai téléchargé le soft sur  http://www.soulseekqt.net/news/node/1	soulseek	dim. nov. 02 2014	06:22																		
+140586070242696	mai désormais suis bloqué	soulseek	dim. nov. 02 2014	06:22																		
+140586070243200	Il faut installer des paquets ?	soulseek	dim. nov. 02 2014	06:23																		
+140586070243816	Via le terminal ?	soulseek	dim. nov. 02 2014	06:23																		
+140586070244152	si vous avez une idée	soulseek	dim. nov. 02 2014	06:23																		
+140586070244880	bonjour	AlexxC	dim. nov. 02 2014	08:44																		
+140586070245272	Bonjour Black-Devil	OERIAS	dim. nov. 02 2014	10:03																		
+140586070258128	Ça Va?	OERIAS	dim. nov. 02 2014	10:04																		
+140586070258576	Salut,	Black-Devil	dim. nov. 02 2014	10:04																		
+140586070259360	oui, je me porte bien	Black-Devil	dim. nov. 02 2014	10:04																		
+140586070259696	. Et toi ?	Black-Devil	dim. nov. 02 2014	10:04																		
+140586070260032	Est-ce que quelqu'un a quelques astuces pour accélérer un peu Xubuntu 14.04 ?	Black-Devil	dim. nov. 02 2014	10:08																		
+140586070261040	utilise un SSD	coyotus	dim. nov. 02 2014	10:08																		
+140586070261488	:p	coyotus	dim. nov. 02 2014	10:08																		
+140586070266096	utilise windows un mois	coyotus	dim. nov. 02 2014	10:08																		
+140586070266880	quand tu reviendra dessus tu trouvera xubuntu vachement rapide	coyotus	dim. nov. 02 2014	10:09																		
+140586070267776	Sacrilège !	Black-Devil	dim. nov. 02 2014	10:10																		
+140586070268504	Tu as prononcé le mot interdit !	Black-Devil	dim. nov. 02 2014	10:10																		
+140586070268896	bonjour	soulsseek	dim. nov. 02 2014	10:10																		
+140586070269232	ai téléchargé soulseekQT	soulsseek	dim. nov. 02 2014	10:10																		
+140586070269792	Salut	Black-Devil	dim. nov. 02 2014	10:10																		
+140586070278496	mais ne sai pas comment l'installer	soulsseek	dim. nov. 02 2014	10:10																		
+140586070279336	Mouais, faudrait que j'essaie �a coyotus :D	Black-Devil	dim. nov. 02 2014	10:10																		
+140586070279896	il faut télécharger des paquets ou passer par le terminal	soulsseek	dim. nov. 02 2014	10:11																		
+140586070280512	?	soulsseek	dim. nov. 02 2014	10:11																		
+140586070280848	je suis avec une version 13.04 d'ubuntu	soulsseek	dim. nov. 02 2014	10:11																		
+140586070281576	attends	Black-Devil	dim. nov. 02 2014	10:11																		
+140586070287024	je fais des recherches sur ce qu'est soulsseekQT et je te dis ce que j'en pense	Black-Devil	dim. nov. 02 2014	10:11																		
+140586070287360	c'est genre emule	soulsseek	dim. nov. 02 2014	10:12																		
+140586070287864	la 13.04 n'est plus prise en charge	Calinou	dim. nov. 02 2014	10:12																		
+140586070288424	(depuis janvier 2014)	Calinou	dim. nov. 02 2014	10:12																		
+140586070288928	un client peer-to-peer	soulsseek	dim. nov. 02 2014	10:12																		
+140586070289376	yep calinou avais vu que a 13.04 était obsolète	soulsseek	dim. nov. 02 2014	10:12																		
+140586070290048	tu me conseilles quoi	soulsseek	dim. nov. 02 2014	10:12																		
+140586070298808	Ah ouas effectivement,	Black-Devil	dim. nov. 02 2014	10:13																		
+140586070299648	tu as essayé une upgrade vers une version plus récente ?	Black-Devil	dim. nov. 02 2014	10:13																		
+140586070300152	ouais*	Black-Devil	dim. nov. 02 2014	10:13																		
+140586070300544	de passer à la 14.04	soulsseek	dim. nov. 02 2014	10:13																		
+140586070301048	Par exemple	Black-Devil	dim. nov. 02 2014	10:13																		
+140586070301440	(qui est un LTS )	soulsseek	dim. nov. 02 2014	10:13																		
+140586070302168	ok...	soulsseek	dim. nov. 02 2014	10:13																		
+140586070302504	Est-ce que les logiciels vont migrer eux même	soulsseek	dim. nov. 02 2014	10:14																		
+140586070307112	où je devrais tout réinstaller	soulsseek	dim. nov. 02 2014	10:14																		
+140586070307448	?	soulsseek	dim. nov. 02 2014	10:14																		
+140586070307840	En fait, si tu fais une mise à niveau ( et le but d'une mise à niveau d'ailleurs ) c'est que tu gardes tous tes documents et logiciels	Black-Devil	dim. nov. 02 2014	10:15																		
+140586070309464	normalement ceux des dépots oui	coyotus	dim. nov. 02 2014	10:15																		
+140586070310136	ceux installé manuellement non	coyotus	dim. nov. 02 2014	10:15																		
+140586070310584	Et les logiciels que tu as installés vont se mettre à jour	Black-Devil	dim. nov. 02 2014	10:15																		
+140586070319792	pas tous	coyotus	dim. nov. 02 2014	10:15																		
+140586070320240	Enfin, oui, eux que tu as installé via les dépots	Black-Devil	dim. nov. 02 2014	10:16																		
+140586070321304	ceux*	Black-Devil	dim. nov. 02 2014	10:16																		
+140586070321640	Une mise à niveau te prends plusieurs heures, fais ça quand tu as le tems	Black-Devil	dim. nov. 02 2014	10:17																		
+140586070322928	temps*	Black-Devil	dim. nov. 02 2014	10:18																		

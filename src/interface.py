@@ -85,7 +85,7 @@ class GraphicalUserInterface(Frame, Styles):
         file_menu = Menu(self.menu_bar, tearoff=0)
         file_menu.add_command(label="Load", accelerator="Ctrl+O", command=self.load)
         file_menu.add_command(label="Save As...", accelerator="Ctrl+Shift+O", command=self.save_as)
-        file_menu.add_command(label="Export As...", accelerator="Ctrl+E", command=self.export_as)
+        file_menu.add_command(label="Export As...", accelerator="Ctrl+Shift+E", command=self.export_as)
         file_menu.add_separator()
         file_menu.add_command(label="Quit", accelerator="Esc", command=self.parent.quit)
 
@@ -95,6 +95,11 @@ class GraphicalUserInterface(Frame, Styles):
         edit_menu.add_command(label="Undo", accelerator="Ctrl+Z", command=self.command_undo)
 
         self.menu_bar.add_cascade(label="Edit", menu=edit_menu)
+
+        view_menu = Menu(self.menu_bar, tearoff=0)
+        view_menu.add_command(label="Randomize participant colors", command=self.generate_participant_colors)
+
+        self.menu_bar.add_cascade(label="View", menu=view_menu)
 
         filter_menu = Menu(self.menu_bar, tearoff=0)
         filter_menu.add_command(label="Filter current label", accelerator="Ctrl+F", command=lambda e=None: self.button_filter(e))

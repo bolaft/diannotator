@@ -2,8 +2,11 @@ import codecs
 import pickle
 import taxonomy
 import os
+import csv
+import json
 
 from nltk.tokenize import WhitespaceTokenizer
+from collections import OrderedDict
 
 
 class DialogueAct:
@@ -25,6 +28,42 @@ class DialogueAct:
 
         self.tokenize()  # tokenization
 
+    def to_json_dict(self):
+        """
+        Returns a dict representation of the object for JSON export
+        """
+        return {
+            "id": self.id,
+            "raw": self.raw,
+            "participant": self.participant,
+            "date": self.date,
+            "time": self.time,
+            "note": self.note,
+            "link": self.link.id if self.link else None,
+            "annotations": self.annotations
+        }
+
+    def to_csv_dict(self):
+        """
+        Returns a dict representation of the object for CSV export
+        """
+        data = OrderedDict()
+
+        data.update({"id": self.id})
+        data.update({"raw": self.raw})
+        data.update({"participant": self.participant})
+        data.update({"date": self.date})
+        data.update({"time": self.time})
+        data.update({"note": self.note})
+        data.update({"link": self.link.id if self.link else None})
+
+        for dimension in taxonomy.labels:
+            data.update(
+                {dimension: None if not dimension in self.annotations else self.annotations[dimension]}
+            )
+
+        return data
+
     def tokenize(self):
         """
         White space tokenization
@@ -41,6 +80,8 @@ class DialogueAct:
         da.legacy = self.legacy.copy()
         da.data = self.data.copy()
         da.link = self.link
+        da.time = self.link
+        da.date = self.link
         da.linked = self.linked
         da.note = self.note
         da.tokenize()
@@ -126,12 +167,11 @@ class DialogueActCollection:
         """
         Renames a label
         """
-        tagset = taxonomy.GENERAL_PURPOSE if label not in self.labels[dimension] else dimension
-        index = self.labels[tagset].index(label)
-        self.labels[tagset].remove(label)
+        index = self.labels[dimension].index(label)
+        self.labels[dimension].remove(label)
 
-        if new_label != "" and new_label not in self.labels[tagset] and new_label not in self.labels[taxonomy.GENERAL_PURPOSE]:
-            self.labels[tagset].insert(index, new_label)
+        if new_label != "" and new_label not in self.labels[dimension]:
+            self.labels[dimension].insert(index, new_label)
 
         for da in self.collection:
             if dimension in da.annotations and da.annotations[dimension] == label:
@@ -220,18 +260,33 @@ class DialogueActCollection:
         """
         Serializes the DialogueActCollection
         """
-        if name is not None and not backup:
+        if name and not backup:
             self.save_file = os.path.abspath(name)
             self.update_last_save()
 
-        with open(self.save_file if not backup else name, "wb") as f:
-            pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
+        if name:
+            with open(self.save_file if not backup else name, "wb") as f:
+                pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
     def export(self, path):
         if path.endswith(".json"):
-            print("export .json")
+            self.export_json(path)
         elif path.endswith(".csv"):
-            print("export .csv")
+            self.export_csv(path)
+
+    def export_json(self, path):
+        data = [da.to_json_dict() for da in self.full_collection]
+
+        with open(path, "w") as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
+
+    def export_csv(self, path):
+        with open(path, "w") as f:
+            w = csv.DictWriter(f, self.full_collection[0].to_csv_dict().keys(), delimiter="\t")
+            w.writeheader()
+
+            for da in self.full_collection:
+                w.writerow(da.to_csv_dict())
 
     def update_last_save(self):
         if not os.path.exists(DialogueActCollection.temp_dir):

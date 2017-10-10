@@ -1,4 +1,3 @@
-GENERAL_PURPOSE = "general purpose"
 TASK = "task"
 FEEDBACK = "feedback"
 CONTACT_MANAGEMENT = "contact management"
@@ -15,39 +14,40 @@ CONDITIONALITY = "conditionality"
 CERTAINTY = "certainty"
 IRONY = "irony"
 
+general_purpose_labels = [
+    "inform",
+    "confirm",
+    "disconfirm",
+    "commit",
+    "offer",
+    "instruct",
+    "suggest",
+    "request information",
+    "request directives"
+]
+
 labels = {
-    GENERAL_PURPOSE: [
-        "inform",
-        "confirm",
-        "disconfirm",
-        "commit",
-        "offer",
-        "instruct",
-        "suggest",
-        "request information",
-        "request directives"
-    ],
     TASK: [
         "request help"
-    ],
+    ] + general_purpose_labels,
     FEEDBACK: [
         "acknowledge",
         "provide",
         "request"
-    ],
+    ] + general_purpose_labels,
     CONTACT_MANAGEMENT: [
         "check contact",
         "indicate contact"
-    ],
+    ] + general_purpose_labels,
     COMMUNICATION_MANAGEMENT: [
         "correct",
         "completion"
-    ],
+    ] + general_purpose_labels,
     DISCOURSE_STRUCTURE_MANAGEMENT: [
         "announce",
         "preclose",
         "switch topic"
-    ],
+    ] + general_purpose_labels,
     SOCIAL_OBLIGATIONS_MANAGEMENT: [
         "greet",
         "self-introduce",
@@ -56,15 +56,15 @@ labels = {
         "thank",
         "downplay thanks",
         "valediction"
-    ],
+    ] + general_purpose_labels,
     KNOWLEDGE: [
-    ],
+    ] + general_purpose_labels,
     OPINION: [
-    ],
+    ] + general_purpose_labels,
     SENTIMENT: [
-    ],
+    ] + general_purpose_labels,
     EMOTION: [
-    ],
+    ] + general_purpose_labels,
     PROBLEM_MANAGEMENT: [
         "describe context",
         "describe symptom",
@@ -82,20 +82,20 @@ labels = {
         "propose search tip",
         "propose information",
         "propose instruction"
-    ],
+    ] + general_purpose_labels,
     PARTIALITY: [
         "partial"
-    ],
+    ] + general_purpose_labels,
     CONDITIONALITY: [
         "conditional"
-    ],
+    ] + general_purpose_labels,
     CERTAINTY: [
         "certain",
         "uncertain"
-    ],
+    ] + general_purpose_labels,
     IRONY: [
         "ironic"
-    ]
+    ] + general_purpose_labels
 }
 
 values = {

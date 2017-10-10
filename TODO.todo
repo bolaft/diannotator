@@ -15,7 +15,7 @@
         ☐ taxonomies as json
         ☐ default taxonomies
         ☐ feature driven annotation
-        ☐ menu bar (save / load)
+        ✔ menu bar (save / load) @done (17-10-10 12:32)
         ✔ jump to next note command @done (17-10-09 16:59)
         ✔ display current dimension @done (17-10-09 13:19)
         ✔ display all annotations, different color per annotation type @done (17-10-08 18:12)
