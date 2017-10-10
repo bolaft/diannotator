@@ -18,7 +18,7 @@ Simply run the Python script `launcher.py` in the `src` folder.
 
 # Build Executable (optional)
 
-Run the build.sh script at the root of the directory. A bin folder containing an executable will be `created` at the root of the project directory.
+Run the build.sh script at the root of the directory. A `bin` folder containing an executable will be created at the root of the project directory.
 
 # Input Data Format
 
