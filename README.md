@@ -89,11 +89,15 @@ The **default dimension** of the taxonomy, the first one to be active when first
 
 #### `labels`
 
-A dictionary of lists, whose key represents the name of the dimension and the list's elements represent the dimension's **labels' tagset**.
+A dictionary of lists, whose keys represent dimension names and the lists' elements represent the dimensions' **labels' tagsets**.
 
 #### `values`
 
-A dictionary of lists, whose key represents the name of the dimension and the list's elements represent the dimension's **qualifiers' tagset**.
+A dictionary of lists, whose keys represent dimension names and the lists' elements represent the dimensions' **qualifiers' tagsets**.
+
+#### `colors`
+
+A dictionary, whose keys represent dimension names and whose elements are hexadecimal color codes used for displaying labels. The `colors` field is mandatory but the dictionary may be left empty, in which case labels will be displayed in white.
 
 # Usage
 

@@ -14,6 +14,7 @@
         ☐ export/import true DiAML
         ☐ add a LICENSE file
         ☐ feature driven annotation
+        ☐ make error messages when file formats are wrong
         ✔ import notes from data files @done (17-10-10 18:40)
         ✔ translate README @done (17-10-10 18:31)
         ✔ add qualifier values to current taxonomy @done (17-10-10 17:25)
