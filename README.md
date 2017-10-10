@@ -48,7 +48,7 @@ Columns bearing a dimension name and suffixed by `-value` are used to load **leg
 
 | participant 	| date     	| time  	| segment                                                            	| raw                                                                	| activity 	| social 	| feedback    	| feedback-value 	|
 |-------------	|----------	|-------	|--------------------------------------------------------------------	|--------------------------------------------------------------------	|----------	|--------	|-------------	|----------------	|
-| manu        	| 11-05-17 	| 13:05 	| hi guys!                                              	| hi guys ! does anyone know how to install a proprietary graphics card driver? 	|          	| greet  	|             	|                	|
+| manu        	| 11-05-17 	| 13:05 	| hi guys!                                              	| hi guys! does anyone know how to install a proprietary graphics card driver? 	|          	| greet  	|             	|                	|
 | manu        	| 11-05-17 	| 13:05 	| does anyone know how to install a propietary graphics card driver?                       	|                                                                    	| question 	|        	|             	|                	|
 | gabi        	| 11-05-17 	| 13:06 	| search software sources, and then it's in the additional drivers tab | search software sources, and then it's in the additional drivers tab" 	| answer   	|        	|             	|                	|
 | manu        	| 11-05-17 	| 13:07 	| ah ok!                                                             	| ah ok!                                                             	|          	|        	| acknowledge 	| positive       	|
