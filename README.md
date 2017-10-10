@@ -6,7 +6,7 @@ Il est recommandé de placer les fichiers de données dans le dossier `csv` à l
 
 ### Format :
 
-Le seul format accepté est CSV. Le fichier doit contenir une ligne d'entête et autant de lignes supplémentaires qu'il n'y a de segments dialogiques à annoter. Consultez le fichier `csv/data.csv` pour observer un exemple. Les colonnes acceptées sont :
+Le seul format accepté est CSV. Le fichier doit contenir une ligne d'entête et autant de lignes supplémentaires qu'il n'y a de segments dialogiques à annoter. Consultez le fichier `csv/data.csv` pour observer un exemple. Les colonnes sont :
 
 #### `time`
 
@@ -28,11 +28,11 @@ Contient le texte brut du message. Si le message a été segmenté, la colonne `
 
 Contient le nom ou l'identifiant du participant qui a produit le message.
 
-#### `<nom de dimension>`
+#### `<nom de dimension>` (optionnel)
 
 Les colonnes portant un nom de dimension servent à charger les annotations "legacy" (pour l'aide à l'annotation). Par exemple, on peut avoir la valeur `check contact` dans la colonne `contact management`.
 
-#### `<nom de dimension>-value`
+#### `<nom de dimension>-value` (optionnel)
 
 Les colonnes portant un nom de dimension suffixé de `-value` doivent contenir la valeur du qualifieur pour cette dimension. Par exemple, on peut avoir la valeur `inform` dans la colonne `emotion` et `happiness` dans la colonne `emotion-value`.
 
