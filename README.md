@@ -1,3 +1,7 @@
+# Overview
+
+DiAnnotator is a dialogue annotation tool. It is meant to reduce the need to use the mouse to annotate dialogues and improve keyboard-only annotation efficiency. DiAnnotator can be used for segmentation, to apply labels, to link dialogue segments and to modify taxonomies. DiAnnotator is fully multi-dimensional, and therefore supports annotation schemes such as the DAMSL or ISO 24617-2.
+
 # Input Data Format
 
 ### Location:
