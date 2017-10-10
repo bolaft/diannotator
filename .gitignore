@@ -5,6 +5,7 @@
 __pycache__/*
 tmp/*
 bin/*
+out/*
 dist/*
 build/*
 doc/*
