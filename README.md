@@ -8,31 +8,40 @@ Il est recommandé de placer les fichiers de données dans le dossier `csv` à l
 
 Le seul format accepté est CSV. Le fichier doit contenir une ligne d'entête et autant de lignes supplémentaires qu'il n'y a de segments dialogiques à annoter. Consultez le fichier `csv/ubuntu-irc-fr.csv` pour observer un exemple. Les colonnes sont :
 
-#### `time`
+#### Example :
+
+| participant 	| date     	| time  	| segment                                                            	| raw                                                                	| activity 	| social 	| feedback    	| feedback-value 	|
+|-------------	|----------	|-------	|--------------------------------------------------------------------	|--------------------------------------------------------------------	|----------	|--------	|-------------	|----------------	|
+| manu        	| 11-05-17 	| 13:05 	| salut tout le monde !                                              	| salut tout le monde ! comment on installe un driver propriétaire ? 	|          	| greet  	|             	|                	|
+| manu        	| 11-05-17 	| 13:05 	| comment on installe un driver propriétaire ?                       	|                                                                    	| question 	|        	|             	|                	|
+| gabi        	| 11-05-17 	| 13:06 	| c'est dans "Logiciels et mise à jour" puis "pilotes propriétaires" 	| c'est dans "Logiciels et mise à jour" puis "pilotes propriétaires" 	| answer   	|        	|             	|                	|
+| manu        	| 11-05-17 	| 13:07 	| ah ok!                                                             	| ah ok!                                                             	|          	|        	| acknowledge 	| positive       	|
+
+##### `time`
 
 Contient une chaîne de caractères représentant l'heure d'envoi du message.
 
-#### `date`
+##### `date`
 
 Contient une chaîne de caractères représentant la date d'envoi du message.
 
-#### `segment`
+##### `segment`
 
 Contient le segment dialogique sur lequel s'appliquent les annotations. Si la colonne est vide pour un segment, cela doit signifier que le message (`raw`) a été fusionné avec le précédent (comme dans le format multi-tab de DiAML).
 
-#### `raw`
+##### `raw`
 
 Contient le texte brut du message. Si le message a été segmenté, la colonne `raw` doit être remplie uniquement pour le premier segment, et laissée vide pour les segments qui suivent (comme dans le format multi-tab de DiAML).
 
-#### `participant`
+##### `participant`
 
 Contient le nom ou l'identifiant du participant qui a produit le message.
 
-#### `<nom de dimension>` (optionnel)
+##### `<nom de dimension>` (optionnel)
 
 Les colonnes portant un nom de dimension servent à charger les annotations "legacy" (pour l'aide à l'annotation). Par exemple, on peut avoir la valeur `check contact` dans la colonne `contact management`. Les dimensions et leurs labels doivent respecter la nomenclature de la taxonomie employée.
 
-#### `<nom de dimension>-value` (optionnel)
+##### `<nom de dimension>-value` (optionnel)
 
 Les colonnes portant un nom de dimension suffixé de `-value` doivent contenir la valeur du qualifieur pour cette dimension. Par exemple, on peut avoir la valeur `inform` dans la colonne `emotion` et `happiness` dans la colonne `emotion-value`. Les dimensions et leurs labels doivent respecter la nomenclature de la taxonomie employée.
 
