@@ -2,6 +2,16 @@
 
 DiAnnotator is a dialogue annotation tool. It is meant to reduce the need to use the mouse to annotate dialogues and to improve keyboard-only annotation speed and reliability. DiAnnotator can be used to segment utterances, to apply dialogue act or sentiment-analysis labels, to link dialogue segments and to modify taxonomies. DiAnnotator is fully multi-dimensional, and therefore supports annotation schemes such as DAMSL and ISO 24617-2.
 
+# Requirements
+
+#### Python version:
+
+Python 3.4.3
+
+#### Python modules:
+
+The module `nltk` is required to run the program.
+
 # Run From Source
 
 Simply run the Python script `launcher.py` in the `src` folder.
