@@ -30,11 +30,11 @@ Contient le nom ou l'identifiant du participant qui a produit le message.
 
 #### `<nom de dimension>` (optionnel)
 
-Les colonnes portant un nom de dimension servent à charger les annotations "legacy" (pour l'aide à l'annotation). Par exemple, on peut avoir la valeur `check contact` dans la colonne `contact management`.
+Les colonnes portant un nom de dimension servent à charger les annotations "legacy" (pour l'aide à l'annotation). Par exemple, on peut avoir la valeur `check contact` dans la colonne `contact management`. Les dimensions et leurs labels doivent respecter la nomenclature de la taxonomie employée.
 
 #### `<nom de dimension>-value` (optionnel)
 
-Les colonnes portant un nom de dimension suffixé de `-value` doivent contenir la valeur du qualifieur pour cette dimension. Par exemple, on peut avoir la valeur `inform` dans la colonne `emotion` et `happiness` dans la colonne `emotion-value`.
+Les colonnes portant un nom de dimension suffixé de `-value` doivent contenir la valeur du qualifieur pour cette dimension. Par exemple, on peut avoir la valeur `inform` dans la colonne `emotion` et `happiness` dans la colonne `emotion-value`. Les dimensions et leurs labels doivent respecter la nomenclature de la taxonomie employée.
 
 ### Taxonomie :
 
@@ -50,7 +50,7 @@ Les boutons noirs en bas de l'écran indiquent les annotations disponibles pour 
 
 #### `Enter`
 
-Valide une entrée dans le champs texte, sélectionne un bouton sur lequel le focus est placé, ou passe au segment suivant en mode annotation si le champs d'entrée de texte est vide.
+Valide une entrée dans le champ texte, sélectionne un bouton sur lequel le focus est placé, ou passe au segment suivant en mode annotation si le champs d'entrée de texte est vide.
 
 #### `Down Arrow`
 
