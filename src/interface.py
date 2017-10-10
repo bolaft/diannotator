@@ -84,7 +84,8 @@ class GraphicalUserInterface(Frame, Styles):
 
         filemenu = Menu(menubar, tearoff=0)
         filemenu.add_command(label="Load", command=self.load)
-        filemenu.add_command(label="Save as", command=self.save_as)
+        filemenu.add_command(label="Save As...", command=self.save_as)
+        filemenu.add_command(label="Export As...", command=self.export_as)
         filemenu.add_separator()
         filemenu.add_command(label="Exit", command=self.parent.quit)
 

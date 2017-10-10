@@ -71,7 +71,7 @@ class Annotator(GraphicalUserInterface):
         self.dac = DialogueActCollection.load(filedialog.askopenfilename(
             initialdir=DialogueActCollection.save_dir,
             title="Open",
-            filetypes=(("serialized saves", "*.pic"), ("data files", "*.csv"), ("all files", "*.*"))
+            filetypes=(("Pickle serialized files", "*.pic"), ("CSV data files", "*.csv"), ("all files", "*.*"))
         ))
 
         self.undo_history = []  # reinitializes undo history
@@ -81,7 +81,16 @@ class Annotator(GraphicalUserInterface):
         self.dac.save(name=filedialog.asksaveasfilename(
             initialdir=DialogueActCollection.save_dir,
             title="Save as",
-            filetypes=(("serialized saves", "*.pic"), ("all files", "*.*"))
+            filetypes=(("Pickle serialized files", "*.pic"), ("all files", "*.*"))
+        ))
+
+        self.update()
+
+    def export_as(self):
+        self.dac.export(filedialog.asksaveasfilename(
+            initialdir=DialogueActCollection.data_dir,
+            title="Save as",
+            filetypes=(("JSON data files", "*.json"), ("CSV data files", "*.csv"))
         ))
 
         self.update()

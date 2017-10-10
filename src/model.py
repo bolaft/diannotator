@@ -96,10 +96,11 @@ class DialogueActCollection:
     # file for serialization
 
     save_dir = "../sav/"
+    data_dir = "../out/"
     temp_dir = "/tmp/diannotator/"
 
     def __init__(self):
-        self.save_file = "{}tmp.pic".format(DialogueActCollection.save_dir)
+        self.save_file = os.path.abspath("{}tmp.pic".format(DialogueActCollection.save_dir))
 
         self.full_collection = []  # full collection of DA
         self.collection = []  # current collection used
@@ -220,11 +221,17 @@ class DialogueActCollection:
         Serializes the DialogueActCollection
         """
         if name is not None and not backup:
-            self.save_file = name
+            self.save_file = os.path.abspath(name)
             self.update_last_save()
 
         with open(self.save_file if not backup else name, "wb") as f:
             pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
+
+    def export(self, path):
+        if path.endswith(".json"):
+            print("export .json")
+        elif path.endswith(".csv"):
+            print("export .csv")
 
     def update_last_save(self):
         if not os.path.exists(DialogueActCollection.temp_dir):
