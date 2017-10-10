@@ -59,7 +59,7 @@ Columns bearing a dimension name and suffixed by `-value` are used to load **leg
 
 # Taxonomy Format:
 
-When a CSV file is loaded, a taxonomy must be chosen before annotation can begin. Taxonomies are saved in the JSON format. Their fields are:
+When a CSV file is loaded, a taxonomy must be chosen before annotation can begin. Taxonomies are saved in JSON format. Their fields are:
 
 #### `name`
 
