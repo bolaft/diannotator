@@ -13,6 +13,8 @@
         ☐ default taxonomies
         ☐ feature driven annotation
         ☐ export/import true DiAML
+        ☐ export current taxonomy
+        ☐ translate README
         ✔ taxonomies as json @done (17-10-10 16:33)
         ✔ generic input format (csv) @done (17-10-10 15:35)
         ✔ export as json or csv @done (17-10-10 13:20)

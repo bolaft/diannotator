@@ -36,9 +36,25 @@ Les colonnes portant un nom de dimension servent à charger les annotations "leg
 
 Les colonnes portant un nom de dimension suffixé de `-value` doivent contenir la valeur du qualifieur pour cette dimension. Par exemple, on peut avoir la valeur `inform` dans la colonne `emotion` et `happiness` dans la colonne `emotion-value`. Les dimensions et leurs labels doivent respecter la nomenclature de la taxonomie employée.
 
-### Taxonomie :
+# Format des taxonomies
 
-La taxonomie est définie par défaut dans le fichier `taxonomy.py`, mais peut être modifiée en cours d'utilisation via différentes commandes détaillées plus bas.
+Lorsqu'un fichier CSV est chargé, il faut ensuite choisir une taxonomie. Les taxonomies sont au format JSON. Consultez la taxonomie exemple `tax/problem-cmc.json` pour comprendre leur format. Les champs sont :
+
+#### `name`
+
+Le nom de la taxonomie.
+
+#### `default`
+
+La dimension par défaut de la taxonomie.
+
+#### `labels`
+
+Un dictionnaire de listes, dont la clef correspond au nom de la dimension et les éléments de la liste aux labels.
+
+#### `values`
+
+Un dictionnaire de listes, dont la clef correspond au nom de la dimension et les éléments de la liste aux qualifieurs qui s'y appliquent.
 
 # Utilisation
 
