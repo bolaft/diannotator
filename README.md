@@ -6,7 +6,7 @@ Il est recommandé de placer les fichiers de données dans le dossier `csv` à l
 
 ### Format :
 
-Le seul format accepté est CSV. Le fichier doit contenir une ligne d'entête et autant de lignes supplémentaires qu'il n'y a de segments dialogiques à annoter. Consultez le fichier `csv/data.csv` pour observer un exemple. Les colonnes sont :
+Le seul format accepté est CSV. Le fichier doit contenir une ligne d'entête et autant de lignes supplémentaires qu'il n'y a de segments dialogiques à annoter. Consultez le fichier `csv/ubuntu-irc-fr.csv` pour observer un exemple. Les colonnes sont :
 
 #### `time`
 

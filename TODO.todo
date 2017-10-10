@@ -10,10 +10,11 @@
 
     Features:
 
-        ☐ generic input format (csv)
         ☐ taxonomies as json
         ☐ default taxonomies
         ☐ feature driven annotation
+        ☐ export/import true DiAML
+        ✔ generic input format (csv) @done (17-10-10 15:35)
         ✔ export as json or csv @done (17-10-10 13:20)
         ✔ menu bar (save / load) @done (17-10-10 12:32)
         ✔ jump to next note command @done (17-10-09 16:59)

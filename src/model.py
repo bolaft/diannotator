@@ -23,7 +23,6 @@ class DialogueAct:
         self.time = time  # time as string
         self.link = None  # DA that elicited this one
         self.linked = []  # DAs that answer an elicitation in this one
-        self.data = {}  # raw data
         self.note = None  # note about the DA
 
         self.tokenize()  # tokenization
@@ -78,7 +77,6 @@ class DialogueAct:
         da = DialogueAct(raw, self.participant, self.time, self.date)
         da.annotations = self.annotations.copy()
         da.legacy = self.legacy.copy()
-        da.data = self.data.copy()
         da.link = self.link
         da.time = self.link
         da.date = self.link
@@ -115,7 +113,6 @@ class DialogueAct:
         self.tokenize()
         self.annotations.update(da.annotations)
         self.legacy.update(da.legacy)
-        self.data += da.data
 
         if self.note is None:
             if da.note is not None:
