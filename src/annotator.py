@@ -1,5 +1,4 @@
 import styles
-import taxonomy
 
 from copy import deepcopy
 from interface import GraphicalUserInterface, WHITE, GRAY
@@ -24,6 +23,11 @@ class Annotator(GraphicalUserInterface):
         if not self.dac:
             # initializing the dialogue act collection
             self.load()
+
+            # choose a taxonomy if none is set
+            if self.dac.taxonomy is None:
+                self.choose_taxonomy()
+                self.generate_dimension_colors()
 
         # make a backup of the collection
         self.dac.save(
@@ -71,10 +75,29 @@ class Annotator(GraphicalUserInterface):
                 foreground=self.generate_random_color()
             )
 
+    def generate_dimension_colors(self):
+        for dimension, color in self.dac.colors.items():
+            self.add_tag(
+                dimension,
+                foreground=color
+            )
+            print(dimension)
+            print(color)
+
+    def choose_taxonomy(self):
+        taxonomy_path = filedialog.askopenfilename(
+            initialdir=DialogueActCollection.taxo_dir,
+            title="Open taxonomy file",
+            filetypes=(("JSON taxonomy file", "*.json"), ("all files", "*.*"))
+        )
+
+        self.dac.set_taxonomy(taxonomy_path)
+        self.update()
+
     def load(self):
         loaded_dac = DialogueActCollection.load(filedialog.askopenfilename(
             initialdir=DialogueActCollection.save_dir,
-            title="Open",
+            title="Open data file",
             filetypes=(("Pickle serialized files", "*.pic"), ("CSV data files", "*.csv"), ("all files", "*.*"))
         ))
 
@@ -82,7 +105,10 @@ class Annotator(GraphicalUserInterface):
             self.dac = loaded_dac
 
             self.undo_history = []  # reinitializes undo history
-            self.update()
+
+            # prevents any display until a taxonomy is loaded
+            if loaded_dac.taxonomy is not None:
+                self.update()
 
     def save_as(self):
         self.dac.save(name=filedialog.asksaveasfilename(
@@ -445,33 +471,15 @@ class Annotator(GraphicalUserInterface):
 
         offset = len(text) + 1
 
-        colors = {
-            taxonomy.TASK: styles.WHITE,
-            taxonomy.FEEDBACK: styles.PROCESS,
-            taxonomy.SOCIAL_OBLIGATIONS_MANAGEMENT: styles.OK,
-            taxonomy.DISCOURSE_STRUCTURE_MANAGEMENT: styles.INFO,
-            taxonomy.COMMUNICATION_MANAGEMENT: styles.DEBUG,
-            taxonomy.CONTACT_MANAGEMENT: styles.GREEN,
-            taxonomy.OPINION: styles.WARNING,
-            taxonomy.SENTIMENT: styles.WARNING,
-            taxonomy.EMOTION: styles.WARNING,
-            taxonomy.KNOWLEDGE: styles.DIALOG,
-            taxonomy.PROBLEM_MANAGEMENT: styles.FAIL,
-            taxonomy.PARTIALITY: styles.PURPLE,
-            taxonomy.CONDITIONALITY: styles.PURPLE,
-            taxonomy.CERTAINTY: styles.PURPLE,
-            taxonomy.IRONY: styles.PURPLE
-        }
-
         for dimension in reversed(sorted(da.annotations.keys())):
             addendum = " [{}]".format(da.annotations[dimension])
-            self.add_to_last_line(addendum, style=colors[dimension], offset=offset)
+            self.add_to_last_line(addendum, style=dimension, offset=offset)
             offset += len(addendum)
 
         for dimension in reversed(sorted(da.legacy.keys())):
             if dimension not in da.annotations:
                 addendum = " (({}))".format(da.legacy[dimension])
-                self.add_to_last_line(addendum, style=colors[dimension], offset=offset)
+                self.add_to_last_line(addendum, style=dimension, offset=offset)
                 offset += len(addendum)
 
         if da.link is not None:

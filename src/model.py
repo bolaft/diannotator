@@ -1,6 +1,5 @@
 import codecs
 import pickle
-import taxonomy
 import os
 import csv
 import json
@@ -42,7 +41,7 @@ class DialogueAct:
             "annotations": self.annotations
         }
 
-    def to_csv_dict(self):
+    def to_csv_dict(self, labels):
         """
         Returns a dict representation of the object for CSV export
         """
@@ -56,7 +55,7 @@ class DialogueAct:
         data.update({"note": self.note})
         data.update({"link": self.link.id if self.link else None})
 
-        for dimension in taxonomy.labels:
+        for dimension in labels:
             data.update(
                 {dimension: None if not dimension in self.annotations else self.annotations[dimension]}
             )
@@ -134,6 +133,7 @@ class DialogueActCollection:
     # file for serialization
 
     save_dir = "../sav/"
+    taxo_dir = "../tax/"
     data_dir = "../out/"
     temp_dir = "/tmp/diannotator/"
 
@@ -144,12 +144,25 @@ class DialogueActCollection:
         self.collection = []  # current collection used
         self.annotations = {}  # list of possible annotations
 
-        self.labels = taxonomy.labels  # label tagsets
-        self.values = taxonomy.values  # label qualifier tagsets
+        self.taxonomy = None
+
+        self.labels = {}  # label tagsets
+        self.values = {}  # label qualifier tagsets
+        self.colors = {}  # dimension colors
 
         self.i = 0
-        self.dimension = taxonomy.TASK
+        self.dimension = None
         self.filter = False
+
+    def set_taxonomy(self, path):
+        taxonomy = json.loads(codecs.open(path, encoding="utf-8").read())
+
+        self.taxonomy = taxonomy["name"]
+        self.dimension = taxonomy["default"]
+
+        self.labels = taxonomy["labels"]  # label tagsets
+        self.values = taxonomy["values"]  # label qualifier tagsets
+        self.colors = taxonomy["colors"]  # dimension colors
 
     def get_current(self):
         return self.collection[self.i]
@@ -300,7 +313,7 @@ class DialogueActCollection:
 
     def export_csv(self, path):
         with open(path, "w") as f:
-            w = csv.DictWriter(f, self.full_collection[0].to_csv_dict().keys(), delimiter="\t")
+            w = csv.DictWriter(f, self.full_collection[0].to_csv_dict(self.labels).keys(), delimiter="\t")
             w.writeheader()
 
             for da in self.full_collection:

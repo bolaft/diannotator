@@ -10,10 +10,10 @@
 
     Features:
 
-        ☐ taxonomies as json
         ☐ default taxonomies
         ☐ feature driven annotation
         ☐ export/import true DiAML
+        ✔ taxonomies as json @done (17-10-10 16:33)
         ✔ generic input format (csv) @done (17-10-10 15:35)
         ✔ export as json or csv @done (17-10-10 13:20)
         ✔ menu bar (save / load) @done (17-10-10 12:32)
