@@ -1,14 +1,46 @@
-# Format de données d'entrée
+# Input Data Format
 
-### Emplacement :
+### Location:
 
-Il est recommandé de placer les fichiers de données dans le dossier `csv` à la racine du projet.
+Raw data files should be placed in the `csv` at the root of the project directory.
 
-### Format :
+### Format:
 
-Le seul format accepté est CSV. Le fichier doit contenir une ligne d'entête et autant de lignes supplémentaires qu'il n'y a de segments dialogiques à annoter. Consultez le fichier `csv/ubuntu-irc-fr.csv` pour observer un exemple. Les colonnes sont :
+The only accepted format is **CSV**. The file must contain a **header** line and as many additional lines as there are dialogue segments. Columns must be separated by **tabs**, not commas, and there should be **no text delimiter**.
 
-#### Example :
+#### Columns:
+
+The following columns are used when importing data:
+
+##### `time`
+
+Contains a string representation of the **time** at which the message was sent.
+
+##### `date`
+
+Contains a string representation of the **date** on which the message was sent.
+
+##### `raw`
+
+Contains the **raw text** of the message.
+
+##### `segment`
+
+Contains the **dialogue segment**. When there are more than one segment in a message (due to prior segmentation for example), the `raw` column should only be filled in the first row, and left empty in the following rows. Moreover, when there are more than one raw message for a single segment (due to prior mergin for example), the `segment` column should be filled only in the first row, and left empty in the following ones.
+
+##### `participant`
+
+Contains the **name** or **ID** of the speaker.
+
+##### `<dimension name>` (optional)
+
+Columns bearing a dimension name are used to load **legacy annotations**, which can serve as useful hints when producing new annotations. These column's names must follow the naming convention of the taxonomy's JSON file.
+
+##### `<nom de dimension>-value` (optional)
+
+Columns bearing a dimension name and suffixed by `-value` are used to load **legacy qualifiers** for that dimension. For example, if `emotion` is a dimension, `express` may be a label, and `happiness` might be the value present in the `emotion-value` column. These column's names must follow the naming convention of the taxonomy's JSON file.
+
+#### Example:
 
 | participant 	| date     	| time  	| segment                                                            	| raw                                                                	| activity 	| social 	| feedback    	| feedback-value 	|
 |-------------	|----------	|-------	|--------------------------------------------------------------------	|--------------------------------------------------------------------	|----------	|--------	|-------------	|----------------	|
@@ -17,152 +49,124 @@ Le seul format accepté est CSV. Le fichier doit contenir une ligne d'entête et
 | gabi        	| 11-05-17 	| 13:06 	| c'est dans "Logiciels et mise à jour" puis "pilotes propriétaires" 	| c'est dans "Logiciels et mise à jour" puis "pilotes propriétaires" 	| answer   	|        	|             	|                	|
 | manu        	| 11-05-17 	| 13:07 	| ah ok!                                                             	| ah ok!                                                             	|          	|        	| acknowledge 	| positive       	|
 
-##### `time`
+# Taxonomy Format:
 
-Contient une chaîne de caractères représentant l'heure d'envoi du message.
-
-##### `date`
-
-Contient une chaîne de caractères représentant la date d'envoi du message.
-
-##### `segment`
-
-Contient le segment dialogique sur lequel s'appliquent les annotations. Si la colonne est vide pour un segment, cela doit signifier que le message (`raw`) a été fusionné avec le précédent (comme dans le format multi-tab de DiAML).
-
-##### `raw`
-
-Contient le texte brut du message. Si le message a été segmenté, la colonne `raw` doit être remplie uniquement pour le premier segment, et laissée vide pour les segments qui suivent (comme dans le format multi-tab de DiAML).
-
-##### `participant`
-
-Contient le nom ou l'identifiant du participant qui a produit le message.
-
-##### `<nom de dimension>` (optionnel)
-
-Les colonnes portant un nom de dimension servent à charger les annotations "legacy" (pour l'aide à l'annotation). Par exemple, on peut avoir la valeur `check contact` dans la colonne `contact management`. Les dimensions et leurs labels doivent respecter la nomenclature de la taxonomie employée.
-
-##### `<nom de dimension>-value` (optionnel)
-
-Les colonnes portant un nom de dimension suffixé de `-value` doivent contenir la valeur du qualifieur pour cette dimension. Par exemple, on peut avoir la valeur `inform` dans la colonne `emotion` et `happiness` dans la colonne `emotion-value`. Les dimensions et leurs labels doivent respecter la nomenclature de la taxonomie employée.
-
-# Format des taxonomies
-
-Lorsqu'un fichier CSV est chargé, il faut ensuite choisir une taxonomie. Les taxonomies sont au format JSON. Consultez la taxonomie exemple `tax/problem-cmc.json` pour comprendre leur format. Les champs sont :
+When a CSV file is loaded, a taxonomy must be chosen before annotation can begin. Taxonomies are saved in the JSON format. Their fields are:
 
 #### `name`
 
-Le nom de la taxonomie.
+The taxonomy's **name**.
 
 #### `default`
 
-La dimension par défaut de la taxonomie.
+The **default dimension** of the taxonomy, the first one to be active when first loading a data file.
 
 #### `labels`
 
-Un dictionnaire de listes, dont la clef correspond au nom de la dimension et les éléments de la liste aux labels.
+A dictionary of lists, whose key represents the name of the dimension and the list's elements represent the dimension's **labels' tagset**.
 
 #### `values`
 
-Un dictionnaire de listes, dont la clef correspond au nom de la dimension et les éléments de la liste aux qualifieurs qui s'y appliquent.
+A dictionary of lists, whose key represents the name of the dimension and the list's elements represent the dimension's **qualifiers' tagset**.
 
-# Utilisation
+# Usage:
 
-### Annotation :
+### Annotation:
 
-Les boutons noirs en bas de l'écran indiquent les annotations disponibles pour la dimension active. La dimension active par défaut est `Task`. Le segment actif est le dernier segment affiché, il apparaît en gras. Pour appliquer une annotation, il suffit de cliquer sur le bouton approprié ou de taper une partie suffisamment discriminante du label (par exemple `req dir` pour `request directives`) puis d'appuyer sur "Entrée" pour appliquer le label à l'énoncé et passer au suivant.
+Black buttons on the bottom of the screen show the possible labels for the active dimension. The active segment is the last one displayed, appearing in bold. To apply a label to a segment, click on the appropriate button or type a sufficiently discriminating part of the label (for example, `req dir` for `request directives`) then press Enter.
 
-### Raccourcis clavier :
+### Keyboard Shortcuts:
 
 #### `Enter`
 
-Valide une entrée dans le champ texte, sélectionne un bouton sur lequel le focus est placé, ou passe au segment suivant en mode annotation si le champs d'entrée de texte est vide.
+Sends an entry, pushes a button on which the focus is set, or moves on to the next segment if the entry field is empty.
 
 #### `Down Arrow`
 
-Passe au segment suivant.
+Moves down one segment.
 
 #### `Up Arrow`
 
-Passe au segment précédent.
+Moves up one segment.
 
 #### `Page Down`
 
-Descend de dix segments.
+Moves down ten segments.
 
 #### `Page Up`
 
-Remonte de dix segments.
+Moves up ten segments.
 
 #### `Delete`
 
-Supprime le segment actif.
+Deletes the active segment.
 
 #### `F11`
 
-Alterne en le mode plein écran et le mode fenêtré.
+Toggles between fullscreen and windowed mode.
 
 #### `Escape`
 
-Quitte l'application. 
+Exits the application.
 
 #### `Tab`
 
-Passe le focus de bouton en bouton.
+Moves focus from button to button, and back to the entry field.
 
 #### `Control O`
 
-Ouvre le dialogue de chargement de fichier.
+Opens the "open data file" dialogue.
 
 #### `Control Shift S`
 
-Ouvre le dialogue de sauvegarde de fichier.
+Opens the "save as..." dialogue.
 
 #### `Control Shift E`
 
-Ouvre le dialogue d'export au format .json ou .csv.
+Opens the "export as..." dialogue.
 
-### Commandes spéciales :
+### Special Commands:
 
 #### Add : `Control A`
 
-La prochaine entrée créé un nouveau label ajouté en tant que label spécifique à la dimension active, ou en tant que nouveau qualifieur possible pour la dimension active, le cas échéant.
+The next entry creates a new label added to the active dimension, or creates a new qualifier for the active dimension, if applicable.
 
 #### Dimension : `Control D`
 
-Permet de choisir la dimension active.
+Changes the active dimension.
 
 #### Filter : `Control F`
 
-Les segments sont filtrés pour ne plus afficher que les segments annotés avec le même label que le segment actif pour la dimension active. Si le segment n'est pas annoté pour la dimension active, le filtre est créé sur le label "legacy" du segment actif pour la dimension active.
+Displayed segments are filtered to only display those bearing the same annotation as the active segment for the active dimension. If the segment doesn't have a label on the active dimension, the filter is created to only display segments bearing the same legacy annotation for the active dimension. Using this command again will remove the filter and display all segments.
 
 #### Jump : `Control J`
 
-Permet d'entrer l'index d'un segment et de s'y déplacer immédiatement.
+Jumps to a specific segment, selected by index.
 
 #### Link : `Control L`
 
-Si le segment actif n'est lié à aucun autre segment, propose d'entrer l'index du segment cible puis créé le lien. Si le segment a déjà un lien vers un autre segment, le lien est supprimé.
+If the active segment is not linked to any other segment, links it to a specific segment, selected by index. If the segment is already linked to another segment, the link is removed.
 
 #### Merge : `Control M`
 
-Fusionne le segment actif à celui qui le précède. Les liens, commentaires, annotations et annotations "legacy" sont préservés.
+Merges the active segment to the previous ones. Links, notes, annotations and legacy annotations are preserved.  
 
 #### Note : `Control N`
 
-La prochaine entrée créé un commentaire joint au segment actif. Si un commentaire existe déjà pour le segment actif, il est supprimé.
+The next entry creates a note and attaches it to the active segment. If the active segment already has a note attached, the note is deleted.
 
 #### Remove : `Control R`
 
-Supprime l'annotation du segment actif pour la dimension active.
+Deletes the active segment's annotation for the active dimension.
 
 #### Split : `Control S`
 
-Divise le segment actif en deux, au niveau du mot choisi. Les liens, commentaires, annotations et annotations "legacy" sont préservés.
+Splits the active segment in two, on the chosen token. Links, notes, annotations and legacy annotations are preserved.
 
 #### Update : `Control U`
 
-La prochaine entrée correspondra au nouveau nom du label du segment actif, pour la dimension active. Le renommage est appliqué à tous les segment de la collection. Si l'entrée est laissée vide, le label est supprimé de la taxonomie.
+The next entry updates the name of the label used for the active segment, on the active dimension. All segments annotated with this label will be affected. If the entry field is empty when Enter is pressed, the label is removed from the taxonomy.
 
 #### Undo : `Control Z`
 
-Annule la dernière action effectuée.
+Cancels the last action performed. Up to 50 actions can be undone this way.
