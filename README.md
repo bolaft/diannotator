@@ -57,9 +57,9 @@ Columns bearing a dimension name and suffixed by `-value` are used to load **leg
 | gabi        	| 11-05-17 	| 13:06 	| search software sources, and then it's in the additional drivers tab | search software sources, and then it's in the additional drivers tab 	| answer   	|        	|             	|                	|
 | manu        	| 11-05-17 	| 13:07 	| k thx!                                                             	| k thx!                                                             	|          	| thanks 	| acknowledge 	| positive       	|
 
-# Taxonomy Format:
+# Taxonomy Format
 
-When a CSV file is loaded, a taxonomy must be chosen before annotation can begin. Taxonomies are saved in the JSON format. Their fields are:
+When a CSV file is loaded, a taxonomy must be chosen before annotation can begin. Taxonomies are saved in JSON format. Their fields are:
 
 #### `name`
 
@@ -77,7 +77,7 @@ A dictionary of lists, whose key represents the name of the dimension and the li
 
 A dictionary of lists, whose key represents the name of the dimension and the list's elements represent the dimension's **qualifiers' tagset**.
 
-# Usage:
+# Usage
 
 ### Annotation:
 
