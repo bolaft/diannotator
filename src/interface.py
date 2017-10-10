@@ -80,21 +80,28 @@ class GraphicalUserInterface(Frame, Styles):
         self.parent.title(self.window_title)
 
         # menu bar
-        menubar = Menu(self.parent)
+        self.menu_bar = Menu(self.parent)
 
-        filemenu = Menu(menubar, tearoff=0)
-        filemenu.add_command(label="Load", command=self.load)
-        filemenu.add_command(label="Save As...", command=self.save_as)
-        filemenu.add_command(label="Export As...", command=self.export_as)
-        filemenu.add_separator()
-        filemenu.add_command(label="Exit", command=self.parent.quit)
+        file_menu = Menu(self.menu_bar, tearoff=0)
+        file_menu.add_command(label="Load", accelerator="Ctrl+O", command=self.load)
+        file_menu.add_command(label="Save As...", accelerator="Ctrl+Shift+O", command=self.save_as)
+        file_menu.add_command(label="Export As...", accelerator="Ctrl+E", command=self.export_as)
+        file_menu.add_separator()
+        file_menu.add_command(label="Quit", accelerator="Esc", command=self.parent.quit)
 
-        menubar.add_cascade(label="File", menu=filemenu)
+        self.menu_bar.add_cascade(label="File", menu=file_menu)
 
-        # menubar.add_command(label="test1", command=self.test1)
-        # menubar.add_command(label="test2", command=self.test2)
+        edit_menu = Menu(self.menu_bar, tearoff=0)
+        edit_menu.add_command(label="Undo", accelerator="Ctrl+Z", command=self.command_undo)
 
-        self.parent.config(menu=menubar)
+        self.menu_bar.add_cascade(label="Edit", menu=edit_menu)
+
+        filter_menu = Menu(self.menu_bar, tearoff=0)
+        filter_menu.add_command(label="Filter current label", accelerator="Ctrl+F", command=lambda e=None: self.button_filter(e))
+
+        self.menu_bar.add_cascade(label="Filter", menu=filter_menu)
+
+        self.parent.config(menu=self.menu_bar)
 
         # make the frame take the whole window
         self.pack(fill=BOTH, expand=1)

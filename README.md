@@ -60,13 +60,17 @@ Quitte l'application.
 
 Passe le focus de bouton en bouton.
 
+#### `Control O`
+
+Ouvre le dialogue de chargement de fichier.
+
 #### `Control Shift S`
 
 Ouvre le dialogue de sauvegarde de fichier.
 
-#### `Control O`
+#### `Control Shift E`
 
-Ouvre le dialogue de chargement de fichier.
+Ouvre le dialogue d'export au format .json ou .csv.
 
 ### Commandes spéciales :
 
