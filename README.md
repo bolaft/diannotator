@@ -36,6 +36,10 @@ Contains the **dialogue segment**. When there are more than one segment in a mes
 
 Contains the **name** or **ID** of the speaker.
 
+##### `note` (optional)
+
+Contains a note or comment pertaining to the segment.
+
 ##### `<dimension name>` (optional)
 
 Columns bearing a dimension name are used to load **legacy annotations**, which can serve as useful hints when producing new annotations. These column's names must follow the naming convention of the taxonomy's JSON file.

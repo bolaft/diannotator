@@ -24,11 +24,6 @@ class Annotator(GraphicalUserInterface):
             # initializing the dialogue act collection
             self.load()
 
-            # choose a taxonomy if none is set
-            if self.dac.taxonomy is None:
-                self.import_taxonomy()
-                self.generate_dimension_colors()
-
         # make a backup of the collection
         self.dac.save(
             name="{}backup/auto-{}.pic".format(DialogueActCollection.save_dir, datetime.now().strftime("%d-%m-%y_%X")),
@@ -113,9 +108,12 @@ class Annotator(GraphicalUserInterface):
 
             self.undo_history = []  # reinitializes undo history
 
-            # prevents any display until a taxonomy is loaded
-            if loaded_dac.taxonomy is not None:
-                self.update()
+            # choose a taxonomy if none is set
+            if self.dac.taxonomy is None:
+                self.import_taxonomy()
+                self.generate_dimension_colors()
+
+            self.update()
 
     def save_as(self):
         self.dac.save(name=filedialog.asksaveasfilename(

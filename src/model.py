@@ -216,6 +216,7 @@ class DialogueActCollection:
             time = row["time"].strip()
             date = row["date"].strip()
             segment = row["segment"].strip()
+            note = row["note"].strip() if "note" in row else None
 
             if row["raw"] is None or row["raw"].strip() == "":
                 da = DialogueAct(
@@ -224,6 +225,7 @@ class DialogueActCollection:
                     previous_da.time,
                     previous_da.date
                 )
+                da.note = previous_da.note
 
                 da.legacy = {}
 
@@ -253,6 +255,7 @@ class DialogueActCollection:
                     time,
                     date
                 )
+                da.note = note
 
             # update the current DA's segment
             da.segment = segment
