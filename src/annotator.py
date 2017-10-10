@@ -26,7 +26,10 @@ class Annotator(GraphicalUserInterface):
             self.load()
 
         # make a backup of the collection
-        self.dac.save(name="auto-" + datetime.now().strftime("%d-%m-%y_%X"), backup=True)
+        self.dac.save(
+            name="{}auto-{}.pic".format(DialogueActCollection.save_dir, datetime.now().strftime("%d-%m-%y_%X")),
+            backup=True
+        )
 
         # creating custom colors for each participant
         for participant in set([da.participant for da in self.dac.full_collection]):
@@ -316,12 +319,6 @@ class Annotator(GraphicalUserInterface):
         """
         Button to filter segments by label
         """
-        # save because filter tends to make the app bug
-        self.dac.save(
-            name="{}auto-{}.pic".format(DialogueActCollection.save_dir, datetime.now().strftime("%d-%m-%y_%X")),
-            backup=True
-        )
-
         current_da = self.dac.get_current()
 
         if not self.dac.filter and (self.dac.dimension in current_da.annotations or self.dac.dimension in current_da.legacy):
