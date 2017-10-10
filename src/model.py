@@ -238,7 +238,13 @@ class DialogueActCollection:
         if not os.path.exists(DialogueActCollection.temp_dir):
             os.makedirs(DialogueActCollection.temp_dir)
 
-        with open("{}last_save.tmp".format(DialogueActCollection.temp_dir), "r") as tmp:
+        path = "{}last_save.tmp".format(DialogueActCollection.temp_dir)
+
+        # create file if doesn't exist
+        if not os.path.exists(path):
+            open(path, "a").close()
+
+        with open(path, "r") as tmp:
             tmp.seek(0)
             return tmp.read().strip()
 
