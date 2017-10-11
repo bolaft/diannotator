@@ -87,6 +87,9 @@ class GraphicalUserInterface(Frame, Styles):
         file_menu.add_command(label="Save As...", accelerator="Ctrl+Shift+O", command=self.save_as)
         file_menu.add_command(label="Export As...", accelerator="Ctrl+Shift+E", command=self.export_as)
         file_menu.add_separator()
+        file_menu.add_command(label="Import Taxonomy...", command=self.import_taxonomy)
+        file_menu.add_command(label="Export Taxonomy As...", command=self.export_taxonomy)
+        file_menu.add_separator()
         file_menu.add_command(label="Quit", accelerator="Esc", command=self.parent.quit)
 
         self.menu_bar.add_cascade(label="File", menu=file_menu)
@@ -97,15 +100,10 @@ class GraphicalUserInterface(Frame, Styles):
         self.menu_bar.add_cascade(label="Edit", menu=edit_menu)
 
         view_menu = Menu(self.menu_bar, tearoff=0)
-        view_menu.add_command(label="Randomize Participant Colors", command=self.generate_participant_colors)
+        view_menu.add_command(label="Randomize Participant Colors", accelerator="F3", command=self.generate_participant_colors)
 
         self.menu_bar.add_cascade(label="View", menu=view_menu)
 
-        taxonomy_menu = Menu(self.menu_bar, tearoff=0)
-        taxonomy_menu.add_command(label="Import File...", command=self.import_taxonomy)
-        taxonomy_menu.add_command(label="Export As...", command=self.export_taxonomy)
-
-        self.menu_bar.add_cascade(label="Taxonomy", menu=taxonomy_menu)
 
         filter_menu = Menu(self.menu_bar, tearoff=0)
         filter_menu.add_command(label="Filter Current Label", accelerator="Ctrl+F", command=lambda e=None: self.button_filter(e))

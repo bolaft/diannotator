@@ -131,6 +131,10 @@ Moves up ten segments.
 
 Deletes the active segment.
 
+#### `F3`
+
+Randomizes participant colors.
+
 #### `F11`
 
 Toggles between fullscreen and windowed mode.

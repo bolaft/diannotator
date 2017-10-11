@@ -1,5 +1,7 @@
     Bugs:
 
+        ☐ date/time not loaded on all segments
+        ☐ bug export CSV, no lines
         ☐ bug with undo when less than max backups
         ✔ bug with filter, due to merge and split functions in annotator (doesn't affect "full_collection") @done (17-10-09 16:58)
         ✔ bug when merging/splitting DA linked/connected by links @done (17-10-09 13:17)
@@ -11,10 +13,14 @@
     Features:
 
         ☐ default taxonomies (ISO, DAMSL, MapTask...)
+        ☐ different links (with colors)
         ☐ export/import true DiAML
         ☐ add a LICENSE file
         ☐ feature driven annotation
         ☐ make error messages when file formats are wrong
+        ☐ smaller binary file
+        ☐ specific command to delete label
+        ☐ only move to bottom of screen if down, not if up
         ✔ import notes from data files @done (17-10-10 18:40)
         ✔ translate README @done (17-10-10 18:31)
         ✔ add qualifier values to current taxonomy @done (17-10-10 17:25)

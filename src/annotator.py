@@ -24,6 +24,8 @@ class Annotator(GraphicalUserInterface):
             # initializing the dialogue act collection
             self.load()
 
+        self.generate_dimension_colors()
+
         # make a backup of the collection
         self.dac.save(
             name="{}backup/auto-{}.pic".format(DialogueActCollection.save_dir, datetime.now().strftime("%d-%m-%y_%X")),
@@ -40,6 +42,7 @@ class Annotator(GraphicalUserInterface):
         self.parent.bind("<Next>", lambda event, arg=10: self.command_continue(event, n=arg))
         self.parent.bind("<Prior>", lambda event, arg=10: self.command_return(event, n=arg))
         self.parent.bind("<Delete>", self.command_delete)
+        self.parent.bind("<F3>", lambda event, arg=None: self.generate_participant_colors())
 
         self.parent.bind("<Control-l>", self.button_link)
         self.parent.bind("<Control-r>", self.button_remove)
@@ -85,6 +88,7 @@ class Annotator(GraphicalUserInterface):
         )
 
         self.dac.set_taxonomy(taxonomy_path)
+        self.generate_dimension_colors()
         self.update()
 
     def export_taxonomy(self):
@@ -111,7 +115,6 @@ class Annotator(GraphicalUserInterface):
             # choose a taxonomy if none is set
             if self.dac.taxonomy is None:
                 self.import_taxonomy()
-                self.generate_dimension_colors()
 
             self.update()
 
