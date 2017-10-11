@@ -16,6 +16,11 @@
         "feedback": "#808080",
         "partiality": "#db5cd7"
     },
+    "links": {
+        "feedback": "#A6E22E",
+        "functional": "#54D6EF",
+        "rhetoric": "#ffffff"
+    },
     "values": {
         "opinion": [
             "depreciate",

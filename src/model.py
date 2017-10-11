@@ -25,7 +25,7 @@ class DialogueAct:
         self.legacy = {}  # legacy annotations
         self.date = date  # date as string
         self.time = time  # time as string
-        self.link = None  # DA that elicited this one
+        self.links = []  # DA linked to this one
         self.linked = []  # DAs that answer an elicitation in this one
         self.note = None  # note about the DA
 
@@ -35,6 +35,11 @@ class DialogueAct:
         """
         Returns a dict representation of the object for JSON export
         """
+        links = {}
+
+        for da, lt in self.links:
+            links[lt] = [da.id] if lt not in links else links[lt] + [da.id]
+
         return {
             "id": self.id,
             "raw": self.raw,
@@ -42,7 +47,7 @@ class DialogueAct:
             "date": self.date,
             "time": self.time,
             "note": self.note,
-            "link": self.link.id if self.link else None,
+            "links": links,
             "annotations": self.annotations
         }
 
@@ -58,7 +63,7 @@ class DialogueAct:
         data.update({"date": self.date})
         data.update({"time": self.time})
         data.update({"note": self.note})
-        data.update({"link": self.link.id if self.link else None})
+        data.update({"links": ",".join(["{}-{}".format(da.id, lt) for da, lt in self.links])})
 
         for dimension in labels:
             data.update(
@@ -81,14 +86,51 @@ class DialogueAct:
         da = DialogueAct(raw, self.participant, self.time, self.date)
         da.annotations = self.annotations.copy()
         da.legacy = self.legacy.copy()
-        da.link = self.link
-        da.time = self.link
-        da.date = self.link
-        da.linked = self.linked
+        da.links = self.links.copy()
+        da.time = self.time
+        da.date = self.date
+        da.linked = self.linked.copy()
         da.note = self.note
         da.tokenize()
 
         return da
+
+    @staticmethod
+    def check_for_link(source, target):
+        """
+        Checks if two DAs are linked
+        """
+        for da, lt in source.links:
+            if da == target:
+                return True
+
+    @staticmethod
+    def remove_links(source, target):
+        """
+        Removes a link between two DA
+        """
+        for da, lt in source.links:
+            if da == target:
+                source.links.remove((target, lt))
+
+        for lda, llt in target.linked:
+            if lda == source:
+                target.linked.remove((source, llt))
+
+    @staticmethod
+    def replace_links(source, target, new_target):
+        """
+        Removes a link between two DA
+        """
+        for lda, lt in source.links:
+            if lda == target:
+                source.links.remove((target, lt))
+                source.links.append((new_target, lt))
+
+        for lda, lt in target.linked:
+            if lda == source:
+                target.linked.remove((source, lt))
+                new_target.linked.append((source, lt))
 
     def split(self, token):
         """
@@ -100,11 +142,13 @@ class DialogueAct:
         # copying attributes
         da1 = self.copy(" ".join(self.tokens[0:split_index]))
         da2 = self.copy(" ".join(self.tokens[split_index:]))
-        da2.link = None
+
+        # outgoing links are removed for da2
+        da2.links = []
 
         # preserves links
-        for link in self.linked:
-            link.link = da2
+        for lda, lt in self.linked:
+            DialogueAct.replace_links(lt, self, da2)
 
         return [da1, da2]
 
@@ -124,12 +168,12 @@ class DialogueAct:
         elif da.note is not None:
             self.note = "{} / {}".format(da.note, self.note)
 
-        if da == self.link:
-            da.linked.remove(self)
-            self.link = da.link
+        if DialogueAct.check_for_link(self, da):
+            DialogueAct.remove_links(self, da)
+            self.links = da.links
 
-        for linked_da in da.linked:
-            linked_da.link = self
+        for lda, lt in da.linked:
+            DialogueAct.replace_links(lda, da, self)
 
         self.linked = list(set(self.linked + da.linked))
 
@@ -153,6 +197,7 @@ class DialogueActCollection:
         self.labels = {}  # label tagsets
         self.values = {}  # label qualifier tagsets
         self.colors = {}  # dimension colors
+        self.links = []  # link types
 
         self.i = 0
         self.dimension = None
@@ -167,9 +212,21 @@ class DialogueActCollection:
         self.labels = taxonomy["labels"]  # label tagsets
         self.values = taxonomy["values"]  # label qualifier tagsets
         self.colors = taxonomy["colors"]  # dimension colors
+        self.links = taxonomy["links"]  # link types
 
     def get_current(self):
         return self.collection[self.i]
+
+    def remove(self, da):
+        self.collection.remove(da)
+        self.full_collection.remove(da)
+
+    def insert_after_current(self, insert):
+        # insert into full collection
+        self.full_collection.insert(self.full_collection.index(self.get_current()) + 1, insert)
+
+        # insert into current collection
+        self.collection.insert(self.i + 1, insert)
 
     def next(self):
         self.i = self.i if self.i + 1 == len(self.collection) else self.i + 1
@@ -184,15 +241,22 @@ class DialogueActCollection:
         index = self.labels[dimension].index(label)
         self.labels[dimension].remove(label)
 
-        if new_label != "" and new_label not in self.labels[dimension]:
+        if new_label not in self.labels[dimension]:
             self.labels[dimension].insert(index, new_label)
 
-        for da in self.collection:
+        for da in list(set(self.collection + self.full_collection)):
             if dimension in da.annotations and da.annotations[dimension] == label:
-                if new_label != "":
-                    da.annotations[dimension] = new_label
-                else:
-                    del da.annotations[dimension]
+                da.annotations[dimension] = new_label
+
+    def delete_label(self, dimension, label):
+        """
+        Deletes a label
+        """
+        self.labels[dimension].remove(label)
+
+        for da in list(set(self.collection + self.full_collection)):
+            if dimension in da.annotations and da.annotations[dimension] == label:
+                del da.annotations[dimension]
 
     def add_label(self, dimension, label):
         """

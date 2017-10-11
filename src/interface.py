@@ -84,11 +84,8 @@ class GraphicalUserInterface(Frame, Styles):
 
         file_menu = Menu(self.menu_bar, tearoff=0)
         file_menu.add_command(label="Open File...", accelerator="Ctrl+O", command=self.load)
-        file_menu.add_command(label="Save As...", accelerator="Ctrl+Shift+O", command=self.save_as)
+        file_menu.add_command(label="Save As...", accelerator="Ctrl+Shift+S", command=self.save_as)
         file_menu.add_command(label="Export As...", accelerator="Ctrl+Shift+E", command=self.export_as)
-        file_menu.add_separator()
-        file_menu.add_command(label="Import Taxonomy...", command=self.import_taxonomy)
-        file_menu.add_command(label="Export Taxonomy As...", command=self.export_taxonomy)
         file_menu.add_separator()
         file_menu.add_command(label="Quit", accelerator="Esc", command=self.parent.quit)
 
@@ -104,11 +101,18 @@ class GraphicalUserInterface(Frame, Styles):
 
         self.menu_bar.add_cascade(label="View", menu=view_menu)
 
-
         filter_menu = Menu(self.menu_bar, tearoff=0)
         filter_menu.add_command(label="Filter Current Label", accelerator="Ctrl+F", command=lambda e=None: self.button_filter(e))
 
         self.menu_bar.add_cascade(label="Filter", menu=filter_menu)
+
+        taxonomy_menu = Menu(self.menu_bar, tearoff=0)
+        taxonomy_menu.add_command(label="Remove Current Label From Taxonomy", command=self.command_remove_label)
+        taxonomy_menu.add_separator()
+        taxonomy_menu.add_command(label="Import Taxonomy...", accelerator="Ctrl+Shift+I", command=self.import_taxonomy)
+        taxonomy_menu.add_command(label="Export Taxonomy As...", accelerator="Ctrl+Shift+T", command=self.export_taxonomy)
+
+        self.menu_bar.add_cascade(label="Taxonomy", menu=taxonomy_menu)
 
         self.parent.config(menu=self.menu_bar)
 
@@ -211,8 +215,10 @@ class GraphicalUserInterface(Frame, Styles):
         Processes user input
         """
         self.free_input = False
-        self.action(t)
-        self.annotation_mode()
+        return_to_annotation_mode = self.action(t)
+
+        if return_to_annotation_mode:
+            self.annotation_mode()
 
     def update_status_message(self, text):
         """
@@ -345,6 +351,7 @@ class GraphicalUserInterface(Frame, Styles):
         commands = sorted(list(set(commands))) if sort else commands  # sort commands alphabetically if necessary
 
         command_list = [str(c) for c in commands]
+
         if command_list != self.command_list:
             self.command_list = [str(c) for c in commands]
             self.update_commands()

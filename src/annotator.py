@@ -2,7 +2,7 @@ import styles
 
 from copy import deepcopy
 from interface import GraphicalUserInterface, WHITE, GRAY
-from model import DialogueActCollection
+from model import DialogueAct, DialogueActCollection
 from datetime import datetime
 from tkinter import Button, filedialog, LEFT
 
@@ -25,6 +25,7 @@ class Annotator(GraphicalUserInterface):
             self.load()
 
         self.generate_dimension_colors()
+        self.generate_link_colors()
 
         # make a backup of the collection
         self.dac.save(
@@ -59,6 +60,8 @@ class Annotator(GraphicalUserInterface):
         self.parent.bind("<Control-o>", lambda event, arg=None: self.load())
         self.parent.bind("<Control-S>", lambda event, arg=None: self.save_as())
         self.parent.bind("<Control-E>", lambda event, arg=None: self.export_as())
+        self.parent.bind("<Control-T>", lambda event, arg=None: self.export_taxonomy())
+        self.parent.bind("<Control-I>", lambda event, arg=None: self.import_taxonomy())
 
         self.undo_history = []  # initializes undo history
 
@@ -80,6 +83,13 @@ class Annotator(GraphicalUserInterface):
                 foreground=color
             )
 
+    def generate_link_colors(self):
+        for link, color in self.dac.links.items():
+            self.add_tag(
+                "link-{}".format(link),
+                foreground=color
+            )
+
     def import_taxonomy(self):
         taxonomy_path = filedialog.askopenfilename(
             initialdir=DialogueActCollection.taxo_dir,
@@ -89,6 +99,7 @@ class Annotator(GraphicalUserInterface):
 
         self.dac.set_taxonomy(taxonomy_path)
         self.generate_dimension_colors()
+        self.generate_link_colors()
         self.update()
 
     def export_taxonomy(self):
@@ -190,15 +201,13 @@ class Annotator(GraphicalUserInterface):
         """
         da = self.dac.get_current()
 
-        # TODO: make a DialogueActCollection "remove" function
-        self.dac.collection.remove(da)
-        self.dac.full_collection.remove(da)
+        self.dac.remove(da)
 
         self.update()
 
     def command_undo(self):
         """
-        Button to undo changes
+        Command to undo changes
         """
         # if there is a previous state in history to go to
         if len(self.undo_history) > 1:
@@ -207,29 +216,50 @@ class Annotator(GraphicalUserInterface):
             self.dac = self.undo_history[-1]  # change to previous state in history
             self.update(backup=False)  # update without saving state to history
 
+    def command_remove_label(self):
+        """
+        Command to delete a label from the taxonomy
+        """
+        da = self.dac.get_current()
+
+        if self.dac.dimension in da.annotations:
+            self.dac.delete_label(self.dac.dimension, da.annotations[self.dac.dimension])
+            self.update()
+
     def button_link(self, e):
         """
         Button to link a segment to another
         """
         if self.dac.i > 0:  # first DA can't be linked
-            da = self.dac.get_current()
+            self.input(self.dac.links.keys(), self.select_link_type)
 
-            if da.link is not None:  # removing link
-                if da in da.link.linked:
-                    da.link.linked.remove(da)
-                da.link = None
+    def select_link_type(self, link_type):
+        """
+        Selects a link type then input link target
+        """
+        da = self.dac.get_current()
+
+        for lda, lt in da.links:
+            # remove link
+            if link_type == lt:
+                DialogueAct.remove_links(da, lda)
                 self.update()
-            else:  # adding link
-                self.input(range(1, self.dac.i + 1), self.link)
+                return
 
-    def link(self, number):
+        # input target segment
+        self.input(range(1, self.dac.i + 1), lambda n, link_t=link_type: self.select_link_target(n, link_t))
+
+        return False  # prevent return to annotation mode
+
+    def select_link_target(self, number, link_type):
         """
         Links a segment to another
         """
         number = int(number) - 1
+
         da = self.dac.get_current()
-        da.link = self.dac.collection[number]
-        self.dac.collection[number].linked.append(da)
+        da.links.append((self.dac.collection[number], link_type))
+        self.dac.collection[number].linked.append((da, link_type))
 
         self.update()
 
@@ -254,14 +284,9 @@ class Annotator(GraphicalUserInterface):
         if current.participant == previous.participant:  # can only merge DA from the same participant
             current.merge(previous)
 
-            del self.dac.collection[self.dac.i - 1]
-
-            for i, act in enumerate(self.dac.full_collection):
-                if act == current:
-                    del self.dac.full_collection[i - 1]
-                    break
-
+            self.dac.remove(previous)
             self.dac.previous()
+
             self.update()
 
     def button_split(self, e):
@@ -278,18 +303,10 @@ class Annotator(GraphicalUserInterface):
         da = self.dac.get_current()
         splits = da.split(token)
 
-        del self.dac.collection[self.dac.i]
-
         for split in reversed(splits):
-            self.dac.collection.insert(self.dac.i, split)
+            self.dac.insert_after_current(split)
 
-        for i, act in enumerate(self.dac.full_collection):
-            if act == da:
-                del self.dac.full_collection[i]
-
-                for split in reversed(splits):
-                    self.dac.full_collection.insert(i, split)
-                break
+        self.dac.remove(da)
 
         self.update()
 
@@ -321,7 +338,7 @@ class Annotator(GraphicalUserInterface):
 
     def button_update(self, e):
         """
-        Button to update (or delete) a label
+        Button to update a label
         """
         da = self.dac.get_current()
 
@@ -334,11 +351,12 @@ class Annotator(GraphicalUserInterface):
         """
         da = self.dac.get_current()
 
-        self.dac.change_label(
-            self.dac.dimension,
-            da.annotations[self.dac.dimension],
-            label
-        )
+        if label:
+            self.dac.change_label(
+                self.dac.dimension,
+                da.annotations[self.dac.dimension],
+                label
+            )
 
         self.update()
 
@@ -358,12 +376,14 @@ class Annotator(GraphicalUserInterface):
         Adds a new label
         """
         self.dac.add_label(self.dac.dimension, label)
+        self.update()
 
     def add_qualifier(self, qualifier):
         """
         Adds a new label
         """
         self.dac.add_qualifier(self.dac.dimension, qualifier)
+        self.update()
 
     def button_note(self, e):
         """
@@ -501,12 +521,13 @@ class Annotator(GraphicalUserInterface):
                 self.add_to_last_line(addendum, style=dimension, offset=offset)
                 offset += len(addendum)
 
-        if da.link is not None:
-            if da.link in self.dac.collection:
-                addendum = " ⟲ {}".format(self.dac.collection.index(da.link) + 1)
+        for lda, lt in da.links:
+            if lda in self.dac.collection:
+                addendum = " ⟲ {}".format(self.dac.collection.index(lda) + 1)
             else:
                 addendum = " ⟲"
-            self.add_to_last_line(addendum, style=styles.WHITE, offset=offset)
+
+            self.add_to_last_line(addendum, style="link-{}".format(lt), offset=offset)
             offset += len(addendum)
 
         if da.note is not None:

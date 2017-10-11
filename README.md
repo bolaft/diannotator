@@ -95,6 +95,10 @@ A dictionary of lists, whose keys represent dimension names and the lists' eleme
 
 A dictionary of lists, whose keys represent dimension names and the lists' elements represent the dimensions' **qualifiers' tagsets**.
 
+#### `links`
+
+A dictionary whose keys represent the different **link types** and whose values represent the colors in which the links should be displayed.
+
 #### `colors`
 
 A dictionary, whose keys represent dimension names and whose elements are **hexadecimal color codes** used for displaying labels. The `colors` field is mandatory but the dictionary may be left empty, in which case labels will be displayed in white.
@@ -179,7 +183,7 @@ Jumps to a specific segment, selected by index.
 
 #### Link : `Control L`
 
-If the active segment is not linked to any other segment, links it to a specific segment, selected by index. If the segment is already linked to another segment, the link is removed.
+If the active segment is not linked to any other segment, links it to a specific segment, selected by index after selecting the link type. If the segment is already linked to another segment of the selected link type, the link is removed.
 
 #### Merge : `Control M`
 
@@ -199,7 +203,7 @@ Splits the active segment in two, on the chosen token. Links, notes, annotations
 
 #### Update : `Control U`
 
-The next entry updates the name of the label used for the active segment, on the active dimension. All segments annotated with this label will be affected. If the entry field is empty when Enter is pressed, the label is removed from the taxonomy.
+The next entry updates the name of the label used for the active segment, on the active dimension. All segments annotated with this label will be affected.
 
 #### Undo : `Control Z`
 

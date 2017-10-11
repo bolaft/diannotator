@@ -18,6 +18,11 @@
         "certainty": "#db5cd7",
         "irony": "#db5cd7"
     },
+    "links": {
+        "feedback": "#A6E22E",
+        "functional": "#54D6EF",
+        "rhetoric": "#ffffff"
+    },
     "labels": {
         "task": [
             "request help",
