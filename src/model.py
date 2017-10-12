@@ -476,12 +476,11 @@ class SegmentCollection:
         """
         if name and not backup:
             self.save_file = os.path.abspath(name)
-            SegmentCollection.write_save_path_to_tmp()
+            self.write_save_path_to_tmp()
 
         with open(name if name is not None else self.save_file, "wb") as f:
             pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
-    @staticmethod
     def write_save_path_to_tmp(self):
         """
         Writes the path to the current save file to /tmp
@@ -518,13 +517,13 @@ class SegmentCollection:
         if path.endswith(".pic"):
             with open(path, "rb") as f:
                 sc = pickle.load(f)
-                sc.update_last_save()
+                sc.write_save_path_to_tmp()
 
                 return sc
         elif path.endswith(".csv"):
             sc = SegmentCollection()
             sc.import_collection(path)
-            sc.update_last_save()
+            sc.write_save_path_to_tmp()
 
             return sc
 
