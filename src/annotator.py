@@ -15,7 +15,7 @@ from tkinter import Button, filedialog, LEFT
 
 from colors import generate_random_color
 from interface import GraphicalUserInterface, WHITE, GRAY
-from model import Segment, SegmentCollection
+from model import SegmentCollection
 from styles import Styles
 
 
@@ -147,7 +147,7 @@ class Annotator(GraphicalUserInterface):
         ##################
 
         # attempt to load previous save
-        self.sc = SegmentCollection.load(SegmentCollection.get_last_save())
+        self.sc = SegmentCollection.load(SegmentCollection.read_save_path_from_tmp())
 
         if not self.sc:
             # initializing the segment collection
@@ -283,7 +283,7 @@ class Annotator(GraphicalUserInterface):
         """
         Saves a .csv or .json file through dialogue
         """
-        self.sc.export(filedialog.asksaveasfilename(
+        self.sc.export_collection(filedialog.asksaveasfilename(
             initialdir=SegmentCollection.data_dir,
             title="Export as",
             filetypes=(("JSON data files", "*.json"), ("CSV data files", "*.csv"))
@@ -454,7 +454,7 @@ class Annotator(GraphicalUserInterface):
 
         while segment.links:
             ls, lt = segment.links[0]
-            Segment.remove_links(segment, ls)
+            segment.remove_links(ls)
 
         self.update()
 

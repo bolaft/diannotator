@@ -41,6 +41,10 @@ class Segment:
 
         self.tokenize()  # tokenization
 
+    ##################
+    # EXPORT METHODS #
+    ##################
+
     def to_json_dict(self):
         """
         Returns a dict representation of the object for JSON export
@@ -84,66 +88,58 @@ class Segment:
 
         return data
 
+    ###############
+    # NLP METHODS #
+    ###############
+
     def tokenize(self):
         """
-        White space tokenization
+        Tokenizes the segment
         """
         tokenizer = WhitespaceTokenizer()
         self.tokens = tokenizer.tokenize(self.raw)
 
-    def copy(self, raw):
-        """
-        Creates and returns a segment with similar attributes but different raw
-        """
-        segment = Segment(raw, self.participant, self.time, self.date)
-        segment.original_raw = self.original_raw
-        segment.annotations = self.annotations.copy()
-        segment.legacy = self.legacy.copy()
-        segment.links = self.links.copy()
-        segment.time = self.time
-        segment.date = self.date
-        segment.linked = self.linked.copy()
-        segment.note = self.note
-        segment.tokenize()
+    ###########################
+    # LINK MANAGEMENT METHODS #
+    ###########################
 
-        return segment
-
-    @staticmethod
-    def check_for_link(source, target):
+    def check_for_link(self, target):
         """
         Checks if two segments are linked
         """
-        for ls, lt in source.links:
+        for ls, lt in self.links:
             if ls == target:
                 return True
 
-    @staticmethod
-    def remove_links(source, target):
+    def remove_links(self, target):
         """
         Removes a link between two segments
         """
-        for ls, lt in source.links:
+        for ls, lt in self.links:
             if ls == target:
-                source.links.remove((target, lt))
+                self.links.remove((target, lt))
 
         for lls, llt in target.linked:
-            if lls == source:
-                target.linked.remove((source, llt))
+            if lls == self:
+                target.linked.remove((self, llt))
 
-    @staticmethod
-    def replace_links(source, target, new_target):
+    def replace_links(self, target, new_target):
         """
         Removes a link between two segments
         """
-        for ls, lt in source.links:
+        for ls, lt in self.links:
             if ls == target:
-                source.links.remove((target, lt))
-                source.links.append((new_target, lt))
+                self.links.remove((target, lt))
+                self.links.append((new_target, lt))
 
         for ls, lt in target.linked:
-            if ls == source:
-                target.linked.remove((source, lt))
-                new_target.linked.append((source, lt))
+            if ls == self:
+                target.linked.remove((self, lt))
+                new_target.linked.append((self, lt))
+
+    ################################
+    # SEGMENT MODIFICATION METHODS #
+    ################################
 
     def split(self, token):
         """
@@ -161,7 +157,7 @@ class Segment:
 
         # preserves links
         for ls, lt in self.linked:
-            Segment.replace_links(lt, self, s2)
+            ls.replace_links(self, s2)
 
         return [s1, s2]
 
@@ -182,54 +178,86 @@ class Segment:
         elif segment.note is not None:
             self.note = "{} / {}".format(segment.note, self.note)
 
-        if Segment.check_for_link(self, segment):
-            Segment.remove_links(self, segment)
-            self.links = segment.links
+        # removing links towards the merged segment
+        self.remove_links(segment)
 
+        # merging links
+        self.links = list(set(self.links + segment.links))
+
+        # updating incoming links
         for ls, lt in segment.linked:
-            Segment.replace_links(ls, segment, self)
+            ls.replace_links(segment, self)
 
-        self.linked = list(set(self.linked + segment.linked))
+    #################
+    # OTHER METHODS #
+    #################
+
+    def copy(self, raw):
+        """
+        Creates and returns a segment with similar attributes but different raw
+        """
+        segment = Segment(raw, self.participant, self.time, self.date)
+        segment.original_raw = self.original_raw
+        segment.annotations = self.annotations.copy()
+        segment.legacy = self.legacy.copy()
+        segment.links = self.links.copy()
+        segment.time = self.time
+        segment.date = self.date
+        segment.linked = self.linked.copy()
+        segment.note = self.note
+        segment.tokenize()
+
+        return segment
 
 
 class SegmentCollection:
-    # file for serialization
+    # paths
     save_dir = "../sav/" if EXEC_FROM_SOURCE else "sav/"
     taxo_dir = "../tax/" if EXEC_FROM_SOURCE else "tax/"
     data_dir = "../out/" if EXEC_FROM_SOURCE else "out/"
     temp_dir = "{}/diannotator/".format(tempfile.gettempdir())
 
     def __init__(self):
+        """
+        Initialization of the segment collection
+        """
         self.save_file = os.path.abspath("{}tmp.pic".format(SegmentCollection.save_dir))
 
         self.full_collection = []  # full collection of segments
         self.collection = []  # current collection used
         self.annotations = {}  # list of possible annotations
 
-        self.taxonomy = None
+        self.taxonomy = None  # taxonomy name
 
         self.labels = {}  # label tagsets
         self.values = {}  # label qualifier tagsets
         self.colors = {}  # dimension colors
         self.links = []  # link types
 
-        self.i = 0
-        self.dimension = None
-        self.filter = False
+        self.i = 0  # collection index
+        self.dimension = None  # active dimension
+        self.filter = False  # active filter
 
-    def import_taxonomy(self, path):
-        taxonomy = json.loads(codecs.open(path, encoding="utf-8").read())
+    ######################
+    # NAVIGATION METHODS #
+    ######################
 
-        self.taxonomy = taxonomy["name"]
-        self.dimension = taxonomy["default"]
+    def next(self):
+        self.i = self.i if self.i + 1 == len(self.collection) else self.i + 1
 
-        self.labels = taxonomy["labels"]  # label tagsets
-        self.values = taxonomy["values"]  # label qualifier tagsets
-        self.colors = taxonomy["colors"]  # dimension colors
-        self.links = taxonomy["links"]  # link types
+    def previous(self):
+        self.i = 0 if self.i - 1 < 0 else self.i - 1
+
+    ##################
+    # ACCESS METHODS #
+    ##################
 
     def get_active(self):
         return self.collection[self.i]
+
+    ########################
+    # MODIFICATION METHODS #
+    ########################
 
     def remove(self, segment):
         self.collection.remove(segment)
@@ -242,11 +270,9 @@ class SegmentCollection:
         # insert into active collection
         self.collection.insert(self.i + 1, insert)
 
-    def next(self):
-        self.i = self.i if self.i + 1 == len(self.collection) else self.i + 1
-
-    def previous(self):
-        self.i = 0 if self.i - 1 < 0 else self.i - 1
+    #################################
+    # TAXONOMY MODIFICATION METHODS #
+    #################################
 
     def change_label(self, dimension, label, new_label):
         """
@@ -284,9 +310,46 @@ class SegmentCollection:
         """
         self.values[dimension].append(quaifier)
 
-    def load_csv(self, path):
+    ##################################
+    # TAXONOMY IMPORT/EXPORT METHODS #
+    ##################################
+
+    def import_taxonomy(self, path):
         """
-        Loads a new collection from a CSV file
+        Imports the collection's taxonomy from a JSON file
+        """
+        taxonomy = json.loads(codecs.open(path, encoding="utf-8").read())
+
+        self.taxonomy = taxonomy["name"]
+        self.dimension = taxonomy["default"]
+
+        self.labels = taxonomy["labels"]  # label tagsets
+        self.values = taxonomy["values"]  # label qualifier tagsets
+        self.colors = taxonomy["colors"]  # dimension colors
+        self.links = taxonomy["links"]  # link types
+
+    def export_taxonomy(self, path):
+        """
+        Exports the collection's taxonomy to a JSON file
+        """
+        taxonomy = {
+            "name": self.taxonomy,
+            "default": self.dimension,
+            "colors": self.colors,
+            "labels": self.labels,
+            "values": self.values
+        }
+
+        with open(path, "w") as f:
+            json.dump(taxonomy, f, indent=4, ensure_ascii=False)
+
+    ####################################
+    # COLLECTION IMPORT/EXPORT METHODS #
+    ####################################
+
+    def import_collection(self, path):
+        """
+        Imports a new collection from a CSV file
         """
         with open(path) as f:
             rows = [{k: v for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True, delimiter="\t")]
@@ -307,7 +370,24 @@ class SegmentCollection:
                     previous_segment.date
                 )
                 segment.original_raw = previous_segment.original_raw
-                segment.legacy = {}
+
+                # loading legacy annotations
+                for key in row.keys():
+                    if key not in ["segment", "raw", "time", "date", "participant"] and row[key] is not None and row[key].strip() != "":
+                        if key.endswith("-value") and row[key]:
+                            dimension = key[:len(key) - len("-value")]
+
+                            # if the function is already set
+                            if key in segment.legacy:
+                                segment.legacy[dimension] = "{} ➔ {}".format(segment.legacy[dimension], row[key])
+                            else:
+                                segment.legacy[dimension] = row[key]
+                        else:
+                            # if the qualifier is already set
+                            if key in segment.legacy:
+                                segment.legacy[key] = "{} ➔ {}".format(row[key], segment.legacy[key])
+                            else:
+                                segment.legacy[key] = row[key]
 
                 tokenizer = WhitespaceTokenizer()
 
@@ -357,52 +437,28 @@ class SegmentCollection:
         # syncs the current collection to the full collection
         self.collection = self.full_collection.copy()
 
-    def make_legacy_annotations(self, row):
-        legacy = {}
-
-        for key in row.keys():
-            if key not in ["segment", "raw", "time", "date", "participant"] and row[key] is not None and row[key].strip() != "":
-                if key.endswith("-value") and row[key]:
-                    dimension = key[:len(key) - len("-value")]
-
-                    # if the function is already set
-                    if key in legacy:
-                        legacy[dimension] = "{} ➔ {}".format(legacy[dimension], row[key])
-                    else:
-                        legacy[dimension] = row[key]
-                else:
-                    # if the qualifier is already set
-                    if key in legacy:
-                        legacy[key] = "{} ➔ {}".format(row[key], legacy[key])
-                    else:
-                        legacy[key] = row[key]
-
-        return legacy
-
-    def save(self, name=None, backup=False):
+    def export_collection(self, path):
         """
-        Serializes the SegmentCollection
+        Exports the collection to the filesystem
         """
-        if name and not backup:
-            self.save_file = os.path.abspath(name)
-            self.update_last_save()
-
-        with open(name if name is not None else self.save_file, "wb") as f:
-            pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
-
-    def export(self, path):
         if path.endswith(".json"):
-            self.export_json(path)
+            self.export_collection_as_json(path)
         elif path.endswith(".csv"):
-            self.export_csv(path)
+            self.export_collection_as_csv(path)
 
-    def export_json(self, path):
+    def export_collection_as_json(self, path):
+        """
+        Exports the collection in JSON format
+        """
         data = [segment.to_json_dict() for segment in self.full_collection]
 
         with open(path, "w") as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
 
-    def export_csv(self, path):
+    def export_collection_as_csv(self, path):
+        """
+        Exports the collection in CSV format
+        """
         with open(path, "w") as f:
             w = csv.DictWriter(f, self.full_collection[0].to_csv_dict(self.labels).keys(), delimiter="\t")
             w.writeheader()
@@ -410,19 +466,26 @@ class SegmentCollection:
             for segment in self.full_collection:
                 w.writerow(segment.to_csv_dict(self.labels))
 
-    def export_taxonomy(self, path):
-        taxonomy = {
-            "name": self.taxonomy,
-            "default": self.dimension,
-            "colors": self.colors,
-            "labels": self.labels,
-            "values": self.values
-        }
+    ###########################
+    # SAVE MANAGEMENT METHODS #
+    ###########################
 
-        with open(path, "w") as f:
-            json.dump(taxonomy, f, indent=4, ensure_ascii=False)
+    def save(self, name=None, backup=False):
+        """
+        Serializes the SegmentCollection and writes it to the filesystem
+        """
+        if name and not backup:
+            self.save_file = os.path.abspath(name)
+            SegmentCollection.write_save_path_to_tmp()
 
-    def update_last_save(self):
+        with open(name if name is not None else self.save_file, "wb") as f:
+            pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
+
+    @staticmethod
+    def write_save_path_to_tmp(self):
+        """
+        Writes the path to the current save file to /tmp
+        """
         if not os.path.exists(SegmentCollection.temp_dir):
             os.makedirs(SegmentCollection.temp_dir)
 
@@ -430,7 +493,10 @@ class SegmentCollection:
             tmp.write(self.save_file)
 
     @staticmethod
-    def get_last_save():
+    def read_save_path_from_tmp():
+        """
+        Reads the path to the previous save file from /tmp
+        """
         if not os.path.exists(SegmentCollection.temp_dir):
             os.makedirs(SegmentCollection.temp_dir)
 
@@ -457,7 +523,7 @@ class SegmentCollection:
                 return sc
         elif path.endswith(".csv"):
             sc = SegmentCollection()
-            sc.load_csv(path)
+            sc.import_collection(path)
             sc.update_last_save()
 
             return sc
