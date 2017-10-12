@@ -2,21 +2,21 @@
     "name": "problem-cmc",
     "default": "task",
     "colors": {
-        "task": "#ffffff",
+        "task": "#FFFFFF",
         "feedback": "#808080",
         "social obligations management": "#A6E22E",
         "discourse structure management": "#E6DB71",
         "communication management": "#664729",
-        "contact management": "#aacf8a",
+        "contact management": "#AACF8A",
         "opinion": "#FD971F",
         "sentiment": "#FD971F",
         "emotion": "#FD971F",
         "knowledge": "#54D6EF",
         "problem management": "#FC4747",
-        "partiality": "#db5cd7",
-        "conditionality": "#db5cd7",
-        "certainty": "#db5cd7",
-        "irony": "#db5cd7"
+        "partiality": "#DB5CD7",
+        "conditionality": "#DB5CD7",
+        "certainty": "#DB5CD7",
+        "irony": "#DB5CD7"
     },
     "links": {
         "feedback": "#A6E22E",

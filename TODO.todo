@@ -17,6 +17,8 @@
         ☐ add a LICENSE file
         ☐ feature driven annotation
         ☐ smaller binary file
+        ☐ use the mouse (eg for links)
+        ☐ windows executable
         ✔ make error messages when file formats are wrong @done (17-10-12 21:37)
         ✔ make status bar more sexy @done (17-10-12 20:37)
         ✔ update qualifiers @done (17-10-12 17:39)
