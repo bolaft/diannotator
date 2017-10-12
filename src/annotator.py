@@ -80,6 +80,9 @@ class Annotator(GraphicalUserInterface):
         self.parent.bind(
             "<Control-z>",
             lambda event: self.undo())
+        self.parent.bind(
+            "<Control-Z>",
+            lambda event: self.redo())
 
         # special commands
         self.parent.bind(
@@ -128,6 +131,7 @@ class Annotator(GraphicalUserInterface):
 
         # edit menu
         self.edit_menu.add_command(label="Undo", accelerator="Ctrl+Z", command=self.undo)
+        self.edit_menu.add_command(label="Redo", accelerator="Ctrl+Shift+Z", command=self.redo)
 
         # view menu
         self.view_menu.add_command(label="Randomize Participant Colors", accelerator="F3", command=self.generate_participant_colors)
@@ -164,11 +168,12 @@ class Annotator(GraphicalUserInterface):
             backup=True
         )
 
-        # undo history initialization
-        self.undo_history = []
-
         # special buttons
         self.make_special_buttons()
+
+        # undo/redo history initialization
+        self.undo_history = []
+        self.redo_history = []
 
         # display update
         self.update()
@@ -585,22 +590,27 @@ class Annotator(GraphicalUserInterface):
             self.sc.collection = self.sc.full_collection.copy()
             self.sc.filter = False
 
-        self.update()
+        self.update(undo=True)
 
-    #################
-    # UNDO COMMANDS #
-    #################
+    ######################
+    # UNDO/REDO COMMANDS #
+    ######################
 
     def undo(self):
         """
-        Undoes one change
+        Undo command
         """
         # if there is a previous state in history to go to
         if len(self.undo_history) > 1:
-            del self.undo_history[-1]  # remove current state from history
+            del self.undo_history[-1]
+            self.sc = self.undo_history.pop()  # change to previous state in history
+            self.update()  # update without saving state to history
 
-            self.sc = self.undo_history[-1]  # change to previous state in history
-            self.update(backup=False)  # update without saving state to history
+    def redo(self):
+        """
+        Redo command
+        """
+        pass
 
     ######################
     # DIMENSION COMMANDS #
@@ -656,7 +666,7 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
-    def update(self, t=None, backup=True, annotation_mode=True):
+    def update(self, t=None, undo=False, annotation_mode=True):
         """
         Updates the application state
         """
@@ -684,12 +694,14 @@ class Annotator(GraphicalUserInterface):
         if annotation_mode:
             self.annotation_mode()
 
-        if backup:
-            if len(self.undo_history) == 100:
-                self.undo_history.pop(0)
+        # undo history management
+        if not undo:
+            if len(self.undo_history) >= 100:
+                del self.undo_history[0]
             self.undo_history.append(deepcopy(self.sc))
 
         self.sc.save()
+        print("upd:" + str(self.sc.i + 1) + str([sc.i + 1 for sc in self.undo_history]))
 
     def output_segment(self, i, active=False):
         """
