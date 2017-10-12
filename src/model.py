@@ -16,6 +16,7 @@ import pickle
 import tempfile
 
 from collections import OrderedDict
+from datetime import datetime
 from nltk.tokenize import WhitespaceTokenizer
 
 # check if the current file is in a folder name "src"
@@ -224,7 +225,7 @@ class SegmentCollection:
         self.save_file = os.path.abspath("{}tmp.pic".format(SegmentCollection.save_dir))
 
         self.full_collection = []  # full collection of segments
-        self.collection = []  # current collection used
+        self.collection = self.full_collection.copy()  # current collection used
         self.annotations = {}  # list of possible annotations
 
         self.taxonomy = None  # taxonomy name
@@ -232,7 +233,7 @@ class SegmentCollection:
         self.labels = {}  # label tagsets
         self.values = {}  # label qualifier tagsets
         self.colors = {}  # dimension colors
-        self.links = []  # link types
+        self.links = {}  # link types
 
         self.i = 0  # collection index
         self.dimension = None  # active dimension
@@ -353,15 +354,20 @@ class SegmentCollection:
         """
         Imports the collection's taxonomy from a JSON file
         """
-        taxonomy = json.loads(codecs.open(path, encoding="utf-8").read())
+        try:
+            taxonomy = json.loads(codecs.open(path, encoding="utf-8").read())
 
-        self.taxonomy = taxonomy["name"]
-        self.dimension = taxonomy["default"]
+            self.taxonomy = taxonomy["name"]
+            self.dimension = taxonomy["default"]
 
-        self.labels = taxonomy["labels"]  # label tagsets
-        self.values = taxonomy["values"]  # label qualifier tagsets
-        self.colors = taxonomy["colors"]  # dimension colors
-        self.links = taxonomy["links"]  # link types
+            self.labels = taxonomy["labels"]  # label tagsets
+            self.values = taxonomy["values"]  # label qualifier tagsets
+            self.colors = taxonomy["colors"]  # dimension colors
+            self.links = taxonomy["links"]  # link types
+        except Exception:
+            return False
+
+        return True
 
     def export_taxonomy(self, path):
         """
@@ -375,8 +381,13 @@ class SegmentCollection:
             "values": self.values
         }
 
-        with open(path, "w") as f:
-            json.dump(taxonomy, f, indent=4, ensure_ascii=False)
+        try:
+            with open(path, "w") as f:
+                json.dump(taxonomy, f, indent=4, ensure_ascii=False)
+        except Exception:
+            return False
+
+        return True
 
     ####################################
     # COLLECTION IMPORT/EXPORT METHODS #
@@ -461,7 +472,22 @@ class SegmentCollection:
             previous_segment = segment
 
             # makes legacy annotations for the segment
-            segment.legacy = self.make_legacy_annotations(row)
+            for key in row.keys():
+                if key not in ["segment", "raw", "time", "date", "participant"] and row[key] is not None and row[key].strip() != "":
+                    if key.endswith("-value") and row[key]:
+                        dimension = key[:len(key) - len("-value")]
+
+                        # if the function is alreay set
+                        if key in segment.legacy:
+                            segment.legacy[dimension] = "{} ➔ {}".format(segment.legacy[dimension], row[key])
+                        else:
+                            segment.legacy[dimension] = row[key]
+                    else:
+                        # if the qualifier is already set
+                        if key in segment.legacy:
+                            segment.legacy[key] = "{} ➔ {}".format(row[key], segment.legacy[key])
+                        else:
+                            segment.legacy[key] = row[key]
 
             # set note
             segment.note = row["note"].strip() if "note" in row else None
@@ -472,14 +498,23 @@ class SegmentCollection:
         # syncs the current collection to the full collection
         self.collection = self.full_collection.copy()
 
+        # resets the index
+        self.i = 0
+
     def export_collection(self, path):
         """
         Exports the collection to the filesystem
         """
-        if path.endswith(".json"):
-            self.export_collection_as_json(path)
-        elif path.endswith(".csv"):
-            self.export_collection_as_csv(path)
+        try:
+            if path.endswith(".json"):
+                self.export_collection_as_json(path)
+            elif path.endswith(".csv"):
+                self.export_collection_as_csv(path)
+        except Exception as e:
+            print(e)
+            return False
+
+        return True
 
     def export_collection_as_json(self, path):
         """
@@ -487,8 +522,14 @@ class SegmentCollection:
         """
         data = [segment.to_json_dict() for segment in self.full_collection]
 
-        with open(path, "w") as f:
-            json.dump(data, f, indent=4, ensure_ascii=False)
+        try:
+            with open(path, "w") as f:
+                json.dump(data, f, indent=4, ensure_ascii=False)
+        except Exception as e:
+            print(e)
+            return False
+
+        return True
 
     def export_collection_as_csv(self, path):
         """
@@ -505,26 +546,38 @@ class SegmentCollection:
     # SAVE MANAGEMENT METHODS #
     ###########################
 
-    def save(self, name=None, backup=False):
+    def save(self, path=None, backup=False):
         """
         Serializes the SegmentCollection and writes it to the filesystem
         """
-        if name and not backup:
-            self.save_file = os.path.abspath(name)
-            self.write_save_path_to_tmp()
+        try:
+            with open(path if path is not None else self.save_file, "wb") as f:
+                pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
 
-        with open(name if name is not None else self.save_file, "wb") as f:
-            pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
+            if path and not backup:
+                self.save_file = os.path.abspath(path)
+                self.write_save_path_to_tmp()
+        except Exception:
+            print(e)
+            return False
+
+        return True
 
     def write_save_path_to_tmp(self):
         """
         Writes the path to the current save file to /tmp
         """
-        if not os.path.exists(SegmentCollection.temp_dir):
-            os.makedirs(SegmentCollection.temp_dir)
+        try:
+            if not os.path.exists(SegmentCollection.temp_dir):
+                os.makedirs(SegmentCollection.temp_dir)
 
-        with open("{}last_save.tmp".format(SegmentCollection.temp_dir), "w") as tmp:
-            tmp.write(self.save_file)
+            with open("{}last_save.tmp".format(SegmentCollection.temp_dir), "w") as tmp:
+                tmp.write(self.save_file)
+        except Exception as e:
+            print(e)
+            return False
+
+        return True
 
     @staticmethod
     def read_save_path_from_tmp():
@@ -549,17 +602,21 @@ class SegmentCollection:
         """
         Loads a serialized SegmentCollection
         """
-        if path.endswith(".pic"):
-            with open(path, "rb") as f:
-                sc = pickle.load(f)
+        try:
+            if path.endswith(".pic"):
+                with open(path, "rb") as f:
+                    sc = pickle.load(f)
+                    sc.write_save_path_to_tmp()
+
+                    return sc
+            elif path.endswith(".csv"):
+                sc = SegmentCollection()
+                sc.import_collection(path)
                 sc.write_save_path_to_tmp()
 
                 return sc
-        elif path.endswith(".csv"):
-            sc = SegmentCollection()
-            sc.import_collection(path)
-            sc.write_save_path_to_tmp()
-
-            return sc
+        except Exception as e:
+            print(e)
+            return False
 
         return False

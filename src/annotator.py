@@ -11,11 +11,11 @@ Annotation methods
 from collections import OrderedDict
 from copy import deepcopy
 from datetime import datetime
-from tkinter import filedialog, LEFT
+from tkinter import filedialog, messagebox, LEFT
 from tkinter.ttk import Button
 
 from colors import generate_random_color
-from interface import GraphicalUserInterface, WHITE, GRAY
+from interface import GraphicalUserInterface
 from model import SegmentCollection
 from styles import Styles
 
@@ -156,7 +156,7 @@ class Annotator(GraphicalUserInterface):
 
         if not self.sc:
             # initializing the segment collection
-            self.open_file()  # load command
+            self.sc = SegmentCollection()  # load command
 
         # colorization
         self.generate_dimension_colors()
@@ -165,7 +165,7 @@ class Annotator(GraphicalUserInterface):
 
         # make a backup of the collection
         self.sc.save(
-            name="{}backup/auto-{}.pic".format(SegmentCollection.save_dir, datetime.now().strftime("%d-%m-%y_%X")),
+            path="{}backup/auto-{}.pic".format(SegmentCollection.save_dir, datetime.now().strftime("%d-%m-%y_%X")),
             backup=True
         )
 
@@ -258,15 +258,14 @@ class Annotator(GraphicalUserInterface):
         """
         Loads a .csv or .pic file through dialogue
         """
-        loaded_sc = SegmentCollection.load(filedialog.askopenfilename(
+        sc = SegmentCollection.load(filedialog.askopenfilename(
             initialdir=SegmentCollection.save_dir,
             title="Open data file",
             filetypes=(("Pickle serialized files", "*.pic"), ("CSV data files", "*.csv"), ("all files", "*.*"))
         ))
 
-        if loaded_sc:
-            self.sc = loaded_sc
-
+        if sc:
+            self.sc = sc
             self.undo_history = []  # reinitializes undo history
 
             # choose a taxonomy if none is set
@@ -274,57 +273,70 @@ class Annotator(GraphicalUserInterface):
                 self.import_taxonomy()
 
             self.update(annotation_mode=False)
+        else:
+            messagebox.showwarning("Open File Error", "The file could not be loaded.\n\nIt may be corrupted or is in the wrong format.")
 
     def save_file(self):
         """
         Saves a .pic file through dialogue
         """
-        self.sc.save(name=filedialog.asksaveasfilename(
+        success = self.sc.save(path=filedialog.asksaveasfilename(
             initialdir=SegmentCollection.save_dir,
             title="Save as",
             filetypes=(("Pickle serialized files", "*.pic"), ("all files", "*.*"))
         ))
 
-        self.update(annotation_mode=False)
+        if success:
+            self.update(annotation_mode=False)
+        else:
+            messagebox.showwarning("Save File Error", "The target path is invalid.\n\nThe file could not be saved.")
 
     def export_file(self):
         """
         Saves a .csv or .json file through dialogue
         """
-        self.sc.export_collection(filedialog.asksaveasfilename(
+        success = self.sc.export_collection(filedialog.asksaveasfilename(
             initialdir=SegmentCollection.data_dir,
             title="Export as",
             filetypes=(("JSON data files", "*.json"), ("CSV data files", "*.csv"))
         ))
 
-        self.update(annotation_mode=False)
+        if success:
+            self.update(annotation_mode=False)
+        else:
+            messagebox.showwarning("Export File Error", "The target path is invalid.\n\nThe file could not be created.")
 
     def import_taxonomy(self):
         """
         Loads a .json taxonomy file through dialogue
         """
-        taxonomy_path = filedialog.askopenfilename(
+        success = self.sc.import_taxonomy(filedialog.askopenfilename(
             initialdir=SegmentCollection.taxo_dir,
             title="Open taxonomy file",
             filetypes=(("JSON taxonomy file", "*.json"), ("all files", "*.*"))
-        )
+        ))
 
-        self.sc.import_taxonomy(taxonomy_path)
-        self.generate_dimension_colors()
-        self.generate_link_colors()
-        self.update()
+        if success:
+            self.generate_dimension_colors()
+            self.generate_link_colors()
+            self.update()
+        else:
+            messagebox.showwarning("Import Taxonomy Error", "The file could not be loaded.\n\nIt may be corrupted or is in the wrong format.")
 
     def export_taxonomy(self):
         """
         Saves a .json taxonomy file through dialogue
         """
-        taxonomy_path = filedialog.asksaveasfilename(
+        success = self.sc.export_taxonomy(filedialog.asksaveasfilename(
             initialdir=SegmentCollection.taxo_dir,
             title="Export taxonomy as",
             filetypes=(("JSON taxonomy file", "*.json"), ("all files", "*.*"))
-        )
+        ))
 
-        self.sc.export_taxonomy(taxonomy_path)
+        if success:
+            self.update(annotation_mode=False)
+        else:
+            messagebox.showwarning("Export Taxonomy Error", "The target path is invalid.\n\nThe file could not be created.")
 
     #######################
     # NAVIGATION COMMANDS #
@@ -669,6 +681,9 @@ class Annotator(GraphicalUserInterface):
         """
         Resumes the annotation mode
         """
+        if self.sc.dimension is None:
+            return
+
         segment = self.sc.get_active()
 
         if self.sc.dimension in self.sc.values and self.sc.dimension in segment.annotations and segment.annotations[self.sc.dimension] in self.sc.labels[self.sc.dimension]:
@@ -702,6 +717,9 @@ class Annotator(GraphicalUserInterface):
         """
         Updates the application state
         """
+        if self.sc.dimension is None:
+            return
+
         self.clear_screen()
 
         n_previous = self.sc.i if self.sc.i < 50 else 50
@@ -710,7 +728,7 @@ class Annotator(GraphicalUserInterface):
             self.output_segment(j)
 
         # dimension in status
-        status_l1 = "Dimension: {}".format(self.sc.dimension.title())
+        status_l1 = "Dimension: {}".format(self.sc.dimension.title()) if self.sc.dimension else "No Dimension Set"
 
         # filter in status
         if self.sc.filter:
