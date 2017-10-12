@@ -328,7 +328,7 @@ class Annotator(GraphicalUserInterface):
         Saves a .json taxonomy file through dialogue
         """
         success = self.sc.export_taxonomy(filedialog.asksaveasfilename(
-            initialdir=SegmentCollection.taxo_dir,
+            initialdir=SegmentCollection.custom_taxo_dir,
             title="Export taxonomy as",
             filetypes=(("JSON taxonomy file", "*.json"), ("all files", "*.*"))
         ))

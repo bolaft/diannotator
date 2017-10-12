@@ -215,6 +215,7 @@ class SegmentCollection:
     # paths
     save_dir = "../sav/" if EXEC_FROM_SOURCE else "sav/"
     taxo_dir = "../tax/" if EXEC_FROM_SOURCE else "tax/"
+    custom_taxo_dir = "../tax/custom" if EXEC_FROM_SOURCE else "tax/"
     data_dir = "../out/" if EXEC_FROM_SOURCE else "out/"
     temp_dir = "{}/diannotator/".format(tempfile.gettempdir())
 
