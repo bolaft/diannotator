@@ -171,6 +171,9 @@ class Annotator(GraphicalUserInterface):
         # special buttons
         self.make_special_buttons()
 
+        # default action (when return is pressed without context)
+        self.default_action = lambda arg=1: self.go_down(arg)
+
         # undo/redo history initialization
         self.undo_history = []
         self.redo_history = [self.sc]  # must be pre-filled with current state
@@ -529,20 +532,43 @@ class Annotator(GraphicalUserInterface):
         segment = self.sc.get_active()
 
         if self.sc.dimension in segment.annotations:
-            self.input([], self.rename_label, free=True)
+            if "➔" in segment.annotations[self.sc.dimension]:
+                self.input(segment.annotations[self.sc.dimension].split(" ➔ "), self.select_label_to_rename)
+            else:
+                self.input([], self.rename_label, free=True)
 
-    def rename_label(self, label):
+    def select_label_to_rename(self, label):
         """
         Renames a label
         """
         segment = self.sc.get_active()
 
+        if label == segment.annotations[self.sc.dimension].split(" ➔ ")[0]:
+            self.input([], self.rename_label, free=True)
+        else:
+            self.input([], lambda label: self.rename_label(label, qualifier=True), free=True)
+
+    def rename_label(self, label, qualifier=False):
+        """
+        Renames a label
+        """
+        segment = self.sc.get_active()
+
+        annotations = segment.annotations[self.sc.dimension].split(" ➔ ")
+
         if label:
-            self.sc.change_label(
-                self.sc.dimension,
-                segment.annotations[self.sc.dimension],
-                label
-            )
+            if qualifier:
+                self.sc.change_qualifier(
+                    self.sc.dimension,
+                    annotations[1],
+                    label
+                )
+            else:
+                self.sc.change_label(
+                    self.sc.dimension,
+                    annotations[0],
+                    label
+                )
 
         self.update()
 

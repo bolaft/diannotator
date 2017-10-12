@@ -285,8 +285,43 @@ class SegmentCollection:
             self.labels[dimension].insert(index, new_label)
 
         for segment in list(set(self.collection + self.full_collection)):
-            if dimension in segment.annotations and segment.annotations[dimension] == label:
-                segment.annotations[dimension] = new_label
+            if dimension in segment.annotations:
+                # get annotation parts (label + qualifier)
+                annotation_parts = segment.annotations[dimension].split(" ➔ ")
+                # check if has a qualifier
+                has_qualifier = len(annotation_parts) > 1
+
+                # if the segment has the label for that dimension
+                if annotation_parts[0] == label:
+                    if has_qualifier:
+                        # replace label, preserve qualifier
+                        segment.annotations[dimension] = segment.annotations[dimension].replace(label + " ➔ ", new_label + " ➔ ")
+                    else:
+                        # replace label
+                        segment.annotations[dimension] = new_label
+
+    def change_qualifier(self, dimension, qualifier, new_qualifier):
+        """
+        Renames a qualifier
+        """
+        index = self.values[dimension].index(qualifier)
+        self.values[dimension].remove(qualifier)
+
+        if new_qualifier not in self.values[dimension]:
+            self.values[dimension].insert(index, new_qualifier)
+
+        for segment in list(set(self.collection + self.full_collection)):
+            if dimension in segment.annotations:
+                # get annotation parts (label + qualifier)
+                annotation_parts = segment.annotations[dimension].split(" ➔ ")
+                # if has no qualifier, continue
+                if len(annotation_parts) == 1:
+                    continue
+
+                # if the segment has the qualifier for that dimension
+                if annotation_parts[1] == qualifier:
+                    # replace qualifier, preserve label
+                    segment.annotations[dimension] = segment.annotations[dimension].replace(" ➔ " + qualifier, " ➔ " + new_qualifier)
 
     def delete_label(self, dimension, label):
         """

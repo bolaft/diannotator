@@ -148,6 +148,7 @@ class GraphicalUserInterface(Frame, Styles):
         self.command_list = []  # list of potential commands
 
         self.action = None  # default command action
+        self.default_action = None  # default command action
 
         self.free_input = False  # sets whether it's possible to input anything in the entry
 
@@ -164,7 +165,7 @@ class GraphicalUserInterface(Frame, Styles):
                 self.entry.delete(0, END)  # clears the entry field
                 self.process_input(text)
             elif len(self.entry.get()) == 0:
-                self.command_continue(None)
+                self.default_action()  # default action
             else:
                 # list of buttons in the button list
                 commands = self.commands.winfo_children()
