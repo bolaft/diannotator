@@ -173,7 +173,7 @@ class Annotator(GraphicalUserInterface):
 
         # undo/redo history initialization
         self.undo_history = []
-        self.redo_history = []
+        self.redo_history = [self.sc]  # must be pre-filled with current state
 
         # display update
         self.update()
@@ -590,7 +590,7 @@ class Annotator(GraphicalUserInterface):
             self.sc.collection = self.sc.full_collection.copy()
             self.sc.filter = False
 
-        self.update(undo=True)
+        self.update(ignore_history=True)
 
     ######################
     # UNDO/REDO COMMANDS #
@@ -602,6 +602,7 @@ class Annotator(GraphicalUserInterface):
         """
         # if there is a previous state in history to go to
         if len(self.undo_history) > 1:
+            self.redo_history.append(self.undo_history[-1])
             del self.undo_history[-1]
             self.sc = self.undo_history.pop()  # change to previous state in history
             self.update()  # update without saving state to history
@@ -610,7 +611,12 @@ class Annotator(GraphicalUserInterface):
         """
         Redo command
         """
-        pass
+        # if there is a next state in history to go to
+        if len(self.redo_history) > 1:
+            self.undo_history.append(self.redo_history[-1])
+            del self.undo_history[-1]
+            self.sc = self.redo_history.pop()  # change to previous state in history
+            self.update()  # update without saving state to history
 
     ######################
     # DIMENSION COMMANDS #
@@ -666,7 +672,7 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
-    def update(self, t=None, undo=False, annotation_mode=True):
+    def update(self, t=None, ignore_history=False, annotation_mode=True):
         """
         Updates the application state
         """
@@ -695,13 +701,12 @@ class Annotator(GraphicalUserInterface):
             self.annotation_mode()
 
         # undo history management
-        if not undo:
+        if not ignore_history:
             if len(self.undo_history) >= 100:
                 del self.undo_history[0]
             self.undo_history.append(deepcopy(self.sc))
 
         self.sc.save()
-        print("upd:" + str(self.sc.i + 1) + str([sc.i + 1 for sc in self.undo_history]))
 
     def output_segment(self, i, active=False):
         """
