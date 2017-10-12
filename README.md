@@ -131,6 +131,10 @@ Moves down ten segments.
 
 Moves up ten segments.
 
+#### `Control J`
+
+Jumps to a specific segment, selected by index.
+
 #### `Delete`
 
 Deletes the active segment.
@@ -176,10 +180,6 @@ Changes the active dimension.
 #### Filter : `Control F`
 
 Displayed segments are filtered to only display those bearing the same annotation as the active segment for the active dimension. If the segment doesn't have a label on the active dimension, the filter is created to only display segments bearing the same legacy annotation for the active dimension. Using this command again will remove the filter and display all segments.
-
-#### Jump : `Control J`
-
-Jumps to a specific segment, selected by index.
 
 #### Link : `Control L`
 
