@@ -20,7 +20,7 @@
         ☐ smaller binary file
         ☐ note turns and ids
         ☐ update qualifiers
-        ☐ allow multiple links per type (to different segments)
+        ✔ allow multiple links per type (to different segments) @done (17-10-12 14:41)
         ✔ preserve full "raw" @done (17-10-11 18:18)
         ✔ filter by dimension @done (17-10-11 18:03)
         ✔ specific command to delete label @done (17-10-11 17:17)
@@ -47,5 +47,5 @@
  
     Refactoring:
 
-        ☐ separate into classes that make sense
+        ✔ separate into classes that make sense @done (17-10-12 14:33)
         ✔ clean up code @done (17-10-10 09:48)

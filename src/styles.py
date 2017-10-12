@@ -5,7 +5,7 @@
 # URL: <http://github.com/bolaft/diannotator>
 
 """
-Styles class
+Style management
 """
 
 

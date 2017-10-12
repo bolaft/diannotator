@@ -5,7 +5,7 @@
 # URL: <http://github.com/bolaft/diannotator>
 
 """
-Annotator class
+Annotation methods
 """
 
 from copy import deepcopy
@@ -85,6 +85,9 @@ class Annotator(GraphicalUserInterface):
             "<Control-l>",
             lambda event: self.select_link_type())
         self.parent.bind(
+            "<Control-u>",
+            lambda event: self.unlink_segment())
+        self.parent.bind(
             "<Control-e>",
             lambda event: self.erase_annotation())
         self.parent.bind(
@@ -117,7 +120,9 @@ class Annotator(GraphicalUserInterface):
         self.file_menu.add_command(label="Open File...", accelerator="Ctrl+O", command=self.open_file)
         self.file_menu.add_command(label="Save As...", accelerator="Ctrl+Shift+S", command=self.save_file)
         self.file_menu.add_command(label="Export As...", accelerator="Ctrl+Shift+E", command=self.export_file)
+
         self.file_menu.add_separator()
+
         self.file_menu.add_command(label="Quit", accelerator="Esc", command=self.parent.quit)
 
         # edit menu
@@ -216,6 +221,7 @@ class Annotator(GraphicalUserInterface):
             "dimension": self.select_dimension,
             "erase": self.erase_annotation,
             "link": self.select_link_type,
+            "unlink": self.unlink_segment,
             "split": self.select_split_token,
             "merge": self.merge_segment,
             "add": self.input_new_label,
@@ -354,7 +360,7 @@ class Annotator(GraphicalUserInterface):
 
     def delete_segment(self):
         """
-        Deletes a segment
+        Deletes the active segment
         """
         segment = self.sc.get_active()
 
@@ -364,7 +370,7 @@ class Annotator(GraphicalUserInterface):
 
     def merge_segment(self):
         """
-        Merges the segment to its preceding one
+        Merges the active segment to its preceding one
         """
         segment = self.sc.get_active()
         previous = self.sc.collection[self.sc.i - 1]
@@ -379,14 +385,14 @@ class Annotator(GraphicalUserInterface):
 
     def select_split_token(self):
         """
-        Inputs the token on which a segment will be split
+        Inputs the token on which the active segment will be split
         """
         segment = self.sc.get_active()
         self.input(segment.tokens[:-1], self.split_segment, sort=False)
 
     def split_segment(self, token):
         """
-        Splits a segment in two
+        Splits the active segment in two
         """
         segment = self.sc.get_active()
         splits = segment.split(token)
@@ -404,7 +410,7 @@ class Annotator(GraphicalUserInterface):
 
     def erase_annotation(self):
         """
-        Erases the segment's annotation for the active dimension
+        Erases the active segment's annotation for the active dimension
         """
         segment = self.sc.get_active()
 
@@ -424,21 +430,12 @@ class Annotator(GraphicalUserInterface):
         """
         Set a link type then input link target
         """
-        segment = self.sc.get_active()
-
-        for ls, lt in segment.links:
-            # remove link
-            if link_type == lt:
-                Segment.remove_links(segment, ls)
-                self.update()
-                return
-
         # input target segment
         self.input(range(1, self.sc.i + 1), lambda n, link_t=link_type: self.link_segment(n, link_t))
 
     def link_segment(self, number, link_type):
         """
-        Links a segment to another
+        Links the active segment to another
         """
         number = int(number) - 1
 
@@ -448,9 +445,21 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
+    def unlink_segment(self):
+        """
+        Removes links emanating from the active segment
+        """
+        segment = self.sc.get_active()
+
+        while segment.links:
+            ls, lt = segment.links[0]
+            Segment.remove_links(segment, ls)
+
+        self.update()
+
     def input_new_note(self):
         """
-        Inputs a note for the current segment
+        Inputs a note for the active segment
         """
         self.input([], self.set_note, free=True)
 
@@ -499,7 +508,7 @@ class Annotator(GraphicalUserInterface):
 
     def remove_label(self):
         """
-        Removes the current segment's label from the taxonomy
+        Removes the active segment's label from the taxonomy
         """
         segment = self.sc.get_active()
 

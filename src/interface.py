@@ -5,7 +5,7 @@
 # URL: <http://github.com/bolaft/diannotator>
 
 """
-GrapicaluserInterface class
+Grapical User Interface
 """
 
 from tkinter import Tk, Button, Entry, Frame, Label, Scrollbar, StringVar, Text, Menu, BOTH, DISABLED, END, LEFT, BOTTOM, NORMAL, N, X, WORD, NSEW, SUNKEN
