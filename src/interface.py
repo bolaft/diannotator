@@ -8,7 +8,9 @@
 Grapical User Interface
 """
 
-from tkinter import Tk, Button, Entry, Frame, Label, Scrollbar, StringVar, Text, Menu, BOTH, DISABLED, END, LEFT, BOTTOM, NORMAL, N, X, WORD, NSEW, SUNKEN
+from tkinter import Tk, StringVar, Text, Menu, BOTH, DISABLED, END, LEFT, BOTTOM, NORMAL, N, X, WORD, NSEW, SUNKEN
+from tkinter.ttk import Button, Entry, Frame, Label, Scrollbar
+from ttkthemes import ThemedStyle
 
 from styles import Styles
 
@@ -43,6 +45,16 @@ class GraphicalUserInterface(Frame, Styles):
     entry_font_size = 14
     entry_font_weight = "normal"
 
+    # menu parameters
+    menu_font_family = "modern"
+
+    # special button parameters
+    special_button_font_family = "mono"
+    special_button_font_size = 11
+    special_button_font_weight = "bold"
+
+    special_button_style = "Special.TButton"
+
     def __init__(self):
         """
         Initializes the graphical user interface
@@ -51,8 +63,22 @@ class GraphicalUserInterface(Frame, Styles):
         self.parent = Tk()
         self.parent.state = False
 
+        # theme
+        style = ThemedStyle(self.parent)
+        style.set_theme("arc")
+
+        # button style
+        style.configure("TButton", font=self.label_font_family)
+
+        # special button style
+        style.configure(self.special_button_style, font=(
+            self.special_button_font_family,
+            self.special_button_font_size,
+            self.special_button_font_weight
+        ))
+
         # root window initialization
-        Frame.__init__(self, self.parent, background=BLACK)
+        Frame.__init__(self, self.parent)
 
         w = 1024  # width for the Tk parent
         h = 680  # height for the Tk parent
@@ -72,21 +98,21 @@ class GraphicalUserInterface(Frame, Styles):
         self.parent.title(self.window_title)
 
         # menu bar
-        self.menu_bar = Menu(self.parent)
+        self.menu_bar = Menu(self.parent, font=self.menu_font_family)
 
-        self.file_menu = Menu(self.menu_bar, tearoff=0)
+        self.file_menu = Menu(self.menu_bar, tearoff=0, font=self.menu_font_family)
         self.menu_bar.add_cascade(label="File", menu=self.file_menu)
 
-        self.edit_menu = Menu(self.menu_bar, tearoff=0)
+        self.edit_menu = Menu(self.menu_bar, tearoff=0, font=self.menu_font_family)
         self.menu_bar.add_cascade(label="Edit", menu=self.edit_menu)
 
-        self.view_menu = Menu(self.menu_bar, tearoff=0)
+        self.view_menu = Menu(self.menu_bar, tearoff=0, font=self.menu_font_family)
         self.menu_bar.add_cascade(label="View", menu=self.view_menu)
 
-        self.filter_menu = Menu(self.menu_bar, tearoff=0)
+        self.filter_menu = Menu(self.menu_bar, tearoff=0, font=self.menu_font_family)
         self.menu_bar.add_cascade(label="Filter", menu=self.filter_menu)
 
-        self.taxonomy_menu = Menu(self.menu_bar, tearoff=0)
+        self.taxonomy_menu = Menu(self.menu_bar, tearoff=0, font=self.menu_font_family)
         self.menu_bar.add_cascade(label="Taxonomy", menu=self.taxonomy_menu)
 
         self.parent.config(menu=self.menu_bar)
@@ -116,7 +142,7 @@ class GraphicalUserInterface(Frame, Styles):
         self.text["yscrollcommand"] = self.scrollbar.set
 
         # status bar
-        self.status = Label(self.output_frame, height=0, wraplengt=self.wrap_length, font=(self.label_font_family, self.label_font_size))
+        self.status = Label(self.output_frame, font=(self.label_font_family, self.label_font_size))
         self.status.grid(row=1, column=0, pady=0)
 
         # binds any typing to the command input field to the update_commands method
@@ -226,13 +252,13 @@ class GraphicalUserInterface(Frame, Styles):
         n_buttons = len(self.commands.winfo_children())
 
         # highlight button that will trigger if return is hit
-        if n_buttons == 1:
-            self.commands.winfo_children()[0].config(background=WHITE, foreground=GRAY)
+        # if n_buttons == 1:
+            # self.commands.winfo_children()[0].config(background=WHITE, foreground=GRAY)
 
         self.text.see(END)  # move the scrollbar to the bottom
 
     def make_button(self, text, bg=DARK_GRAY, fg=WHITE, disabled=False):
-        b = Button(self.commands, text=text, background=bg, foreground=fg, command=lambda n=text: self.button_pressed(n))
+        b = Button(self.commands, text=text, command=lambda n=text: self.button_pressed(n))
         b.bind("<Return>", self.return_pressed)  # binds the Return key to the return_pressed method
         b.pack(side=LEFT)
 

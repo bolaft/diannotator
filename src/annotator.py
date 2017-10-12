@@ -11,7 +11,8 @@ Annotation methods
 from collections import OrderedDict
 from copy import deepcopy
 from datetime import datetime
-from tkinter import Button, filedialog, LEFT
+from tkinter import filedialog, LEFT
+from tkinter.ttk import Button
 
 from colors import generate_random_color
 from interface import GraphicalUserInterface, WHITE, GRAY
@@ -243,8 +244,7 @@ class Annotator(GraphicalUserInterface):
             b = Button(
                 self.special_commands,
                 text=text,
-                background=WHITE,
-                foreground=GRAY,
+                style=self.special_button_style,
                 command=function
             )
 
@@ -710,14 +710,22 @@ class Annotator(GraphicalUserInterface):
             self.output_segment(j)
 
         # dimension in status
-        status = "Dimension: {}".format(self.sc.dimension.title())
+        status_l1 = "Dimension: {}".format(self.sc.dimension.title())
 
         # filter in status
         if self.sc.filter:
-            status = "{} - Filter: {}".format(status, self.sc.filter)
+            status_l2 = "{} - Filter: {}".format(status_l1, self.sc.filter)
 
         # file in status
-        status = "{}\nFile: {}".format(status, self.sc.save_file)
+        status_l2 = "File: {}".format(self.sc.save_file)
+
+        # pad strings so they are aligned
+        if len(status_l1) > len(status_l2):
+            status_l2 = " " * int((len(status_l1) - len(status_l2)) / 2) + status_l2
+        else:
+            status_l1 = " " * int((len(status_l2) - len(status_l1)) / 2) + status_l1
+
+        status = "{}\n{}".format(status_l1, status_l2)
 
         self.update_status_message(status)
 

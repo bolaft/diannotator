@@ -10,7 +10,10 @@ DiAnnotator is written in Python 3.4.3.
 
 #### Python modules:
 
-The module `nltk` is required to run the program.
+The following modules are required to run the program:
+
+* `nltk`
+* `ttkthemes`
 
 # Run From Source
 
