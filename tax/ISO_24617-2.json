@@ -1,6 +1,6 @@
 {
     "name": "ISO 24617-2",
-    "default": "task",
+    "default": "Task",
     "colors": {
         "Task": "#FFFFFF",
         "Auto-Feedback": "#808080",
