@@ -8,6 +8,7 @@
 Annotation methods
 """
 
+from collections import OrderedDict
 from copy import deepcopy
 from datetime import datetime
 from tkinter import Button, filedialog, LEFT
@@ -217,23 +218,23 @@ class Annotator(GraphicalUserInterface):
         for button in self.special_commands.winfo_children():
             button.destroy()
 
-        buttons = {
-            "dimension": self.select_dimension,
-            "erase": self.erase_annotation,
-            "link": self.select_link_type,
-            "unlink": self.unlink_segment,
-            "split": self.select_split_token,
-            "merge": self.merge_segment,
-            "add": self.input_new_label,
-            "rename": self.input_new_label_name,
-            "filter": self.filter_by_label,
-            "note": self.input_new_note
-        }
+        buttons = OrderedDict()
 
-        for text, function in sorted(buttons.items()):
+        buttons.update({"Select [D]imension": self.select_dimension})
+        buttons.update({"[E]rase Annotation": self.erase_annotation})
+        buttons.update({"[L]ink Segment": self.select_link_type})
+        buttons.update({"[U]nlink Segment": self.unlink_segment})
+        buttons.update({"[S]plit Segment": self.select_split_token})
+        buttons.update({"[M]erge Segment": self.merge_segment})
+        buttons.update({"[A]dd Label": self.input_new_label})
+        buttons.update({"[R]ename Label": self.input_new_label_name})
+        buttons.update({"[F]ilter By Label": self.filter_by_label})
+        buttons.update({"Add [N]ote": self.input_new_note})
+
+        for text, function in buttons.items():
             b = Button(
                 self.special_commands,
-                text="[{}]{}".format(text[0].upper(), text[1:]),
+                text=text,
                 background=WHITE,
                 foreground=GRAY,
                 command=function

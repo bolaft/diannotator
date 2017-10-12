@@ -16,7 +16,7 @@ from styles import Styles
 BLACK = "#000000"
 WHITE = "#ffffff"
 GRAY = "#0f0e0e"
-LIGHT_GRAY = "#171717"
+DARK_GRAY = "#171717"
 
 
 class GraphicalUserInterface(Frame, Styles):
@@ -108,7 +108,7 @@ class GraphicalUserInterface(Frame, Styles):
         # Text widget
         self.text = Text(self.output_frame, borderwidth=3, relief=SUNKEN)
         self.text.grid(row=0, column=0, sticky="nsew", padx=self.padding, pady=(self.padding, 0))
-        self.text.config(font=(self.text_font_family, self.text_font_size), undo=True, wrap=WORD, bg=LIGHT_GRAY, fg=WHITE, highlightbackground=BLACK, highlightcolor=WHITE, state=DISABLED)
+        self.text.config(font=(self.text_font_family, self.text_font_size), undo=True, wrap=WORD, bg=DARK_GRAY, fg=WHITE, highlightbackground=BLACK, highlightcolor=WHITE, state=DISABLED)
 
         # creates a Scrollbar and associate it with text
         self.scrollbar = Scrollbar(self.output_frame, command=self.text.yview)
@@ -230,7 +230,7 @@ class GraphicalUserInterface(Frame, Styles):
 
         self.text.see(END)  # move the scrollbar to the bottom
 
-    def make_button(self, text, bg=GRAY, fg=WHITE, disabled=False):
+    def make_button(self, text, bg=DARK_GRAY, fg=WHITE, disabled=False):
         b = Button(self.commands, text=text, background=bg, foreground=fg, command=lambda n=text: self.button_pressed(n))
         b.bind("<Return>", self.return_pressed)  # binds the Return key to the return_pressed method
         b.pack(side=LEFT)
