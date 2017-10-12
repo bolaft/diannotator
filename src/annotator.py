@@ -1,10 +1,21 @@
-import styles
+# DiAnnotator
+#
+# Author: Soufian Salim <soufi@nsal.im>
+#
+# URL: <http://github.com/bolaft/diannotator>
+
+"""
+Annotator class
+"""
 
 from copy import deepcopy
-from interface import GraphicalUserInterface, WHITE, GRAY
-from model import DialogueAct, DialogueActCollection
 from datetime import datetime
 from tkinter import Button, filedialog, LEFT
+
+from colors import generate_random_color
+from interface import GraphicalUserInterface, WHITE, GRAY
+from model import Segment, SegmentCollection
+from styles import Styles
 
 
 class Annotator(GraphicalUserInterface):
@@ -13,155 +24,204 @@ class Annotator(GraphicalUserInterface):
     """
     def __init__(self):
         """
-        Initializes the game
+        Initializes the annotator
         """
         GraphicalUserInterface.__init__(self)
 
-        # tries to load previous save
-        self.dac = DialogueActCollection.load(DialogueActCollection.get_last_save())
+        ####################
+        # CONTROL BINDINGS #
+        ####################
 
-        if not self.dac:
-            # initializing the dialogue act collection
-            self.load()
+        # navigation shortcuts
+        self.parent.bind(
+            "<Down>",
+            lambda event, arg=1: self.go_down(arg))
+        self.parent.bind(
+            "<Up>",
+            lambda event, arg=1: self.go_up(arg))
+        self.parent.bind(
+            "<Next>",
+            lambda event, arg=10: self.go_down(arg))
+        self.parent.bind(
+            "<Prior>",
+            lambda event, arg=10: self.go_up(arg))
+        self.parent.bind(
+            "<Control-j>",
+            lambda event: self.select_go_to())
 
+        # load / save shortcuts
+        self.parent.bind(
+            "<Control-o>",
+            lambda event: self.open_file())
+        self.parent.bind(
+            "<Control-S>",
+            lambda event: self.save_file())
+        self.parent.bind(
+            "<Control-E>",
+            lambda event: self.export_file())
+        self.parent.bind(
+            "<Control-T>",
+            lambda event: self.export_taxonomy())
+        self.parent.bind(
+            "<Control-I>",
+            lambda event: self.import_taxonomy())
+
+        # other shortcuts
+        self.parent.bind(
+            "<Delete>",
+            lambda event: self.delete_segment())
+        self.parent.bind(
+            "<F3>",
+            lambda event: self.generate_participant_colors())
+        self.parent.bind(
+            "<F4>",
+            lambda event: self.filter_by_dimension())
+        self.parent.bind(
+            "<Control-z>",
+            lambda event: self.undo())
+
+        # special commands
+        self.parent.bind(
+            "<Control-l>",
+            lambda event: self.select_link_type())
+        self.parent.bind(
+            "<Control-e>",
+            lambda event: self.erase_annotation())
+        self.parent.bind(
+            "<Control-m>",
+            lambda event: self.merge_segment())
+        self.parent.bind(
+            "<Control-s>",
+            lambda event: self.select_split_token())
+        self.parent.bind(
+            "<Control-d>",
+            lambda event: self.select_dimension())
+        self.parent.bind(
+            "<Control-r>",
+            lambda event: self.input_new_label_name())
+        self.parent.bind(
+            "<Control-a>",
+            lambda event: self.input_new_label())
+        self.parent.bind(
+            "<Control-n>",
+            lambda event: self.input_new_note())
+        self.parent.bind(
+            "<Control-f>",
+            lambda event: self.filter_by_label())
+
+        #################
+        # MENU COMMANDS #
+        #################
+
+        # file menu
+        self.file_menu.add_command(label="Open File...", accelerator="Ctrl+O", command=self.open_file)
+        self.file_menu.add_command(label="Save As...", accelerator="Ctrl+Shift+S", command=self.save_file)
+        self.file_menu.add_command(label="Export As...", accelerator="Ctrl+Shift+E", command=self.export_file)
+        self.file_menu.add_separator()
+        self.file_menu.add_command(label="Quit", accelerator="Esc", command=self.parent.quit)
+
+        # edit menu
+        self.edit_menu.add_command(label="Undo", accelerator="Ctrl+Z", command=self.undo)
+
+        # view menu
+        self.view_menu.add_command(label="Randomize Participant Colors", accelerator="F3", command=self.generate_participant_colors)
+
+        # filter menu
+        self.filter_menu.add_command(label="Filter By Active Label", accelerator="Ctrl+F", command=self.filter_by_label)
+        self.filter_menu.add_command(label="Filter By Active Dimension", accelerator="F4", command=self.filter_by_dimension)
+
+        # taxonomy menu
+        self.taxonomy_menu.add_command(label="Import Taxonomy...", accelerator="Ctrl+Shift+I", command=self.import_taxonomy)
+        self.taxonomy_menu.add_command(label="Export Taxonomy As...", accelerator="Ctrl+Shift+T", command=self.export_taxonomy)
+        self.taxonomy_menu.add_separator()
+        self.taxonomy_menu.add_command(label="Remove Active Label From Taxonomy", command=self.remove_label)
+
+        ##################
+        # INITIALIZATION #
+        ##################
+
+        # attempt to load previous save
+        self.sc = SegmentCollection.load(SegmentCollection.get_last_save())
+
+        if not self.sc:
+            # initializing the segment collection
+            self.open_file()  # load command
+
+        # colorization
         self.generate_dimension_colors()
         self.generate_link_colors()
+        self.generate_participant_colors()
 
         # make a backup of the collection
-        self.dac.save(
-            name="{}backup/auto-{}.pic".format(DialogueActCollection.save_dir, datetime.now().strftime("%d-%m-%y_%X")),
+        self.sc.save(
+            name="{}backup/auto-{}.pic".format(SegmentCollection.save_dir, datetime.now().strftime("%d-%m-%y_%X")),
             backup=True
         )
 
-        # creating custom colors for each participant
-        self.generate_participant_colors()
+        # undo history initialization
+        self.undo_history = []
 
-        # binding controls
+        # special buttons
+        self.make_special_buttons()
 
-        self.parent.bind("<Down>", self.command_continue)
-        self.parent.bind("<Up>", self.command_return)
-        self.parent.bind("<Next>", lambda event, arg=10: self.command_continue(event, n=arg))
-        self.parent.bind("<Prior>", lambda event, arg=10: self.command_return(event, n=arg))
-        self.parent.bind("<Delete>", self.command_delete)
-        self.parent.bind("<F3>", lambda event, arg=None: self.generate_participant_colors())
+        # display update
+        self.update()
 
-        self.parent.bind("<Control-l>", self.button_link)
-        self.parent.bind("<Control-r>", self.button_remove)
-        self.parent.bind("<Control-m>", self.button_merge)
-        self.parent.bind("<Control-s>", self.button_split)
-        self.parent.bind("<Control-d>", self.button_dimension)
-        self.parent.bind("<Control-j>", self.button_jump)
-        self.parent.bind("<Control-u>", self.button_update)
-        self.parent.bind("<Control-a>", self.button_add)
-        self.parent.bind("<Control-n>", self.button_note)
-        self.parent.bind("<Control-f>", self.button_filter)
-
-        self.parent.bind("<Control-z>", lambda event, arg=None: self.command_undo())
-        self.parent.bind("<Control-o>", lambda event, arg=None: self.load())
-        self.parent.bind("<Control-S>", lambda event, arg=None: self.save_as())
-        self.parent.bind("<Control-E>", lambda event, arg=None: self.export_as())
-        self.parent.bind("<Control-T>", lambda event, arg=None: self.export_taxonomy())
-        self.parent.bind("<Control-I>", lambda event, arg=None: self.import_taxonomy())
-
-        self.undo_history = []  # initializes undo history
-
-        self.make_special_buttons()  # makes special buttons
-
-        self.update()  # display text
+    #################
+    # COLOR METHODS #
+    #################
 
     def generate_participant_colors(self):
-        for participant in set([da.participant for da in self.dac.full_collection]):
+        """
+        Adds a color tag per participant to the text widget
+        """
+        for participant in set([s.participant for s in self.sc.full_collection]):
             self.add_tag(
-                participant,
-                foreground=self.generate_random_color()
+                "participant-{}".format(participant),
+                foreground=generate_random_color()
             )
 
     def generate_dimension_colors(self):
-        for dimension, color in self.dac.colors.items():
+        """
+        Adds a color tag per dimension to the text widget
+        """
+        for dimension, color in self.sc.colors.items():
             self.add_tag(
-                dimension,
+                "dimension-{}".format(dimension),
                 foreground=color
             )
 
     def generate_link_colors(self):
-        for link, color in self.dac.links.items():
+        """
+        Adds a color tag per link type to the text widget
+        """
+        for link, color in self.sc.links.items():
             self.add_tag(
                 "link-{}".format(link),
                 foreground=color
             )
 
-    def import_taxonomy(self):
-        taxonomy_path = filedialog.askopenfilename(
-            initialdir=DialogueActCollection.taxo_dir,
-            title="Open taxonomy file",
-            filetypes=(("JSON taxonomy file", "*.json"), ("all files", "*.*"))
-        )
-
-        self.dac.set_taxonomy(taxonomy_path)
-        self.generate_dimension_colors()
-        self.generate_link_colors()
-        self.update()
-
-    def export_taxonomy(self):
-        taxonomy_path = filedialog.asksaveasfilename(
-            initialdir=DialogueActCollection.taxo_dir,
-            title="Export taxonomy as",
-            filetypes=(("JSON taxonomy file", "*.json"), ("all files", "*.*"))
-        )
-
-        self.dac.export_taxonomy(taxonomy_path)
-
-    def load(self):
-        loaded_dac = DialogueActCollection.load(filedialog.askopenfilename(
-            initialdir=DialogueActCollection.save_dir,
-            title="Open data file",
-            filetypes=(("Pickle serialized files", "*.pic"), ("CSV data files", "*.csv"), ("all files", "*.*"))
-        ))
-
-        if loaded_dac:
-            self.dac = loaded_dac
-
-            self.undo_history = []  # reinitializes undo history
-
-            # choose a taxonomy if none is set
-            if self.dac.taxonomy is None:
-                self.import_taxonomy()
-
-            self.update()
-
-    def save_as(self):
-        self.dac.save(name=filedialog.asksaveasfilename(
-            initialdir=DialogueActCollection.save_dir,
-            title="Save as",
-            filetypes=(("Pickle serialized files", "*.pic"), ("all files", "*.*"))
-        ))
-
-        self.update()
-
-    def export_as(self):
-        self.dac.export(filedialog.asksaveasfilename(
-            initialdir=DialogueActCollection.data_dir,
-            title="Export as",
-            filetypes=(("JSON data files", "*.json"), ("CSV data files", "*.csv"))
-        ))
-
-        self.update()
+    #####################
+    # INTERFACE METHODS #
+    #####################
 
     def make_special_buttons(self):
+        """
+        Creates special command buttons
+        """
         for button in self.special_commands.winfo_children():
             button.destroy()
 
         buttons = {
-            "jump": lambda n=0: self.button_jump(n),
-            "dimension": lambda n=0: self.button_dimension(n),
-            "remove": lambda n=0: self.button_remove(n),
-            "link": lambda n=0: self.button_link(n),
-            "split": lambda n=0: self.button_split(n),
-            "merge": lambda n=0: self.button_merge(n),
-            "add": lambda n=0: self.button_add(n),
-            "update": lambda n=0: self.button_update(n),
-            "filter": lambda n=0: self.button_filter(n),
-            "note": lambda n=0: self.button_note(n)
+            "dimension": self.select_dimension,
+            "erase": self.erase_annotation,
+            "link": self.select_link_type,
+            "split": self.select_split_token,
+            "merge": self.merge_segment,
+            "add": self.input_new_label,
+            "rename": self.input_new_label_name,
+            "filter": self.filter_by_label,
+            "note": self.input_new_note
         }
 
         for text, function in sorted(buttons.items()):
@@ -175,198 +235,250 @@ class Annotator(GraphicalUserInterface):
 
             b.pack(side=LEFT)
 
-    def command_continue(self, e, n=1):
+    #####################
+    # SAVE/OPEN METHODS #
+    #####################
+
+    def open_file(self):
         """
-        Command to continue to a next segment
+        Loads a .csv or .pic file through dialogue
+        """
+        loaded_sc = SegmentCollection.load(filedialog.askopenfilename(
+            initialdir=SegmentCollection.save_dir,
+            title="Open data file",
+            filetypes=(("Pickle serialized files", "*.pic"), ("CSV data files", "*.csv"), ("all files", "*.*"))
+        ))
+
+        if loaded_sc:
+            self.sc = loaded_sc
+
+            self.undo_history = []  # reinitializes undo history
+
+            # choose a taxonomy if none is set
+            if self.sc.taxonomy is None:
+                self.import_taxonomy()
+
+            self.update(annotation_mode=False)
+
+    def save_file(self):
+        """
+        Saves a .pic file through dialogue
+        """
+        self.sc.save(name=filedialog.asksaveasfilename(
+            initialdir=SegmentCollection.save_dir,
+            title="Save as",
+            filetypes=(("Pickle serialized files", "*.pic"), ("all files", "*.*"))
+        ))
+
+        self.update(annotation_mode=False)
+
+    def export_file(self):
+        """
+        Saves a .csv or .json file through dialogue
+        """
+        self.sc.export(filedialog.asksaveasfilename(
+            initialdir=SegmentCollection.data_dir,
+            title="Export as",
+            filetypes=(("JSON data files", "*.json"), ("CSV data files", "*.csv"))
+        ))
+
+        self.update(annotation_mode=False)
+
+    def import_taxonomy(self):
+        """
+        Loads a .json taxonomy file through dialogue
+        """
+        taxonomy_path = filedialog.askopenfilename(
+            initialdir=SegmentCollection.taxo_dir,
+            title="Open taxonomy file",
+            filetypes=(("JSON taxonomy file", "*.json"), ("all files", "*.*"))
+        )
+
+        self.sc.import_taxonomy(taxonomy_path)
+        self.generate_dimension_colors()
+        self.generate_link_colors()
+        self.update()
+
+    def export_taxonomy(self):
+        """
+        Saves a .json taxonomy file through dialogue
+        """
+        taxonomy_path = filedialog.asksaveasfilename(
+            initialdir=SegmentCollection.taxo_dir,
+            title="Export taxonomy as",
+            filetypes=(("JSON taxonomy file", "*.json"), ("all files", "*.*"))
+        )
+
+        self.sc.export_taxonomy(taxonomy_path)
+
+    #######################
+    # NAVIGATION COMMANDS #
+    #######################
+
+    def go_down(self, n):
+        """
+        Moves to an ulterior segment
         """
         # cycles through the collection
         for i in range(0, n):
-            self.dac.next()
+            self.sc.next()
 
         self.update()
 
-    def command_return(self, e, n=1):
+    def go_up(self, n):
         """
-        Command to return to a previous segment
+        Moves to a previous segment
         """
         # cycles backards through the collection
         for i in range(0, n):
-            self.dac.previous()
+            self.sc.previous()
 
         self.update()
 
-    def command_delete(self, e, n=1):
+    def select_go_to(self):
         """
-        Command to delete a segment
+        Inputs a target segment to go to
         """
-        da = self.dac.get_current()
+        self.input(range(1, len(self.sc.collection)), self.go_to)
 
-        self.dac.remove(da)
+    def go_to(self, number):
+        """
+        Moves to a specific segment by index in collection
+        """
+        self.sc.i = int(number) - 1
+        self.update()
+
+    ###############################
+    # SEGMENT MANAGEMENT COMMANDS #
+    ###############################
+
+    def delete_segment(self):
+        """
+        Deletes a segment
+        """
+        segment = self.sc.get_active()
+
+        self.sc.remove(segment)
 
         self.update()
 
-    def command_undo(self):
+    def merge_segment(self):
         """
-        Command to undo changes
+        Merges the segment to its preceding one
         """
-        # if there is a previous state in history to go to
-        if len(self.undo_history) > 1:
-            del self.undo_history[-1]  # remove current state from history
+        segment = self.sc.get_active()
+        previous = self.sc.collection[self.sc.i - 1]
 
-            self.dac = self.undo_history[-1]  # change to previous state in history
-            self.update(backup=False)  # update without saving state to history
+        if segment.participant == previous.participant:  # can only merge segments from the same participant
+            segment.merge(previous)
 
-    def command_remove_label(self):
-        """
-        Command to delete a label from the taxonomy
-        """
-        da = self.dac.get_current()
+            self.sc.remove(previous)
+            self.sc.previous()
 
-        if self.dac.dimension in da.annotations:
-            self.dac.delete_label(self.dac.dimension, da.annotations[self.dac.dimension])
             self.update()
 
-    def button_link(self, e):
+    def select_split_token(self):
         """
-        Button to link a segment to another
+        Inputs the token on which a segment will be split
         """
-        if self.dac.i > 0:  # first DA can't be linked
-            self.input(self.dac.links.keys(), self.select_link_type)
+        segment = self.sc.get_active()
+        self.input(segment.tokens[:-1], self.split_segment, sort=False)
 
-    def select_link_type(self, link_type):
+    def split_segment(self, token):
         """
-        Selects a link type then input link target
+        Splits a segment in two
         """
-        da = self.dac.get_current()
+        segment = self.sc.get_active()
+        splits = segment.split(token)
 
-        for lda, lt in da.links:
+        for split in reversed(splits):
+            self.sc.insert_after_active(split)
+
+        self.sc.remove(segment)
+
+        self.update()
+
+    ##################################
+    # ANNOTATION MANAGEMENT COMMANDS #
+    ##################################
+
+    def erase_annotation(self):
+        """
+        Erases the segment's annotation for the active dimension
+        """
+        segment = self.sc.get_active()
+
+        if self.sc.dimension in segment.annotations:
+            del segment.annotations[self.sc.dimension]
+
+            self.update()
+
+    def select_link_type(self):
+        """
+        Inputs a link type
+        """
+        if self.sc.i > 0:  # first segment can't be linked
+            self.input(self.sc.links.keys(), self.select_link_target)
+
+    def select_link_target(self, link_type):
+        """
+        Set a link type then input link target
+        """
+        segment = self.sc.get_active()
+
+        for ls, lt in segment.links:
             # remove link
             if link_type == lt:
-                DialogueAct.remove_links(da, lda)
+                Segment.remove_links(segment, ls)
                 self.update()
                 return
 
         # input target segment
-        self.input(range(1, self.dac.i + 1), lambda n, link_t=link_type: self.select_link_target(n, link_t))
+        self.input(range(1, self.sc.i + 1), lambda n, link_t=link_type: self.link_segment(n, link_t))
 
-        return False  # prevent return to annotation mode
-
-    def select_link_target(self, number, link_type):
+    def link_segment(self, number, link_type):
         """
         Links a segment to another
         """
         number = int(number) - 1
 
-        da = self.dac.get_current()
-        da.links.append((self.dac.collection[number], link_type))
-        self.dac.collection[number].linked.append((da, link_type))
+        segment = self.sc.get_active()
+        segment.links.append((self.sc.collection[number], link_type))
+        self.sc.collection[number].linked.append((segment, link_type))
 
         self.update()
 
-    def button_remove(self, e):
+    def input_new_note(self):
         """
-        Button to remove annotations for the segment in the current dimension
+        Inputs a note for the current segment
         """
-        da = self.dac.get_current()
+        self.input([], self.set_note, free=True)
 
-        if self.dac.dimension in da.annotations:
-            del da.annotations[self.dac.dimension]
-
-            self.update()
-
-    def button_merge(self, e):
+    def set_note(self, note):
         """
-        Button to merge two segments
+        Sets the note of the segment
         """
-        current = self.dac.get_current()
-        previous = self.dac.collection[self.dac.i - 1]
+        segment = self.sc.get_active()
 
-        if current.participant == previous.participant:  # can only merge DA from the same participant
-            current.merge(previous)
-
-            self.dac.remove(previous)
-            self.dac.previous()
-
-            self.update()
-
-    def button_split(self, e):
-        """
-        Button to split a segment in two
-        """
-        da = self.dac.get_current()
-        self.input(da.tokens[:-1], self.split, sort=False)
-
-    def split(self, token):
-        """
-        Splits a segment in two
-        """
-        da = self.dac.get_current()
-        splits = da.split(token)
-
-        for split in reversed(splits):
-            self.dac.insert_after_current(split)
-
-        self.dac.remove(da)
+        if note != "":
+            segment = self.sc.get_active()
+            segment.note = note
+        else:
+            segment.note = None
 
         self.update()
 
-    def button_dimension(self, e):
-        """
-        Button to change the current dimension
-        """
-        self.input(self.dac.labels.keys(), self.change_dimension)
+    ################################
+    # TAXONOMY MANAGEMENT COMMANDS #
+    ################################
 
-    def change_dimension(self, dimension):
+    def input_new_label(self):
         """
-        Changes the current dimension
+        Inputs name of a new label
         """
-        self.dac.dimension = dimension
-        self.update()
+        segment = self.sc.get_active()
 
-    def button_jump(self, e):
-        """
-        Button to jump to a specific segment
-        """
-        self.input(range(1, len(self.dac.collection)), self.jump)
-
-    def jump(self, number):
-        """
-        Jumps to a specific segment
-        """
-        self.dac.i = int(number) - 1
-        self.update()
-
-    def button_update(self, e):
-        """
-        Button to update a label
-        """
-        da = self.dac.get_current()
-
-        if self.dac.dimension in da.annotations:
-            self.input([], self.update_label, free=True)
-
-    def update_label(self, label):
-        """
-        Updates (or deletes) a label
-        """
-        da = self.dac.get_current()
-
-        if label:
-            self.dac.change_label(
-                self.dac.dimension,
-                da.annotations[self.dac.dimension],
-                label
-            )
-
-        self.update()
-
-    def button_add(self, e):
-        """
-        Button to add a new label
-        """
-        da = self.dac.get_current()
-
-        if self.dac.dimension in self.dac.values and self.dac.dimension in da.annotations and da.annotations[self.dac.dimension] in self.dac.labels[self.dac.dimension]:
+        if self.sc.dimension in self.sc.values and self.sc.dimension in segment.annotations and segment.annotations[self.sc.dimension] in self.sc.labels[self.sc.dimension]:
             self.input([], self.add_qualifier, free=True)
         else:
             self.input([], self.add_label, free=True)
@@ -375,160 +487,235 @@ class Annotator(GraphicalUserInterface):
         """
         Adds a new label
         """
-        self.dac.add_label(self.dac.dimension, label)
+        self.sc.add_label(self.sc.dimension, label)
         self.update()
 
     def add_qualifier(self, qualifier):
         """
         Adds a new label
         """
-        self.dac.add_qualifier(self.dac.dimension, qualifier)
+        self.sc.add_qualifier(self.sc.dimension, qualifier)
         self.update()
 
-    def button_note(self, e):
+    def remove_label(self):
         """
-        Button to add (or remove) a note
+        Removes the current segment's label from the taxonomy
         """
-        da = self.dac.get_current()
+        segment = self.sc.get_active()
 
-        if da.note is not None:
-            da.note = None
-            self.update()
-        else:
-            self.input([], self.note, free=True)
-
-    def note(self, note):
-        """
-        Adds a new note
-        """
-        if note != "":
-            da = self.dac.get_current()
-            da.note = note
+        if self.sc.dimension in segment.annotations:
+            self.sc.delete_label(self.sc.dimension, segment.annotations[self.sc.dimension])
             self.update()
 
-    def button_filter(self, e):
+    def input_new_label_name(self):
+        """
+        Inputs the name of a new label
+        """
+        segment = self.sc.get_active()
+
+        if self.sc.dimension in segment.annotations:
+            self.input([], self.rename_label, free=True)
+
+    def rename_label(self, label):
+        """
+        Renames a label
+        """
+        segment = self.sc.get_active()
+
+        if label:
+            self.sc.change_label(
+                self.sc.dimension,
+                segment.annotations[self.sc.dimension],
+                label
+            )
+
+        self.update()
+
+    #################
+    # VIEW COMMANDS #
+    #################
+
+    def filter_by_label(self):
         """
         Button to filter segments by label
         """
-        current_da = self.dac.get_current()
+        segment = self.sc.get_active()
 
-        if not self.dac.filter and (self.dac.dimension in current_da.annotations or self.dac.dimension in current_da.legacy):
-            if self.dac.dimension in current_da.annotations:
-                self.dac.collection = [da for da in self.dac.full_collection if self.dac.dimension in da.annotations and da.annotations[self.dac.dimension].startswith(current_da.annotations[self.dac.dimension].split(" ➔ ")[0])]
-                self.dac.filter = "[{}]".format(current_da.annotations[self.dac.dimension].split(" ➔ ")[0])
-            elif self.dac.dimension in current_da.legacy:
-                self.dac.collection = [da for da in self.dac.full_collection if self.dac.dimension in da.legacy and da.legacy[self.dac.dimension].startswith(current_da.legacy[self.dac.dimension].split(" ➔ ")[0])]
-                self.dac.filter = "(({}))".format(current_da.legacy[self.dac.dimension].split(" ➔ ")[0])
+        if not self.sc.filter and (self.sc.dimension in segment.annotations or self.sc.dimension in segment.legacy):
+            if self.sc.dimension in segment.annotations:
+                self.sc.collection = [s for s in self.sc.full_collection if self.sc.dimension in s.annotations and s.annotations[self.sc.dimension].startswith(segment.annotations[self.sc.dimension].split(" ➔ ")[0])]
+                self.sc.filter = "[{}]".format(segment.annotations[self.sc.dimension].split(" ➔ ")[0])
+            elif self.sc.dimension in segment.legacy:
+                self.sc.collection = [s for s in self.sc.full_collection if self.sc.dimension in s.legacy and s.legacy[self.sc.dimension].startswith(segment.legacy[self.sc.dimension].split(" ➔ ")[0])]
+                self.sc.filter = "(({}))".format(segment.legacy[self.sc.dimension].split(" ➔ ")[0])
         else:
-            self.dac.collection = self.dac.full_collection.copy()
-            self.dac.filter = False
+            self.sc.collection = self.sc.full_collection.copy()
+            self.sc.filter = False
 
-        for i, da in enumerate(self.dac.collection):
-            if da == current_da:
-                self.dac.i = i
+        for i, s in enumerate(self.sc.collection):
+            if s == segment:
+                self.sc.i = i
 
         self.update()
+
+    def filter_by_dimension(self):
+        if not self.sc.filter:
+            self.sc.collection = [s for s in self.sc.full_collection if self.sc.dimension in s.annotations or self.sc.dimension in s.legacy]
+            self.sc.filter = "|{}|".format(self.sc.dimension)
+
+            # look first for a target from the active segment to the end, and then backwards from the position of the active segment
+            for i in list(range(self.sc.i, len(self.sc.full_collection))) + list(reversed(range(0, self.sc.i))):
+                segment = self.sc.full_collection[i]
+                if segment in self.sc.collection:
+                    # adjust the current index in the new collection
+                    self.sc.i = self.sc.collection.index(segment)
+                    break
+        else:
+            self.sc.i = self.sc.full_collection.index(self.sc.get_active())
+            self.sc.collection = self.sc.full_collection.copy()
+            self.sc.filter = False
+
+        self.update()
+
+    #################
+    # UNDO COMMANDS #
+    #################
+
+    def undo(self):
+        """
+        Undoes one change
+        """
+        # if there is a previous state in history to go to
+        if len(self.undo_history) > 1:
+            del self.undo_history[-1]  # remove current state from history
+
+            self.sc = self.undo_history[-1]  # change to previous state in history
+            self.update(backup=False)  # update without saving state to history
+
+    ######################
+    # DIMENSION COMMANDS #
+    ######################
+
+    def select_dimension(self):
+        """
+        Inputs a dimension
+        """
+        self.input(self.sc.labels.keys(), self.set_active_dimension)
+
+    def set_active_dimension(self, dimension):
+        """
+        Changes the active dimension
+        """
+        self.sc.dimension = dimension
+        self.update()
+
+    ###################
+    # GENERAL METHODS #
+    ###################
 
     def annotation_mode(self):
         """
         Resumes the annotation mode
         """
-        da = self.dac.get_current()
+        segment = self.sc.get_active()
 
-        if self.dac.dimension in self.dac.values and self.dac.dimension in da.annotations and da.annotations[self.dac.dimension] in self.dac.labels[self.dac.dimension]:
-            self.input(self.dac.values[self.dac.dimension], self.annotate_qualifier, sort=False)
+        if self.sc.dimension in self.sc.values and self.sc.dimension in segment.annotations and segment.annotations[self.sc.dimension] in self.sc.labels[self.sc.dimension]:
+            self.input(self.sc.values[self.sc.dimension], self.annotate_qualifier, sort=False)
         else:
-            self.input(self.dac.labels[self.dac.dimension], self.annotate_label, sort=False)
+            self.input(self.sc.labels[self.sc.dimension], self.annotate_label, sort=False)
 
     def annotate_label(self, annotation):
         """
-        Adds a label to the current segment annotations
+        Adds a label to the active segment annotations
         """
-        da = self.dac.get_current()
-        da.annotations[self.dac.dimension] = annotation
+        segment = self.sc.get_active()
+        segment.annotations[self.sc.dimension] = annotation
 
-        if self.dac.dimension not in self.dac.values or self.dac.dimension not in da.annotations or da.annotations[self.dac.dimension] not in self.dac.labels[self.dac.dimension]:
-            self.dac.next()
+        if self.sc.dimension not in self.sc.values or self.sc.dimension not in segment.annotations or segment.annotations[self.sc.dimension] not in self.sc.labels[self.sc.dimension]:
+            self.sc.next()
 
         self.update()
 
     def annotate_qualifier(self, annotation):
         """
-        Adds a qualifier to the current segment annotations
+        Adds a qualifier to the active segment annotations
         """
-        da = self.dac.get_current()
-        da.annotations[self.dac.dimension] = "{} ➔ {}".format(da.annotations[self.dac.dimension], annotation)
-        self.dac.next()
+        segment = self.sc.get_active()
+        segment.annotations[self.sc.dimension] = "{} ➔ {}".format(segment.annotations[self.sc.dimension], annotation)
+        self.sc.next()
+
         self.update()
 
-    def update(self, t=None, backup=True):
+    def update(self, t=None, backup=True, annotation_mode=True):
         """
         Updates the application state
         """
         self.clear_screen()
 
-        n_previous = self.dac.i if self.dac.i < 50 else 50
+        n_previous = self.sc.i if self.sc.i < 50 else 50
 
-        for j in range(self.dac.i - n_previous, self.dac.i):
+        for j in range(self.sc.i - n_previous, self.sc.i):
             self.output_segment(j)
 
         # dimension in status
-        status = "Dimension: {}".format(self.dac.dimension.title())
+        status = "Dimension: {}".format(self.sc.dimension.title())
 
         # filter in status
-        if self.dac.filter:
-            status = "{} - Filter: {}".format(status, self.dac.filter)
+        if self.sc.filter:
+            status = "{} - Filter: {}".format(status, self.sc.filter)
 
         # file in status
-        status = "{}\nFile: {}".format(status, self.dac.save_file)
+        status = "{}\nFile: {}".format(status, self.sc.save_file)
 
         self.update_status_message(status)
 
-        self.output_segment(self.dac.i, current=True)
-        self.annotation_mode()
+        self.output_segment(self.sc.i, active=True)
+
+        if annotation_mode:
+            self.annotation_mode()
 
         if backup:
             if len(self.undo_history) == 100:
                 self.undo_history.pop(0)
-            self.undo_history.append(deepcopy(self.dac))
+            self.undo_history.append(deepcopy(self.sc))
 
-        self.dac.save()
+        self.sc.save()
 
-    def output_segment(self, i, current=False):
+    def output_segment(self, i, active=False):
         """
         Outputs a segment to the text field
         """
-        da = self.dac.collection[i]
+        segment = self.sc.collection[i]
 
-        style = [da.participant]
+        style = ["participant-{}".format(segment.participant)]
 
-        if current:
-            style.append(styles.STRONG)
+        if active:
+            style.append(Styles.STRONG)
 
-        text = "{}\t{}\t{}  \t\t{}".format(i + 1, da.time, da.participant, da.raw)
+        text = "{}\t{}\t{}  \t\t{}".format(i + 1, segment.time, segment.participant, segment.raw)
         self.output(text, style=style)
 
         offset = len(text) + 1
 
-        for dimension in reversed(sorted(da.annotations.keys())):
-            addendum = " [{}]".format(da.annotations[dimension])
-            self.add_to_last_line(addendum, style=dimension, offset=offset)
+        for dimension in reversed(sorted(segment.annotations.keys())):
+            addendum = " [{}]".format(segment.annotations[dimension])
+            self.add_to_last_line(addendum, style="dimension-{}".format(dimension), offset=offset)
             offset += len(addendum)
 
-        for dimension in reversed(sorted(da.legacy.keys())):
-            if dimension not in da.annotations:
-                addendum = " (({}))".format(da.legacy[dimension])
-                self.add_to_last_line(addendum, style=dimension, offset=offset)
+        for dimension in reversed(sorted(segment.legacy.keys())):
+            if dimension not in segment.annotations:
+                addendum = " (({}))".format(segment.legacy[dimension])
+                self.add_to_last_line(addendum, style="dimension-{}".format(dimension), offset=offset)
                 offset += len(addendum)
 
-        for lda, lt in da.links:
-            if lda in self.dac.collection:
-                addendum = " ⟲ {}".format(self.dac.collection.index(lda) + 1)
+        for ls, lt in segment.links:
+            if ls in self.sc.collection:
+                addendum = " ⟲ {}".format(self.sc.collection.index(ls) + 1)
             else:
                 addendum = " ⟲"
 
             self.add_to_last_line(addendum, style="link-{}".format(lt), offset=offset)
             offset += len(addendum)
 
-        if da.note is not None:
-            self.output("\t\t\t\t ⤷ {}".format(da.note), style=styles.ITALIC)
+        if segment.note is not None:
+            self.output("\t\t\t\t ⤷ {}".format(segment.note), style=Styles.ITALIC)

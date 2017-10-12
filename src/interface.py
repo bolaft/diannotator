@@ -1,10 +1,18 @@
-import random
+# DiAnnotator
+#
+# Author: Soufian Salim <soufi@nsal.im>
+#
+# URL: <http://github.com/bolaft/diannotator>
+
+"""
+GrapicaluserInterface class
+"""
 
 from tkinter import Tk, Button, Entry, Frame, Label, Scrollbar, StringVar, Text, Menu, BOTH, DISABLED, END, LEFT, BOTTOM, NORMAL, N, X, WORD, NSEW, SUNKEN
+
 from styles import Styles
 
 # colors
-
 BLACK = "#000000"
 WHITE = "#ffffff"
 GRAY = "#0f0e0e"
@@ -15,53 +23,36 @@ class GraphicalUserInterface(Frame, Styles):
     """
     Graphical User Interface class
     """
-    __instance = None  # singleton
-    __initialized = False  # prevents multiple initializations
-
     window_title = "DiAnnotator"  # window title
 
     padding = 25  # padding for text area
     wrap_length = 960  # max length of labels before automatic newline
 
+    # text parameters
     text_font_family = "mono"
     text_font_size = 12
     text_font_weight = "normal"
 
+    # label parameters
     label_font_family = "mono"
     label_font_size = 12
     label_font_weight = "normal"
 
+    # entry parameters
     entry_font_family = "TkDefaultFont"
     entry_font_size = 14
     entry_font_weight = "normal"
-
-    def __new__(cls):
-        """
-        Singleton method
-        """
-        if GraphicalUserInterface.__instance is None:
-            GraphicalUserInterface.__instance = object.__new__(cls)
-
-        return GraphicalUserInterface.__instance
 
     def __init__(self):
         """
         Initializes the graphical user interface
         """
-        if GraphicalUserInterface.__initialized:
-            return
-        else:
-            GraphicalUserInterface.__initialized = True
-
-        self.command_list = []  # list of potential commands
-
-        self.free_input = False  # sets whether it's possible to input anything in the entry
-
         # main interface object
         self.parent = Tk()
         self.parent.state = False
 
-        Frame.__init__(self, self.parent, background=BLACK)  # initializes the root window
+        # root window initialization
+        Frame.__init__(self, self.parent, background=BLACK)
 
         w = 1024  # width for the Tk parent
         h = 680  # height for the Tk parent
@@ -73,6 +64,7 @@ class GraphicalUserInterface(Frame, Styles):
         self.parent.geometry("%dx%d+0+0" % (ws, hs))  # set the dimensions of the window
         self.parent.minsize(w, h)  # minimum size of the window
 
+        # default bindings
         self.parent.bind("<F11>", self.toggle_fullscreen)
         self.parent.bind("<Escape>", lambda event, arg=None: self.parent.quit())
 
@@ -82,37 +74,20 @@ class GraphicalUserInterface(Frame, Styles):
         # menu bar
         self.menu_bar = Menu(self.parent)
 
-        file_menu = Menu(self.menu_bar, tearoff=0)
-        file_menu.add_command(label="Open File...", accelerator="Ctrl+O", command=self.load)
-        file_menu.add_command(label="Save As...", accelerator="Ctrl+Shift+S", command=self.save_as)
-        file_menu.add_command(label="Export As...", accelerator="Ctrl+Shift+E", command=self.export_as)
-        file_menu.add_separator()
-        file_menu.add_command(label="Quit", accelerator="Esc", command=self.parent.quit)
+        self.file_menu = Menu(self.menu_bar, tearoff=0)
+        self.menu_bar.add_cascade(label="File", menu=self.file_menu)
 
-        self.menu_bar.add_cascade(label="File", menu=file_menu)
+        self.edit_menu = Menu(self.menu_bar, tearoff=0)
+        self.menu_bar.add_cascade(label="Edit", menu=self.edit_menu)
 
-        edit_menu = Menu(self.menu_bar, tearoff=0)
-        edit_menu.add_command(label="Undo", accelerator="Ctrl+Z", command=self.command_undo)
+        self.view_menu = Menu(self.menu_bar, tearoff=0)
+        self.menu_bar.add_cascade(label="View", menu=self.view_menu)
 
-        self.menu_bar.add_cascade(label="Edit", menu=edit_menu)
+        self.filter_menu = Menu(self.menu_bar, tearoff=0)
+        self.menu_bar.add_cascade(label="Filter", menu=self.filter_menu)
 
-        view_menu = Menu(self.menu_bar, tearoff=0)
-        view_menu.add_command(label="Randomize Participant Colors", accelerator="F3", command=self.generate_participant_colors)
-
-        self.menu_bar.add_cascade(label="View", menu=view_menu)
-
-        filter_menu = Menu(self.menu_bar, tearoff=0)
-        filter_menu.add_command(label="Filter Current Label", accelerator="Ctrl+F", command=lambda e=None: self.button_filter(e))
-
-        self.menu_bar.add_cascade(label="Filter", menu=filter_menu)
-
-        taxonomy_menu = Menu(self.menu_bar, tearoff=0)
-        taxonomy_menu.add_command(label="Remove Current Label From Taxonomy", command=self.command_remove_label)
-        taxonomy_menu.add_separator()
-        taxonomy_menu.add_command(label="Import Taxonomy...", accelerator="Ctrl+Shift+I", command=self.import_taxonomy)
-        taxonomy_menu.add_command(label="Export Taxonomy As...", accelerator="Ctrl+Shift+T", command=self.export_taxonomy)
-
-        self.menu_bar.add_cascade(label="Taxonomy", menu=taxonomy_menu)
+        self.taxonomy_menu = Menu(self.menu_bar, tearoff=0)
+        self.menu_bar.add_cascade(label="Taxonomy", menu=self.taxonomy_menu)
 
         self.parent.config(menu=self.menu_bar)
 
@@ -130,26 +105,25 @@ class GraphicalUserInterface(Frame, Styles):
         self.output_frame.grid_rowconfigure(1, weight=1)  # implement stretchability
         self.output_frame.grid_columnconfigure(0, weight=1)
 
-        # create a Text widget
+        # Text widget
         self.text = Text(self.output_frame, borderwidth=3, relief=SUNKEN)
         self.text.grid(row=0, column=0, sticky="nsew", padx=self.padding, pady=(self.padding, 0))
         self.text.config(font=(self.text_font_family, self.text_font_size), undo=True, wrap=WORD, bg=LIGHT_GRAY, fg=WHITE, highlightbackground=BLACK, highlightcolor=WHITE, state=DISABLED)
+
+        # creates a Scrollbar and associate it with text
+        self.scrollbar = Scrollbar(self.output_frame, command=self.text.yview)
+        self.scrollbar.grid(row=0, rowspan=3, column=1, sticky=NSEW)
+        self.text["yscrollcommand"] = self.scrollbar.set
 
         # status bar
         self.status = Label(self.output_frame, height=0, wraplengt=self.wrap_length, font=(self.label_font_family, self.label_font_size))
         self.status.grid(row=1, column=0, pady=0)
 
-        # create a Scrollbar and associate it with text
-        self.scrollbar = Scrollbar(self.output_frame, command=self.text.yview)
-        self.scrollbar.grid(row=0, rowspan=3, column=1, sticky=NSEW)
-        self.text["yscrollcommand"] = self.scrollbar.set
-
-        self.action = None  # default command action
-
         # binds any typing to the command input field to the update_commands method
         sv = StringVar()
         sv.trace("w", lambda name, index, mode, sv=sv: self.update_commands())
 
+        # input frame
         self.input_frame = Frame(self)
         self.input_frame.pack(fill=X, side=BOTTOM)
 
@@ -162,14 +136,20 @@ class GraphicalUserInterface(Frame, Styles):
         self.entry.focus_set()  # sets the focus on the input field
 
         # creates the frame containing buttons
-
         self.commands = Frame(self.input_frame)
         self.commands.pack(fill=X, side=BOTTOM)
 
+        # creates the frame containing special buttons
         self.special_commands = Frame(self.input_frame)
         self.special_commands.pack(fill=X, side=BOTTOM)
 
         Styles.__init__(self)  # initializes style tags
+
+        self.command_list = []  # list of potential commands
+
+        self.action = None  # default command action
+
+        self.free_input = False  # sets whether it's possible to input anything in the entry
 
     def return_pressed(self, e):
         """
@@ -215,10 +195,7 @@ class GraphicalUserInterface(Frame, Styles):
         Processes user input
         """
         self.free_input = False
-        return_to_annotation_mode = self.action(t)
-
-        if return_to_annotation_mode:
-            self.annotation_mode()
+        self.action(t)
 
     def update_status_message(self, text):
         """
@@ -270,15 +247,6 @@ class GraphicalUserInterface(Frame, Styles):
 
         return "break"
 
-    def end_fullscreen(self, event=None):
-        """
-        Returns to a windowed state
-        """
-        self.parent.state = False
-        self.parent.attributes("-fullscreen", False)
-
-        return "break"
-
     def clear_screen(self):
         """
         Clears the text widget
@@ -296,16 +264,6 @@ class GraphicalUserInterface(Frame, Styles):
         self.text.config(state=DISABLED)  # makes the text editable
 
         self.add_blank_lines(1)
-
-    def add_to_last_line(self, text, style=None, offset=0):
-        """
-        Adds text to the end of the previous line
-        """
-        self.text.config(state=NORMAL)  # makes the text editable
-        self.text.delete("end-1c linestart", self.text.index(END))
-        self.text.config(state=DISABLED)  # makes the text editable
-
-        self.add_text(text, added=True, style=style, offset=offset)
 
     def add_text(self, text, added=False, style=None, offset=0):
         """
@@ -332,6 +290,16 @@ class GraphicalUserInterface(Frame, Styles):
 
         self.previous_tag_name = style
         self.previous_line_length = len(text)
+
+    def add_to_last_line(self, text, style=None, offset=0):
+        """
+        Adds text to the end of the previous line
+        """
+        self.text.config(state=NORMAL)  # makes the text editable
+        self.text.delete("end-1c linestart", self.text.index(END))
+        self.text.config(state=DISABLED)  # makes the text editable
+
+        self.add_text(text, added=True, style=style, offset=offset)
 
     def add_blank_lines(self, n, delay=1.0):
         """
@@ -373,10 +341,3 @@ class GraphicalUserInterface(Frame, Styles):
             self.add_text(line, style=style)
 
         self.add_blank_lines(blank_after, delay=delay)  # blank lines after the output
-
-    def generate_random_color(self):
-        r = (random.randrange(1, 256) + 255) / 2
-        g = (random.randrange(1, 256) + 255) / 2
-        b = (random.randrange(1, 256) + 255) / 2
-
-        return '#%02x%02x%02x' % (r, g, b)

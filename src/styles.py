@@ -1,110 +1,34 @@
-# style names
+# DiAnnotator
+#
+# Author: Soufian Salim <soufi@nsal.im>
+#
+# URL: <http://github.com/bolaft/diannotator>
 
-STRONG = "STRONG"
-ITALIC = "ITALIC"
-DIALOG = "DIALOG"
-PROCESS = "PROCESS"
-INFO = "INFO"
-DEBUG = "DEBUG"
-OK = "OK"
-WARNING = "WARNING"
-FAIL = "FAIL"
-HIGHLIGHT = "HIGHLIGHT"
-BLACK = "BLACK"
-WHITE = "WHITE"
-GRAY = "GRAY"
-LIGHT_GRAY = "LIGHT_GRAY"
-GREEN = "GREEN"
-PURPLE = "PURPLE"
+"""
+Styles class
+"""
 
 
 class Styles:
     """
     Class defining text style tags
     """
+    STRONG = "STRONG"
+    ITALIC = "ITALIC"
+
     def __init__(self):
         """
         Initializes style tags
         """
 
         self.add_tag(
-            BLACK,
-            foreground="#000000"
-        )
-
-        self.add_tag(
-            WHITE,
-            foreground="#ffffff"
-        )
-
-        self.add_tag(
-            GRAY,
-            foreground="#0f0e0e"
-        )
-
-        self.add_tag(
-            LIGHT_GRAY,
-            foreground="#171717"
-        )
-
-        self.add_tag(
-            GREEN,
-            foreground="#aacf8a"
-        )
-
-        self.add_tag(
-            PURPLE,
-            foreground="#db5cd7"
-        )
-
-        self.add_tag(
-            STRONG,
+            Styles.STRONG,
             font_weight="bold"
         )
 
         self.add_tag(
-            ITALIC,
+            Styles.ITALIC,
             font_weight="italic"
-        )
-
-        self.add_tag(
-            DIALOG,
-            foreground="#54D6EF",
-        )
-
-        self.add_tag(
-            PROCESS,
-            foreground="#808080"
-        )
-
-        self.add_tag(
-            INFO,
-            foreground="#E6DB71"
-        )
-
-        self.add_tag(
-            DEBUG,
-            foreground="#664729"
-        )
-
-        self.add_tag(
-            OK,
-            foreground="#A6E22E"
-        )
-
-        self.add_tag(
-            WARNING,
-            foreground="#FD971F"
-        )
-
-        self.add_tag(
-            HIGHLIGHT,
-            background="#ffffff"
-        )
-
-        self.add_tag(
-            FAIL,
-            foreground="#FC4747"
         )
 
     def add_tag(self, name, foreground=None, background=None, justify=None, font_family=None, font_size=None, font_weight=None):

@@ -1,6 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+# DiAnnotator
+#
+# Author: Soufian Salim <soufi@nsal.im>
+#
+# URL: <http://github.com/bolaft/diannotator>
+
+"""
+Launcher
+"""
+
 import doctest
 import sys
 
@@ -9,7 +19,7 @@ from optparse import OptionParser
 from annotator import Annotator
 
 APP_TITLE = "DiAnnotator"  # hardcoded game title
-VERSION_NUMBER = "alpha 17.10.6"  # hardcoded version number
+VERSION_NUMBER = "alpha 17.10.12"  # hardcoded version number
 
 
 def parse_args():
@@ -48,6 +58,7 @@ if __name__ == "__main__":
         doctest.testmod()  # unit testing
         sys.exit()
 
+    # displays version of the program
     if options.version:
         sys.exit("{} {}".format(APP_TITLE, VERSION_NUMBER))
 

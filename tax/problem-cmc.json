@@ -187,57 +187,17 @@
             "request directives"
         ],
         "partiality": [
-            "partial",
-
-            "inform",
-            "confirm",
-            "disconfirm",
-            "commit",
-            "offer",
-            "instruct",
-            "suggest",
-            "request information",
-            "request directives"
+            "partial"
         ],
         "conditionality": [
-            "conditional",
-
-            "inform",
-            "confirm",
-            "disconfirm",
-            "commit",
-            "offer",
-            "instruct",
-            "suggest",
-            "request information",
-            "request directives"
+            "conditional"
         ],
         "certainty": [
             "certain",
-            "uncertain",
-
-            "inform",
-            "confirm",
-            "disconfirm",
-            "commit",
-            "offer",
-            "instruct",
-            "suggest",
-            "request information",
-            "request directives"
+            "uncertain"
         ],
         "irony": [
-            "ironic",
-
-            "inform",
-            "confirm",
-            "disconfirm",
-            "commit",
-            "offer",
-            "instruct",
-            "suggest",
-            "request information",
-            "request directives"
+            "ironic"
         ]
     },
     "values": {

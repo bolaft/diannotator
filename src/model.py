@@ -1,33 +1,43 @@
+# DiAnnotator
+#
+# Author: Soufian Salim <soufi@nsal.im>
+#
+# URL: <http://github.com/bolaft/diannotator>
+
+"""
+Segment modelisation classes
+"""
+
 import codecs
-import pickle
-import os
 import csv
 import json
+import os
+import pickle
 import tempfile
 
-from nltk.tokenize import WhitespaceTokenizer
 from collections import OrderedDict
-
+from nltk.tokenize import WhitespaceTokenizer
 
 # check if the current file is in a folder name "src"
 EXEC_FROM_SOURCE = os.path.dirname(os.path.abspath(__file__)).split("/")[-1] == "src"
 
 
-class DialogueAct:
+class Segment:
     def __init__(self, raw, participant, time, date):
         """
-        Dialogue Act constructor
+        Segment constructor
         """
         self.id = id(self)  # random unique ID
         self.raw = raw  # raw utterance
+        self.original_raw = raw  # full original raw utterance
         self.participant = participant  # speaker name
         self.annotations = {}  # annotations
         self.legacy = {}  # legacy annotations
         self.date = date  # date as string
         self.time = time  # time as string
-        self.links = []  # DA linked to this one
-        self.linked = []  # DAs that answer an elicitation in this one
-        self.note = None  # note about the DA
+        self.links = []  # segment linked to this one
+        self.linked = []  # segments that answer an elicitation in this one
+        self.note = None  # note about the segment
 
         self.tokenize()  # tokenization
 
@@ -37,12 +47,13 @@ class DialogueAct:
         """
         links = {}
 
-        for da, lt in self.links:
-            links[lt] = [da.id] if lt not in links else links[lt] + [da.id]
+        for segment, lt in self.links:
+            links[lt] = [segment.id] if lt not in links else links[lt] + [segment.id]
 
         return {
             "id": self.id,
             "raw": self.raw,
+            "original_raw": self.original_raw,
             "participant": self.participant,
             "date": self.date,
             "time": self.time,
@@ -59,13 +70,14 @@ class DialogueAct:
 
         data.update({"id": self.id})
         data.update({"raw": self.raw})
+        data.update({"original_raw": self.original_raw if isinstance(self.original_raw, str) else "<<MERGED<<".join(self.original_raw)})
         data.update({"participant": self.participant})
         data.update({"date": self.date})
         data.update({"time": self.time})
         data.update({"note": self.note})
-        data.update({"links": ",".join(["{}-{}".format(da.id, lt) for da, lt in self.links])})
+        data.update({"links": ",".join(["{}-{}".format(segment.id, lt) for segment, lt in self.links])})
 
-        for dimension in labels:
+        for dimension in labels.keys():
             data.update(
                 {dimension: None if not dimension in self.annotations else self.annotations[dimension]}
             )
@@ -81,104 +93,106 @@ class DialogueAct:
 
     def copy(self, raw):
         """
-        Creates and returns a DA with similar attributes but different raw
+        Creates and returns a segment with similar attributes but different raw
         """
-        da = DialogueAct(raw, self.participant, self.time, self.date)
-        da.annotations = self.annotations.copy()
-        da.legacy = self.legacy.copy()
-        da.links = self.links.copy()
-        da.time = self.time
-        da.date = self.date
-        da.linked = self.linked.copy()
-        da.note = self.note
-        da.tokenize()
+        segment = Segment(raw, self.participant, self.time, self.date)
+        segment.original_raw = self.original_raw
+        segment.annotations = self.annotations.copy()
+        segment.legacy = self.legacy.copy()
+        segment.links = self.links.copy()
+        segment.time = self.time
+        segment.date = self.date
+        segment.linked = self.linked.copy()
+        segment.note = self.note
+        segment.tokenize()
 
-        return da
+        return segment
 
     @staticmethod
     def check_for_link(source, target):
         """
-        Checks if two DAs are linked
+        Checks if two segments are linked
         """
-        for da, lt in source.links:
-            if da == target:
+        for ls, lt in source.links:
+            if ls == target:
                 return True
 
     @staticmethod
     def remove_links(source, target):
         """
-        Removes a link between two DA
+        Removes a link between two segments
         """
-        for da, lt in source.links:
-            if da == target:
+        for ls, lt in source.links:
+            if ls == target:
                 source.links.remove((target, lt))
 
-        for lda, llt in target.linked:
-            if lda == source:
+        for lls, llt in target.linked:
+            if lls == source:
                 target.linked.remove((source, llt))
 
     @staticmethod
     def replace_links(source, target, new_target):
         """
-        Removes a link between two DA
+        Removes a link between two segments
         """
-        for lda, lt in source.links:
-            if lda == target:
+        for ls, lt in source.links:
+            if ls == target:
                 source.links.remove((target, lt))
                 source.links.append((new_target, lt))
 
-        for lda, lt in target.linked:
-            if lda == source:
+        for ls, lt in target.linked:
+            if ls == source:
                 target.linked.remove((source, lt))
                 new_target.linked.append((source, lt))
 
     def split(self, token):
         """
-        Returns two halves of the DA
+        Returns two halves of the segments
         """
         # index of the split
         split_index = self.tokens.index(token) + 1
 
         # copying attributes
-        da1 = self.copy(" ".join(self.tokens[0:split_index]))
-        da2 = self.copy(" ".join(self.tokens[split_index:]))
+        s1 = self.copy(" ".join(self.tokens[0:split_index]))
+        s2 = self.copy(" ".join(self.tokens[split_index:]))
 
-        # outgoing links are removed for da2
-        da2.links = []
+        # outgoing links are removed for s2
+        s2.links = []
 
         # preserves links
-        for lda, lt in self.linked:
-            DialogueAct.replace_links(lt, self, da2)
+        for ls, lt in self.linked:
+            Segment.replace_links(lt, self, s2)
 
-        return [da1, da2]
+        return [s1, s2]
 
-    def merge(self, da):
+    def merge(self, segment):
         """
-        Merges the DA with another
+        Merges the segment with another
         """
         join = "" if len(self.raw) == 0 or self.raw[0] in [",", "."] else " "
-        self.raw = da.raw + join + self.raw
+        self.raw = segment.raw + join + self.raw
+        self.original_raw = [segment.original_raw, self.original_raw]
         self.tokenize()
-        self.annotations.update(da.annotations)
-        self.legacy.update(da.legacy)
+        self.annotations.update(segment.annotations)
+        self.legacy.update(segment.legacy)
 
         if self.note is None:
-            if da.note is not None:
-                self.note = da.note
-        elif da.note is not None:
-            self.note = "{} / {}".format(da.note, self.note)
+            if segment.note is not None:
+                self.note = segment.note
+        elif segment.note is not None:
+            self.note = "{} / {}".format(segment.note, self.note)
 
-        if DialogueAct.check_for_link(self, da):
-            DialogueAct.remove_links(self, da)
-            self.links = da.links
+        if Segment.check_for_link(self, segment):
+            Segment.remove_links(self, segment)
+            self.links = segment.links
 
-        for lda, lt in da.linked:
-            DialogueAct.replace_links(lda, da, self)
+        for ls, lt in segment.linked:
+            Segment.replace_links(ls, segment, self)
 
-        self.linked = list(set(self.linked + da.linked))
+        self.linked = list(set(self.linked + segment.linked))
 
 
-class DialogueActCollection:
+class SegmentCollection:
     # file for serialization
     save_dir = "../sav/" if EXEC_FROM_SOURCE else "sav/"
     taxo_dir = "../tax/" if EXEC_FROM_SOURCE else "tax/"
@@ -186,9 +200,9 @@ class DialogueActCollection:
     temp_dir = "{}/diannotator/".format(tempfile.gettempdir())
 
     def __init__(self):
-        self.save_file = os.path.abspath("{}tmp.pic".format(DialogueActCollection.save_dir))
+        self.save_file = os.path.abspath("{}tmp.pic".format(SegmentCollection.save_dir))
 
-        self.full_collection = []  # full collection of DA
+        self.full_collection = []  # full collection of segments
         self.collection = []  # current collection used
         self.annotations = {}  # list of possible annotations
 
@@ -203,7 +217,7 @@ class DialogueActCollection:
         self.dimension = None
         self.filter = False
 
-    def set_taxonomy(self, path):
+    def import_taxonomy(self, path):
         taxonomy = json.loads(codecs.open(path, encoding="utf-8").read())
 
         self.taxonomy = taxonomy["name"]
@@ -214,18 +228,18 @@ class DialogueActCollection:
         self.colors = taxonomy["colors"]  # dimension colors
         self.links = taxonomy["links"]  # link types
 
-    def get_current(self):
+    def get_active(self):
         return self.collection[self.i]
 
-    def remove(self, da):
-        self.collection.remove(da)
-        self.full_collection.remove(da)
+    def remove(self, segment):
+        self.collection.remove(segment)
+        self.full_collection.remove(segment)
 
-    def insert_after_current(self, insert):
+    def insert_after_active(self, insert):
         # insert into full collection
-        self.full_collection.insert(self.full_collection.index(self.get_current()) + 1, insert)
+        self.full_collection.insert(self.full_collection.index(self.get_active()) + 1, insert)
 
-        # insert into current collection
+        # insert into active collection
         self.collection.insert(self.i + 1, insert)
 
     def next(self):
@@ -244,9 +258,9 @@ class DialogueActCollection:
         if new_label not in self.labels[dimension]:
             self.labels[dimension].insert(index, new_label)
 
-        for da in list(set(self.collection + self.full_collection)):
-            if dimension in da.annotations and da.annotations[dimension] == label:
-                da.annotations[dimension] = new_label
+        for segment in list(set(self.collection + self.full_collection)):
+            if dimension in segment.annotations and segment.annotations[dimension] == label:
+                segment.annotations[dimension] = new_label
 
     def delete_label(self, dimension, label):
         """
@@ -254,9 +268,9 @@ class DialogueActCollection:
         """
         self.labels[dimension].remove(label)
 
-        for da in list(set(self.collection + self.full_collection)):
-            if dimension in da.annotations and da.annotations[dimension] == label:
-                del da.annotations[dimension]
+        for segment in list(set(self.collection + self.full_collection)):
+            if dimension in segment.annotations and segment.annotations[dimension] == label:
+                del segment.annotations[dimension]
 
     def add_label(self, dimension, label):
         """
@@ -277,68 +291,68 @@ class DialogueActCollection:
         with open(path) as f:
             rows = [{k: v for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True, delimiter="\t")]
 
-        previous_da = None
-        da = None
+        previous_segment = None
+        segment = None
 
         for row in rows:
-            time = row["time"].strip()
-            date = row["date"].strip()
-            segment = row["segment"].strip()
-            note = row["note"].strip() if "note" in row else None
+            time = previous_segment.time if row["time"] is None or row["time"].strip() == "" else row["time"].strip()
+            date = previous_segment.date if row["date"] is None or row["date"].strip() == "" else row["date"].strip()
+            span = row["segment"].strip()
 
             if row["raw"] is None or row["raw"].strip() == "":
-                da = DialogueAct(
-                    previous_da.raw,
-                    previous_da.participant,
-                    previous_da.time,
-                    previous_da.date
+                segment = Segment(
+                    previous_segment.raw,
+                    previous_segment.participant,
+                    previous_segment.time,
+                    previous_segment.date
                 )
-                da.note = previous_da.note
-
-                da.legacy = {}
+                segment.original_raw = previous_segment.original_raw
+                segment.legacy = {}
 
                 tokenizer = WhitespaceTokenizer()
 
-                # last token of the previous DA's segment
-                end_of_previous_da = tokenizer.tokenize(previous_da.segment)[-1]
+                # last token of the previous segment's segment
+                end_of_previous_span = tokenizer.tokenize(previous_segment.span)[-1]
 
-                # position of the last token of the previous DA's segment in the full raw
-                index = previous_da.raw.index(end_of_previous_da) + len(end_of_previous_da)
+                # position of the last token of the previous segment's segment in the full raw
+                index = previous_segment.raw.index(end_of_previous_span) + len(end_of_previous_span)
 
-                # ajust the raw of the current DA
-                da.raw = previous_da.raw[index:].strip()
+                # ajust the raw of the current segment
+                segment.raw = previous_segment.raw[index:].strip()
 
-                # adjust the raw of the previous DA
-                previous_da.raw = previous_da.raw[:index].strip()
+                # adjust the raw of the previous segment
+                previous_segment.raw = previous_segment.raw[:index].strip()
 
-                # update tokens of the previous DA
-                previous_da.tokenize()
+                # update tokens of the previous segment
+                previous_segment.tokenize()
             else:
                 raw = row["raw"].strip()
-                participant = row["participant"].strip() if row["participant"].strip() != "\\" else da.participant
+                participant = row["participant"].strip() if row["participant"].strip() != "\\" else segment.participant
 
-                da = DialogueAct(
+                segment = Segment(
                     raw,
                     participant,
                     time,
                     date
                 )
-                da.note = note
 
-            # update the current DA's segment
-            da.segment = segment
+            # update the current segment's segment
+            segment.span = span
 
-            # update the current DA's tokens
-            da.tokenize()
+            # update the current segment's tokens
+            segment.tokenize()
 
-            # set the current DA as the previous DA (for the next iteration)
-            previous_da = da
+            # set the current segment as the previous segment (for the next iteration)
+            previous_segment = segment
 
-            # makes legacy annotations for the DA
-            da.legacy = self.make_legacy_annotations(row)
+            # makes legacy annotations for the segment
+            segment.legacy = self.make_legacy_annotations(row)
 
-            # adds the DA to the full collection
-            self.full_collection.append(da)
+            # set note
+            segment.note = row["note"].strip() if "note" in row else None
+
+            # adds the segment to the full collection
+            self.full_collection.append(segment)
 
         # syncs the current collection to the full collection
         self.collection = self.full_collection.copy()
@@ -351,7 +365,7 @@ class DialogueActCollection:
                 if key.endswith("-value") and row[key]:
                     dimension = key[:len(key) - len("-value")]
 
-                    # if the function is alreay set
+                    # if the function is already set
                     if key in legacy:
                         legacy[dimension] = "{} ➔ {}".format(legacy[dimension], row[key])
                     else:
@@ -367,7 +381,7 @@ class DialogueActCollection:
 
     def save(self, name=None, backup=False):
         """
-        Serializes the DialogueActCollection
+        Serializes the SegmentCollection
         """
         if name and not backup:
             self.save_file = os.path.abspath(name)
@@ -383,7 +397,7 @@ class DialogueActCollection:
             self.export_csv(path)
 
     def export_json(self, path):
-        data = [da.to_json_dict() for da in self.full_collection]
+        data = [segment.to_json_dict() for segment in self.full_collection]
 
         with open(path, "w") as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
@@ -393,8 +407,8 @@ class DialogueActCollection:
             w = csv.DictWriter(f, self.full_collection[0].to_csv_dict(self.labels).keys(), delimiter="\t")
             w.writeheader()
 
-            for da in self.full_collection:
-                w.writerow(da.to_csv_dict())
+            for segment in self.full_collection:
+                w.writerow(segment.to_csv_dict(self.labels))
 
     def export_taxonomy(self, path):
         taxonomy = {
@@ -409,18 +423,18 @@ class DialogueActCollection:
             json.dump(taxonomy, f, indent=4, ensure_ascii=False)
 
     def update_last_save(self):
-        if not os.path.exists(DialogueActCollection.temp_dir):
-            os.makedirs(DialogueActCollection.temp_dir)
+        if not os.path.exists(SegmentCollection.temp_dir):
+            os.makedirs(SegmentCollection.temp_dir)
 
-        with open("{}last_save.tmp".format(DialogueActCollection.temp_dir), "w") as tmp:
+        with open("{}last_save.tmp".format(SegmentCollection.temp_dir), "w") as tmp:
             tmp.write(self.save_file)
 
     @staticmethod
     def get_last_save():
-        if not os.path.exists(DialogueActCollection.temp_dir):
-            os.makedirs(DialogueActCollection.temp_dir)
+        if not os.path.exists(SegmentCollection.temp_dir):
+            os.makedirs(SegmentCollection.temp_dir)
 
-        path = "{}last_save.tmp".format(DialogueActCollection.temp_dir)
+        path = "{}last_save.tmp".format(SegmentCollection.temp_dir)
 
         # create file if doesn't exist
         if not os.path.exists(path):
@@ -433,19 +447,19 @@ class DialogueActCollection:
     @staticmethod
     def load(path):
         """
-        Loads a serialized DialogueActCollection
+        Loads a serialized SegmentCollection
         """
         if path.endswith(".pic"):
             with open(path, "rb") as f:
-                dac = pickle.load(f)
-                dac.update_last_save()
+                sc = pickle.load(f)
+                sc.update_last_save()
 
-                return dac
+                return sc
         elif path.endswith(".csv"):
-            dac = DialogueActCollection()
-            dac.load_csv(path)
-            dac.update_last_save()
+            sc = SegmentCollection()
+            sc.load_csv(path)
+            sc.update_last_save()
 
-            return dac
+            return sc
 
         return False
