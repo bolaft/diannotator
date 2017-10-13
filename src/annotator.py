@@ -291,7 +291,7 @@ class Annotator(GraphicalUserInterface):
 
             self.update(annotation_mode=False)
         else:
-            messagebox.showwarning("Open File Error", "The file could not be loaded.\n\nIt may be corrupted or is in the wrong format.")
+            messagebox.showerror("Open File Error", "The file could not be loaded.\n\nIt may be corrupted or is in the wrong format.")
 
     def save_file(self):
         """
@@ -311,7 +311,7 @@ class Annotator(GraphicalUserInterface):
         if success:
             self.update(annotation_mode=False)
         else:
-            messagebox.showwarning("Save File Error", "The target path is invalid.\n\nThe file could not be saved.")
+            messagebox.showerror("Save File Error", "The target path is invalid.\n\nThe file could not be saved.")
 
     def export_file(self):
         """
@@ -331,7 +331,7 @@ class Annotator(GraphicalUserInterface):
         if success:
             self.update(annotation_mode=False)
         else:
-            messagebox.showwarning("Export File Error", "The target path is invalid.\n\nThe file could not be created.")
+            messagebox.showerror("Export File Error", "The target path is invalid.\n\nThe file could not be created.")
 
     def import_taxonomy(self):
         """
@@ -353,7 +353,7 @@ class Annotator(GraphicalUserInterface):
             self.generate_link_colors()
             self.update()
         else:
-            messagebox.showwarning("Import Taxonomy Error", "The file could not be loaded.\n\nIt may be corrupted or is in the wrong format.")
+            messagebox.showerror("Import Taxonomy Error", "The file could not be loaded.\n\nIt may be corrupted or is in the wrong format.")
 
     def export_taxonomy(self):
         """
@@ -373,7 +373,7 @@ class Annotator(GraphicalUserInterface):
         if success:
             self.update(annotation_mode=False)
         else:
-            messagebox.showwarning("Export Taxonomy Error", "The target path is invalid.\n\nThe file could not be created.")
+            messagebox.showerror("Export Taxonomy Error", "The target path is invalid.\n\nThe file could not be created.")
 
     #######################
     # NAVIGATION COMMANDS #
