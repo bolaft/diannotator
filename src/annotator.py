@@ -712,7 +712,9 @@ class Annotator(GraphicalUserInterface):
         """
         Inputs a note for the active segment
         """
-        self.input("input note text", [], self.set_note, free=True)
+        segment = self.sc.get_active()
+        placeholder = "" if segment.note is None else segment.note
+        self.input("input note text", [], self.set_note, placeholder=placeholder, free=True)
 
     @undoable
     def set_note(self, note):
