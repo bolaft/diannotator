@@ -391,17 +391,25 @@ class SegmentCollection:
             if layer in segment.annotations and segment.annotations[layer]["qualifier"] == qualifier:
                 del segment.annotations[layer]["qualifier"]
 
+    def add_layer(self, layer):
+        """
+        Adds a new layer to the tagset
+        """
+        self.labels[layer] = []
+
     def add_label(self, layer, label):
         """
         Adds a new label to the tagset
         """
-        self.labels[layer].append(label)
+        if label not in self.labels[layer]:
+            self.labels[layer].append(label)
 
-    def add_qualifier(self, layer, quaifier):
+    def add_qualifier(self, layer, qualifier):
         """
         Adds a new qualifier to the tagset
         """
-        self.qualifiers[layer].append(quaifier)
+        if qualifier not in self.qualifiers[layer]:
+            self.qualifiers[layer].append(qualifier)
 
     def delete_layer(self, layer):
         """

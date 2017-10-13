@@ -108,14 +108,17 @@ class Annotator(GraphicalUserInterface):
             "<Control-s>",
             lambda event: self.select_split_token())
         self.parent.bind(
-            "<Control-d>",
+            "<Control-c>",
             lambda event: self.select_layer())
         self.parent.bind(
             "<Control-r>",
-            lambda event: self.input_new_label_name())
+            lambda event: self.input_new_tag_name())
         self.parent.bind(
             "<Control-a>",
-            lambda event: self.input_new_label())
+            lambda event: self.input_new_layer())
+        self.parent.bind(
+            "<Control-t>",
+            lambda event: self.input_new_tag())
         self.parent.bind(
             "<Control-n>",
             lambda event: self.input_new_note())
@@ -153,6 +156,7 @@ class Annotator(GraphicalUserInterface):
         self.taxonomy_menu.add_command(label="Export Taxonomy As...", accelerator="Ctrl+Alt+E", command=self.export_taxonomy)
         self.taxonomy_menu.add_separator()
         self.taxonomy_menu.add_command(label="Set Active Layer As Default", command=self.set_layer_as_default)
+        self.taxonomy_menu.add_separator()
         self.taxonomy_menu.add_command(label="Remove Active Label From Taxonomy", command=self.remove_label)
         self.taxonomy_menu.add_command(label="Remove Active Qualifier From Taxonomy", command=self.remove_qualifier)
         self.taxonomy_menu.add_command(label="Remove Active Layer From Taxonomy", command=self.remove_layer)
@@ -256,14 +260,15 @@ class Annotator(GraphicalUserInterface):
 
         buttons = OrderedDict()
 
-        buttons.update({"Select [D]imension": self.select_layer})
+        buttons.update({"[C]hange Layer": self.select_layer})
         buttons.update({"[E]rase Annotation": self.erase_annotation})
         buttons.update({"[L]ink Segment": self.select_link_type})
         buttons.update({"[U]nlink Segment": self.unlink_segment})
         buttons.update({"[S]plit Segment": self.select_split_token})
         buttons.update({"[M]erge Segment": self.merge_segment})
-        buttons.update({"[A]dd Label": self.input_new_label})
-        buttons.update({"[R]ename Label": self.input_new_label_name})
+        buttons.update({"[A]dd Layer": self.input_new_layer})
+        buttons.update({"Add [T]ag": self.input_new_tag})
+        buttons.update({"[R]ename Tag": self.input_new_tag_name})
         buttons.update({"[F]ilter By Label": self.filter_by_label})
         buttons.update({"Add [N]ote": self.input_new_note})
 
@@ -587,9 +592,22 @@ class Annotator(GraphicalUserInterface):
     # TAXONOMY MANAGEMENT COMMANDS #
     ################################
 
-    def input_new_label(self):
+    def input_new_layer(self):
         """
-        Inputs name of a new label
+        Inputs name of a new layer
+        """
+        self.input("input new layer name", [], self.add_layer, free=True)
+
+    def add_layer(self, label):
+        """
+        Adds a new layer
+        """
+        self.sc.add_layer(self.sc.layer)
+        self.update()
+
+    def input_new_tag(self):
+        """
+        Inputs name of a new label or qualifier
         """
         segment = self.sc.get_active()
 
@@ -650,9 +668,9 @@ class Annotator(GraphicalUserInterface):
             self.sc.delete_layer(self.sc.layer)
             self.update()
 
-    def input_new_label_name(self):
+    def input_new_tag_name(self):
         """
-        Inputs the name of a new label
+        Inputs the name of a new label or qualifier
         """
         segment = self.sc.get_active()
 
@@ -854,12 +872,24 @@ class Annotator(GraphicalUserInterface):
 
             # title with filepath
             self.parent.title("{} - {}".format(self.window_title, self.sc.save_file))
+
+            # active segment
+            segment = self.sc.get_active()
+
+            # status message
+            status = "Active Layer: |{}|".format(self.sc.layer.title())
+
+            if self.sc.layer in segment.annotations and "label" in segment.annotations[self.sc.layer]:
+                status = "{} - Active Label: [{}]".format(status, segment.annotations[self.sc.layer]["label"].title())
+
+            if self.sc.layer in segment.annotations and "qualifier" in segment.annotations[self.sc.layer]:
+                status = "{} - Active Qualifier: [{}]".format(status, segment.annotations[self.sc.layer]["qualifier"].title())
         else:
             # default title
             self.parent.title(self.window_title)
 
-        # layer in status
-        status = "Layer: {}".format(self.sc.layer.title()) if self.sc.layer else "No Collection"
+            # status message
+            status = "No Collection"
 
         # filter in status
         if self.sc.filter:

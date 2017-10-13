@@ -150,7 +150,7 @@ class GraphicalUserInterface(Frame, Styles):
         self.text["yscrollcommand"] = self.scrollbar.set
 
         # status bar
-        self.status = Label(self.output_frame, font=(self.label_font_family, self.label_font_size))
+        self.status = Label(self.output_frame, font=(self.label_font_family, self.label_font_size, "bold"))
         self.status.grid(row=1, column=0, pady=0)
 
         # binds any typing to the command input field to the update_commands method
