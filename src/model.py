@@ -389,7 +389,7 @@ class SegmentCollection:
 
         for segment in list(set(self.collection + self.full_collection)):
             if layer in segment.annotations and segment.annotations[layer]["qualifier"] == qualifier:
-                del segment.annotations[layer]
+                del segment.annotations[layer]["qualifier"]
 
     def add_label(self, layer, label):
         """
@@ -566,7 +566,7 @@ class SegmentCollection:
             self.i = 0
 
             # writes save path to /tmp
-            sc.write_save_path_to_tmp()
+            self.write_save_path_to_tmp()
         except Exception as e:
             logging.exception("DialogueActCollection.import_collection()")
             return False

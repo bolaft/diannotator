@@ -154,6 +154,7 @@ class Annotator(GraphicalUserInterface):
         self.taxonomy_menu.add_separator()
         self.taxonomy_menu.add_command(label="Set Active Layer As Default", command=self.set_layer_as_default)
         self.taxonomy_menu.add_command(label="Remove Active Label From Taxonomy", command=self.remove_label)
+        self.taxonomy_menu.add_command(label="Remove Active Qualifier From Taxonomy", command=self.remove_qualifier)
         self.taxonomy_menu.add_command(label="Remove Active Layer From Taxonomy", command=self.remove_layer)
 
         ##################
