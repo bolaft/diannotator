@@ -403,7 +403,7 @@ class Annotator(GraphicalUserInterface):
         """
         Inputs a target segment to go to
         """
-        self.input(range(1, len(self.sc.collection)), self.go_to)
+        self.input("select destination index", range(1, len(self.sc.collection)), self.go_to)
 
     def go_to(self, number):
         """
@@ -447,7 +447,7 @@ class Annotator(GraphicalUserInterface):
         Inputs the token on which the active segment will be split
         """
         segment = self.sc.get_active()
-        self.input(segment.tokens[:-1], self.split_segment, sort=False)
+        self.input("select token on which to split", segment.tokens[:-1], self.split_segment, sort=False)
 
     def split_segment(self, token):
         """
@@ -483,14 +483,14 @@ class Annotator(GraphicalUserInterface):
         Inputs a link type
         """
         if self.sc.i > 0:  # first segment can't be linked
-            self.input(self.sc.links.keys(), self.select_link_target)
+            self.input("select link type", self.sc.links.keys(), self.select_link_target)
 
     def select_link_target(self, link_type):
         """
         Set a link type then input link target
         """
         # input target segment
-        self.input(range(1, self.sc.i + 1), lambda n, link_t=link_type: self.link_segment(n, link_t))
+        self.input("select link target", range(1, self.sc.i + 1), lambda n, link_t=link_type: self.link_segment(n, link_t))
 
     def link_segment(self, number, link_type):
         """
@@ -520,7 +520,7 @@ class Annotator(GraphicalUserInterface):
         """
         Inputs a note for the active segment
         """
-        self.input([], self.set_note, free=True)
+        self.input("input note text", [], self.set_note, free=True)
 
     def set_note(self, note):
         """
@@ -547,9 +547,9 @@ class Annotator(GraphicalUserInterface):
         segment = self.sc.get_active()
 
         if self.sc.dimension in self.sc.values and self.sc.dimension in segment.annotations and segment.annotations[self.sc.dimension] in self.sc.labels[self.sc.dimension]:
-            self.input([], self.add_qualifier, free=True)
+            self.input("input new qualifier name", [], self.add_qualifier, free=True)
         else:
-            self.input([], self.add_label, free=True)
+            self.input("input new label name", [], self.add_label, free=True)
 
     def add_label(self, label):
         """
@@ -599,9 +599,9 @@ class Annotator(GraphicalUserInterface):
 
         if self.sc.dimension in segment.annotations:
             if "➔" in segment.annotations[self.sc.dimension]:
-                self.input(segment.annotations[self.sc.dimension].split(" ➔ "), self.select_label_to_rename)
+                self.input("select label or qualifier to rename", segment.annotations[self.sc.dimension].split(" ➔ "), self.select_label_to_rename)
             else:
-                self.input([], self.rename_label, free=True)
+                self.input("input new label name", [], self.rename_label, free=True)
 
     def select_label_to_rename(self, label):
         """
@@ -610,9 +610,9 @@ class Annotator(GraphicalUserInterface):
         segment = self.sc.get_active()
 
         if label == segment.annotations[self.sc.dimension].split(" ➔ ")[0]:
-            self.input([], self.rename_label, free=True)
+            self.input("input new label name", [], self.rename_label, free=True)
         else:
-            self.input([], lambda label: self.rename_label(label, qualifier=True), free=True)
+            self.input("input new qualifier name", [], lambda label: self.rename_label(label, qualifier=True), free=True)
 
     def rename_label(self, label, qualifier=False):
         """
@@ -718,7 +718,7 @@ class Annotator(GraphicalUserInterface):
         """
         Inputs a dimension
         """
-        self.input(self.sc.labels.keys(), self.set_active_dimension)
+        self.input("select dimension", self.sc.labels.keys(), self.set_active_dimension)
 
     def set_active_dimension(self, dimension):
         """
@@ -741,9 +741,9 @@ class Annotator(GraphicalUserInterface):
         segment = self.sc.get_active()
 
         if self.sc.dimension in self.sc.values and self.sc.dimension in segment.annotations and segment.annotations[self.sc.dimension] in self.sc.labels[self.sc.dimension]:
-            self.input(self.sc.values[self.sc.dimension], self.annotate_qualifier, sort=False)
+            self.input("select qualifier to apply", self.sc.values[self.sc.dimension], self.annotate_qualifier, sort=False)
         else:
-            self.input(self.sc.labels[self.sc.dimension], self.annotate_label, sort=False)
+            self.input("select label to apply", self.sc.labels[self.sc.dimension], self.annotate_label, sort=False)
 
     def annotate_label(self, annotation):
         """

@@ -169,6 +169,10 @@ class GraphicalUserInterface(Frame, Styles):
         self.commands = Frame(self.input_frame)
         self.commands.pack(fill=X, side=BOTTOM)
 
+        self.prompt = StringVar()
+        self.prompt_label = Label(self.commands, font=(self.menu_font_family, self.label_font_size, "bold"), textvariable=self.prompt)
+        self.prompt_label.pack(side=LEFT, padx=(10, 15), pady=10)
+
         # creates the frame containing special buttons
         self.special_commands = Frame(self.input_frame)
         self.special_commands.pack(fill=X, side=BOTTOM)
@@ -200,9 +204,9 @@ class GraphicalUserInterface(Frame, Styles):
                 # list of buttons in the button list
                 commands = self.commands.winfo_children()
 
-                # if there is only one button, invokes it's function
-                if len(commands) == 1:
-                    self.commands.winfo_children()[0].invoke()
+                # if there is only one button (plus label), invokes it's function
+                if len(commands) == 2:
+                    self.commands.winfo_children()[1].invoke()
         else:
             for button in self.commands.winfo_children():
                 if focus == button:
@@ -238,8 +242,9 @@ class GraphicalUserInterface(Frame, Styles):
         """
         Updates the command button list
         """
-        for button in self.commands.winfo_children():
-            button.destroy()
+        for element in self.commands.winfo_children():
+            if isinstance(element, Button):
+                element.destroy()
 
         input_text = self.entry.get()
 
@@ -373,10 +378,11 @@ class GraphicalUserInterface(Frame, Styles):
             # sleep(self.delay * delay)  # small pause between outputs
             self.add_text("" + "\n" * (n - 1))
 
-    def input(self, commands, action, prompt_params=[], prompt_delay=0, free=False, sort=True):
+    def input(self, prompt, commands, action, prompt_params=[], prompt_delay=0, free=False, sort=True):
         """
         Manages user input
         """
+        self.prompt.set(prompt.title() + ":")
         self.free_input = free
         self.action = action
 
