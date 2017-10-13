@@ -13,12 +13,11 @@
 
     Features:
 
-        ☐ separate import file from open file
         ☐ view menu : show columns to display
         ☐ one filter button, prompt for type, then input label/dimension
         ☐ command to set dimension color code
-        ☐ make links importable
         ☐ add layer
+        ☐ make exported JSON importable
         ☐ delete qualifier
         ☐ externalize text strings
         ☐ JSON config file to tell which columns are what
@@ -30,6 +29,7 @@
         ☐ windows executable
         ☐ integrate pyrata for annotation search
         ☐ feature driven annotation
+        ✔ separate import file from open file @done (17-10-13 15:36)
         ✔ make exported CSV importable @done (17-10-13 15:13)
         ✔ remove arrow for qualifier @done (17-10-13 14:36)
         ✔ change dimension to layer @done (17-10-13 13:24)

@@ -263,8 +263,9 @@ class SegmentCollection:
     # paths
     save_dir = "../sav/" if EXEC_FROM_SOURCE else "sav/"
     taxo_dir = "../tax/" if EXEC_FROM_SOURCE else "tax/"
+    csv_dir = "../csv/" if EXEC_FROM_SOURCE else "csv/"
     custom_taxo_dir = "../tax/custom" if EXEC_FROM_SOURCE else "tax/"
-    data_dir = "../out/" if EXEC_FROM_SOURCE else "out/"
+    out_dir = "../out/" if EXEC_FROM_SOURCE else "out/"
     temp_dir = "{}/diannotator/".format(tempfile.gettempdir())
 
     def __init__(self):
@@ -280,7 +281,7 @@ class SegmentCollection:
         self.taxonomy = None  # taxonomy name
 
         self.labels = {}  # label tagsets
-        self.values = {}  # label qualifier tagsets
+        self.qualifiers = {}  # label qualifier tagsets
         self.colors = {}  # layer colors
         self.links = {}  # link types
 
@@ -297,13 +298,13 @@ class SegmentCollection:
         """
         Sets the index to the next segment
         """
-        self.i = self.i if self.i + 1 == len(self.collection) else self.i + 1
+        self.i = self.i + 1 if self.i + 1 < len(self.collection) else self.i
 
     def previous(self):
         """
         Sets the index to the previous segment
         """
-        self.i = 0 if self.i - 1 < 0 else self.i - 1
+        self.i = self.i - 1 if self.i - 1 >= 0 and self.collection else self.i  # must check if collection not empty
 
     ##################
     # ACCESS METHODS #
@@ -359,11 +360,11 @@ class SegmentCollection:
         """
         Renames a qualifier
         """
-        index = self.values[layer].index(qualifier)
-        self.values[layer].remove(qualifier)
+        index = self.qualifiers[layer].index(qualifier)
+        self.qualifiers[layer].remove(qualifier)
 
-        if new_qualifier not in self.values[layer]:
-            self.values[layer].insert(index, new_qualifier)
+        if new_qualifier not in self.qualifiers[layer]:
+            self.qualifiers[layer].insert(index, new_qualifier)
 
         for segment in list(set(self.collection + self.full_collection)):
             if layer in segment.annotations:
@@ -380,6 +381,16 @@ class SegmentCollection:
             if layer in segment.annotations and segment.annotations[layer]["label"] == label:
                 del segment.annotations[layer]
 
+    def delete_qualifier(self, layer, qualifier):
+        """
+        Deletes a qualifier
+        """
+        self.qualifiers[layer].remove(qualifier)
+
+        for segment in list(set(self.collection + self.full_collection)):
+            if layer in segment.annotations and segment.annotations[layer]["qualifier"] == qualifier:
+                del segment.annotations[layer]
+
     def add_label(self, layer, label):
         """
         Adds a new label to the tagset
@@ -390,7 +401,7 @@ class SegmentCollection:
         """
         Adds a new qualifier to the tagset
         """
-        self.values[layer].append(quaifier)
+        self.qualifiers[layer].append(quaifier)
 
     def delete_layer(self, layer):
         """
@@ -426,7 +437,7 @@ class SegmentCollection:
             self.layer = self.default_layer = taxonomy["default"]
 
             self.labels = taxonomy["labels"]  # label tagsets
-            self.values = taxonomy["values"]  # label qualifier tagsets
+            self.qualifiers = taxonomy["qualifiers"]  # label qualifier tagsets
             self.colors = taxonomy["colors"]  # layer colors
             self.links = taxonomy["links"]  # link types
         except Exception as e:
@@ -444,7 +455,7 @@ class SegmentCollection:
             "default": self.default_layer,
             "colors": self.colors,
             "labels": self.labels,
-            "values": self.values
+            "qualifiers": self.qualifiers
         }
 
         try:
@@ -464,94 +475,103 @@ class SegmentCollection:
         """
         Imports a new collection from a CSV file
         """
-        with open(path) as f:
-            rows = [{k: v for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True, delimiter="\t")]
+        try:
+            with open(path) as f:
+                rows = [{k: v for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True, delimiter="\t")]
 
-        previous_segment = None
-        segment = None
+            previous_segment = None
+            segment = None
 
-        for row in rows:
-            time = previous_segment.time if row["time"] is None or row["time"].strip() == "" else row["time"].strip()
-            date = previous_segment.date if row["date"] is None or row["date"].strip() == "" else row["date"].strip()
-            span = row["segment"].strip()
+            for row in rows:
+                time = previous_segment.time if row["time"] is None or row["time"].strip() == "" else row["time"].strip()
+                date = previous_segment.date if row["date"] is None or row["date"].strip() == "" else row["date"].strip()
+                span = row["segment"].strip()
 
-            if row["raw"] is None or row["raw"].strip() == "":
-                segment = Segment(
-                    previous_segment.raw,
-                    previous_segment.participant,
-                    previous_segment.time,
-                    previous_segment.date
-                )
-                segment.original_raw = previous_segment.original_raw
+                if row["raw"] is None or row["raw"].strip() == "":
+                    segment = Segment(
+                        previous_segment.raw,
+                        previous_segment.participant,
+                        previous_segment.time,
+                        previous_segment.date
+                    )
+                    segment.original_raw = previous_segment.original_raw
 
-                tokenizer = WhitespaceTokenizer()
+                    tokenizer = WhitespaceTokenizer()
 
-                # last token of the previous segment's segment
-                end_of_previous_span = tokenizer.tokenize(previous_segment.span)[-1]
+                    # last token of the previous segment's segment
+                    end_of_previous_span = tokenizer.tokenize(previous_segment.span)[-1]
 
-                # position of the last token of the previous segment's segment in the full raw
-                index = previous_segment.raw.index(end_of_previous_span) + len(end_of_previous_span)
+                    # position of the last token of the previous segment's segment in the full raw
+                    index = previous_segment.raw.index(end_of_previous_span) + len(end_of_previous_span)
 
-                # ajust the raw of the current segment
-                segment.raw = previous_segment.raw[index:].strip()
+                    # ajust the raw of the current segment
+                    segment.raw = previous_segment.raw[index:].strip()
 
-                # adjust the raw of the previous segment
-                previous_segment.raw = previous_segment.raw[:index].strip()
+                    # adjust the raw of the previous segment
+                    previous_segment.raw = previous_segment.raw[:index].strip()
 
-                # update tokens of the previous segment
-                previous_segment.tokenize()
-            else:
-                raw = row["raw"].strip()
-                participant = row["participant"].strip() if row["participant"].strip() != "\\" else segment.participant
+                    # update tokens of the previous segment
+                    previous_segment.tokenize()
+                else:
+                    raw = row["raw"].strip()
+                    participant = row["participant"].strip() if row["participant"].strip() != "\\" else segment.participant
 
-                segment = Segment(
-                    raw,
-                    participant,
-                    time,
-                    date
-                )
+                    segment = Segment(
+                        raw,
+                        participant,
+                        time,
+                        date
+                    )
 
-            # update the current segment's segment
-            segment.span = span
+                # update the current segment's segment
+                segment.span = span
 
-            # update the current segment's tokens
-            segment.tokenize()
+                # update the current segment's tokens
+                segment.tokenize()
 
-            # set the current segment as the previous segment (for the next iteration)
-            previous_segment = segment
+                # set the current segment as the previous segment (for the next iteration)
+                previous_segment = segment
 
-            # loading legacy annotations
-            for key in row.keys():
-                if key not in ["segment", "raw", "time", "date", "participant", "links", "note", "id"] and row[key] is not None and row[key].strip() != "":
-                    if key.endswith("-value") and row[key]:
-                        # getting layer name from column
-                        layer = key[:len(key) - len("-value")]
+                # loading legacy annotations
+                for key in row.keys():
+                    if key not in ["segment", "raw", "time", "date", "participant", "links", "note", "id"] and row[key] is not None and row[key].strip() != "":
+                        if key.endswith("-value") and row[key]:
+                            # getting layer name from column
+                            layer = key[:len(key) - len("-value")]
 
-                        # create layer if does not exist
-                        if layer not in segment.legacy:
-                            segment.legacy[layer] = {}
+                            # create layer if does not exist
+                            if layer not in segment.legacy:
+                                segment.legacy[layer] = {}
 
-                        # adding qualifier
-                        segment.legacy[layer]["qualifier"] = row[key]
-                    else:
-                        # create layer if does not exist
-                        if key not in segment.legacy:
-                            segment.legacy[key] = {}
+                            # adding qualifier
+                            segment.legacy[layer]["qualifier"] = row[key]
+                        else:
+                            # create layer if does not exist
+                            if key not in segment.legacy:
+                                segment.legacy[key] = {}
 
-                        # adding label
-                        segment.legacy[key]["label"] = row[key]
+                            # adding label
+                            segment.legacy[key]["label"] = row[key]
 
-            # set note
-            segment.note = row["note"].strip() if "note" in row and row["note"].strip() else None
+                # set note
+                segment.note = row["note"].strip() if "note" in row and row["note"].strip() else None
 
-            # adds the segment to the full collection
-            self.full_collection.append(segment)
+                # adds the segment to the full collection
+                self.full_collection.append(segment)
 
-        # syncs the current collection to the full collection
-        self.collection = self.full_collection.copy()
+            # syncs the current collection to the full collection
+            self.collection = self.full_collection.copy()
 
-        # resets the index
-        self.i = 0
+            # resets the index
+            self.i = 0
+
+            # writes save path to /tmp
+            sc.write_save_path_to_tmp()
+        except Exception as e:
+            logging.exception("DialogueActCollection.import_collection()")
+            return False
+
+        return True
 
     def export_collection(self, path):
         """
@@ -681,15 +701,8 @@ class SegmentCollection:
         Loads a serialized SegmentCollection
         """
         try:
-            if path.endswith(".pic"):
-                with open(path, "rb") as f:
-                    sc = pickle.load(f)
-                    sc.write_save_path_to_tmp()
-
-                    return sc
-            elif path.endswith(".csv"):
-                sc = SegmentCollection()
-                sc.import_collection(path)
+            with open(path, "rb") as f:
+                sc = pickle.load(f)
                 sc.write_save_path_to_tmp()
 
                 return sc

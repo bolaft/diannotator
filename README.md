@@ -98,7 +98,7 @@ The **default layer** of the taxonomy, the first one to be active when first loa
 
 A dictionary of lists, whose keys represent layer names and the lists' elements represent the layers' **labels' tagsets**.
 
-#### `values`
+#### `qualifiers`
 
 A dictionary of lists, whose keys represent layer names and the lists' elements represent the layers' **qualifiers' tagsets**.
 

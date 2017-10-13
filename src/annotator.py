@@ -59,16 +59,19 @@ class Annotator(GraphicalUserInterface):
             "<Control-S>",
             lambda event: self.save_file())
         self.parent.bind(
+            "<Control-I>",
+            lambda event: self.import_file())
+        self.parent.bind(
             "<Control-E>",
             lambda event: self.export_file())
         self.parent.bind(
             "<Control-w>",
             lambda event: self.close_file())
         self.parent.bind(
-            "<Control-T>",
+            "<Control-Alt-e>",
             lambda event: self.export_taxonomy())
         self.parent.bind(
-            "<Control-I>",
+            "<Control-Alt-i>",
             lambda event: self.import_taxonomy())
 
         # other shortcuts
@@ -125,9 +128,10 @@ class Annotator(GraphicalUserInterface):
         #################
 
         # file menu
-        self.file_menu.add_command(label="Open File...", accelerator="Ctrl+O", command=self.open_file)
+        self.file_menu.add_command(label="Open...", accelerator="Ctrl+O", command=self.open_file)
         self.file_menu.add_command(label="Save As...", accelerator="Ctrl+Shift+S", command=self.save_file)
-        self.file_menu.add_command(label="Export As...", accelerator="Ctrl+Shift+E", command=self.export_file)
+        self.file_menu.add_command(label="Import Data...", accelerator="Ctrl+Shift+I", command=self.import_file)
+        self.file_menu.add_command(label="Export Data As...", accelerator="Ctrl+Shift+E", command=self.export_file)
         self.file_menu.add_command(label="Close File", accelerator="Ctrl+W", command=self.close_file)
         self.file_menu.add_separator()
         self.file_menu.add_command(label="Quit", accelerator="Esc", command=self.parent.quit)
@@ -145,8 +149,8 @@ class Annotator(GraphicalUserInterface):
         self.filter_menu.add_command(label="Filter By Active Layer", accelerator="F4", command=self.filter_by_layer)
 
         # taxonomy menu
-        self.taxonomy_menu.add_command(label="Import Taxonomy...", accelerator="Ctrl+Shift+I", command=self.import_taxonomy)
-        self.taxonomy_menu.add_command(label="Export Taxonomy As...", accelerator="Ctrl+Shift+T", command=self.export_taxonomy)
+        self.taxonomy_menu.add_command(label="Import Taxonomy...", accelerator="Ctrl+Alt+I", command=self.import_taxonomy)
+        self.taxonomy_menu.add_command(label="Export Taxonomy As...", accelerator="Ctrl+Alt+E", command=self.export_taxonomy)
         self.taxonomy_menu.add_separator()
         self.taxonomy_menu.add_command(label="Set Active Layer As Default", command=self.set_layer_as_default)
         self.taxonomy_menu.add_command(label="Remove Active Label From Taxonomy", command=self.remove_label)
@@ -278,12 +282,12 @@ class Annotator(GraphicalUserInterface):
 
     def open_file(self):
         """
-        Loads a .csv or .pic file through dialogue
+        Loads a .pic file through dialogue
         """
         path = filedialog.askopenfilename(
             initialdir=SegmentCollection.save_dir,
-            title="Open data file",
-            filetypes=(("Pickle serialized files", "*.pic"), ("CSV data files", "*.csv"), ("all files", "*.*"))
+            title="Open file",
+            filetypes=(("Pickle serialized files", "*.pic"), ("all files", "*.*"))
         )
 
         if path == "":
@@ -294,11 +298,6 @@ class Annotator(GraphicalUserInterface):
         if sc:
             self.sc = sc
             self.undo_history = []  # reinitializes undo history
-
-            # choose a taxonomy if none is set
-            if self.sc.taxonomy is None:
-                self.import_taxonomy()
-
             self.colorize()
             self.update()
         else:
@@ -324,14 +323,40 @@ class Annotator(GraphicalUserInterface):
         else:
             messagebox.showerror("Save File Error", "The target path is invalid.\n\nThe file could not be saved.")
 
+    def import_file(self):
+        """
+        Loads a .csv file through dialogue
+        """
+        path = filedialog.askopenfilename(
+            initialdir=SegmentCollection.csv_dir,
+            title="Import data file",
+            filetypes=(("CSV data files", "*.csv"), ("all files", "*.*"))
+        )
+
+        if path == "":
+            return  # no file selected
+
+        success = self.sc.import_collection(path)
+
+        if success:
+            # choose a taxonomy if none is set
+            if self.sc.taxonomy is None:
+                self.import_taxonomy()
+
+            self.undo_history = []  # reinitializes undo history
+            self.colorize()
+            self.update()
+        else:
+            messagebox.showerror("Open File Error", "The file could not be loaded.\n\nIt may be corrupted or is in the wrong format.")
+
     def export_file(self):
         """
         Saves a .csv or .json file through dialogue
         """
         path = filedialog.asksaveasfilename(
-            initialdir=SegmentCollection.data_dir,
+            initialdir=SegmentCollection.out_dir,
             title="Export as",
-            filetypes=(("JSON data files", "*.json"), ("CSV data files", "*.csv"))
+            filetypes=(("CSV data files", "*.csv"), ("JSON data files", "*.json"))
         )
 
         if path == "":
@@ -382,7 +407,7 @@ class Annotator(GraphicalUserInterface):
         path = filedialog.asksaveasfilename(
             initialdir=SegmentCollection.custom_taxo_dir,
             title="Export taxonomy as",
-            filetypes=(("JSON taxonomy file", "*.json"), ("all files", "*.*"))
+            filetypes=(("JSON data files", "*.json"), ("all files", "*.*"))
         )
 
         if path == "":
@@ -567,7 +592,7 @@ class Annotator(GraphicalUserInterface):
         """
         segment = self.sc.get_active()
 
-        if self.sc.layer in self.sc.values and self.sc.layer in segment.annotations and "label" in segment.annotations[self.sc.layer] and "qualifier" not in segment.annotations[self.sc.layer]:
+        if self.sc.layer in self.sc.qualifiers and self.sc.layer in segment.annotations and "label" in segment.annotations[self.sc.layer] and "qualifier" not in segment.annotations[self.sc.layer]:
             self.input("input new qualifier name", [], self.add_qualifier, free=True)
         else:
             self.input("input new label name", [], self.add_label, free=True)
@@ -593,9 +618,21 @@ class Annotator(GraphicalUserInterface):
         segment = self.sc.get_active()
 
         if self.sc.layer in segment.annotations:
-            label = segment.annotations[self.sc.layer]
+            label = segment.annotations[self.sc.layer]["label"]
             if messagebox.askyesno("Delete Label", "Are you sure you want to remove the {} label from the taxonomy?".format(label)):
                 self.sc.delete_label(self.sc.layer, label)
+                self.update()
+
+    def remove_qualifier(self):
+        """
+        Removes the active segment's qualifier from the taxonomy
+        """
+        segment = self.sc.get_active()
+
+        if self.sc.layer in segment.annotations:
+            qualifier = segment.annotations[self.sc.layer]["qualifier"]
+            if messagebox.askyesno("Delete Qualifier", "Are you sure you want to remove the {} qualifier from the taxonomy?".format(qualifier)):
+                self.sc.delete_qualifier(self.sc.layer, qualifier)
                 self.update()
 
     def set_layer_as_default(self):
@@ -620,7 +657,7 @@ class Annotator(GraphicalUserInterface):
 
         if self.sc.layer in segment.annotations:
             if "qualifier" in segment.annotations[self.sc.layer]:
-                self.input("select label or qualifier to rename", segment.annotations[self.sc.layer].values(), self.select_label_or_qualifier_to_rename)
+                self.input("select label or qualifier to rename", segment.annotations[self.sc.layer].qualifiers(), self.select_label_or_qualifier_to_rename)
             else:
                 self.input("input new label name", [], self.rename_label_or_qualifier, free=True)
 
@@ -663,7 +700,7 @@ class Annotator(GraphicalUserInterface):
 
     def filter_by_label(self):
         """
-        Button to filter segments by label
+        Filters the collection by label
         """
         segment = self.sc.get_active()
 
@@ -682,6 +719,9 @@ class Annotator(GraphicalUserInterface):
         self.update()
 
     def filter_by_layer(self):
+        """
+        Filters the collection by layer
+        """
         if not self.sc.filter:
             self.sc.collection = [s for s in self.sc.full_collection if self.sc.layer in s.annotations or self.sc.layer in s.legacy]
             self.sc.filter = "|{}|".format(self.sc.layer)
@@ -694,7 +734,9 @@ class Annotator(GraphicalUserInterface):
                     self.sc.i = self.sc.collection.index(segment)
                     break
         else:
-            self.sc.i = self.sc.full_collection.index(self.sc.get_active())
+            if self.sc.collection:
+                self.sc.i = self.sc.full_collection.index(self.sc.get_active())
+
             self.sc.collection = self.sc.full_collection.copy()
             self.sc.filter = False
 
@@ -751,14 +793,14 @@ class Annotator(GraphicalUserInterface):
         """
         Resumes the annotation mode
         """
-        if self.sc.layer is None:
+        if not self.sc.collection:
             self.input(None, [], None)
             return
 
         segment = self.sc.get_active()
 
-        if self.sc.layer in self.sc.values and self.sc.layer in segment.annotations and "label" in segment.annotations[self.sc.layer] and "qualifier" not in segment.annotations[self.sc.layer]:
-            self.input("select qualifier to apply", self.sc.values[self.sc.layer], self.annotate_qualifier, sort=False)
+        if self.sc.layer in self.sc.qualifiers and self.sc.layer in segment.annotations and "label" in segment.annotations[self.sc.layer] and "qualifier" not in segment.annotations[self.sc.layer]:
+            self.input("select qualifier to apply", self.sc.qualifiers[self.sc.layer], self.annotate_qualifier, sort=False)
         else:
             self.input("select label to apply", self.sc.labels[self.sc.layer], self.annotate_label, sort=False)
 
@@ -774,7 +816,7 @@ class Annotator(GraphicalUserInterface):
 
         segment.annotations[self.sc.layer]["label"] = annotation
 
-        if self.sc.layer not in self.sc.values:
+        if self.sc.layer not in self.sc.qualifiers:
             self.sc.next()
 
         self.update()
@@ -800,8 +842,8 @@ class Annotator(GraphicalUserInterface):
         """
         self.clear_screen()
 
-        # if a file is opened and a layer is set
-        if self.sc.layer is not None:
+        # if the collection is not empty
+        if self.sc.collection:
             n_previous = self.sc.i if self.sc.i < 50 else 50
 
             for j in range(self.sc.i - n_previous, self.sc.i):
@@ -857,23 +899,25 @@ class Annotator(GraphicalUserInterface):
 
         # annotations display
         for layer in reversed(sorted(segment.annotations.keys())):
-            if "qualifier" in segment.annotations[layer]:
-                addendum = " [{} ➔ {}]".format(segment.annotations[layer]["label"], segment.annotations[layer]["qualifier"])
-            else:
-                addendum = " [{}]".format(segment.annotations[layer]["label"])
+            if "label" in segment.annotations[layer]:
+                if "qualifier" in segment.annotations[layer]:
+                    addendum = " [{} ➔ {}]".format(segment.annotations[layer]["label"], segment.annotations[layer]["qualifier"])
+                else:
+                    addendum = " [{}]".format(segment.annotations[layer]["label"])
 
-            self.add_to_last_line(addendum, style="layer-{}".format(layer), offset=offset)
-            offset += len(addendum)
+                self.add_to_last_line(addendum, style="layer-{}".format(layer), offset=offset)
+                offset += len(addendum)
 
         # legacy annotations display
         for layer in reversed(sorted(segment.legacy.keys())):
-            if "qualifier" in segment.legacy[layer]:
-                addendum = " (({} ➔ {}))".format(segment.legacy[layer]["label"], segment.legacy[layer]["qualifier"])
-            else:
-                addendum = " (({}))".format(segment.legacy[layer]["label"])
+            if "label" in segment.legacy[layer]:
+                if "qualifier" in segment.legacy[layer]:
+                    addendum = " (({} ➔ {}))".format(segment.legacy[layer]["label"], segment.legacy[layer]["qualifier"])
+                else:
+                    addendum = " (({}))".format(segment.legacy[layer]["label"])
 
-            self.add_to_last_line(addendum, style="layer-{}".format(layer), offset=offset)
-            offset += len(addendum)
+                self.add_to_last_line(addendum, style="layer-{}".format(layer), offset=offset)
+                offset += len(addendum)
 
         # links display
         for ls, lt in segment.links:
