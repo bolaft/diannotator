@@ -756,8 +756,7 @@ class Annotator(GraphicalUserInterface):
         Resumes the annotation mode
         """
         if self.sc.dimension is None:
-            self.command_list = []
-            self.update_commands()
+            self.input(None, [], None)
             return
 
         segment = self.sc.get_active()
@@ -795,6 +794,7 @@ class Annotator(GraphicalUserInterface):
         """
         self.clear_screen()
 
+        # if a file is opened and a dimension is set
         if self.sc.dimension is not None:
             n_previous = self.sc.i if self.sc.i < 50 else 50
 
@@ -803,23 +803,18 @@ class Annotator(GraphicalUserInterface):
 
             self.output_segment(self.sc.i, active=True)
 
+            # title with filepath
+            self.parent.title("{} - {}".format(self.window_title, self.sc.save_file))
+        else:
+            # default title
+            self.parent.title(self.window_title)
+
         # dimension in status
-        status_l1 = "Dimension: {}".format(self.sc.dimension.title()) if self.sc.dimension else "No Dimension Set"
+        status = "Dimension: {}".format(self.sc.dimension.title()) if self.sc.dimension else "No Collection"
 
         # filter in status
         if self.sc.filter:
-            status_l2 = "{} - Filter: {}".format(status_l1, self.sc.filter)
-
-        # file in status
-        status_l2 = "File: {}".format(self.sc.save_file)
-
-        # pad strings so they are aligned
-        if len(status_l1) > len(status_l2):
-            status_l2 = " " * int((len(status_l1) - len(status_l2)) / 2) + status_l2
-        else:
-            status_l1 = " " * int((len(status_l2) - len(status_l1)) / 2) + status_l1
-
-        status = "{}\n{}".format(status_l1, status_l2)
+            status = "{} - Filter: {}".format(status, self.sc.filter)
 
         self.update_status_message(status)
 

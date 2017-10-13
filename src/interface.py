@@ -386,7 +386,7 @@ class GraphicalUserInterface(Frame, Styles):
         """
         Manages user input
         """
-        self.prompt.set(prompt.title() + ":")
+        self.prompt.set(prompt.title() + ":" if prompt else "")
         self.free_input = free
         self.action = action
 
