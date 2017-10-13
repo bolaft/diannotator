@@ -8,7 +8,7 @@
 Grapical User Interface
 """
 
-from tkinter import Tk, StringVar, Text, Menu, BOTH, DISABLED, END, LEFT, BOTTOM, NORMAL, N, X, WORD, NSEW, SUNKEN
+from tkinter import Tk, StringVar, Text, Menu, messagebox, BOTH, DISABLED, END, LEFT, BOTTOM, NORMAL, N, X, WORD, NSEW, SUNKEN
 from tkinter.ttk import Button, Entry, Frame, Label, Scrollbar
 from ttkthemes import ThemedStyle
 
@@ -91,8 +91,8 @@ class GraphicalUserInterface(Frame, Styles):
         self.parent.minsize(w, h)  # minimum size of the window
 
         # default bindings
-        self.parent.bind("<F11>", self.toggle_fullscreen)
-        self.parent.bind("<Escape>", lambda event, arg=None: self.parent.quit())
+        self.parent.bind("<F11>", lambda event: self.toggle_fullscreen())
+        self.parent.bind("<Escape>", lambda event: self.exit_prompt())
 
         # window title
         self.parent.title(self.window_title)
@@ -273,6 +273,13 @@ class GraphicalUserInterface(Frame, Styles):
         self.parent.attributes("-fullscreen", self.parent.state)
 
         return "break"
+
+    def exit_prompt(self):
+        """
+        Show an exit prompt
+        """
+        if messagebox.askyesno("Quit", "Do you want to quit?"):
+            self.parent.quit()
 
     def clear_screen(self):
         """
