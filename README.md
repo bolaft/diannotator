@@ -150,6 +150,18 @@ Deletes the active segment.
 
 Randomizes participant colors.
 
+#### `F5`
+
+Filters segments by active layer.
+
+#### `F6`
+
+Filters segments by active label.
+
+#### `F7`
+
+Filters segments by active qualifier.
+
 #### `F11`
 
 Toggles between fullscreen and windowed mode.
@@ -216,9 +228,9 @@ The next entry creates a new label added to the active layer, or creates a new q
 
 Updates the name of the label or qualifier used for the active segment, on the active layer. All segments annotated with this label or qualifier will be affected.
  
-#### Filter By Label : `Control F`
+#### Filter : `Control F`
 
-Displayed segments are filtered to only display those bearing the same annotation as the active segment for the active layer. If the segment doesn't have a label on the active layer, the filter is created to only display segments bearing the same legacy annotation for the active layer. Using this command again will remove the filter and display all segments.
+Filters the collection by label, legacy label, layer, legacy layer, qualifier or legacy qualifier.
 
 #### Add Note : `Control N`
 
