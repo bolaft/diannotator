@@ -125,10 +125,10 @@ class Annotator(GraphicalUserInterface):
             lambda event: self.select_layer())
         self.parent.bind(
             "<Control-r>",
-            lambda event: self.input_new_element_name())
+            lambda event: self.select_element())
         self.parent.bind(
             "<Control-a>",
-            lambda event: self.select_element_type())
+            lambda event: self.select_new_element_type())
         self.parent.bind(
             "<Control-n>",
             lambda event: self.input_new_note())
@@ -303,8 +303,8 @@ class Annotator(GraphicalUserInterface):
         buttons.update({"[U]nlink Segment": self.unlink_segment})
         buttons.update({"[S]plit Segment": self.select_split_token})
         buttons.update({"[M]erge Segment": self.merge_segment})
-        buttons.update({"[A]dd Element": self.select_element_type})
-        buttons.update({"[R]ename Element": self.input_new_element_name})
+        buttons.update({"[A]dd Element": self.select_new_element_type})
+        buttons.update({"[R]ename Element": self.select_element})
         buttons.update({"[F]ilter": self.select_filter_type})
         buttons.update({"Add [N]ote": self.input_new_note})
 
@@ -736,11 +736,11 @@ class Annotator(GraphicalUserInterface):
     # TAXONOMY MANAGEMENT COMMANDS #
     ################################
 
-    def select_element_type(self):
+    def select_new_element_type(self):
         """
         Selects the type of element to be added to the taxonomy
         """
-        self.input("select element type", ["Layer", "Label", "Qualifier"], self.add_new_element)
+        self.input("select element type", ["Layer", "Label", "Qualifier", "Link Type"], self.add_new_element)
 
     def add_new_element(self, element_type):
         """
@@ -754,6 +754,9 @@ class Annotator(GraphicalUserInterface):
 
         if element_type == "Qualifier":
             self.input("input new qualifier name", [], self.add_qualifier, free=True)
+
+        if element_type == "Link Type":
+            self.input("input new link type", [], self.add_link_type, free=True)
 
     @undoable
     def add_layer(self, layer):
@@ -782,7 +785,7 @@ class Annotator(GraphicalUserInterface):
     @undoable
     def add_qualifier(self, qualifier):
         """
-        Adds a new label to the taxonomy
+        Adds a new qualifier to the taxonomy
         """
         self.sc.add_qualifier(self.sc.layer, qualifier)
         self.update()
@@ -790,6 +793,18 @@ class Annotator(GraphicalUserInterface):
         yield  # undo
 
         self.sc.delete_qualifier(self.sc.layer, qualifier)
+
+    @undoable
+    def add_link_type(self, link_type):
+        """
+        Adds a new link type to the taxonomy
+        """
+        self.sc.add_link_type(link_type)
+        self.update()
+
+        yield  # undo
+
+        self.sc.delete_link_type(link_type)
 
     @undoable
     def remove_label(self):
@@ -856,41 +871,46 @@ class Annotator(GraphicalUserInterface):
 
         self.sc = sc
 
-    def input_new_element_name(self):
+    def select_element(self):
         """
-        Inputs the new name of a label or qualifier
+        Selects the element to be renamed
         """
         segment = self.sc.get_active()
 
+        elements = [self.sc.layer]
+
         if self.sc.layer in segment.annotations:
+            if "label" in segment.annotations[self.sc.layer]:
+                elements.append(segment.annotations[self.sc.layer]["label"])
+
             if "qualifier" in segment.annotations[self.sc.layer]:
-                self.input(
-                    "select layer, label or qualifier to rename",
-                    list(segment.annotations[self.sc.layer].values()) + [self.sc.layer],
-                    self.select_what_to_rename
-                )
-            else:
-                self.input(
-                    "select layer or label to rename",
-                    list(segment.annotations[self.sc.layer].values()) + [self.sc.layer],
-                    self.select_what_to_rename
-                )
-        else:
+                elements.append(segment.annotations[self.sc.layer]["qualifier"])
+
+        for ls, lt in segment.links:
+            elements.append(lt)
+
+        self.input(
+            "select element to rename",
+            elements,
+            self.input_element_new_name
+        )
+
+    def input_element_new_name(self, text):
+        """
+        Select either a layer, a label or a qualifier to rename
+        """
+        segment = self.sc.get_active()
+
+        if text == self.sc.layer:
             self.input(
                 "input new layer name",
                 [],
                 self.rename_layer,
-                placeholder=self.sc.layer,
+                placeholder=text,
                 free=True
             )
 
-    def select_what_to_rename(self, text):
-        """
-        Select either a label or a qualifier to rename
-        """
-        segment = self.sc.get_active()
-
-        if text == segment.annotations[self.sc.layer]["label"]:
+        if text == self.sc.get_active_label():
             self.input(
                 "input new label name",
                 [],
@@ -898,15 +918,8 @@ class Annotator(GraphicalUserInterface):
                 placeholder=text,
                 free=True
             )
-        elif text == self.sc.layer:
-            self.input(
-                "input new layer name",
-                [],
-                self.rename_layer,
-                placeholder=text,
-                free=True
-            )
-        else:
+
+        if text == self.sc.get_active_qualifier():
             self.input(
                 "input new qualifier name",
                 [],
@@ -915,13 +928,38 @@ class Annotator(GraphicalUserInterface):
                 free=True
             )
 
+        for ls, lt in segment.links:
+            if text == lt:
+                self.input(
+                    "input new relation type name",
+                    [],
+                    lambda name: self.rename_link_type(lt, name),
+                    placeholder=text,
+                    free=True
+                )
+
+    @undoable
+    def rename_layer(self, name):
+        """
+        Renames a layer
+        """
+        sc = self.sc
+        success = self.sc.change_layer(self.sc.layer, name)
+        self.update()
+        self.generate_layer_colors()
+
+        yield  # undo
+
+        if success:
+            self.sc = sc
+            self.generate_layer_colors()
+
     @undoable
     def rename_label(self, label):
         """
         Renames a label
         """
         sc = deepcopy(self.sc)
-
         segment = self.sc.get_active()
 
         if label:
@@ -944,7 +982,6 @@ class Annotator(GraphicalUserInterface):
         Renames a qualifier
         """
         sc = deepcopy(self.sc)
-
         segment = self.sc.get_active()
 
         if qualifier:
@@ -962,26 +999,18 @@ class Annotator(GraphicalUserInterface):
             self.sc = sc
 
     @undoable
-    def rename_layer(self, name):
+    def rename_link_type(self, link_type, name):
         """
-        Renames a layer
+        Renames a link type
         """
         sc = self.sc
-        success = self.sc.change_layer(self.sc.layer, name)
+        success = self.sc.change_link_type(link_type, name)
         self.update()
-        self.generate_layer_colors()
 
         yield  # undo
 
         if success:
             self.sc = sc
-            self.generate_layer_colors()
-
-    def input_new_layer_name(self):
-        """
-        Inputs the new name of the active layer
-        """
-        self.input("input new layer name", [], lambda name: self.rename_layer(name), placeholder=self.sc.layer, free=True)
 
     #################
     # VIEW COMMANDS #
@@ -1438,9 +1467,9 @@ class Annotator(GraphicalUserInterface):
         # links display
         for ls, lt in segment.links:
             if ls in self.sc.collection:
-                addendum = " ⟲ {}".format(self.sc.collection.index(ls) + 1)
+                addendum = " [{} ⟲ {}]".format(lt, self.sc.collection.index(ls) + 1)
             else:
-                addendum = " ⟲"
+                addendum = " [{} ⟲]".format(lt)
 
             self.add_to_last_line(addendum, style="link-{}".format(lt), offset=offset)
             offset += len(addendum)

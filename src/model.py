@@ -412,7 +412,7 @@ class SegmentCollection:
             self.colors[new_layer] = self.colors[layer]
             del self.colors[layer]
 
-        for segment in list(set(self.collection + self.full_collection)):
+        for segment in self.full_collection:
             if layer in segment.annotations:
                 segment.annotations[new_layer] = segment.annotations[layer]
                 del segment.annotations[layer]
@@ -429,9 +429,9 @@ class SegmentCollection:
         if new_label not in self.labels[layer]:
             self.labels[layer].insert(index, new_label)
 
-        for segment in list(set(self.collection + self.full_collection)):
+        for segment in self.full_collection:
             if layer in segment.annotations:
-                if segment.annotations[layer]["label"] == label:
+                if "label" in segment.annotations[layer] and segment.annotations[layer]["label"] == label:
                     # replace label
                     segment.annotations[layer]["label"] = new_label
 
@@ -445,31 +445,34 @@ class SegmentCollection:
         if new_qualifier not in self.qualifiers[layer]:
             self.qualifiers[layer].insert(index, new_qualifier)
 
-        for segment in list(set(self.collection + self.full_collection)):
+        for segment in self.full_collection:
             if layer in segment.annotations:
-                if segment.annotations[layer]["qualifier"] == qualifier:
+                if "qualifier" in segment.annotations[layer] and segment.annotations[layer]["qualifier"] == qualifier:
                     # replace qualifier
                     segment.annotations[layer]["qualifier"] = new_qualifier
 
-    def delete_label(self, layer, label):
+    def change_link_type(self, link_type, new_link_type):
         """
-        Deletes a label
+        Renames a link type
         """
-        self.labels[layer].remove(label)
+        # insert new link type, with prior color
+        if new_link_type not in self.links:
+            self.links[new_link_type] = self.links[link_type]
 
-        for segment in list(set(self.collection + self.full_collection)):
-            if layer in segment.annotations and "label" in segment.annotations[layer] and segment.annotations[layer]["label"] == label:
-                del segment.annotations[layer]
+        # remove old link type
+        del self.links[link_type]
 
-    def delete_qualifier(self, layer, qualifier):
-        """
-        Deletes a qualifier
-        """
-        self.qualifiers[layer].remove(qualifier)
+        # replace in links and linked for all segment
+        for segment in self.full_collection:
+            for ls, lt in segment.links:
+                if lt == link_type:
+                    segment.links.remove((ls, lt))
+                    segment.links.append((ls, new_link_type))
 
-        for segment in list(set(self.collection + self.full_collection)):
-            if layer in segment.annotations and "qualifier" in segment.annotations[layer] and segment.annotations[layer]["qualifier"] == qualifier:
-                del segment.annotations[layer]["qualifier"]
+            for ls, lt in segment.linked:
+                if lt == link_type:
+                    segment.linked.remove((ls, lt))
+                    segment.linked.append((ls, new_link_type))
 
     def add_layer(self, layer):
         """
@@ -494,6 +497,13 @@ class SegmentCollection:
         if qualifier not in self.qualifiers[layer]:
             self.qualifiers[layer].append(qualifier)
 
+    def add_link_type(self, link_type):
+        """
+        Adds a new link type to the tagset
+        """
+        if link_type not in self.links:
+            self.links[link_type] = None
+
     def delete_layer(self, layer):
         """
         Deletes a layer
@@ -502,7 +512,7 @@ class SegmentCollection:
         del self.labels[layer]
 
         # remove the layer from all annotations
-        for segment in list(set(self.collection + self.full_collection)):
+        for segment in self.full_collection:
             if layer in segment.annotations:
                 del segment.annotations[layer]
 
@@ -512,6 +522,43 @@ class SegmentCollection:
 
         # changes the active layer
         self.layer = self.default_layer
+
+    def delete_label(self, layer, label):
+        """
+        Deletes a label
+        """
+        self.labels[layer].remove(label)
+
+        for segment in self.full_collection:
+            if layer in segment.annotations and "label" in segment.annotations[layer] and segment.annotations[layer]["label"] == label:
+                del segment.annotations[layer]
+
+    def delete_qualifier(self, layer, qualifier):
+        """
+        Deletes a qualifier
+        """
+        self.qualifiers[layer].remove(qualifier)
+
+        for segment in self.full_collection:
+            if layer in segment.annotations and "qualifier" in segment.annotations[layer] and segment.annotations[layer]["qualifier"] == qualifier:
+                del segment.annotations[layer]["qualifier"]
+
+    def delete_link_type(self, link_type):
+        """
+        Deletes a link type
+        """
+        # remove old link type
+        del self.links[link_type]
+
+        # replace in links and linked for all segment
+        for segment in self.full_collection:
+            for ls, lt in segment.links:
+                if lt == link_type:
+                    segment.links.remove((ls, lt))
+
+            for ls, lt in segment.linked:
+                if lt == link_type:
+                    segment.linked.remove((ls, lt))
 
     ##################################
     # TAXONOMY IMPORT/EXPORT METHODS #

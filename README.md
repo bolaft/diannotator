@@ -197,42 +197,42 @@ Opens the "export as..." dialogue.
 
 ### Special Commands:
 
-#### Change Layer : `Control C`
+#### Change Layer: `Control C`
 
 Changes the active layer.
 
-#### Erase Annotation : `Control E`
+#### Erase Annotation: `Control E`
 
 Removes label and qualifier from the active segment.
 
-#### Link Segment : `Control L`
+#### Link Segment: `Control L`
 
 If the active segment is not linked to any other segment, links it to a specific segment, selected by index after selecting the link type. If the segment is already linked to another segment of the selected link type, the link is removed.
 
-### Unlink Segment : `Control U`
+### Unlink Segment: `Control U`
 
 Removes all links emanating from the active segment.
 
-#### Split Segment : `Control S`
+#### Split Segment: `Control S`
 
 Splits the active segment in two, on the chosen token. Links, notes, annotations and legacy annotations are preserved.
 
-#### Merge Segment : `Control M`
+#### Merge Segment: `Control M`
 
 Merges the active segment to the previous ones. Links, notes, annotations and legacy annotations are preserved.
 
-#### Add Tag : `Control T`
+#### Add Element: `Control A`
 
-The next entry creates a new label added to the active layer, or creates a new qualifier for the active layer, if applicable.
+Adds a new layer, label, qualifier or link type.
 
-#### Rename : `Control R`
+#### Rename Element: `Control R`
 
-Updates the name of the layer, label or qualifier used for the active segment. All segments annotated with this layer, label or qualifier will be affected.
+Updates the name of the layer, label, qualifier or link type used for the active segment. All segments annotated with this layer, label, qualifier or link type will be affected.
  
-#### Filter : `Control F`
+#### Filter: `Control F`
 
 Filters the collection by label, legacy label, layer, legacy layer, qualifier or legacy qualifier.
 
-#### Add Note : `Control N`
+#### Add Note: `Control N`
 
 The next entry creates a note and attaches it to the active segment. If the active segment already has a note attached, the note is deleted.
