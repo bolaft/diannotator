@@ -388,6 +388,37 @@ class SegmentCollection:
     # TAXONOMY MODIFICATION METHODS #
     #################################
 
+    def change_layer(self, layer, new_layer):
+        """
+        Renames a layer
+        """
+        if new_layer in self.labels.keys():
+            return False
+
+        if layer == self.default_layer:
+            self.default_layer = new_layer
+
+        if layer == self.layer:
+            self.layer = new_layer
+
+        self.labels[new_layer] = self.labels[layer]
+        del self.labels[layer]
+
+        if layer in self.qualifiers:
+            self.qualifiers[new_layer] = self.qualifiers[layer]
+            del self.qualifiers[layer]
+
+        if layer in self.colors:
+            self.colors[new_layer] = self.colors[layer]
+            del self.colors[layer]
+
+        for segment in list(set(self.collection + self.full_collection)):
+            if layer in segment.annotations:
+                segment.annotations[new_layer] = segment.annotations[layer]
+                del segment.annotations[layer]
+
+        return True
+
     def change_label(self, layer, label, new_label):
         """
         Renames a label

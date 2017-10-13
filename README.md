@@ -225,9 +225,9 @@ Merges the active segment to the previous ones. Links, notes, annotations and le
 
 The next entry creates a new label added to the active layer, or creates a new qualifier for the active layer, if applicable.
 
-#### Rename Tag : `Control R`
+#### Rename : `Control R`
 
-Updates the name of the label or qualifier used for the active segment, on the active layer. All segments annotated with this label or qualifier will be affected.
+Updates the name of the layer, label or qualifier used for the active segment. All segments annotated with this layer, label or qualifier will be affected.
  
 #### Filter : `Control F`
 

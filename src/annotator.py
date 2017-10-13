@@ -278,7 +278,7 @@ class Annotator(GraphicalUserInterface):
         buttons.update({"[M]erge Segment": self.merge_segment})
         buttons.update({"[A]dd Layer": self.input_new_layer})
         buttons.update({"Add [T]ag": self.input_new_tag})
-        buttons.update({"[R]ename Tag": self.input_new_tag_name})
+        buttons.update({"[R]ename": self.input_new_tag_name})
         buttons.update({"[F]ilter": self.select_filter_type})
         buttons.update({"Add [N]ote": self.input_new_note})
 
@@ -826,29 +826,65 @@ class Annotator(GraphicalUserInterface):
 
     def input_new_tag_name(self):
         """
-        Inputs the name of a new label or qualifier
+        Inputs the new name of a label or qualifier
         """
         segment = self.sc.get_active()
 
         if self.sc.layer in segment.annotations:
             if "qualifier" in segment.annotations[self.sc.layer]:
-                self.input("select label or qualifier to rename", segment.annotations[self.sc.layer].values(), self.select_label_or_qualifier_to_rename)
+                self.input(
+                    "select layer, label or qualifier to rename",
+                    list(segment.annotations[self.sc.layer].values()) + [self.sc.layer],
+                    self.select_what_to_rename
+                )
             else:
-                self.input("input new label name", [], self.rename_label_or_qualifier, placeholder=segment.annotations[self.sc.layer]["label"], free=True)
+                self.input(
+                    "select layer or label to rename",
+                    list(segment.annotations[self.sc.layer].values()) + [self.sc.layer],
+                    self.select_what_to_rename
+                )
+        else:
+            self.input(
+                "input new layer name",
+                [],
+                self.rename_layer,
+                placeholder=self.sc.layer,
+                free=True
+            )
 
-    def select_label_or_qualifier_to_rename(self, label):
+    def select_what_to_rename(self, text):
         """
         Select either a label or a qualifier to rename
         """
         segment = self.sc.get_active()
 
-        if label == segment.annotations[self.sc.layer]["label"]:
-            self.input("input new label name", [], self.rename_label_or_qualifier, placeholder=label, free=True)
+        if text == segment.annotations[self.sc.layer]["label"]:
+            self.input(
+                "input new label name",
+                [],
+                self.rename_label,
+                placeholder=text,
+                free=True
+            )
+        elif text == self.sc.layer:
+            self.input(
+                "input new layer name",
+                [],
+                self.rename_layer,
+                placeholder=text,
+                free=True
+            )
         else:
-            self.input("input new qualifier name", [], lambda label: self.rename_label_or_qualifier(label, qualifier=True), placeholder=label, free=True)
+            self.input(
+                "input new qualifier name",
+                [],
+                self.rename_qualifier,
+                placeholder=text,
+                free=True
+            )
 
     @undoable
-    def rename_label_or_qualifier(self, label, qualifier=False):
+    def rename_label(self, label):
         """
         Renames a label
         """
@@ -857,24 +893,63 @@ class Annotator(GraphicalUserInterface):
         segment = self.sc.get_active()
 
         if label:
-            if qualifier:
-                self.sc.change_qualifier(
-                    self.sc.layer,
-                    segment.annotations[self.sc.layer]["qualifier"],
-                    label
-                )
-            else:
-                self.sc.change_label(
-                    self.sc.layer,
-                    segment.annotations[self.sc.layer]["label"],
-                    label
-                )
+            self.sc.change_label(
+                self.sc.layer,
+                segment.annotations[self.sc.layer]["label"],
+                label
+            )
 
-        self.update()
+            self.update()
 
         yield  # undo
 
-        self.sc = sc
+        if label:
+            self.sc = sc
+
+    @undoable
+    def rename_qualifier(self, qualifier):
+        """
+        Renames a qualifier
+        """
+        sc = deepcopy(self.sc)
+
+        segment = self.sc.get_active()
+
+        if qualifier:
+            self.sc.change_qualifier(
+                self.sc.layer,
+                segment.annotations[self.sc.layer]["qualifier"],
+                qualifier
+            )
+
+            self.update()
+
+        yield  # undo
+
+        if qualifier:
+            self.sc = sc
+
+    @undoable
+    def rename_layer(self, name):
+        """
+        Renames a layer
+        """
+        sc = self.sc
+        success = self.sc.change_layer(self.sc.layer, name)
+        self.update()
+        self.generate_layer_colors()
+
+        yield  # undo
+
+        if success:
+            self.sc = sc
+            self.generate_layer_colors()
+
+    def input_new_layer_name(self):
+        """
+        Inputs the new name of the active layer
+        """
+        self.input("input new layer name", [], lambda name: self.rename_layer(name), placeholder=self.sc.layer, free=True)
 
     #################
     # VIEW COMMANDS #
