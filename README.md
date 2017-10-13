@@ -158,6 +158,14 @@ Toggles between fullscreen and windowed mode.
 
 Exits the application.
 
+#### `Control +`
+
+Increases text font size.
+
+#### `Control -`
+
+Decreases text font size.
+
 #### `Tab`
 
 Moves focus from button to button, and back to the entry field.

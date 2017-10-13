@@ -93,6 +93,8 @@ class GraphicalUserInterface(Frame, Styles):
         # default bindings
         self.parent.bind("<F11>", lambda event: self.toggle_fullscreen())
         self.parent.bind("<Escape>", lambda event: self.exit_prompt())
+        self.parent.bind("<Control-KP_Add>", lambda event: self.zoom_in())
+        self.parent.bind("<Control-KP_Subtract>", lambda event: self.zoom_out())
 
         # window title
         self.parent.title(self.window_title)
@@ -108,6 +110,8 @@ class GraphicalUserInterface(Frame, Styles):
 
         self.view_menu = Menu(self.menu_bar, tearoff=0, font=self.menu_font_family)
         self.menu_bar.add_cascade(label="View", menu=self.view_menu)
+        self.view_menu.add_command(label="Zoom In", accelerator="Ctrl++", command=self.zoom_in)
+        self.view_menu.add_command(label="Zoom Out", accelerator="Ctrl+-", command=self.zoom_out)
 
         self.filter_menu = Menu(self.menu_bar, tearoff=0, font=self.menu_font_family)
         self.menu_bar.add_cascade(label="Filter", menu=self.filter_menu)
@@ -249,12 +253,6 @@ class GraphicalUserInterface(Frame, Styles):
                 if len([c for c in chunks if c.lower() in s.lower()]) == len(chunks):
                     self.make_button(s)
 
-        n_buttons = len(self.commands.winfo_children())
-
-        # highlight button that will trigger if return is hit
-        # if n_buttons == 1:
-            # self.commands.winfo_children()[0].config(background=WHITE, foreground=GRAY)
-
         self.text.see(END)  # move the scrollbar to the bottom
 
     def make_button(self, text, bg=DARK_GRAY, fg=WHITE, disabled=False):
@@ -265,7 +263,32 @@ class GraphicalUserInterface(Frame, Styles):
         if disabled:
             b.config(state=DISABLED)
 
-    def toggle_fullscreen(self, event=None):
+    def zoom_in(self):
+        """
+        Increases Text widget font
+        """
+        if self.text_font_size < 20:
+            self.text_font_size += 1
+            self.update_font_size()
+
+    def zoom_out(self):
+        """
+        Decreases Text widget font
+        """
+        if self.text_font_size > 8:
+            self.text_font_size -= 1
+            self.update_font_size()
+
+    def update_font_size(self):
+        """
+        Updates Text widget font size
+        """
+        self.text.config(font=(self.text_font_family, self.text_font_size))
+        self.text.tag_config(Styles.STRONG, font=(self.text_font_family, self.text_font_size, "bold"))
+        self.text.tag_config(Styles.ITALIC, font=(self.text_font_family, self.text_font_size, "italic"))
+        self.text.see(END)  # move the scrollbar to the bottom
+
+    def toggle_fullscreen(self):
         """
         Toggles between windowed and fullscreen
         """

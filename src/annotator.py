@@ -125,9 +125,7 @@ class Annotator(GraphicalUserInterface):
         self.file_menu.add_command(label="Open File...", accelerator="Ctrl+O", command=self.open_file)
         self.file_menu.add_command(label="Save As...", accelerator="Ctrl+Shift+S", command=self.save_file)
         self.file_menu.add_command(label="Export As...", accelerator="Ctrl+Shift+E", command=self.export_file)
-
         self.file_menu.add_separator()
-
         self.file_menu.add_command(label="Quit", accelerator="Esc", command=self.parent.quit)
 
         # edit menu
@@ -135,6 +133,7 @@ class Annotator(GraphicalUserInterface):
         self.edit_menu.add_command(label="Redo", accelerator="Ctrl+Shift+Z", command=self.redo)
 
         # view menu
+        self.view_menu.add_separator()
         self.view_menu.add_command(label="Randomize Participant Colors", accelerator="F3", command=self.generate_participant_colors)
 
         # filter menu
