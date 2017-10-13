@@ -80,7 +80,13 @@ class Annotator(GraphicalUserInterface):
             "<Delete>",
             lambda event: self.delete_segment())
         self.parent.bind(
+            "<F2>",
+            lambda event: self.show_legacy_annotations())
+        self.parent.bind(
             "<F3>",
+            lambda event: self.hide_legacy_annotations())
+        self.parent.bind(
+            "<F4>",
             lambda event: self.generate_participant_colors())
         self.parent.bind(
             "<F5>",
@@ -152,7 +158,10 @@ class Annotator(GraphicalUserInterface):
 
         # view menu
         self.view_menu.add_separator()
-        self.view_menu.add_command(label="Randomize Participant Colors", accelerator="F3", command=self.generate_participant_colors)
+        self.view_menu.add_command(label="Show Legacy Annotations", accelerator="F2", command=self.show_legacy_annotations)
+        self.view_menu.add_command(label="Hide Legacy Annotations", accelerator="F3", command=self.hide_legacy_annotations)
+        self.view_menu.add_separator()
+        self.view_menu.add_command(label="Randomize Participant Colors", accelerator="F4", command=self.generate_participant_colors)
 
         # filter menu
         self.filter_menu.add_command(label="Filter By Active Layer", accelerator="F5", command=self.filter_by_active_layer)
@@ -198,11 +207,32 @@ class Annotator(GraphicalUserInterface):
         # clear undo stack
         stack().clear()
 
+        # previous key press, for speed checks
+        self.previous_key_press = datetime.now() - timedelta(seconds=10)
+
+        # show legacy annotations
+        self.show_legacy = True
+
         # display update
         self.update()
 
-        # previous key press, for speed checks
-        self.previous_key_press = datetime.now() - timedelta(seconds=10)
+    ################
+    # VIEW METHODS #
+    ################
+
+    def show_legacy_annotations(self):
+        """
+        Sets legacy annotations to be displayed
+        """
+        self.show_legacy = True
+        self.update()
+
+    def hide_legacy_annotations(self):
+        """
+        Sets legacy annotations to not be displayed
+        """
+        self.show_legacy = False
+        self.update()
 
     #################
     # COLOR METHODS #
@@ -434,7 +464,7 @@ class Annotator(GraphicalUserInterface):
     # NAVIGATION COMMANDS #
     #######################
 
-    def is_slow_enough(self, milliseconds):
+    def is_slow_enough(self, milliseconds=75):
         """
         Checks if the speed limit between key presses is respected
         """
@@ -453,7 +483,7 @@ class Annotator(GraphicalUserInterface):
         """
         Moves to an ulterior segment
         """
-        if self.is_slow_enough(50):
+        if self.is_slow_enough():
             self.cycle_down(n=n)
 
     @undoable
@@ -470,7 +500,7 @@ class Annotator(GraphicalUserInterface):
         """
         Moves to a previous segment
         """
-        if self.is_slow_enough(50):
+        if self.is_slow_enough():
             self.cycle_up(n=n)
 
     @undoable
@@ -1392,15 +1422,16 @@ class Annotator(GraphicalUserInterface):
                 legacy_layers_to_ignore.append(layer)
 
         # legacy annotations display
-        for layer in reversed(sorted(segment.legacy.keys())):
-            if "label" in segment.legacy[layer] and layer not in legacy_layers_to_ignore:
-                if "qualifier" in segment.legacy[layer]:
-                    addendum = " (({} ➔ {}))".format(segment.legacy[layer]["label"], segment.legacy[layer]["qualifier"])
-                else:
-                    addendum = " (({}))".format(segment.legacy[layer]["label"])
+        if self.show_legacy:
+            for layer in reversed(sorted(segment.legacy.keys())):
+                if "label" in segment.legacy[layer] and layer not in legacy_layers_to_ignore:
+                    if "qualifier" in segment.legacy[layer]:
+                        addendum = " (({} ➔ {}))".format(segment.legacy[layer]["label"], segment.legacy[layer]["qualifier"])
+                    else:
+                        addendum = " (({}))".format(segment.legacy[layer]["label"])
 
-                self.add_to_last_line(addendum, style="layer-{}".format(layer), offset=offset)
-                offset += len(addendum)
+                    self.add_to_last_line(addendum, style="layer-{}".format(layer), offset=offset)
+                    offset += len(addendum)
 
         # links display
         for ls, lt in segment.links:
