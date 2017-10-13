@@ -10,7 +10,7 @@ Annotation methods
 
 from collections import OrderedDict
 from copy import deepcopy
-from datetime import datetime
+from datetime import datetime, timedelta
 from tkinter import filedialog, messagebox, LEFT
 from tkinter.ttk import Button
 from undo import stack, undoable
@@ -200,6 +200,9 @@ class Annotator(GraphicalUserInterface):
 
         # display update
         self.update()
+
+        # previous key press, for speed checks
+        self.previous_key_press = datetime.now() - timedelta(seconds=10)
 
     #################
     # COLOR METHODS #
@@ -431,33 +434,54 @@ class Annotator(GraphicalUserInterface):
     # NAVIGATION COMMANDS #
     #######################
 
-    @undoable
+    def is_slow_enough(self, milliseconds):
+        """
+        Checks if the speed limit between key presses is respected
+        """
+        now = datetime.now()
+
+        delta = now - self.previous_key_press
+
+        if delta.total_seconds() * 1000 < milliseconds:
+            return False
+        else:
+            self.previous_key_press = now
+
+            return True
+
     def go_down(self, n):
         """
         Moves to an ulterior segment
         """
+        if self.is_slow_enough(50):
+            self.cycle_down(n=n)
+
+    @undoable
+    def cycle_down(self, n):
         # cycles through the collection
         self.sc.next(n=n)
-
         self.update()
 
         yield  # undo
 
-        self.go_up(n)
+        self.cycle_up(n)
 
-    @undoable
-    def go_up(self, n):
+    def go_up(self, n, limit_speed=True):
         """
         Moves to a previous segment
         """
-        # cycles backards through the collection
-        self.sc.previous(n=n)
+        if self.is_slow_enough(50):
+            self.cycle_up(n=n)
 
+    @undoable
+    def cycle_up(self, n):
+        # cycles through the collection
+        self.sc.previous(n=n)
         self.update()
 
         yield  # undo
 
-        self.go_down(n)
+        self.cycle_down(n)
 
     def select_go_to(self):
         """
