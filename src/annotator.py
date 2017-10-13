@@ -487,7 +487,7 @@ class Annotator(GraphicalUserInterface):
         """
         Inputs a target segment to go to
         """
-        self.input("select destination index", range(1, len(self.sc.collection)), self.go_to)
+        self.input("select destination index", [], self.go_to, free=True)
 
     @undoable
     def go_to(self, number):
@@ -496,6 +496,13 @@ class Annotator(GraphicalUserInterface):
         """
         i = self.sc.i
         self.sc.i = int(number) - 1
+
+        if self.sc.i >= len(self.sc.collection):
+            self.sc.i = len(self.sc.collection) - 1
+
+        if self.sc.i < 0:
+            self.sc.i = 0
+
         self.update()
 
         yield  # undo
@@ -629,8 +636,10 @@ class Annotator(GraphicalUserInterface):
         """
         Set a link type then input link target
         """
+        i = self.sc.i - 50 if self.sc.i - 50 >= 1 else 1
+
         # input target segment
-        self.input("select link target", range(1, self.sc.i + 1), lambda n, link_t=link_type: self.link_segment(n, link_t))
+        self.input("select link target", reversed(list(range(i, self.sc.i + 1))), lambda n, link_t=link_type: self.link_segment(n, link_t), sort=False)
 
     @undoable
     def link_segment(self, number, link_type):

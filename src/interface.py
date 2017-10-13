@@ -390,7 +390,7 @@ class GraphicalUserInterface(Frame, Styles):
         self.free_input = free
         self.action = action
 
-        commands = sorted(list(set(commands))) if sort else commands  # sort commands alphabetically if necessary
+        commands = sorted(list(commands)) if sort else list(commands)  # sort commands alphabetically if necessary
 
         command_list = [str(c) for c in commands]
 
@@ -399,9 +399,9 @@ class GraphicalUserInterface(Frame, Styles):
             self.update_commands()
 
         self.entry.delete(0, END)  # clears the entry field
+        self.entry.insert(0, placeholder)  # inserts the placeholder
         self.entry.config(state=NORMAL)
         self.entry.focus_set()  # sets the focus on the input field
-        self.entry.insert(0, placeholder)
 
     def output(self, message, style=None, params=[], delay=1.0, blank_before=0, blank_after=0):
         """
