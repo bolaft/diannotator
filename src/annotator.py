@@ -258,11 +258,16 @@ class Annotator(GraphicalUserInterface):
         """
         Loads a .csv or .pic file through dialogue
         """
-        sc = SegmentCollection.load(filedialog.askopenfilename(
+        path = filedialog.askopenfilename(
             initialdir=SegmentCollection.save_dir,
             title="Open data file",
             filetypes=(("Pickle serialized files", "*.pic"), ("CSV data files", "*.csv"), ("all files", "*.*"))
-        ))
+        )
+
+        if path == "":
+            return  # no file selected
+
+        sc = SegmentCollection.load(path)
 
         if sc:
             self.sc = sc
@@ -280,11 +285,16 @@ class Annotator(GraphicalUserInterface):
         """
         Saves a .pic file through dialogue
         """
-        success = self.sc.save(path=filedialog.asksaveasfilename(
+        path = filedialog.asksaveasfilename(
             initialdir=SegmentCollection.save_dir,
             title="Save as",
             filetypes=(("Pickle serialized files", "*.pic"), ("all files", "*.*"))
-        ))
+        )
+
+        if path == "":
+            return  # no path selected
+
+        success = self.sc.save(path=path)
 
         if success:
             self.update(annotation_mode=False)
@@ -295,11 +305,16 @@ class Annotator(GraphicalUserInterface):
         """
         Saves a .csv or .json file through dialogue
         """
-        success = self.sc.export_collection(filedialog.asksaveasfilename(
+        path = filedialog.asksaveasfilename(
             initialdir=SegmentCollection.data_dir,
             title="Export as",
             filetypes=(("JSON data files", "*.json"), ("CSV data files", "*.csv"))
-        ))
+        )
+
+        if path == "":
+            return  # no path selected
+
+        success = self.sc.export_collection(path)
 
         if success:
             self.update(annotation_mode=False)
@@ -310,11 +325,16 @@ class Annotator(GraphicalUserInterface):
         """
         Loads a .json taxonomy file through dialogue
         """
-        success = self.sc.import_taxonomy(filedialog.askopenfilename(
+        path = filedialog.askopenfilename(
             initialdir=SegmentCollection.taxo_dir,
             title="Open taxonomy file",
             filetypes=(("JSON taxonomy file", "*.json"), ("all files", "*.*"))
-        ))
+        )
+
+        if path == "":
+            return  # no path selected
+
+        success = self.sc.import_taxonomy(path)
 
         if success:
             self.generate_dimension_colors()
@@ -327,11 +347,16 @@ class Annotator(GraphicalUserInterface):
         """
         Saves a .json taxonomy file through dialogue
         """
-        success = self.sc.export_taxonomy(filedialog.asksaveasfilename(
+        path = filedialog.asksaveasfilename(
             initialdir=SegmentCollection.custom_taxo_dir,
             title="Export taxonomy as",
             filetypes=(("JSON taxonomy file", "*.json"), ("all files", "*.*"))
-        ))
+        )
+
+        if path == "":
+            return  # no path selected
+
+        success = self.sc.export_taxonomy(path)
 
         if success:
             self.update(annotation_mode=False)

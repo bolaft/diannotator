@@ -18,7 +18,7 @@ from optparse import OptionParser
 
 from annotator import Annotator
 
-APP_TITLE = "DiAnnotator"  # hardcoded game title
+APP_TITLE = "DiAnnotator"  # hardcoded application title
 VERSION_NUMBER = "alpha 17.10.12"  # hardcoded version number
 
 
@@ -40,14 +40,14 @@ def parse_args():
         dest="fullscreen",
         default=False,
         action="store_true",
-        help="starts the game in fullscreen mode")
+        help="starts the application in fullscreen mode")
 
     op.add_option(
         "-v", "--version",
         dest="version",
         default=False,
         action="store_true",
-        help="displays the current version of the game")
+        help="displays the current version of the application")
 
     return op.parse_args()
 
@@ -62,7 +62,7 @@ if __name__ == "__main__":
     if options.version:
         sys.exit("{} {}".format(APP_TITLE, VERSION_NUMBER))
 
-    # creates the game engine
+    # creates the annotation engine
     annotator = Annotator()
 
     if options.fullscreen:

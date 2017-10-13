@@ -13,7 +13,7 @@ import random
 
 def generate_random_color():
     """
-    Generate the hexadecimal code of a random pastel color
+    Generates the hexadecimal code of a random pastel color
     """
     r = (random.randrange(1, 256) + 255) / 2
     g = (random.randrange(1, 256) + 255) / 2

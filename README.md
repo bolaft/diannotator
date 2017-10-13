@@ -86,6 +86,10 @@ When a CSV file is loaded, a taxonomy must be chosen before annotation can begin
 
 The taxonomy's **name**.
 
+#### `url` (optional)
+
+The URL to the taxonomy's **website** or **documentation**.
+
 #### `default`
 
 The **default dimension** of the taxonomy, the first one to be active when first loading a data file.

@@ -29,8 +29,8 @@ class Segment:
         Segment constructor
         """
         self.id = id(self)  # random unique ID
-        self.raw = raw  # raw utterance
-        self.original_raw = raw  # full original raw utterance
+        self.raw = raw  # raw text
+        self.original_raw = raw  # full original raw text
         self.participant = participant  # speaker name
         self.annotations = {}  # annotations
         self.legacy = {}  # legacy annotations
