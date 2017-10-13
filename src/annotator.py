@@ -1431,13 +1431,19 @@ class Annotator(GraphicalUserInterface):
             self.parent.title("{} - {}".format(self.window_title, self.sc.save_file))
 
             # status message
-            status = "Active Layer: |{}|".format(self.sc.layer.title())
+            status = "Active Layer: {}".format(self.sc.layer.title())
 
             if self.sc.get_active_label():
-                status = "{} - Active Label: [{}]".format(status, self.sc.get_active_label().title())
+                status = "{} - Active Label: {}".format(status, self.sc.get_active_label().title())
 
             if self.sc.get_active_qualifier():
-                status = "{} - Active Qualifier: [{}]".format(status, self.sc.get_active_qualifier().title())
+                status = "{} - Active Qualifier: {}".format(status, self.sc.get_active_qualifier().title())
+
+            link_types = set([lt.title() for ls, lt in self.sc.get_active().links])
+
+            if len(link_types) > 0:
+                status = "{} - Active Link Type{}: {}".format(status, "s" if len(link_types) > 1 else "", ", ".join(link_types))
+
         else:
             # default title
             self.parent.title(self.window_title)
