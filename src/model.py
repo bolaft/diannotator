@@ -238,6 +238,7 @@ class SegmentCollection:
 
         self.i = 0  # collection index
         self.dimension = None  # active dimension
+        self.default_dimension = None  # default dimension
         self.filter = False  # active filter
 
     ######################
@@ -347,6 +348,25 @@ class SegmentCollection:
         """
         self.values[dimension].append(quaifier)
 
+    def delete_dimension(self, dimension):
+        """
+        Deletes a dimension
+        """
+        # remove the dimension from the taxonomy
+        del self.labels[dimension]
+
+        # remove the dimension from all annotations
+        for segment in list(set(self.collection + self.full_collection)):
+            if dimension in segment.annotations:
+                del segment.annotations[dimension]
+
+        # changes the default dimension if needed
+        if dimension == self.default_dimension:
+            self.default_dimension = list(self.labels.keys())[0]
+
+        # changes the active dimension
+        self.dimension = self.default_dimension
+
     ##################################
     # TAXONOMY IMPORT/EXPORT METHODS #
     ##################################
@@ -359,7 +379,7 @@ class SegmentCollection:
             taxonomy = json.loads(codecs.open(path, encoding="utf-8").read())
 
             self.taxonomy = taxonomy["name"]
-            self.dimension = taxonomy["default"]
+            self.dimension = self.default_dimension = taxonomy["default"]
 
             self.labels = taxonomy["labels"]  # label tagsets
             self.values = taxonomy["values"]  # label qualifier tagsets
@@ -376,7 +396,7 @@ class SegmentCollection:
         """
         taxonomy = {
             "name": self.taxonomy,
-            "default": self.dimension,
+            "default": self.default_dimension,
             "colors": self.colors,
             "labels": self.labels,
             "values": self.values

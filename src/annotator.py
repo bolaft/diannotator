@@ -144,7 +144,9 @@ class Annotator(GraphicalUserInterface):
         self.taxonomy_menu.add_command(label="Import Taxonomy...", accelerator="Ctrl+Shift+I", command=self.import_taxonomy)
         self.taxonomy_menu.add_command(label="Export Taxonomy As...", accelerator="Ctrl+Shift+T", command=self.export_taxonomy)
         self.taxonomy_menu.add_separator()
+        self.taxonomy_menu.add_command(label="Set Active Dimension As Default", command=self.set_dimension_as_default)
         self.taxonomy_menu.add_command(label="Remove Active Label From Taxonomy", command=self.remove_label)
+        self.taxonomy_menu.add_command(label="Remove Active Dimension From Taxonomy", command=self.remove_dimension)
 
         ##################
         # INITIALIZATION #
@@ -571,6 +573,19 @@ class Annotator(GraphicalUserInterface):
         if self.sc.dimension in segment.annotations:
             self.sc.delete_label(self.sc.dimension, segment.annotations[self.sc.dimension])
             self.update()
+
+    def set_dimension_as_default(self):
+        """
+        Removes the active segment's dimension from the taxonomy
+        """
+        self.sc.default_dimension = self.sc.dimension
+
+    def remove_dimension(self):
+        """
+        Removes the active segment's dimension from the taxonomy
+        """
+        self.sc.delete_dimension(self.sc.dimension)
+        self.update()
 
     def input_new_label_name(self):
         """
