@@ -825,7 +825,7 @@ class Annotator(GraphicalUserInterface):
             if "qualifier" in segment.annotations[self.sc.layer]:
                 self.input("select label or qualifier to rename", segment.annotations[self.sc.layer].values(), self.select_label_or_qualifier_to_rename)
             else:
-                self.input("input new label name", [], self.rename_label_or_qualifier, free=True)
+                self.input("input new label name", [], self.rename_label_or_qualifier, placeholder=segment.annotations[self.sc.layer]["label"], free=True)
 
     def select_label_or_qualifier_to_rename(self, label):
         """
@@ -834,9 +834,9 @@ class Annotator(GraphicalUserInterface):
         segment = self.sc.get_active()
 
         if label == segment.annotations[self.sc.layer]["label"]:
-            self.input("input new label name", [], self.rename_label_or_qualifier, free=True)
+            self.input("input new label name", [], self.rename_label_or_qualifier, placeholder=label, free=True)
         else:
-            self.input("input new qualifier name", [], lambda label: self.rename_label_or_qualifier(label, qualifier=True), free=True)
+            self.input("input new qualifier name", [], lambda label: self.rename_label_or_qualifier(label, qualifier=True), placeholder=label, free=True)
 
     @undoable
     def rename_label_or_qualifier(self, label, qualifier=False):

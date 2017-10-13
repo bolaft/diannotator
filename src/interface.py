@@ -382,7 +382,7 @@ class GraphicalUserInterface(Frame, Styles):
             # sleep(self.delay * delay)  # small pause between outputs
             self.add_text("" + "\n" * (n - 1))
 
-    def input(self, prompt, commands, action, prompt_params=[], prompt_delay=0, free=False, sort=True):
+    def input(self, prompt, commands, action, prompt_params=[], prompt_delay=0, free=False, sort=True, placeholder=""):
         """
         Manages user input
         """
@@ -401,6 +401,7 @@ class GraphicalUserInterface(Frame, Styles):
         self.entry.delete(0, END)  # clears the entry field
         self.entry.config(state=NORMAL)
         self.entry.focus_set()  # sets the focus on the input field
+        self.entry.insert(0, placeholder)
 
     def output(self, message, style=None, params=[], delay=1.0, blank_before=0, blank_after=0):
         """
