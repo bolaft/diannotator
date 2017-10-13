@@ -505,6 +505,7 @@ class Annotator(GraphicalUserInterface):
         Inputs the token on which the active segment will be split
         """
         segment = self.sc.get_active()
+
         if len(segment.tokens) > 1:
             self.input("select token on which to split", segment.tokens[:-1], self.split_segment, sort=False)
 
@@ -616,9 +617,7 @@ class Annotator(GraphicalUserInterface):
         """
         Inputs name of a new label or qualifier
         """
-        segment = self.sc.get_active()
-
-        if self.sc.layer in self.sc.qualifiers and self.sc.layer in segment.annotations and "label" in segment.annotations[self.sc.layer] and "qualifier" not in segment.annotations[self.sc.layer]:
+        if self.sc.layer in self.sc.qualifiers and self.sc.get_active_label() and not self.sc.get_active_qualifier():
             self.input("input new qualifier name", [], self.add_qualifier, free=True)
         else:
             self.input("input new label name", [], self.add_label, free=True)
@@ -683,7 +682,7 @@ class Annotator(GraphicalUserInterface):
 
         if self.sc.layer in segment.annotations:
             if "qualifier" in segment.annotations[self.sc.layer]:
-                self.input("select label or qualifier to rename", segment.annotations[self.sc.layer].qualifiers(), self.select_label_or_qualifier_to_rename)
+                self.input("select label or qualifier to rename", segment.annotations[self.sc.layer].values(), self.select_label_or_qualifier_to_rename)
             else:
                 self.input("input new label name", [], self.rename_label_or_qualifier, free=True)
 
@@ -971,9 +970,7 @@ class Annotator(GraphicalUserInterface):
             self.input(None, [], None)
             return
 
-        segment = self.sc.get_active()
-
-        if self.sc.layer in self.sc.qualifiers and self.sc.layer in segment.annotations and "label" in segment.annotations[self.sc.layer] and "qualifier" not in segment.annotations[self.sc.layer]:
+        if self.sc.layer in self.sc.qualifiers and self.sc.get_active_label() and not self.sc.get_active_qualifier():
             self.input("select qualifier to apply", self.sc.qualifiers[self.sc.layer], self.annotate_qualifier, sort=False)
         else:
             self.input("select label to apply", self.sc.labels[self.sc.layer], self.annotate_label, sort=False)
@@ -1028,17 +1025,14 @@ class Annotator(GraphicalUserInterface):
             # title with filepath
             self.parent.title("{} - {}".format(self.window_title, self.sc.save_file))
 
-            # active segment
-            segment = self.sc.get_active()
-
             # status message
             status = "Active Layer: |{}|".format(self.sc.layer.title())
 
-            if self.sc.layer in segment.annotations and "label" in segment.annotations[self.sc.layer]:
-                status = "{} - Active Label: [{}]".format(status, segment.annotations[self.sc.layer]["label"].title())
+            if self.sc.get_active_label():
+                status = "{} - Active Label: [{}]".format(status, self.sc.get_active_label().title())
 
-            if self.sc.layer in segment.annotations and "qualifier" in segment.annotations[self.sc.layer]:
-                status = "{} - Active Qualifier: [{}]".format(status, segment.annotations[self.sc.layer]["qualifier"].title())
+            if self.sc.get_active_qualifier():
+                status = "{} - Active Qualifier: [{}]".format(status, self.sc.get_active_qualifier().title())
         else:
             # default title
             self.parent.title(self.window_title)

@@ -485,7 +485,8 @@ class SegmentCollection:
             "default": self.default_layer,
             "colors": self.colors,
             "labels": self.labels,
-            "qualifiers": self.qualifiers
+            "qualifiers": self.qualifiers,
+            "links": self.links
         }
 
         try:
