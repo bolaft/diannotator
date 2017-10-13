@@ -420,11 +420,12 @@ class Annotator(GraphicalUserInterface):
         """
         Deletes the active segment
         """
-        segment = self.sc.get_active()
+        if messagebox.askyesno("Delete Segment", "Are you sure you want to remove the active segment from the collection?"):
+            segment = self.sc.get_active()
 
-        self.sc.remove(segment)
+            self.sc.remove(segment)
 
-        self.update()
+            self.update()
 
     def merge_segment(self):
         """
@@ -571,8 +572,10 @@ class Annotator(GraphicalUserInterface):
         segment = self.sc.get_active()
 
         if self.sc.dimension in segment.annotations:
-            self.sc.delete_label(self.sc.dimension, segment.annotations[self.sc.dimension])
-            self.update()
+            label = segment.annotations[self.sc.dimension]
+            if messagebox.askyesno("Delete Label", "Are you sure you want to remove the {} label from the taxonomy?".format(label)):
+                self.sc.delete_label(self.sc.dimension, label)
+                self.update()
 
     def set_dimension_as_default(self):
         """
@@ -584,8 +587,9 @@ class Annotator(GraphicalUserInterface):
         """
         Removes the active segment's dimension from the taxonomy
         """
-        self.sc.delete_dimension(self.sc.dimension)
-        self.update()
+        if messagebox.askyesno("Delete Dimension", "Are you sure you want to remove the {} dimension from the taxonomy?".format(self.sc.dimension)):
+            self.sc.delete_dimension(self.sc.dimension)
+            self.update()
 
     def input_new_label_name(self):
         """
