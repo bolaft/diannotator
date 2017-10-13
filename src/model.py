@@ -531,7 +531,13 @@ class SegmentCollection:
         """
         Imports a new collection from a CSV file
         """
+        # backup of the full collection
+        collection = self.collection
+        full_collection = self.full_collection
+
         try:
+            self.full_collection = []
+
             with open(path) as f:
                 rows = [{k: v for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True, delimiter="\t")]
 
@@ -624,7 +630,11 @@ class SegmentCollection:
             # writes save path to /tmp
             self.write_save_path_to_tmp()
         except Exception as e:
+            self.collection = collection
+            self.full_collection = full_collection
+
             logging.exception("DialogueActCollection.import_collection()")
+
             return False
 
         return True
