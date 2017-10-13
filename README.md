@@ -208,7 +208,7 @@ Splits the active segment in two, on the chosen token. Links, notes, annotations
 
 Merges the active segment to the previous ones. Links, notes, annotations and legacy annotations are preserved.
 
-#### Add Tag : `Control A`
+#### Add Tag : `Control T`
 
 The next entry creates a new label added to the active layer, or creates a new qualifier for the active layer, if applicable.
 

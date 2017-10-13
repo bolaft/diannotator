@@ -316,6 +316,28 @@ class SegmentCollection:
         """
         return self.collection[self.i]
 
+    def get_active_label(self):
+        """
+        Returns the active segment's label
+        """
+        segment = self.get_active()
+
+        if self.layer in segment.annotations and "label" in segment.annotations[self.layer]:
+            return segment.annotations[self.layer]["label"]
+        else:
+            return False
+
+    def get_active_qualifier(self):
+        """
+        Returns the active segment's qualifier
+        """
+        segment = self.get_active()
+
+        if self.layer in segment.annotations and "qualifier" in segment.annotations[self.layer]:
+            return segment.annotations[self.layer]["qualifier"]
+        else:
+            return False
+
     ########################
     # MODIFICATION METHODS #
     ########################

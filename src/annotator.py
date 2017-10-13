@@ -82,8 +82,14 @@ class Annotator(GraphicalUserInterface):
             "<F3>",
             lambda event: self.generate_participant_colors())
         self.parent.bind(
-            "<F4>",
-            lambda event: self.filter_by_layer())
+            "<F5>",
+            lambda event: self.filter_by_active_layer())
+        self.parent.bind(
+            "<F6>",
+            lambda event: self.filter_by_active_label())
+        self.parent.bind(
+            "<F7>",
+            lambda event: self.filter_by_active_qualifier())
         self.parent.bind(
             "<Control-z>",
             lambda event: self.undo())
@@ -124,7 +130,7 @@ class Annotator(GraphicalUserInterface):
             lambda event: self.input_new_note())
         self.parent.bind(
             "<Control-f>",
-            lambda event: self.filter_by_label())
+            lambda event: self.select_filter_type())
 
         #################
         # MENU COMMANDS #
@@ -148,8 +154,9 @@ class Annotator(GraphicalUserInterface):
         self.view_menu.add_command(label="Randomize Participant Colors", accelerator="F3", command=self.generate_participant_colors)
 
         # filter menu
-        self.filter_menu.add_command(label="Filter By Active Label", accelerator="Ctrl+F", command=self.filter_by_label)
-        self.filter_menu.add_command(label="Filter By Active Layer", accelerator="F4", command=self.filter_by_layer)
+        self.filter_menu.add_command(label="Filter By Active Layer", accelerator="F5", command=self.filter_by_active_layer)
+        self.filter_menu.add_command(label="Filter By Active Label", accelerator="F6", command=self.filter_by_active_label)
+        self.filter_menu.add_command(label="Filter By Active Qualifier", accelerator="F7", command=self.filter_by_active_qualifier)
 
         # taxonomy menu
         self.taxonomy_menu.add_command(label="Import Taxonomy...", accelerator="Ctrl+Alt+I", command=self.import_taxonomy)
@@ -269,7 +276,7 @@ class Annotator(GraphicalUserInterface):
         buttons.update({"[A]dd Layer": self.input_new_layer})
         buttons.update({"Add [T]ag": self.input_new_tag})
         buttons.update({"[R]ename Tag": self.input_new_tag_name})
-        buttons.update({"[F]ilter By Label": self.filter_by_label})
+        buttons.update({"[F]ilter": self.select_filter_type})
         buttons.update({"Add [N]ote": self.input_new_note})
 
         for text, function in buttons.items():
@@ -717,49 +724,197 @@ class Annotator(GraphicalUserInterface):
     # VIEW COMMANDS #
     #################
 
-    def filter_by_label(self):
+    def select_filter_type(self):
         """
-        Filters the collection by label
+        Selects a filter type
         """
-        segment = self.sc.get_active()
-
-        if not self.sc.filter and (self.sc.layer in segment.annotations or self.sc.layer in segment.legacy):
-            if self.sc.layer in segment.annotations:
-                self.sc.collection = [s for s in self.sc.full_collection if self.sc.layer in s.annotations and s.annotations[self.sc.layer]["label"].startswith(segment.annotations[self.sc.layer]["label"])]
-                self.sc.filter = "[{}]".format(segment.annotations[self.sc.layer]["label"])
-            elif self.sc.layer in segment.legacy:
-                self.sc.collection = [s for s in self.sc.full_collection if self.sc.layer in s.legacy and s.legacy[self.sc.layer].startswith(segment.legacy[self.sc.layer]["label"])]
-                self.sc.filter = "(({}))".format(segment.legacy[self.sc.layer]["label"])
+        if not self.sc.filter:
+            self.input("select filter type", ["Layer", "Legacy Layer", "Label", "Legacy Label", "Qualifier", "Legacy Qualifier"], self.filter)
         else:
-            self.sc.i = self.sc.full_collection.index(segment)
-            self.sc.collection = self.sc.full_collection.copy()
-            self.sc.filter = False
+            self.remove_filter()
+
+    def remove_filter(self):
+        """
+        Removes a filter
+        """
+        if self.sc.collection:
+            self.sc.i = self.sc.full_collection.index(self.sc.get_active())
+
+        self.sc.collection = self.sc.full_collection.copy()
+        self.sc.filter = False
 
         self.update()
 
-    def filter_by_layer(self):
+    def filter(self, filter_type):
+        """
+        Filters the collection
+        """
+        if filter_type == "Layer":
+            self.input("select layer", self.sc.labels.keys(), self.filter_by_layer)
+
+        if filter_type == "Legacy Layer":
+            legacy_layers = []
+
+            for segment in self.sc.full_collection:
+                for layer in segment.legacy.keys():
+                    legacy_layers.append(layer)
+
+            self.input("select legacy layer", set(legacy_layers), self.filter_by_legacy_layer)
+
+        if filter_type == "Label":
+            labels = []
+
+            for layer in self.sc.labels:
+                labels += self.sc.labels[layer]
+
+            self.input("select label", set(labels), self.filter_by_label)
+
+        if filter_type == "Legacy Label":
+            legacy_labels = []
+
+            for segment in self.sc.full_collection:
+                for layer in segment.legacy.keys():
+                    if "label" in segment.legacy[layer]:
+                        legacy_labels.append(segment.legacy[layer]["label"])
+
+            self.input("select legacy label", set(legacy_labels), self.filter_by_legacy_label)
+
+        if filter_type == "Qualifier":
+            qualifiers = []
+
+            for layer in self.sc.qualifiers:
+                qualifiers += self.sc.qualifiers[layer]
+
+            self.input("select qualifier", set(qualifiers), self.filter_by_qualifier)
+
+        if filter_type == "Legacy Qualifier":
+            legacy_qualifiers = []
+
+            for segment in self.sc.full_collection:
+                for layer in segment.legacy.keys():
+                    if "qualifier" in segment.legacy[layer]:
+                        legacy_qualifiers.append(segment.legacy[layer]["qualifier"])
+
+            self.input("select legacy qualifier", set(legacy_qualifiers), self.filter_by_legacy_qualifier)
+
+    def filter_by_active_layer(self):
+        """
+        Filters the collection by active layer
+        """
+        if not self.sc.filter:
+            self.filter_by_layer(self.sc.layer)
+        else:
+            self.remove_filter()
+
+    def filter_by_active_label(self):
+        """
+        Filters the collection by active label
+        """
+        if not self.sc.filter:
+            label = self.sc.get_active_label()
+
+            if label:
+                self.filter_by_label(label)
+        else:
+            self.remove_filter()
+
+    def filter_by_active_qualifier(self):
+        """
+        Filters the collection by active qualifier
+        """
+        if not self.sc.filter:
+            qualifier = self.sc.get_active_qualifier()
+
+            if qualifier:
+                self.filter_by_qualifier(qualifier)
+        else:
+            self.remove_filter()
+
+    def finish_filter(self):
+        """
+        Moves the index to an appropriate location in the new collection
+        """
+        # look first for a target from the active segment to the end, and then backwards from the position of the active segment
+        for i in list(range(self.sc.i, len(self.sc.full_collection))) + list(reversed(range(0, self.sc.i))):
+            segment = self.sc.full_collection[i]
+            if segment in self.sc.collection:
+                # adjust the current index in the new collection
+                self.sc.i = self.sc.collection.index(segment)
+                break
+
+        self.update()
+
+    def filter_by_layer(self, layer):
         """
         Filters the collection by layer
         """
-        if not self.sc.filter:
-            self.sc.collection = [s for s in self.sc.full_collection if self.sc.layer in s.annotations or self.sc.layer in s.legacy]
-            self.sc.filter = "|{}|".format(self.sc.layer)
+        self.sc.collection = [s for s in self.sc.full_collection if layer in s.annotations]
+        self.sc.filter = "|{}|".format(layer)
+        self.finish_filter()
 
-            # look first for a target from the active segment to the end, and then backwards from the position of the active segment
-            for i in list(range(self.sc.i, len(self.sc.full_collection))) + list(reversed(range(0, self.sc.i))):
-                segment = self.sc.full_collection[i]
-                if segment in self.sc.collection:
-                    # adjust the current index in the new collection
-                    self.sc.i = self.sc.collection.index(segment)
-                    break
-        else:
-            if self.sc.collection:
-                self.sc.i = self.sc.full_collection.index(self.sc.get_active())
+    def filter_by_legacy_layer(self, layer):
+        """
+        Filters the collection by legacy layer
+        """
+        self.sc.collection = [s for s in self.sc.full_collection if layer in s.legacy]
+        self.sc.filter = "|{}|".format(layer)
+        self.finish_filter()
 
-            self.sc.collection = self.sc.full_collection.copy()
-            self.sc.filter = False
+    def filter_by_label(self, label):
+        """
+        Filters the collection by label
+        """
+        segments = []
+        for segment in self.sc.full_collection:
+            for layer in segment.annotations:
+                if "label" in segment.annotations[layer] and label == segment.annotations[layer]["label"]:
+                    segments.append(segment)
 
-        self.update()
+        self.sc.collection = list(set(segments))
+        self.sc.filter = "[{}]".format(label)
+        self.finish_filter()
+
+    def filter_by_legacy_label(self, label):
+        """
+        Filters the collection by legacy label
+        """
+        segments = []
+        for segment in self.sc.full_collection:
+            for layer in segment.legacy:
+                if "label" in segment.legacy[layer] and label == segment.legacy[layer]["label"]:
+                    segments.append(segment)
+
+        self.sc.collection = list(set(segments))
+        self.sc.filter = "[{}]".format(label)
+        self.finish_filter()
+
+    def filter_by_qualifier(self, qualifier):
+        """
+        Filters the collection by qualifier
+        """
+        segments = []
+        for segment in self.sc.full_collection:
+            for layer in segment.annotations:
+                if "qualifier" in segment.annotations[layer] and qualifier == segment.annotations[layer]["qualifier"]:
+                    segments.append(segment)
+
+        self.sc.collection = list(set(segments))
+        self.sc.filter = "[➔ {}]".format(qualifier)
+        self.finish_filter()
+
+    def filter_by_legacy_qualifier(self, qualifier):
+        """
+        Filters the collection by legacy qualifier
+        """
+        segments = []
+        for segment in self.sc.full_collection:
+            for layer in segment.legacy:
+                if "qualifier" in segment.legacy[layer] and qualifier == segment.legacy[layer]["qualifier"]:
+                    segments.append(segment)
+
+        self.sc.collection = list(set(segments))
+        self.sc.filter = "((➔ {}))".format(qualifier)
+        self.finish_filter()
 
     ######################
     # UNDO/REDO COMMANDS #
@@ -928,6 +1083,9 @@ class Annotator(GraphicalUserInterface):
         # offset for displaying addendums
         offset = len(text) + 1
 
+        # ignore legacy layers where there is already an annotation
+        legacy_layers_to_ignore = []
+
         # annotations display
         for layer in reversed(sorted(segment.annotations.keys())):
             if "label" in segment.annotations[layer]:
@@ -938,10 +1096,11 @@ class Annotator(GraphicalUserInterface):
 
                 self.add_to_last_line(addendum, style="layer-{}".format(layer), offset=offset)
                 offset += len(addendum)
+                legacy_layers_to_ignore.append(layer)
 
         # legacy annotations display
         for layer in reversed(sorted(segment.legacy.keys())):
-            if "label" in segment.legacy[layer]:
+            if "label" in segment.legacy[layer] and layer not in legacy_layers_to_ignore:
                 if "qualifier" in segment.legacy[layer]:
                     addendum = " (({} ➔ {}))".format(segment.legacy[layer]["label"], segment.legacy[layer]["qualifier"])
                 else:
