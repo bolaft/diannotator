@@ -243,8 +243,15 @@ class GraphicalUserInterface(Frame, Styles):
 
         input_text = self.entry.get()
 
-        if input_text in self.command_list:
-            self.make_button(input_text)
+        match = None
+
+        for cmd in self.command_list:
+            if cmd.lower() == input_text.lower():
+                match = cmd
+
+        # if only one match
+        if match:
+            self.make_button(match)
         else:
             chunks = input_text.split(" ")
 
