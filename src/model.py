@@ -24,6 +24,9 @@ from nltk.tokenize import WhitespaceTokenizer
 # check if the current file is in a folder name "src"
 EXEC_FROM_SOURCE = os.path.dirname(os.path.abspath(__file__)).split("/")[-1] == "src"
 
+# symbol for merged original raws
+MERGE_SYMBOL = "<<MERGED<<"
+
 
 class Segment:
     def __init__(self, raw, participant, time, date):
@@ -59,8 +62,8 @@ class Segment:
 
         return {
             "id": self.id,
-            "raw": self.raw,
-            "original_raw": self.original_raw,
+            "segment": self.raw,
+            "raw": self.original_raw,
             "participant": self.participant,
             "date": self.date,
             "time": self.time,
@@ -77,7 +80,7 @@ class Segment:
 
         data.update({"id": self.id})
         data.update({"segment": self.raw})
-        data.update({"raw": self.original_raw if isinstance(self.original_raw, str) else "<<MERGED<<".join(self.original_raw)})
+        data.update({"raw": self.original_raw if isinstance(self.original_raw, str) else MERGE_SYMBOL.join(self.original_raw)})
         data.update({"participant": self.participant})
         data.update({"date": self.date})
         data.update({"time": self.time})
@@ -86,11 +89,20 @@ class Segment:
 
         for layer in labels.keys():
             if layer in self.annotations:
-                label = self.annotations[layer]["label"]
-                qualifier = self.annotations[layer]["qualifier"] if qualifier in self.annotations[layer] else None
-            data.update(
-                {layer: {"label": label, "qualifier": qualifier} if qualifier else {"label": label}}
-            )
+                # label
+                data.update({layer: self.annotations[layer]["label"]})
+
+                if "qualifier" in self.annotations[layer]:
+                    # qualifier
+                    data.update({layer: self.annotations[layer]["label"]})
+                else:
+                    # empty qualifier
+                    data.update({layer + "-value": ""})
+            else:
+                # empty label
+                data.update({layer: ""})
+                # empty qualifier
+                data.update({layer + "-value": ""})
 
         return data
 
@@ -173,8 +185,24 @@ class Segment:
         """
         join = "" if len(self.raw) == 0 or self.raw[0] in [",", "."] else " "
         self.raw = segment.raw + join + self.raw
-        self.original_raw = [segment.original_raw, self.original_raw]
+
+        # preserving original raws, as a list
+        original_raw = []
+
+        if isinstance(segment.original_raw, str):
+            original_raw.append(segment.original_raw)
+        else:
+            original_raw = segment.original_raw
+
+        if isinstance(self.original_raw, str):
+            original_raw.append(self.original_raw)
+        else:
+            original_raw = original_raw + self.original_raw
+
+        self.original_raw = original_raw
+
         self.tokenize()
+
         self.annotations = self.update(self.annotations, segment.annotations)
         self.legacy = self.update(self.legacy, segment.legacy)
 
@@ -229,6 +257,9 @@ class Segment:
 
 
 class SegmentCollection:
+    """
+    Class managing a collection of segments
+    """
     # paths
     save_dir = "../sav/" if EXEC_FROM_SOURCE else "sav/"
     taxo_dir = "../tax/" if EXEC_FROM_SOURCE else "tax/"
@@ -263,9 +294,15 @@ class SegmentCollection:
     ######################
 
     def next(self):
+        """
+        Sets the index to the next segment
+        """
         self.i = self.i if self.i + 1 == len(self.collection) else self.i + 1
 
     def previous(self):
+        """
+        Sets the index to the previous segment
+        """
         self.i = 0 if self.i - 1 < 0 else self.i - 1
 
     ##################
@@ -273,6 +310,9 @@ class SegmentCollection:
     ##################
 
     def get_active(self):
+        """
+        Returns the active segment
+        """
         return self.collection[self.i]
 
     ########################
@@ -280,10 +320,16 @@ class SegmentCollection:
     ########################
 
     def remove(self, segment):
+        """
+        Removes a segment
+        """
         self.collection.remove(segment)
         self.full_collection.remove(segment)
 
     def insert_after_active(self, insert):
+        """
+        Inserts a segment after the active one
+        """
         # insert into full collection
         self.full_collection.insert(self.full_collection.index(self.get_active()) + 1, insert)
 
@@ -476,7 +522,7 @@ class SegmentCollection:
 
             # loading legacy annotations
             for key in row.keys():
-                if key not in ["segment", "raw", "time", "date", "participant", "links", "note"] and row[key] is not None and row[key].strip() != "":
+                if key not in ["segment", "raw", "time", "date", "participant", "links", "note", "id"] and row[key] is not None and row[key].strip() != "":
                     if key.endswith("-value") and row[key]:
                         # getting layer name from column
                         layer = key[:len(key) - len("-value")]
@@ -545,8 +591,16 @@ class SegmentCollection:
             w = csv.DictWriter(f, self.full_collection[0].to_csv_dict(self.labels).keys(), delimiter="\t")
             w.writeheader()
 
+            previous_raw = None
             for segment in self.full_collection:
-                w.writerow(segment.to_csv_dict(self.labels))
+                row = segment.to_csv_dict(self.labels)
+
+                if row["raw"] == previous_raw:
+                    row["raw"] = ""  # no consecutives raws, should be left empty
+
+                w.writerow(row)
+
+                previous_raw = row["raw"]
 
     ###########################
     # SAVE MANAGEMENT METHODS #
