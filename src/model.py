@@ -129,6 +129,13 @@ class Segment:
             if ls == target:
                 return True
 
+    def create_link(self, target, link_type):
+        """
+        Creates a link towards another segment
+        """
+        self.links.append((target, link_type))
+        target.linked.append((self, link_type))
+
     def remove_links(self, target):
         """
         Removes a link between two segments
@@ -294,17 +301,17 @@ class SegmentCollection:
     # NAVIGATION METHODS #
     ######################
 
-    def next(self):
+    def next(self, n=1):
         """
         Sets the index to the next segment
         """
-        self.i = self.i + 1 if self.i + 1 < len(self.collection) else self.i
+        self.i = self.i + n if self.i + n < len(self.collection) else self.i
 
-    def previous(self):
+    def previous(self, n=1):
         """
         Sets the index to the previous segment
         """
-        self.i = self.i - 1 if self.i - 1 >= 0 and self.collection else self.i  # must check if collection not empty
+        self.i = self.i - n if self.i - n >= 0 and self.collection else self.i  # must check if collection not empty
 
     ##################
     # ACCESS METHODS #
@@ -338,6 +345,12 @@ class SegmentCollection:
         else:
             return False
 
+    def get_segment_indexes(self, segment):
+        """
+        Return a tuple of segment indexes
+        """
+        return (self.collection.index(segment), self.full_collection.index(segment))
+
     ########################
     # MODIFICATION METHODS #
     ########################
@@ -346,8 +359,20 @@ class SegmentCollection:
         """
         Removes a segment
         """
+        ci = self.collection.index(segment)
         self.collection.remove(segment)
+        fi = self.full_collection.index(segment)
         self.full_collection.remove(segment)
+
+    def insert(self, i, fi, insert):
+        """
+        Inserts a segment at a specific index
+        """
+        # insert into full collection
+        self.full_collection.insert(i, insert)
+
+        # insert into active collection
+        self.collection.insert(fi, insert)
 
     def insert_after_active(self, insert):
         """
@@ -400,7 +425,7 @@ class SegmentCollection:
         self.labels[layer].remove(label)
 
         for segment in list(set(self.collection + self.full_collection)):
-            if layer in segment.annotations and segment.annotations[layer]["label"] == label:
+            if layer in segment.annotations and "label" in segment.annotations[layer] and segment.annotations[layer]["label"] == label:
                 del segment.annotations[layer]
 
     def delete_qualifier(self, layer, qualifier):
@@ -410,7 +435,7 @@ class SegmentCollection:
         self.qualifiers[layer].remove(qualifier)
 
         for segment in list(set(self.collection + self.full_collection)):
-            if layer in segment.annotations and segment.annotations[layer]["qualifier"] == qualifier:
+            if layer in segment.annotations and "qualifier" in segment.annotations[layer] and segment.annotations[layer]["qualifier"] == qualifier:
                 del segment.annotations[layer]["qualifier"]
 
     def add_layer(self, layer):

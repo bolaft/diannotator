@@ -13,6 +13,7 @@ from copy import deepcopy
 from datetime import datetime
 from tkinter import filedialog, messagebox, LEFT
 from tkinter.ttk import Button
+from undo import stack, undoable
 
 from colors import generate_random_color
 from interface import GraphicalUserInterface
@@ -194,9 +195,8 @@ class Annotator(GraphicalUserInterface):
         # default action (when return is pressed without context)
         self.default_action = lambda arg=1: self.go_down(arg)
 
-        # undo/redo history initialization
-        self.undo_history = []
-        self.redo_history = [self.sc]  # must be pre-filled with current state
+        # clear undo stack
+        stack().clear()
 
         # display update
         self.update()
@@ -310,7 +310,7 @@ class Annotator(GraphicalUserInterface):
 
         if sc:
             self.sc = sc
-            self.undo_history = []  # reinitializes undo history
+            stack().clear()  # reinitializes undo history
             self.colorize()
             self.update()
         else:
@@ -331,9 +331,7 @@ class Annotator(GraphicalUserInterface):
 
         success = self.sc.save(path=path)
 
-        if success:
-            self.update(annotation_mode=False)
-        else:
+        if not success:
             messagebox.showerror("Save File Error", "The target path is invalid.\n\nThe file could not be saved.")
 
     def import_file(self):
@@ -352,11 +350,11 @@ class Annotator(GraphicalUserInterface):
         success = self.sc.import_collection(path)
 
         if success:
-            # choose a taxonomy if none is set
-            if self.sc.taxonomy is None:
-                self.import_taxonomy()
+            # choose a taxonomy
+            self.import_taxonomy()
 
-            self.undo_history = []  # reinitializes undo history
+            stack().clear()  # reinitializes undo history
+
             self.colorize()
             self.update()
         else:
@@ -377,9 +375,7 @@ class Annotator(GraphicalUserInterface):
 
         success = self.sc.export_collection(path)
 
-        if success:
-            self.update(annotation_mode=False)
-        else:
+        if not success:
             messagebox.showerror("Export File Error", "The target path is invalid.\n\nThe file could not be created.")
 
     def close_file(self):
@@ -428,34 +424,40 @@ class Annotator(GraphicalUserInterface):
 
         success = self.sc.export_taxonomy(path)
 
-        if success:
-            self.update(annotation_mode=False)
-        else:
+        if not success:
             messagebox.showerror("Export Taxonomy Error", "The target path is invalid.\n\nThe file could not be created.")
 
     #######################
     # NAVIGATION COMMANDS #
     #######################
 
+    @undoable
     def go_down(self, n):
         """
         Moves to an ulterior segment
         """
         # cycles through the collection
-        for i in range(0, n):
-            self.sc.next()
+        self.sc.next(n=n)
 
         self.update()
 
+        yield  # undo
+
+        self.go_up(n)
+
+    @undoable
     def go_up(self, n):
         """
         Moves to a previous segment
         """
         # cycles backards through the collection
-        for i in range(0, n):
-            self.sc.previous()
+        self.sc.previous(n=n)
 
         self.update()
+
+        yield  # undo
+
+        self.go_down(n)
 
     def select_go_to(self):
         """
@@ -463,27 +465,39 @@ class Annotator(GraphicalUserInterface):
         """
         self.input("select destination index", range(1, len(self.sc.collection)), self.go_to)
 
+    @undoable
     def go_to(self, number):
         """
         Moves to a specific segment by index in collection
         """
+        i = self.sc.i
         self.sc.i = int(number) - 1
         self.update()
+
+        yield  # undo
+
+        self.go_to(i)
 
     ###############################
     # SEGMENT MANAGEMENT COMMANDS #
     ###############################
-
     def delete_segment(self):
         """
         Deletes the active segment
         """
         if messagebox.askyesno("Delete Segment", "Are you sure you want to remove the active segment from the collection?"):
-            segment = self.sc.get_active()
+            self.apply_delete_segment()
 
-            self.sc.remove(segment)
+    @undoable
+    def apply_delete_segment(self):
+        segment = self.sc.get_active()
+        i, fi = self.sc.get_segment_indexes(segment)
+        self.sc.remove(segment)
+        self.update()
 
-            self.update()
+        yield  # undo
+
+        self.sc.insert(i, fi, segment)
 
     def merge_segment(self):
         """
@@ -493,12 +507,28 @@ class Annotator(GraphicalUserInterface):
         previous = self.sc.collection[self.sc.i - 1]
 
         if segment.participant == previous.participant:  # can only merge segments from the same participant
-            segment.merge(previous)
+            self.apply_merge_segment(segment, previous)
 
-            self.sc.remove(previous)
-            self.sc.previous()
+    @undoable
+    def apply_merge_segment(self, segment, previous):
+        """
+        Applies a merge
+        """
+        i, fi = self.sc.get_segment_indexes(segment)
+        original = deepcopy(segment)
+        segment.merge(previous)
 
-            self.update()
+        self.sc.remove(previous)
+        self.sc.previous()
+
+        self.update()
+
+        yield  # undo
+
+        self.sc.remove(segment)
+        self.sc.insert(i, fi, original)
+        self.sc.insert(i, fi, previous)
+        self.sc.next(n=2)
 
     def select_split_token(self):
         """
@@ -509,11 +539,13 @@ class Annotator(GraphicalUserInterface):
         if len(segment.tokens) > 1:
             self.input("select token on which to split", segment.tokens[:-1], self.split_segment, sort=False)
 
+    @undoable
     def split_segment(self, token):
         """
         Splits the active segment in two
         """
         segment = self.sc.get_active()
+        i, fi = self.sc.get_segment_indexes(segment)
         splits = segment.split(token)
 
         for split in reversed(splits):
@@ -522,6 +554,13 @@ class Annotator(GraphicalUserInterface):
         self.sc.remove(segment)
 
         self.update()
+
+        yield  # undo
+
+        for split in splits:
+            self.sc.remove(split)
+
+        self.sc.insert(i, fi, segment)
 
     ##################################
     # ANNOTATION MANAGEMENT COMMANDS #
@@ -534,14 +573,31 @@ class Annotator(GraphicalUserInterface):
         segment = self.sc.get_active()
 
         if self.sc.layer in segment.annotations:
-            del segment.annotations[self.sc.layer]
+            self.apply_erase_annotation(segment)
 
-            self.update()
+    @undoable
+    def apply_erase_annotation(self, segment):
+        """
+        Applies an annotation erasure
+        """
+        annotation = segment.annotations[self.sc.layer]
+
+        del segment.annotations[self.sc.layer]
+
+        self.update()
+
+        yield  # undo
+
+        segment.annotations[self.sc.layer] = annotation
 
     def select_link_type(self):
         """
         Inputs a link type
         """
+        if len(self.sc.links.keys()) == 0:
+            messagebox.showwarning("No Link Available", "The current taxonomy doesn't have any link types defined.")
+            return
+
         if self.sc.i > 0:  # first segment can't be linked
             self.input("select link type", self.sc.links.keys(), self.select_link_target)
 
@@ -552,6 +608,7 @@ class Annotator(GraphicalUserInterface):
         # input target segment
         self.input("select link target", range(1, self.sc.i + 1), lambda n, link_t=link_type: self.link_segment(n, link_t))
 
+    @undoable
     def link_segment(self, number, link_type):
         """
         Links the active segment to another
@@ -564,11 +621,18 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
+        yield  # undo
+
+        segment.links.remove((self.sc.collection[number], link_type))
+        self.sc.collection[number].linked.remove((segment, link_type))
+
+    @undoable
     def unlink_segment(self):
         """
         Removes links emanating from the active segment
         """
         segment = self.sc.get_active()
+        links = segment.links.copy()
 
         while segment.links:
             ls, lt = segment.links[0]
@@ -576,17 +640,24 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
+        yield  # undo
+
+        for ls, lt in links:
+            segment.create_link(ls, lt)
+
     def input_new_note(self):
         """
         Inputs a note for the active segment
         """
         self.input("input note text", [], self.set_note, free=True)
 
+    @undoable
     def set_note(self, note):
         """
         Sets the note of the segment
         """
         segment = self.sc.get_active()
+        previous_note = segment.note
 
         if note != "":
             segment = self.sc.get_active()
@@ -595,6 +666,10 @@ class Annotator(GraphicalUserInterface):
             segment.note = None
 
         self.update()
+
+        yield  # undo
+
+        segment.note = previous_note
 
     ################################
     # TAXONOMY MANAGEMENT COMMANDS #
@@ -606,12 +681,17 @@ class Annotator(GraphicalUserInterface):
         """
         self.input("input new layer name", [], self.add_layer, free=True)
 
-    def add_layer(self, label):
+    @undoable
+    def add_layer(self, layer):
         """
         Adds a new layer
         """
-        self.sc.add_layer(self.sc.layer)
+        self.sc.add_layer(layer)
         self.update()
+
+        yield  # undo
+
+        self.sc.delete_layer(layer)
 
     def input_new_tag(self):
         """
@@ -622,6 +702,7 @@ class Annotator(GraphicalUserInterface):
         else:
             self.input("input new label name", [], self.add_label, free=True)
 
+    @undoable
     def add_label(self, label):
         """
         Adds a new label
@@ -629,6 +710,11 @@ class Annotator(GraphicalUserInterface):
         self.sc.add_label(self.sc.layer, label)
         self.update()
 
+        yield  # undo
+
+        self.sc.delete_label(self.sc.layer, label)
+
+    @undoable
     def add_qualifier(self, qualifier):
         """
         Adds a new label
@@ -636,10 +722,17 @@ class Annotator(GraphicalUserInterface):
         self.sc.add_qualifier(self.sc.layer, qualifier)
         self.update()
 
+        yield  # undo
+
+        self.sc.delete_qualifier(self.sc.layer, qualifier)
+
+    @undoable
     def remove_label(self):
         """
         Removes the active segment's label from the taxonomy
         """
+        sc = deepcopy(self.sc)
+
         segment = self.sc.get_active()
 
         if self.sc.layer in segment.annotations:
@@ -648,10 +741,17 @@ class Annotator(GraphicalUserInterface):
                 self.sc.delete_label(self.sc.layer, label)
                 self.update()
 
+        yield  # undo
+
+        self.sc = sc
+
+    @undoable
     def remove_qualifier(self):
         """
         Removes the active segment's qualifier from the taxonomy
         """
+        sc = deepcopy(self.sc)
+
         segment = self.sc.get_active()
 
         if self.sc.layer in segment.annotations:
@@ -659,6 +759,10 @@ class Annotator(GraphicalUserInterface):
             if messagebox.askyesno("Delete Qualifier", "Are you sure you want to remove the {} qualifier from the taxonomy?".format(qualifier)):
                 self.sc.delete_qualifier(self.sc.layer, qualifier)
                 self.update()
+
+        yield  # undo
+
+        self.sc = sc
 
     def set_layer_as_default(self):
         """
@@ -671,8 +775,21 @@ class Annotator(GraphicalUserInterface):
         Removes the active segment's layer from the taxonomy
         """
         if messagebox.askyesno("Delete Layer", "Are you sure you want to remove the {} layer from the taxonomy?".format(self.sc.layer)):
-            self.sc.delete_layer(self.sc.layer)
-            self.update()
+            self.apply_remove_layer(self.sc.layer)
+
+    @undoable
+    def apply_remove_layer(self, layer):
+        """
+        Applies the removal of a layer
+        """
+        sc = deepcopy(self.sc)
+
+        self.sc.delete_layer(layer)
+        self.update()
+
+        yield  # undo
+
+        self.sc = sc
 
     def input_new_tag_name(self):
         """
@@ -697,10 +814,13 @@ class Annotator(GraphicalUserInterface):
         else:
             self.input("input new qualifier name", [], lambda label: self.rename_label_or_qualifier(label, qualifier=True), free=True)
 
+    @undoable
     def rename_label_or_qualifier(self, label, qualifier=False):
         """
         Renames a label
         """
+        sc = deepcopy(self.sc)
+
         segment = self.sc.get_active()
 
         if label:
@@ -719,6 +839,10 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
+        yield  # undo
+
+        self.sc = sc
+
     #################
     # VIEW COMMANDS #
     #################
@@ -732,10 +856,13 @@ class Annotator(GraphicalUserInterface):
         else:
             self.remove_filter()
 
+    @undoable
     def remove_filter(self):
         """
         Removes a filter
         """
+        sc = deepcopy(self.sc)
+
         if self.sc.collection:
             self.sc.i = self.sc.full_collection.index(self.sc.get_active())
 
@@ -743,6 +870,10 @@ class Annotator(GraphicalUserInterface):
         self.sc.filter = False
 
         self.update()
+
+        yield  # undo
+
+        self.sc = sc
 
     def filter(self, filter_type):
         """
@@ -843,27 +974,45 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
+    @undoable
     def filter_by_layer(self, layer):
         """
         Filters the collection by layer
         """
+        sc = deepcopy(self.sc)
+
         self.sc.collection = [s for s in self.sc.full_collection if layer in s.annotations]
         self.sc.filter = "|{}|".format(layer)
         self.finish_filter()
 
+        yield  # undo
+
+        self.sc = sc
+
+    @undoable
     def filter_by_legacy_layer(self, layer):
         """
         Filters the collection by legacy layer
         """
+        sc = deepcopy(self.sc)
+
         self.sc.collection = [s for s in self.sc.full_collection if layer in s.legacy]
         self.sc.filter = "|{}|".format(layer)
         self.finish_filter()
 
+        yield  # undo
+
+        self.sc = sc
+
+    @undoable
     def filter_by_label(self, label):
         """
         Filters the collection by label
         """
+        sc = deepcopy(self.sc)
+
         segments = []
+
         for segment in self.sc.full_collection:
             for layer in segment.annotations:
                 if "label" in segment.annotations[layer] and label == segment.annotations[layer]["label"]:
@@ -873,11 +1022,19 @@ class Annotator(GraphicalUserInterface):
         self.sc.filter = "[{}]".format(label)
         self.finish_filter()
 
+        yield  # undo
+
+        self.sc = sc
+
+    @undoable
     def filter_by_legacy_label(self, label):
         """
         Filters the collection by legacy label
         """
+        sc = deepcopy(self.sc)
+
         segments = []
+
         for segment in self.sc.full_collection:
             for layer in segment.legacy:
                 if "label" in segment.legacy[layer] and label == segment.legacy[layer]["label"]:
@@ -887,11 +1044,19 @@ class Annotator(GraphicalUserInterface):
         self.sc.filter = "[{}]".format(label)
         self.finish_filter()
 
+        yield  # undo
+
+        self.sc = sc
+
+    @undoable
     def filter_by_qualifier(self, qualifier):
         """
         Filters the collection by qualifier
         """
+        sc = deepcopy(self.sc)
+
         segments = []
+
         for segment in self.sc.full_collection:
             for layer in segment.annotations:
                 if "qualifier" in segment.annotations[layer] and qualifier == segment.annotations[layer]["qualifier"]:
@@ -901,11 +1066,19 @@ class Annotator(GraphicalUserInterface):
         self.sc.filter = "[➔ {}]".format(qualifier)
         self.finish_filter()
 
+        yield  # undo
+
+        self.sc = sc
+
+    @undoable
     def filter_by_legacy_qualifier(self, qualifier):
         """
         Filters the collection by legacy qualifier
         """
+        sc = deepcopy(self.sc)
+
         segments = []
+
         for segment in self.sc.full_collection:
             for layer in segment.legacy:
                 if "qualifier" in segment.legacy[layer] and qualifier == segment.legacy[layer]["qualifier"]:
@@ -915,6 +1088,10 @@ class Annotator(GraphicalUserInterface):
         self.sc.filter = "((➔ {}))".format(qualifier)
         self.finish_filter()
 
+        yield  # undo
+
+        self.sc = sc
+
     ######################
     # UNDO/REDO COMMANDS #
     ######################
@@ -923,23 +1100,15 @@ class Annotator(GraphicalUserInterface):
         """
         Undo command
         """
-        # if there is a previous state in history to go to
-        if len(self.undo_history) > 1:
-            self.redo_history.append(self.undo_history[-1])
-            del self.undo_history[-1]
-            self.sc = self.undo_history.pop()  # change to previous state in history
-            self.update()  # update without saving state to history
+        stack().undo()
+        self.update()
 
     def redo(self):
         """
         Redo command
         """
-        # if there is a next state in history to go to
-        if len(self.redo_history) > 1:
-            self.undo_history.append(self.redo_history[-1])
-            del self.undo_history[-1]
-            self.sc = self.redo_history.pop()  # change to previous state in history
-            self.update()  # update without saving state to history
+        stack().redo()
+        self.update()
 
     ######################
     # DIMENSION COMMANDS #
@@ -949,14 +1118,25 @@ class Annotator(GraphicalUserInterface):
         """
         Inputs a layer
         """
+        if len(self.sc.labels.keys()) == 1:
+            messagebox.showwarning("No Other Layers", "The current taxonomy doesn't have any other layers.")
+            return
+
         self.input("select layer", self.sc.labels.keys(), self.set_active_layer)
 
+    @undoable
     def set_active_layer(self, layer):
         """
         Changes the active layer
         """
+        previous_layer = self.sc.layer
+
         self.sc.layer = layer
         self.update()
+
+        yield  # undo
+
+        self.sc.layer = previous_layer
 
     ###################
     # GENERAL METHODS #
@@ -975,11 +1155,14 @@ class Annotator(GraphicalUserInterface):
         else:
             self.input("select label to apply", self.sc.labels[self.sc.layer], self.annotate_label, sort=False)
 
+    @undoable
     def annotate_label(self, annotation):
         """
         Adds a label to the active segment annotations
         """
         segment = self.sc.get_active()
+
+        previous_annotations = segment.annotations.copy()
 
         # create dict if layer not in annotations
         if self.sc.layer not in segment.annotations:
@@ -992,6 +1175,14 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
+        yield  # undo
+
+        segment.annotations = previous_annotations
+
+        if self.sc.layer not in self.sc.qualifiers:
+            self.sc.previous()
+
+    @undoable
     def annotate_qualifier(self, annotation):
         """
         Adds a qualifier to the active segment annotations
@@ -1007,7 +1198,13 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
-    def update(self, t=None, ignore_history=False, annotation_mode=True):
+        yield  # undo
+
+        del segment.annotations[self.sc.layer]["qualifier"]
+
+        self.sc.previous()
+
+    def update(self, t=None, annotation_mode=True):
         """
         Updates the application state
         """
@@ -1048,12 +1245,6 @@ class Annotator(GraphicalUserInterface):
 
         if annotation_mode:
             self.annotation_mode()
-
-        # undo history management
-        if not ignore_history:
-            if len(self.undo_history) >= 100:
-                del self.undo_history[0]
-            self.undo_history.append(deepcopy(self.sc))
 
         self.sc.save()
 

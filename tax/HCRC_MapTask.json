@@ -1,0 +1,23 @@
+{
+    "name": "HCRC MapTask",
+    "default": "standard",
+    "colors": {},
+    "links": {},
+    "labels": {
+        "standard": [
+            "instruct",
+            "explain",
+            "check",
+            "align",
+            "query-yn",
+            "query-w",
+            "acknowledge",
+            "reply-y",
+            "reply-n",
+            "reply-w",
+            "clarify",
+            "ready"
+        ]
+    },
+    "qualifiers": {}
+}

@@ -14,9 +14,7 @@
     Features:
 
         ☐ view menu : show columns to display
-        ☐ one filter button, prompt for type, then input label/dimension
         ☐ command to set dimension color code
-        ☐ add layer
         ☐ make exported JSON importable
         ☐ externalize text strings
         ☐ JSON config file to tell which columns are what
@@ -28,6 +26,8 @@
         ☐ windows executable
         ☐ integrate pyrata for annotation search
         ☐ feature driven annotation
+        ✔ add layer @done (17-10-13 18:05)
+        ✔ one filter button, prompt for type, then input label/dimension @done (17-10-13 18:04)
         ✔ delete qualifier @done (17-10-13 16:18)
         ✔ separate import file from open file @done (17-10-13 15:36)
         ✔ make exported CSV importable @done (17-10-13 15:13)

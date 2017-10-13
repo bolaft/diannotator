@@ -14,6 +14,7 @@ The following modules are required to run the program:
 
 * `nltk`
 * `ttkthemes`
+* `undo`
 
 # Run From Source
 
