@@ -488,6 +488,9 @@ class SegmentCollection:
         """
         Adds a new qualifier to the tagset
         """
+        if layer not in self.qualifiers:
+            self.qualifiers[layer] = []
+
         if qualifier not in self.qualifiers[layer]:
             self.qualifiers[layer].append(qualifier)
 

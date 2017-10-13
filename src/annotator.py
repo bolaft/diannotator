@@ -125,13 +125,10 @@ class Annotator(GraphicalUserInterface):
             lambda event: self.select_layer())
         self.parent.bind(
             "<Control-r>",
-            lambda event: self.input_new_tag_name())
+            lambda event: self.input_new_element_name())
         self.parent.bind(
             "<Control-a>",
-            lambda event: self.input_new_layer())
-        self.parent.bind(
-            "<Control-t>",
-            lambda event: self.input_new_tag())
+            lambda event: self.select_element_type())
         self.parent.bind(
             "<Control-n>",
             lambda event: self.input_new_note())
@@ -306,9 +303,8 @@ class Annotator(GraphicalUserInterface):
         buttons.update({"[U]nlink Segment": self.unlink_segment})
         buttons.update({"[S]plit Segment": self.select_split_token})
         buttons.update({"[M]erge Segment": self.merge_segment})
-        buttons.update({"[A]dd Layer": self.input_new_layer})
-        buttons.update({"Add [T]ag": self.input_new_tag})
-        buttons.update({"[R]ename": self.input_new_tag_name})
+        buttons.update({"[A]dd Element": self.select_element_type})
+        buttons.update({"[R]ename Element": self.input_new_element_name})
         buttons.update({"[F]ilter": self.select_filter_type})
         buttons.update({"Add [N]ote": self.input_new_note})
 
@@ -740,16 +736,29 @@ class Annotator(GraphicalUserInterface):
     # TAXONOMY MANAGEMENT COMMANDS #
     ################################
 
-    def input_new_layer(self):
+    def select_element_type(self):
         """
-        Inputs name of a new layer
+        Selects the type of element to be added to the taxonomy
         """
-        self.input("input new layer name", [], self.add_layer, free=True)
+        self.input("select element type", ["Layer", "Label", "Qualifier"], self.add_new_element)
+
+    def add_new_element(self, element_type):
+        """
+        Adds a new element to the taxonomy
+        """
+        if element_type == "Layer":
+            self.input("input new layer name", [], self.add_layer, free=True)
+
+        if element_type == "Label":
+            self.input("input new label name", [], self.add_label, free=True)
+
+        if element_type == "Qualifier":
+            self.input("input new qualifier name", [], self.add_qualifier, free=True)
 
     @undoable
     def add_layer(self, layer):
         """
-        Adds a new layer
+        Adds a new layer to the taxonomy
         """
         self.sc.add_layer(layer)
         self.update()
@@ -758,19 +767,10 @@ class Annotator(GraphicalUserInterface):
 
         self.sc.delete_layer(layer)
 
-    def input_new_tag(self):
-        """
-        Inputs name of a new label or qualifier
-        """
-        if self.sc.layer in self.sc.qualifiers and self.sc.get_active_label() and not self.sc.get_active_qualifier():
-            self.input("input new qualifier name", [], self.add_qualifier, free=True)
-        else:
-            self.input("input new label name", [], self.add_label, free=True)
-
     @undoable
     def add_label(self, label):
         """
-        Adds a new label
+        Adds a new label to the taxonomy
         """
         self.sc.add_label(self.sc.layer, label)
         self.update()
@@ -782,7 +782,7 @@ class Annotator(GraphicalUserInterface):
     @undoable
     def add_qualifier(self, qualifier):
         """
-        Adds a new label
+        Adds a new label to the taxonomy
         """
         self.sc.add_qualifier(self.sc.layer, qualifier)
         self.update()
@@ -856,7 +856,7 @@ class Annotator(GraphicalUserInterface):
 
         self.sc = sc
 
-    def input_new_tag_name(self):
+    def input_new_element_name(self):
         """
         Inputs the new name of a label or qualifier
         """
