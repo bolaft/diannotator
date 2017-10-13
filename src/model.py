@@ -9,8 +9,10 @@ Segment modelisation classes
 """
 
 import codecs
+import collections
 import csv
 import json
+import logging
 import os
 import pickle
 import tempfile
@@ -83,8 +85,11 @@ class Segment:
         data.update({"links": ",".join(["{}-{}".format(segment.id, lt) for segment, lt in self.links])})
 
         for layer in labels.keys():
+            if layer in self.annotations:
+                label = self.annotations[layer]["label"]
+                qualifier = self.annotations[layer]["qualifier"] if qualifier in self.annotations[layer] else None
             data.update(
-                {layer: None if not layer in self.annotations else self.annotations[layer]}
+                {layer: {"label": label, "qualifier": qualifier} if qualifier else {"label": label}}
             )
 
         return data
@@ -170,8 +175,8 @@ class Segment:
         self.raw = segment.raw + join + self.raw
         self.original_raw = [segment.original_raw, self.original_raw]
         self.tokenize()
-        self.annotations.update(segment.annotations)
-        self.legacy.update(segment.legacy)
+        self.annotations = self.update(self.annotations, segment.annotations)
+        self.legacy = self.update(self.legacy, segment.legacy)
 
         if self.note is None:
             if segment.note is not None:
@@ -192,6 +197,18 @@ class Segment:
     #################
     # OTHER METHODS #
     #################
+
+    def update(self, data1, data2):
+        """
+        Updates a dictionary with nested values
+        """
+        for k, v in data2.items():
+            if isinstance(v, collections.Mapping):
+                r = self.update(data1.get(k, {}), v)
+                data1[k] = r
+            else:
+                data1[k] = data2[k]
+        return data1
 
     def copy(self, raw):
         """
@@ -289,19 +306,8 @@ class SegmentCollection:
 
         for segment in list(set(self.collection + self.full_collection)):
             if layer in segment.annotations:
-                # get annotation parts (label + qualifier)
-                annotation_parts = segment.annotations[layer].split(" ➔ ")
-                # check if has a qualifier
-                has_qualifier = len(annotation_parts) > 1
-
-                # if the segment has the label for that layer
-                if annotation_parts[0] == label:
-                    if has_qualifier:
-                        # replace label, preserve qualifier
-                        segment.annotations[layer] = segment.annotations[layer].replace(label + " ➔ ", new_label + " ➔ ")
-                    else:
-                        # replace label
-                        segment.annotations[layer] = new_label
+                # replace label
+                segment.annotations[layer]["label"] = new_label
 
     def change_qualifier(self, layer, qualifier, new_qualifier):
         """
@@ -315,16 +321,8 @@ class SegmentCollection:
 
         for segment in list(set(self.collection + self.full_collection)):
             if layer in segment.annotations:
-                # get annotation parts (label + qualifier)
-                annotation_parts = segment.annotations[layer].split(" ➔ ")
-                # if has no qualifier, continue
-                if len(annotation_parts) == 1:
-                    continue
-
-                # if the segment has the qualifier for that layer
-                if annotation_parts[1] == qualifier:
-                    # replace qualifier, preserve label
-                    segment.annotations[layer] = segment.annotations[layer].replace(" ➔ " + qualifier, " ➔ " + new_qualifier)
+                # replace qualifier
+                segment.annotations[layer]["qualifier"] = new_qualifier
 
     def delete_label(self, layer, label):
         """
@@ -333,7 +331,7 @@ class SegmentCollection:
         self.labels[layer].remove(label)
 
         for segment in list(set(self.collection + self.full_collection)):
-            if layer in segment.annotations and segment.annotations[layer] == label:
+            if layer in segment.annotations and segment.annotations[layer]["label"] == label:
                 del segment.annotations[layer]
 
     def add_label(self, layer, label):
@@ -385,7 +383,8 @@ class SegmentCollection:
             self.values = taxonomy["values"]  # label qualifier tagsets
             self.colors = taxonomy["colors"]  # layer colors
             self.links = taxonomy["links"]  # link types
-        except Exception:
+        except Exception as e:
+            logging.exception("DialogueActCollection.import_taxonomy()")
             return False
 
         return True
@@ -405,7 +404,8 @@ class SegmentCollection:
         try:
             with open(path, "w") as f:
                 json.dump(taxonomy, f, indent=4, ensure_ascii=False)
-        except Exception:
+        except Exception as e:
+            logging.exception("DialogueActCollection.export_taxonomy()")
             return False
 
         return True
@@ -437,24 +437,6 @@ class SegmentCollection:
                     previous_segment.date
                 )
                 segment.original_raw = previous_segment.original_raw
-
-                # loading legacy annotations
-                for key in row.keys():
-                    if key not in ["segment", "raw", "time", "date", "participant"] and row[key] is not None and row[key].strip() != "":
-                        if key.endswith("-value") and row[key]:
-                            layer = key[:len(key) - len("-value")]
-
-                            # if the function is already set
-                            if key in segment.legacy:
-                                segment.legacy[layer] = "{} ➔ {}".format(segment.legacy[layer], row[key])
-                            else:
-                                segment.legacy[layer] = row[key]
-                        else:
-                            # if the qualifier is already set
-                            if key in segment.legacy:
-                                segment.legacy[key] = "{} ➔ {}".format(row[key], segment.legacy[key])
-                            else:
-                                segment.legacy[key] = row[key]
 
                 tokenizer = WhitespaceTokenizer()
 
@@ -492,23 +474,26 @@ class SegmentCollection:
             # set the current segment as the previous segment (for the next iteration)
             previous_segment = segment
 
-            # makes legacy annotations for the segment
+            # loading legacy annotations
             for key in row.keys():
-                if key not in ["segment", "raw", "time", "date", "participant"] and row[key] is not None and row[key].strip() != "":
+                if key not in ["segment", "raw", "time", "date", "participant", "links", "note"] and row[key] is not None and row[key].strip() != "":
                     if key.endswith("-value") and row[key]:
+                        # getting layer name from column
                         layer = key[:len(key) - len("-value")]
 
-                        # if the function is alreay set
-                        if key in segment.legacy:
-                            segment.legacy[layer] = "{} ➔ {}".format(segment.legacy[layer], row[key])
-                        else:
-                            segment.legacy[layer] = row[key]
+                        # create layer if does not exist
+                        if layer not in segment.legacy:
+                            segment.legacy[layer] = {}
+
+                        # adding qualifier
+                        segment.legacy[layer]["qualifier"] = row[key]
                     else:
-                        # if the qualifier is already set
-                        if key in segment.legacy:
-                            segment.legacy[key] = "{} ➔ {}".format(row[key], segment.legacy[key])
-                        else:
-                            segment.legacy[key] = row[key]
+                        # create layer if does not exist
+                        if key not in segment.legacy:
+                            segment.legacy[key] = {}
+
+                        # adding label
+                        segment.legacy[key]["label"] = row[key]
 
             # set note
             segment.note = row["note"].strip() if "note" in row and row["note"].strip() else None
@@ -532,7 +517,7 @@ class SegmentCollection:
             elif path.endswith(".csv"):
                 self.export_collection_as_csv(path)
         except Exception as e:
-            print(e)
+            logging.exception("DialogueActCollection.export_collection()")
             return False
 
         return True
@@ -547,7 +532,7 @@ class SegmentCollection:
             with open(path, "w") as f:
                 json.dump(data, f, indent=4, ensure_ascii=False)
         except Exception as e:
-            print(e)
+            logging.exception("")
             return False
 
         return True
@@ -582,7 +567,7 @@ class SegmentCollection:
                 self.save_file = os.path.abspath(path)
                 self.write_save_path_to_tmp()
         except Exception:
-            print(e)
+            logging.exception("DialogueActCollection.save()")
             return False
 
         return True
@@ -598,7 +583,7 @@ class SegmentCollection:
             with open("{}last_save.tmp".format(SegmentCollection.temp_dir), "w") as tmp:
                 tmp.write(self.save_file)
         except Exception as e:
-            print(e)
+            logging.exception("DialogueActCollection.write_save_path_to_tmp()")
             return False
 
         return True
@@ -655,7 +640,7 @@ class SegmentCollection:
 
                 return sc
         except Exception as e:
-            print(e)
+            logging.exception("DialogueActCollection.load()")
             return False
 
         return False

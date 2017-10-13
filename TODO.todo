@@ -13,15 +13,14 @@
 
     Features:
 
-        ☐ remove arrow for qualifier
         ☐ separate import file from open file
         ☐ view menu : show columns to display
         ☐ one filter button, prompt for type, then input label/dimension
         ☐ command to set dimension color code
-        ☐ make links importable and fix "links" as dimension
+        ☐ make links importable
         ☐ make exported CSV importable
-        ☐ add dimension
-        ☐ change dimension to layer
+        ☐ add layer
+        ☐ delete qualifier
         ☐ externalize text strings
         ☐ JSON config file to tell which columns are what
         ☐ default taxonomies (ISO, DAMSL, MapTask...)
@@ -32,6 +31,8 @@
         ☐ windows executable
         ☐ integrate pyrata for annotation search
         ☐ feature driven annotation
+        ✔ remove arrow for qualifier @done (17-10-13 14:36)
+        ✔ change dimension to layer @done (17-10-13 13:24)
         ✔ delete dimension @done (17-10-13 12:41)
         ✔ ask dialog before exit @done (17-10-13 10:14)
         ✔ generate default colors for legacy annotations not in taxonomy @done (17-10-13 10:03)
