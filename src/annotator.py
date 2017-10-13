@@ -174,6 +174,7 @@ class Annotator(GraphicalUserInterface):
         self.taxonomy_menu.add_command(label="Remove Active Label From Taxonomy", command=self.remove_label)
         self.taxonomy_menu.add_command(label="Remove Active Qualifier From Taxonomy", command=self.remove_qualifier)
         self.taxonomy_menu.add_command(label="Remove Active Layer From Taxonomy", command=self.remove_layer)
+        self.taxonomy_menu.add_command(label="Remove Active Link Types From Taxonomy", command=self.remove_link_types)
 
         ##################
         # INITIALIZATION #
@@ -854,7 +855,10 @@ class Annotator(GraphicalUserInterface):
         """
         Removes the active segment's layer from the taxonomy
         """
-        if messagebox.askyesno("Delete Layer", "Are you sure you want to remove the {} layer from the taxonomy?".format(self.sc.layer)):
+        if messagebox.askyesno(
+            "Delete Layer",
+            "Are you sure you want to remove the {} layer from the taxonomy?".format(self.sc.layer)
+        ):
             self.apply_remove_layer(self.sc.layer)
 
     @undoable
@@ -865,6 +869,38 @@ class Annotator(GraphicalUserInterface):
         sc = deepcopy(self.sc)
 
         self.sc.delete_layer(layer)
+        self.update()
+
+        yield  # undo
+
+        self.sc = sc
+
+    def remove_link_types(self):
+        """
+        Removes the active segment's link types from the taxonomy
+        """
+        lts = []
+
+        for ls, lt in self.sc.get_active().links:
+            if lt not in lts:
+                lts.append(lt)
+
+        if messagebox.askyesno(
+            "Delete Link Type{}".format("s" if len(lts) > 1 else ""),
+            "Are you sure you want to remove the {} link type{} from the taxonomy?".format(", ".join(lts), "s" if len(lts) > 1 else "")
+        ):
+            self.apply_remove_link_types(lts)
+
+    @undoable
+    def apply_remove_link_types(self, link_types):
+        """
+        Applies the removal of a layer
+        """
+        sc = self.sc
+
+        for lt in link_types:
+            self.sc.delete_link_type(lt)
+
         self.update()
 
         yield  # undo
