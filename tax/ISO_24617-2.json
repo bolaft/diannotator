@@ -305,7 +305,7 @@
             "Unconditional"
         ]
     },
-    "qualifier": {
+    "qualifiers": {
         "Allo-Feedback": [
             "Attention",
             "Perception",

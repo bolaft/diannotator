@@ -200,7 +200,7 @@
             "ironic"
         ]
     },
-    "qualifier": {
+    "qualifiers": {
         "feedback": [
             "perception",
             "interpretation",
