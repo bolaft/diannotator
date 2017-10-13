@@ -51,7 +51,7 @@ class Annotator(GraphicalUserInterface):
             "<Control-j>",
             lambda event: self.select_go_to())
 
-        # load / save shortcuts
+        # load / save / close shortcuts
         self.parent.bind(
             "<Control-o>",
             lambda event: self.open_file())
@@ -61,6 +61,9 @@ class Annotator(GraphicalUserInterface):
         self.parent.bind(
             "<Control-E>",
             lambda event: self.export_file())
+        self.parent.bind(
+            "<Control-w>",
+            lambda event: self.close_file())
         self.parent.bind(
             "<Control-T>",
             lambda event: self.export_taxonomy())
@@ -125,6 +128,7 @@ class Annotator(GraphicalUserInterface):
         self.file_menu.add_command(label="Open File...", accelerator="Ctrl+O", command=self.open_file)
         self.file_menu.add_command(label="Save As...", accelerator="Ctrl+Shift+S", command=self.save_file)
         self.file_menu.add_command(label="Export As...", accelerator="Ctrl+Shift+E", command=self.export_file)
+        self.file_menu.add_command(label="Close File", accelerator="Ctrl+W", command=self.close_file)
         self.file_menu.add_separator()
         self.file_menu.add_command(label="Quit", accelerator="Esc", command=self.parent.quit)
 
@@ -160,9 +164,7 @@ class Annotator(GraphicalUserInterface):
             self.sc = SegmentCollection()  # load command
 
         # colorization
-        self.generate_dimension_colors()
-        self.generate_link_colors()
-        self.generate_participant_colors()
+        self.colorize()
 
         # make a backup of the collection
         self.sc.save(
@@ -186,6 +188,14 @@ class Annotator(GraphicalUserInterface):
     #################
     # COLOR METHODS #
     #################
+
+    def colorize(self):
+        """
+        Initializes colors
+        """
+        self.generate_dimension_colors()
+        self.generate_link_colors()
+        self.generate_participant_colors()
 
     def generate_participant_colors(self):
         """
@@ -289,7 +299,8 @@ class Annotator(GraphicalUserInterface):
             if self.sc.taxonomy is None:
                 self.import_taxonomy()
 
-            self.update(annotation_mode=False)
+            self.colorize()
+            self.update()
         else:
             messagebox.showerror("Open File Error", "The file could not be loaded.\n\nIt may be corrupted or is in the wrong format.")
 
@@ -333,6 +344,16 @@ class Annotator(GraphicalUserInterface):
         else:
             messagebox.showerror("Export File Error", "The target path is invalid.\n\nThe file could not be created.")
 
+    def close_file(self):
+        """
+        Closes the current file
+        """
+        # deletes the "previous save" file
+        SegmentCollection.delete_save_path_on_tmp()
+        self.clear_screen()
+        self.sc = SegmentCollection()  # load command
+        self.update()
+
     def import_taxonomy(self):
         """
         Loads a .json taxonomy file through dialogue
@@ -349,8 +370,7 @@ class Annotator(GraphicalUserInterface):
         success = self.sc.import_taxonomy(path)
 
         if success:
-            self.generate_dimension_colors()
-            self.generate_link_colors()
+            self.colorize()
             self.update()
         else:
             messagebox.showerror("Import Taxonomy Error", "The file could not be loaded.\n\nIt may be corrupted or is in the wrong format.")
@@ -736,6 +756,8 @@ class Annotator(GraphicalUserInterface):
         Resumes the annotation mode
         """
         if self.sc.dimension is None:
+            self.command_list = []
+            self.update_commands()
             return
 
         segment = self.sc.get_active()
@@ -771,15 +793,15 @@ class Annotator(GraphicalUserInterface):
         """
         Updates the application state
         """
-        if self.sc.dimension is None:
-            return
-
         self.clear_screen()
 
-        n_previous = self.sc.i if self.sc.i < 50 else 50
+        if self.sc.dimension is not None:
+            n_previous = self.sc.i if self.sc.i < 50 else 50
 
-        for j in range(self.sc.i - n_previous, self.sc.i):
-            self.output_segment(j)
+            for j in range(self.sc.i - n_previous, self.sc.i):
+                self.output_segment(j)
+
+            self.output_segment(self.sc.i, active=True)
 
         # dimension in status
         status_l1 = "Dimension: {}".format(self.sc.dimension.title()) if self.sc.dimension else "No Dimension Set"
@@ -800,8 +822,6 @@ class Annotator(GraphicalUserInterface):
         status = "{}\n{}".format(status_l1, status_l2)
 
         self.update_status_message(status)
-
-        self.output_segment(self.sc.i, active=True)
 
         if annotation_mode:
             self.annotation_mode()

@@ -571,6 +571,9 @@ class SegmentCollection:
         """
         Serializes the SegmentCollection and writes it to the filesystem
         """
+        if self.dimension is None:
+            return False
+
         try:
             with open(path if path is not None else self.save_file, "wb") as f:
                 pickle.dump(self, f, pickle.HIGHEST_PROTOCOL)
@@ -617,6 +620,21 @@ class SegmentCollection:
         with open(path, "r") as tmp:
             tmp.seek(0)
             return tmp.read().strip()
+
+    @staticmethod
+    def delete_save_path_on_tmp():
+        """
+        Deletes the previous save file from /tmp
+        """
+        if not os.path.exists(SegmentCollection.temp_dir):
+            return
+
+        path = "{}last_save.tmp".format(SegmentCollection.temp_dir)
+
+        if not os.path.exists(path):
+            return
+
+        os.remove(path)
 
     @staticmethod
     def load(path):
