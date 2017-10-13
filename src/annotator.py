@@ -200,6 +200,17 @@ class Annotator(GraphicalUserInterface):
         """
         Adds a color tag per dimension to the text widget
         """
+        legacy_dimensions = []
+
+        for segment in self.sc.full_collection:
+            for dimension in segment.legacy.keys():
+                if dimension not in legacy_dimensions:
+                    legacy_dimensions.append(dimension)
+
+        for dimension in list(self.sc.labels.keys()) + legacy_dimensions:
+            if dimension not in self.sc.colors.keys():
+                self.sc.colors[dimension] = generate_random_color()
+
         for dimension, color in self.sc.colors.items():
             self.add_tag(
                 "dimension-{}".format(dimension),

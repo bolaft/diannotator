@@ -15,16 +15,18 @@
 
         ☐ export/import true DiAML
         ☐ default taxonomies (ISO, DAMSL, MapTask...)
-        ☐ generate default colors for legacy annotations not in taxonomy 
-        ☐ add a LICENSE file
         ☐ feature driven annotation
         ☐ remove arrow for qualifier
         ☐ unit testing
         ☐ ask dialog before exit
         ☐ smaller binary file
+        ☐ add/delete dimension
+        ☐ change dimension to layer
         ☐ use the mouse (eg for links)
         ☐ integrate pyrata for annotation search
         ☐ windows executable
+        ✔ generate default colors for legacy annotations not in taxonomy @done (17-10-13 10:03)
+        ✔ add a LICENSE file @done (17-10-13 09:39)
         ✔ make error messages when file formats are wrong @done (17-10-12 21:37)
         ✔ make status bar more sexy @done (17-10-12 20:37)
         ✔ update qualifiers @done (17-10-12 17:39)

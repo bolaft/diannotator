@@ -227,7 +227,7 @@ class SegmentCollection:
 
         self.full_collection = []  # full collection of segments
         self.collection = self.full_collection.copy()  # current collection used
-        self.annotations = {}  # list of possible annotations
+        self.annotations = {}  # list of annotations
 
         self.taxonomy = None  # taxonomy name
 

@@ -108,7 +108,7 @@ A dictionary whose keys represent the different **link types** and whose values 
 
 #### `colors`
 
-A dictionary, whose keys represent dimension names and whose elements are **hexadecimal color codes** used for displaying labels. The `colors` field is mandatory but the dictionary may be left empty, in which case labels will be displayed in white.
+A dictionary, whose keys represent dimension names and whose elements are **hexadecimal color codes** used for displaying labels. The `colors` field is mandatory but the dictionary may be left empty, in which case labels will be displayed in a randomly generated color.
 
 # Usage
 
