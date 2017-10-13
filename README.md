@@ -184,42 +184,42 @@ Opens the "export as..." dialogue.
 
 ### Special Commands:
 
-#### Add : `Control A`
-
-The next entry creates a new label added to the active layer, or creates a new qualifier for the active layer, if applicable.
-
 #### Change Layer : `Control C`
 
 Changes the active layer.
 
-#### Filter : `Control F`
+#### Erase Annotation : `Control E`
 
-Displayed segments are filtered to only display those bearing the same annotation as the active segment for the active layer. If the segment doesn't have a label on the active layer, the filter is created to only display segments bearing the same legacy annotation for the active layer. Using this command again will remove the filter and display all segments.
+Removes label and qualifier from the active segment.
 
-#### Link : `Control L`
+#### Link Segment : `Control L`
 
 If the active segment is not linked to any other segment, links it to a specific segment, selected by index after selecting the link type. If the segment is already linked to another segment of the selected link type, the link is removed.
 
-#### Merge : `Control M`
+### Unlink Segment : `Control U`
 
-Merges the active segment to the previous ones. Links, notes, annotations and legacy annotations are preserved.  
+Removes all links emanating from the active segment.
 
-#### Note : `Control N`
-
-The next entry creates a note and attaches it to the active segment. If the active segment already has a note attached, the note is deleted.
-
-#### Remove : `Control R`
-
-Deletes the active segment's annotation for the active layer.
-
-#### Split : `Control S`
+#### Split Segment : `Control S`
 
 Splits the active segment in two, on the chosen token. Links, notes, annotations and legacy annotations are preserved.
 
-#### Update : `Control U`
+#### Merge Segment : `Control M`
 
-The next entry updates the name of the label used for the active segment, on the active layer. All segments annotated with this label will be affected.
+Merges the active segment to the previous ones. Links, notes, annotations and legacy annotations are preserved.
 
-#### Undo : `Control Z`
+#### Add Tag : `Control A`
 
-Cancels the last action performed. Up to 50 actions can be undone this way.
+The next entry creates a new label added to the active layer, or creates a new qualifier for the active layer, if applicable.
+
+#### Rename Tag : `Control R`
+
+Updates the name of the label or qualifier used for the active segment, on the active layer. All segments annotated with this label or qualifier will be affected.
+ 
+#### Filter By Label : `Control F`
+
+Displayed segments are filtered to only display those bearing the same annotation as the active segment for the active layer. If the segment doesn't have a label on the active layer, the filter is created to only display segments bearing the same legacy annotation for the active layer. Using this command again will remove the filter and display all segments.
+
+#### Add Note : `Control N`
+
+The next entry creates a note and attaches it to the active segment. If the active segment already has a note attached, the note is deleted.
