@@ -821,9 +821,9 @@ class SegmentCollection:
 
         path = "{}last_save.tmp".format(SegmentCollection.temp_dir)
 
-        # create file if doesn't exist
+        # check if file doesn't exist
         if not os.path.exists(path):
-            open(path, "a").close()
+            return False
 
         with open(path, "r") as tmp:
             tmp.seek(0)

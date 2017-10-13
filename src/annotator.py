@@ -181,9 +181,12 @@ class Annotator(GraphicalUserInterface):
         ##################
 
         # attempt to load previous save
-        self.sc = SegmentCollection.load(SegmentCollection.read_save_path_from_tmp())
+        previous_save = SegmentCollection.read_save_path_from_tmp()
 
-        if not self.sc:
+        if previous_save:
+            self.sc = SegmentCollection.load(previous_save)
+
+        if not hasattr(self, "sc"):
             # initializing the segment collection
             self.sc = SegmentCollection()  # load command
 
