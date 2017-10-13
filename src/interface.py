@@ -18,6 +18,7 @@ from styles import Styles
 BLACK = "#000000"
 WHITE = "#ffffff"
 GRAY = "#0f0e0e"
+MEDIUM_GRAY = "#353131"
 DARK_GRAY = "#171717"
 
 
@@ -76,6 +77,9 @@ class GraphicalUserInterface(Frame, Styles):
             self.special_button_font_size,
             self.special_button_font_weight
         ))
+
+        # make buttons change foreground when hovered
+        style.map('TButton', foreground=[("active", MEDIUM_GRAY)])
 
         # root window initialization
         Frame.__init__(self, self.parent)
