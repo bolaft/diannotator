@@ -431,8 +431,9 @@ class SegmentCollection:
 
         for segment in list(set(self.collection + self.full_collection)):
             if layer in segment.annotations:
-                # replace label
-                segment.annotations[layer]["label"] = new_label
+                if segment.annotations[layer]["label"] == label:
+                    # replace label
+                    segment.annotations[layer]["label"] = new_label
 
     def change_qualifier(self, layer, qualifier, new_qualifier):
         """
@@ -446,8 +447,9 @@ class SegmentCollection:
 
         for segment in list(set(self.collection + self.full_collection)):
             if layer in segment.annotations:
-                # replace qualifier
-                segment.annotations[layer]["qualifier"] = new_qualifier
+                if segment.annotations[layer]["qualifier"] == qualifier:
+                    # replace qualifier
+                    segment.annotations[layer]["qualifier"] = new_qualifier
 
     def delete_label(self, layer, label):
         """
