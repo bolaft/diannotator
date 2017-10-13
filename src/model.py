@@ -74,17 +74,17 @@ class Segment:
         data = OrderedDict()
 
         data.update({"id": self.id})
-        data.update({"raw": self.raw})
-        data.update({"original_raw": self.original_raw if isinstance(self.original_raw, str) else "<<MERGED<<".join(self.original_raw)})
+        data.update({"segment": self.raw})
+        data.update({"raw": self.original_raw if isinstance(self.original_raw, str) else "<<MERGED<<".join(self.original_raw)})
         data.update({"participant": self.participant})
         data.update({"date": self.date})
         data.update({"time": self.time})
-        data.update({"note": self.note})
+        data.update({"note": self.note if self.note is not None else ""})
         data.update({"links": ",".join(["{}-{}".format(segment.id, lt) for segment, lt in self.links])})
 
-        for dimension in labels.keys():
+        for layer in labels.keys():
             data.update(
-                {dimension: None if not dimension in self.annotations else self.annotations[dimension]}
+                {layer: None if not layer in self.annotations else self.annotations[layer]}
             )
 
         return data
@@ -233,12 +233,12 @@ class SegmentCollection:
 
         self.labels = {}  # label tagsets
         self.values = {}  # label qualifier tagsets
-        self.colors = {}  # dimension colors
+        self.colors = {}  # layer colors
         self.links = {}  # link types
 
         self.i = 0  # collection index
-        self.dimension = None  # active dimension
-        self.default_dimension = None  # default dimension
+        self.layer = None  # active layer
+        self.default_layer = None  # default layer
         self.filter = False  # active filter
 
     ######################
@@ -277,95 +277,95 @@ class SegmentCollection:
     # TAXONOMY MODIFICATION METHODS #
     #################################
 
-    def change_label(self, dimension, label, new_label):
+    def change_label(self, layer, label, new_label):
         """
         Renames a label
         """
-        index = self.labels[dimension].index(label)
-        self.labels[dimension].remove(label)
+        index = self.labels[layer].index(label)
+        self.labels[layer].remove(label)
 
-        if new_label not in self.labels[dimension]:
-            self.labels[dimension].insert(index, new_label)
+        if new_label not in self.labels[layer]:
+            self.labels[layer].insert(index, new_label)
 
         for segment in list(set(self.collection + self.full_collection)):
-            if dimension in segment.annotations:
+            if layer in segment.annotations:
                 # get annotation parts (label + qualifier)
-                annotation_parts = segment.annotations[dimension].split(" ➔ ")
+                annotation_parts = segment.annotations[layer].split(" ➔ ")
                 # check if has a qualifier
                 has_qualifier = len(annotation_parts) > 1
 
-                # if the segment has the label for that dimension
+                # if the segment has the label for that layer
                 if annotation_parts[0] == label:
                     if has_qualifier:
                         # replace label, preserve qualifier
-                        segment.annotations[dimension] = segment.annotations[dimension].replace(label + " ➔ ", new_label + " ➔ ")
+                        segment.annotations[layer] = segment.annotations[layer].replace(label + " ➔ ", new_label + " ➔ ")
                     else:
                         # replace label
-                        segment.annotations[dimension] = new_label
+                        segment.annotations[layer] = new_label
 
-    def change_qualifier(self, dimension, qualifier, new_qualifier):
+    def change_qualifier(self, layer, qualifier, new_qualifier):
         """
         Renames a qualifier
         """
-        index = self.values[dimension].index(qualifier)
-        self.values[dimension].remove(qualifier)
+        index = self.values[layer].index(qualifier)
+        self.values[layer].remove(qualifier)
 
-        if new_qualifier not in self.values[dimension]:
-            self.values[dimension].insert(index, new_qualifier)
+        if new_qualifier not in self.values[layer]:
+            self.values[layer].insert(index, new_qualifier)
 
         for segment in list(set(self.collection + self.full_collection)):
-            if dimension in segment.annotations:
+            if layer in segment.annotations:
                 # get annotation parts (label + qualifier)
-                annotation_parts = segment.annotations[dimension].split(" ➔ ")
+                annotation_parts = segment.annotations[layer].split(" ➔ ")
                 # if has no qualifier, continue
                 if len(annotation_parts) == 1:
                     continue
 
-                # if the segment has the qualifier for that dimension
+                # if the segment has the qualifier for that layer
                 if annotation_parts[1] == qualifier:
                     # replace qualifier, preserve label
-                    segment.annotations[dimension] = segment.annotations[dimension].replace(" ➔ " + qualifier, " ➔ " + new_qualifier)
+                    segment.annotations[layer] = segment.annotations[layer].replace(" ➔ " + qualifier, " ➔ " + new_qualifier)
 
-    def delete_label(self, dimension, label):
+    def delete_label(self, layer, label):
         """
         Deletes a label
         """
-        self.labels[dimension].remove(label)
+        self.labels[layer].remove(label)
 
         for segment in list(set(self.collection + self.full_collection)):
-            if dimension in segment.annotations and segment.annotations[dimension] == label:
-                del segment.annotations[dimension]
+            if layer in segment.annotations and segment.annotations[layer] == label:
+                del segment.annotations[layer]
 
-    def add_label(self, dimension, label):
+    def add_label(self, layer, label):
         """
         Adds a new label to the tagset
         """
-        self.labels[dimension].append(label)
+        self.labels[layer].append(label)
 
-    def add_qualifier(self, dimension, quaifier):
+    def add_qualifier(self, layer, quaifier):
         """
         Adds a new qualifier to the tagset
         """
-        self.values[dimension].append(quaifier)
+        self.values[layer].append(quaifier)
 
-    def delete_dimension(self, dimension):
+    def delete_layer(self, layer):
         """
-        Deletes a dimension
+        Deletes a layer
         """
-        # remove the dimension from the taxonomy
-        del self.labels[dimension]
+        # remove the layer from the taxonomy
+        del self.labels[layer]
 
-        # remove the dimension from all annotations
+        # remove the layer from all annotations
         for segment in list(set(self.collection + self.full_collection)):
-            if dimension in segment.annotations:
-                del segment.annotations[dimension]
+            if layer in segment.annotations:
+                del segment.annotations[layer]
 
-        # changes the default dimension if needed
-        if dimension == self.default_dimension:
-            self.default_dimension = list(self.labels.keys())[0]
+        # changes the default layer if needed
+        if layer == self.default_layer:
+            self.default_layer = list(self.labels.keys())[0]
 
-        # changes the active dimension
-        self.dimension = self.default_dimension
+        # changes the active layer
+        self.layer = self.default_layer
 
     ##################################
     # TAXONOMY IMPORT/EXPORT METHODS #
@@ -379,11 +379,11 @@ class SegmentCollection:
             taxonomy = json.loads(codecs.open(path, encoding="utf-8").read())
 
             self.taxonomy = taxonomy["name"]
-            self.dimension = self.default_dimension = taxonomy["default"]
+            self.layer = self.default_layer = taxonomy["default"]
 
             self.labels = taxonomy["labels"]  # label tagsets
             self.values = taxonomy["values"]  # label qualifier tagsets
-            self.colors = taxonomy["colors"]  # dimension colors
+            self.colors = taxonomy["colors"]  # layer colors
             self.links = taxonomy["links"]  # link types
         except Exception:
             return False
@@ -396,7 +396,7 @@ class SegmentCollection:
         """
         taxonomy = {
             "name": self.taxonomy,
-            "default": self.default_dimension,
+            "default": self.default_layer,
             "colors": self.colors,
             "labels": self.labels,
             "values": self.values
@@ -442,13 +442,13 @@ class SegmentCollection:
                 for key in row.keys():
                     if key not in ["segment", "raw", "time", "date", "participant"] and row[key] is not None and row[key].strip() != "":
                         if key.endswith("-value") and row[key]:
-                            dimension = key[:len(key) - len("-value")]
+                            layer = key[:len(key) - len("-value")]
 
                             # if the function is already set
                             if key in segment.legacy:
-                                segment.legacy[dimension] = "{} ➔ {}".format(segment.legacy[dimension], row[key])
+                                segment.legacy[layer] = "{} ➔ {}".format(segment.legacy[layer], row[key])
                             else:
-                                segment.legacy[dimension] = row[key]
+                                segment.legacy[layer] = row[key]
                         else:
                             # if the qualifier is already set
                             if key in segment.legacy:
@@ -496,13 +496,13 @@ class SegmentCollection:
             for key in row.keys():
                 if key not in ["segment", "raw", "time", "date", "participant"] and row[key] is not None and row[key].strip() != "":
                     if key.endswith("-value") and row[key]:
-                        dimension = key[:len(key) - len("-value")]
+                        layer = key[:len(key) - len("-value")]
 
                         # if the function is alreay set
                         if key in segment.legacy:
-                            segment.legacy[dimension] = "{} ➔ {}".format(segment.legacy[dimension], row[key])
+                            segment.legacy[layer] = "{} ➔ {}".format(segment.legacy[layer], row[key])
                         else:
-                            segment.legacy[dimension] = row[key]
+                            segment.legacy[layer] = row[key]
                     else:
                         # if the qualifier is already set
                         if key in segment.legacy:
@@ -511,7 +511,7 @@ class SegmentCollection:
                             segment.legacy[key] = row[key]
 
             # set note
-            segment.note = row["note"].strip() if "note" in row else None
+            segment.note = row["note"].strip() if "note" in row and row["note"].strip() else None
 
             # adds the segment to the full collection
             self.full_collection.append(segment)
@@ -571,7 +571,7 @@ class SegmentCollection:
         """
         Serializes the SegmentCollection and writes it to the filesystem
         """
-        if self.dimension is None:
+        if self.layer is None:
             return False
 
         try:

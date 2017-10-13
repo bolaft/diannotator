@@ -1,6 +1,6 @@
 # Overview
 
-DiAnnotator is a dialogue annotation tool. It is meant to reduce the need to use the mouse to annotate dialogues and to improve keyboard-only annotation speed and reliability. DiAnnotator can be used to segment utterances, to apply dialogue act or sentiment-analysis labels, to link dialogue segments and to modify taxonomies. DiAnnotator is fully multi-dimensional, and therefore supports annotation schemes such as DAMSL and ISO 24617-2.
+DiAnnotator is a dialogue annotation tool. It is meant to reduce the need to use the mouse to annotate dialogues and to improve keyboard-only annotation speed and reliability. DiAnnotator can be used to segment utterances, to apply dialogue act or sentiment-analysis labels, to link dialogue segments and to modify taxonomies. DiAnnotator is fully multi-layeral, and therefore supports annotation schemes such as DAMSL and ISO 24617-2.
 
 # Requirements
 
@@ -61,13 +61,13 @@ Contains the **name** or **ID** of the speaker.
 
 Contains a note or comment pertaining to the segment.
 
-##### `<dimension name>` (optional)
+##### `<layer name>` (optional)
 
-Columns bearing a dimension name are used to load **legacy annotations**, which can serve as useful hints when producing new annotations. These column's names must follow the naming convention of the taxonomy's JSON file.
+Columns bearing a layer name are used to load **legacy annotations**, which can serve as useful hints when producing new annotations. These column's names must follow the naming convention of the taxonomy's JSON file.
 
-##### `<dimension name>-value` (optional)
+##### `<layer name>-value` (optional)
 
-Columns bearing a dimension name and suffixed by `-value` are used to load **legacy qualifiers** for that dimension. For example, if `emotion` is a dimension, `express` may be a label, and `happiness` might be the value present in the `emotion-value` column. These column's names must follow the naming convention of the taxonomy's JSON file.
+Columns bearing a layer name and suffixed by `-value` are used to load **legacy qualifiers** for that layer. For example, if `emotion` is a layer, `express` may be a label, and `happiness` might be the value present in the `emotion-value` column. These column's names must follow the naming convention of the taxonomy's JSON file.
 
 #### Example:
 
@@ -92,15 +92,15 @@ The URL to the taxonomy's **website** or **documentation**.
 
 #### `default`
 
-The **default dimension** of the taxonomy, the first one to be active when first loading a data file.
+The **default layer** of the taxonomy, the first one to be active when first loading a data file.
 
 #### `labels`
 
-A dictionary of lists, whose keys represent dimension names and the lists' elements represent the dimensions' **labels' tagsets**.
+A dictionary of lists, whose keys represent layer names and the lists' elements represent the layers' **labels' tagsets**.
 
 #### `values`
 
-A dictionary of lists, whose keys represent dimension names and the lists' elements represent the dimensions' **qualifiers' tagsets**.
+A dictionary of lists, whose keys represent layer names and the lists' elements represent the layers' **qualifiers' tagsets**.
 
 #### `links`
 
@@ -108,13 +108,13 @@ A dictionary whose keys represent the different **link types** and whose values 
 
 #### `colors`
 
-A dictionary, whose keys represent dimension names and whose elements are **hexadecimal color codes** used for displaying labels. The `colors` field is mandatory but the dictionary may be left empty, in which case labels will be displayed in a randomly generated color.
+A dictionary, whose keys represent layer names and whose elements are **hexadecimal color codes** used for displaying labels. The `colors` field is mandatory but the dictionary may be left empty, in which case labels will be displayed in a randomly generated color.
 
 # Usage
 
 ### Annotation:
 
-Black buttons on the bottom of the screen show the possible labels for the active dimension. The active segment is the last one displayed, appearing in bold. To apply a label to a segment, click on the appropriate button or type a sufficiently discriminating part of the label (for example, `req dir` for `request directives`) then press Enter.
+Black buttons on the bottom of the screen show the possible labels for the active layer. The active segment is the last one displayed, appearing in bold. To apply a label to a segment, click on the appropriate button or type a sufficiently discriminating part of the label (for example, `req dir` for `request directives`) then press Enter.
 
 ### Keyboard Shortcuts:
 
@@ -186,15 +186,15 @@ Opens the "export as..." dialogue.
 
 #### Add : `Control A`
 
-The next entry creates a new label added to the active dimension, or creates a new qualifier for the active dimension, if applicable.
+The next entry creates a new label added to the active layer, or creates a new qualifier for the active layer, if applicable.
 
-#### Dimension : `Control D`
+#### Change Layer : `Control C`
 
-Changes the active dimension.
+Changes the active layer.
 
 #### Filter : `Control F`
 
-Displayed segments are filtered to only display those bearing the same annotation as the active segment for the active dimension. If the segment doesn't have a label on the active dimension, the filter is created to only display segments bearing the same legacy annotation for the active dimension. Using this command again will remove the filter and display all segments.
+Displayed segments are filtered to only display those bearing the same annotation as the active segment for the active layer. If the segment doesn't have a label on the active layer, the filter is created to only display segments bearing the same legacy annotation for the active layer. Using this command again will remove the filter and display all segments.
 
 #### Link : `Control L`
 
@@ -210,7 +210,7 @@ The next entry creates a note and attaches it to the active segment. If the acti
 
 #### Remove : `Control R`
 
-Deletes the active segment's annotation for the active dimension.
+Deletes the active segment's annotation for the active layer.
 
 #### Split : `Control S`
 
@@ -218,7 +218,7 @@ Splits the active segment in two, on the chosen token. Links, notes, annotations
 
 #### Update : `Control U`
 
-The next entry updates the name of the label used for the active segment, on the active dimension. All segments annotated with this label will be affected.
+The next entry updates the name of the label used for the active segment, on the active layer. All segments annotated with this label will be affected.
 
 #### Undo : `Control Z`
 

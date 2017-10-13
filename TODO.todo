@@ -1,6 +1,6 @@
     Bugs:
 
-        ☐ when quitting file dialogue, warning shows up
+        ✔ when quitting file dialogue, warning shows up @done (17-10-13 12:42)
         ✔ bug with undo when less than max backups @done (17-10-12 16:51)
         ✔ date/time not loaded on all segments @done (17-10-11 17:30)
         ✔ bug export CSV, no lines @done (17-10-11 17:25)
@@ -13,18 +13,26 @@
 
     Features:
 
-        ☐ export/import true DiAML
-        ☐ default taxonomies (ISO, DAMSL, MapTask...)
-        ☐ feature driven annotation
         ☐ remove arrow for qualifier
+        ☐ separate import file from open file
+        ☐ view menu : show columns to display
+        ☐ one filter button, prompt for type, then input label/dimension
+        ☐ command to set dimension color code
+        ☐ make links importable and fix "links" as dimension
+        ☐ make exported CSV importable
+        ☐ add dimension
+        ☐ change dimension to layer
+        ☐ externalize text strings
+        ☐ JSON config file to tell which columns are what
+        ☐ default taxonomies (ISO, DAMSL, MapTask...)
+        ☐ use the mouse (eg for links)
+        ☐ export/import true DiAML
         ☐ unit testing
         ☐ smaller binary file
-        ☐ add/delete dimension
-        ☐ change dimension to layer
-        ☐ use the mouse (eg for links)
-        ☐ integrate pyrata for annotation search
         ☐ windows executable
-        ☐ externalize text strings
+        ☐ integrate pyrata for annotation search
+        ☐ feature driven annotation
+        ✔ delete dimension @done (17-10-13 12:41)
         ✔ ask dialog before exit @done (17-10-13 10:14)
         ✔ generate default colors for legacy annotations not in taxonomy @done (17-10-13 10:03)
         ✔ add a LICENSE file @done (17-10-13 09:39)
