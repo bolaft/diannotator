@@ -428,6 +428,25 @@ class SegmentCollection:
         # insert into active collection
         self.collection.insert(self.i + 1, insert)
 
+    def legacy_to_annotations(self):
+        """
+        Creates a normal annotation for each legacy annotations
+        """
+        for segment in self.full_collection:
+            for layer in segment.legacy:
+                if layer in self.labels.keys():
+                    # setting labels
+                    if segment.has(layer, legacy=True):
+                        segment.set(layer, segment.get(layer, legacy=True))
+                    # setting qualifiers
+                    if segment.has(layer, legacy=True, qualifier=True):
+                        segment.set(layer, segment.get(layer, legacy=True, qualifier=True), qualifier=True)
+
+            # setting legacy links
+            for ls, lt in segment.legacy_links:
+                if lt in self.links:
+                    segment.create_link(ls, lt)
+
     #################################
     # TAXONOMY MODIFICATION METHODS #
     #################################
@@ -712,6 +731,7 @@ class SegmentCollection:
             # makes sure all ids are unique
             if segment.id in segments_by_id:
                 raise Exception
+
             segments_by_id[segment.id] = segment
 
             # adds the segment to the full collection

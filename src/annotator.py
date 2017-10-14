@@ -428,6 +428,13 @@ class Annotator(GraphicalUserInterface):
             # choose a taxonomy
             self.import_taxonomy()
 
+            # how to use legacy annotations
+            if messagebox.askyesno(
+                "Legacy Annotations",
+                "Do you want to import legacy annotations as normal annotations?"
+            ):
+                self.sc.legacy_to_annotations()
+
             stack().clear()  # reinitializes undo history
 
             self.colorize()
