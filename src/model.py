@@ -714,7 +714,7 @@ class SegmentCollection:
         for dic in data:
             # create segment
             segment = Segment(
-                dic["raw"],
+                dic["segment"],
                 dic["participant"],
                 parser.parse(dic["datetime"])
             )
