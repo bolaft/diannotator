@@ -155,6 +155,11 @@ class Annotator(GraphicalUserInterface):
 
         # view menu
         self.view_menu.add_separator()
+        self.view_menu.add_command(label="Show/Hide Participant Column", command=self.toggle_participant_column)
+        self.view_menu.add_command(label="Show/Hide Date Column", command=self.toggle_date_column)
+        self.view_menu.add_command(label="Show/Hide Time Column", command=self.toggle_time_column)
+        self.view_menu.add_command(label="Show/Hide ID Column", command=self.toggle_id_column)
+        self.view_menu.add_separator()
         self.view_menu.add_command(label="Show Legacy Annotations", accelerator="F2", command=self.show_legacy_annotations)
         self.view_menu.add_command(label="Hide Legacy Annotations", accelerator="F3", command=self.hide_legacy_annotations)
         self.view_menu.add_separator()
@@ -214,12 +219,46 @@ class Annotator(GraphicalUserInterface):
         # show legacy annotations
         self.show_legacy = True
 
+        # show columns
+        self.show_participant = True
+        self.show_date = False
+        self.show_time = True
+        self.show_id = False
+
         # display update
         self.update()
 
     ################
     # VIEW METHODS #
     ################
+
+    def toggle_participant_column(self):
+        """
+        Toggles participant column display
+        """
+        self.show_participant = not self.show_participant
+        self.update()
+
+    def toggle_date_column(self):
+        """
+        Toggles date column display
+        """
+        self.show_date = not self.show_date
+        self.update()
+
+    def toggle_time_column(self):
+        """
+        Toggles time column display
+        """
+        self.show_time = not self.show_time
+        self.update()
+
+    def toggle_id_column(self):
+        """
+        Toggles id column display
+        """
+        self.show_id = not self.show_id
+        self.update()
 
     def show_legacy_annotations(self):
         """
@@ -1475,8 +1514,20 @@ class Annotator(GraphicalUserInterface):
         if active:
             style.append(Styles.STRONG)
 
-        # segment base text
-        text = "{}\t{}\t{}  \t\t{}".format(i + 1, segment.datetime.strftime("%H:%M"), segment.participant, segment.raw)
+        # columns to be displayed
+        columns = [str(i + 1)]  # the index is the first column
+
+        if self.show_id:
+            columns.append(str(segment.id))
+        if self.show_date:
+            columns.append(segment.datetime.strftime("%d-%m-%y"))
+        if self.show_time:
+            columns.append(segment.datetime.strftime("%H:%M"))
+        if self.show_participant:
+            columns.append(segment.participant)
+
+        # base text string
+        text = "\t".join(columns + [segment.raw])
         self.output(text, style=style)
 
         # offset for displaying addendums
