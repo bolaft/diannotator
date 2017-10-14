@@ -719,6 +719,8 @@ class SegmentCollection:
                 parser.parse(dic["datetime"])
             )
 
+            segment.raw = dic["raw"]
+
             segment.id = dic["id"]
             segment.legacy = dic["annotations"]
             segment.note = dic["note"]

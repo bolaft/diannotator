@@ -1,6 +1,6 @@
 # Overview
 
-DiAnnotator is a dialogue annotation tool. It is meant to reduce the need to use the mouse to annotate dialogues and to improve keyboard-only annotation speed and reliability. DiAnnotator can be used to segment utterances, to apply dialogue act or sentiment-analysis labels, to link dialogue segments and to modify taxonomies. DiAnnotator is fully multi-layer, and therefore supports annotation schemes such as DAMSL and ISO 24617-2.
+DiAnnotator is a dialogue annotation tool. It is meant to reduce the need to use the mouse to annotate dialogues and to improve keyboard-only annotation speed and reliability. DiAnnotator can be used to segment utterances, to apply dialogue act or sentiment-analysis labels, to link text segments and to modify taxonomies. DiAnnotator is fully multi-layer, and therefore supports annotation schemes such as DAMSL and ISO 24617-2.
 
 # Requirements
 
@@ -22,17 +22,13 @@ Simply run the Python script `launcher.py` in the `src` folder.
 
 # Build Executable (optional)
 
-Run the build.sh script at the root of the directory. A `bin` folder containing an executable will be created at the root of the project directory.
+Run the `build.sh` script at the root of the directory. A `bin` folder containing an executable will be created at the root of the project directory.
 
 # Input Data Format
 
-### Location:
+### CSV Format:
 
-Raw data files should be placed in the `csv` folder at the root of the project directory.
-
-### Format:
-
-The only accepted format is **CSV**. The file must contain a **header** line and as many additional lines as there are dialogue segments. Columns must be separated by **tabs**, not commas, and there should be **no text delimiter**.
+The file must contain a **header** line and as many additional lines as there are text segments. Columns must be separated by **tabs**, not commas, and there should be **no text delimiter**.
 
 #### Columns:
 
@@ -48,7 +44,7 @@ Contains the **raw text** of the message.
 
 ##### `segment`
 
-Contains the **dialogue segment**. When there are more than one segment in a message (due to prior segmentation for example), the `raw` column should only be filled in the first row, and left empty in the following rows. Moreover, when there are more than one raw message for a single segment (due to prior merging for example), the `segment` column should be filled only in the first row, and left empty in the following ones.
+Contains the **text segment**. When there are more than one segment in a message (due to prior segmentation for example), the `raw` column should only be filled in the first row, and left empty in the following rows. Moreover, when there are more than one raw message for a single segment (due to prior merging for example), the `segment` column should be filled only in the first row, and left empty in the following ones.
 
 ##### `participant`
 
@@ -76,16 +72,47 @@ Contains the list of links emanating from this segment, their types and their ta
 
 #### Example:
 
-| participant 	| date     	| time  	| segment                                                            	| raw                                                                	| activity 	| social 	| feedback    	| feedback-value 	|
-|-------------	|----------	|-------	|--------------------------------------------------------------------	|--------------------------------------------------------------------	|----------	|--------	|-------------	|----------------	|
-| manu        	| 11-05-17 	| 13:05 	| hi guys!                                              	| hi guys! does anyone know how to install a proprietary graphics card driver? 	|          	| greet  	|             	|                	|
-| manu        	| 11-05-17 	| 13:05 	| does anyone know how to install a proprietary graphics card driver?                       	|                                                                    	| question 	|        	|             	|                	|
-| gabi        	| 11-05-17 	| 13:06 	| search software sources, and then it's in the additional drivers tab | search software sources, and then it's in the additional drivers tab 	| answer   	|        	|             	|                	|
-| manu        	| 11-05-17 	| 13:07 	| k thx!                                                             	| k thx!                                                             	|          	| thanks 	| acknowledge 	| positive       	|
+| participant 	| datetime  	| segment                                                            	| raw                                                                	| activity 	| social 	| feedback    	| feedback-value 	|
+|-------------	|-------	|--------------------------------------------------------------------	|--------------------------------------------------------------------	|----------	|--------	|-------------	|----------------	|
+| manu        	| 11-05-17 13:05 	| hi guys!                                              	| hi guys! does anyone know how to install a proprietary graphics card driver? 	|          	| greet  	|             	|                	|
+| manu        	| 11-05-17 13:05 	| does anyone know how to install a proprietary graphics card driver?                       	|                                                                    	| question 	|        	|             	|                	|
+| gabi        	| 11-05-17 13:06 	| search software sources, and then it's in the additional drivers tab | search software sources, and then it's in the additional drivers tab 	| answer   	|        	|             	|                	|
+| manu        	| 11-05-17 13:07 	| k thx!                                                             	| k thx!                                                             	|          	| thanks 	| acknowledge 	| positive       	|
+
+### JSON Format:
+
+The file must contain an ordered list of dictionaries, each dictionary representing a single segment.
+
+#### Fields:
+
+Most fields are the same as for CSV data, with a few exceptions.
+
+##### Annotations
+
+The segment dictionary must not contain fields for each layer, instead there must be a field `annotations` that contains a dictionary. Each key of that dictionary is a layer and each value is another dictionary, with a `label` field containing the label of the segment for the layer and optionally a `qualifier` field containing the qualifier for the layer.
+
+##### Links
+
+Links must be represented as a dictionary in the optional `links` field of the segment dictionary. Each key of that dictionary represents a link type, and the corresponding value must be the list of identifiers of the target segments. The `id` field must be set for all segments for links to be imported correctly.
+
+#### Example:
+
+```json
+{
+    "id": 76,
+    "segment": "Hello guys,",
+    "raw": "Hello guys, how are you doing?",
+    "participant": "jeffrey",
+    "datetime": "04-11-17 22:17",
+    "note": self.note,
+    "links": links,
+    "annotations": self.annotations
+}
+```
 
 # Taxonomy Format
 
-When a CSV file is loaded, a taxonomy must be chosen before annotation can begin. Taxonomies are saved in JSON format. Their fields are:
+When a data file is loaded, a taxonomy must be chosen before annotation can begin. Taxonomies are saved in JSON format. Their fields are:
 
 #### `name`
 
