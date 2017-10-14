@@ -731,15 +731,21 @@ class Annotator(GraphicalUserInterface):
         number = int(number) - 1
 
         segment = self.sc.get_active()
-        segment.links.append((self.sc.collection[number], link_type))
-        self.sc.collection[number].linked.append((segment, link_type))
 
-        self.update()
+        success = False
+
+        if not (self.sc.collection[number], link_type) in segment.links:
+            segment.links.append((self.sc.collection[number], link_type))
+            self.sc.collection[number].linked.append((segment, link_type))
+
+            self.update()
+            success = True
 
         yield  # undo
 
-        segment.links.remove((self.sc.collection[number], link_type))
-        self.sc.collection[number].linked.remove((segment, link_type))
+        if success:
+            segment.links.remove((self.sc.collection[number], link_type))
+            self.sc.collection[number].linked.remove((segment, link_type))
 
     @undoable
     def unlink_segment(self):
