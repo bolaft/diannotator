@@ -13,7 +13,6 @@
 
     Features:
 
-        ☐ import links from CSV
         ☐ add all data from ubuntu-fr file
         ☐ command to set dimension color code
         ☐ command to set link color code
@@ -25,9 +24,10 @@
         ☐ unit testing
         ☐ smaller binary file
         ☐ windows executable
-        ☐ make exported JSON importable
         ☐ integrate pyrata for annotation search
         ☐ feature driven annotation
+        ✔ make exported JSON importable @done (17-10-14 19:17)
+        ✔ import links from CSV @done (17-10-14 19:17)
         ✔ choose if import are legacy or current @done (17-10-14 18:41)
         ✔ view menu: show columns to display @done (17-10-14 14:52)
         ✔ default taxonomies (ISO, DAMSL, MapTask...) @done (17-10-14 11:42)

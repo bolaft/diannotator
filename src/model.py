@@ -743,12 +743,12 @@ class SegmentCollection:
         """
         Imports a new collection from a CSV file
         """
-        # 140027181274280-Feedback,140027181274280-Functional,140027181274280-Functional,140027181274280-Functional
         collection = []
 
         with open(path) as f:
             rows = [{k: v for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True, delimiter="\t")]
 
+        segments_by_id = {}
         previous_segment = None
         segment = None
 
@@ -762,6 +762,10 @@ class SegmentCollection:
                     previous_segment.participant,
                     previous_segment.datetime
                 )
+
+                if "id" in row and row["id"] != "":
+                    segment.id = row["id"]
+
                 segment.original_raw = previous_segment.original_raw
 
                 tokenizer = WhitespaceTokenizer()
@@ -790,6 +794,9 @@ class SegmentCollection:
                     datetime
                 )
 
+                if "id" in row and row["id"] != "":
+                    segment.id = row["id"]
+
             # update the current segment's segment
             segment.span = span
 
@@ -812,8 +819,29 @@ class SegmentCollection:
                         # adding label
                         segment.set(key, row[key], legacy=True)
 
+            # ",".join(["{}-{}".format(segment.id, lt) for segment, lt in self.links])
+            # 140027181274280-Feedback,140027181274280-Functional,140027181274280-Functional,140027181274280-Functional
+            # 140027181274280-Feedback
+
+            # link extraction
+            if "links" in row and row["links"] != "":
+                links = row["links"].split(",")
+
+                for link in links:
+                    lt = link.split("-")[1]
+                    identifier = link.split("-")[0]
+
+                    segment.legacy_links.append((segments_by_id[identifier], lt))
+                    segments_by_id[identifier].legacy_linked.append((lt, segment))
+
             # set note
             segment.note = row["note"].strip() if "note" in row and row["note"].strip() else None
+
+            # makes sure all ids are unique
+            if segment.id in segments_by_id:
+                raise Exception
+
+            segments_by_id[segment.id] = segment
 
             # adds the segment to the full collection
             collection.append(segment)

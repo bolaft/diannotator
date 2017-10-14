@@ -1,6 +1,6 @@
 # Overview
 
-DiAnnotator is a dialogue annotation tool. It is meant to reduce the need to use the mouse to annotate dialogues and to improve keyboard-only annotation speed and reliability. DiAnnotator can be used to segment utterances, to apply dialogue act or sentiment-analysis labels, to link dialogue segments and to modify taxonomies. DiAnnotator is fully multi-layeral, and therefore supports annotation schemes such as DAMSL and ISO 24617-2.
+DiAnnotator is a dialogue annotation tool. It is meant to reduce the need to use the mouse to annotate dialogues and to improve keyboard-only annotation speed and reliability. DiAnnotator can be used to segment utterances, to apply dialogue act or sentiment-analysis labels, to link dialogue segments and to modify taxonomies. DiAnnotator is fully multi-layer, and therefore supports annotation schemes such as DAMSL and ISO 24617-2.
 
 # Requirements
 
@@ -65,6 +65,14 @@ Columns bearing a layer name are used to load **legacy annotations**, which can 
 ##### `<layer name>-value` (optional)
 
 Columns bearing a layer name and suffixed by `-value` are used to load **legacy qualifiers** for that layer. For example, if `emotion` is a layer, `express` may be a label, and `happiness` might be the value present in the `emotion-value` column. These column's names must follow the naming convention of the taxonomy's JSON file.
+
+##### `id` (optional)
+
+Contains a unique identifier for the segment. This column is optional but is required for link importation.
+
+##### `links` (optional)
+
+Contains the list of links emanating from this segment, their types and their targets. The link format is the following: `<target_id>-<link_type>,<target_id>-<link_type>`. 
 
 #### Example:
 
