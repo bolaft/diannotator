@@ -1728,7 +1728,7 @@ class Annotator(GraphicalUserInterface):
             columns.append(segment.participant)
 
         # base text string
-        text = "\t".join(columns + [segment.raw])
+        text = "\t".join(columns + ["\t" + segment.raw])
         self.output(text, style=style)
 
         # offset for displaying addendums
