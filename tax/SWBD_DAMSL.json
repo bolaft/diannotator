@@ -1,0 +1,78 @@
+{
+    "name": "SWBD DAMSL",
+    "url": "web.stanford.edu/~jurafsky/ws97/manual.august1.html",
+    "default": "Forward Communicative Functions",
+    "colors": {
+        "Forward Communicative Functions": "#FFFFFF",
+        "Backwards Communicative Functions": "#54D6EF",
+        "Information Level": "#DB5CD7"
+    },
+    "links": {
+    },
+    "labels": {
+        "Forward Communicative Functions": [
+            "Statement",
+            "Statement Non Opinion",
+            "Open Option",
+            "Yes No Question",
+            "WH Question",
+            "Open Question",
+            "Or Question",
+            "Or Clause",
+            "Declarative Question",
+            "Tag Question",
+            "Action Directive",
+            "Offer",
+            "Commit",
+            "Conventional Opening",
+            "Conventional Closing",
+            "Exclamation",
+            "Other Forward Function",
+            "Thanking",
+            "You're Welcome",
+            "Apology"
+        ],
+        "Backwards Communicative Functions": [
+            "Accept",
+            "Accept Part",
+            "Maybe",
+            "Reject Part",
+            "Reject",
+            "Hold Before Answer/Agreement",
+            "Signal Non Understanding",
+            "Signal Understanding",
+            "Acknowledge",
+            "Acknowledge Answer",
+            "Repeat Phrase",
+            "Completion",
+            "Summarize/Reformulate",
+            "Appreciation",
+            "Sympathy",
+            "Downplayer",
+            "Correct Misspeaking",
+            "Yes Answer",
+            "No Answer",
+            "Affirmative Non-Yes Answer",
+            "Negative Non-No Answer",
+            "Other Answer",
+            "Expansions of Y/N Answer",
+            "Dispreferred Answer"
+        ],
+        "Information Level": [
+            "Task",
+            "Task Management",
+            "Communication Management",
+            "Other"
+        ]
+    },
+    "qualifiers": {
+        "Forward Communicative Functions": [
+            "Abandoned",
+            "Uninterpretable"
+        ],
+        "Backwards Communicative Functions": [
+            "Abandoned",
+            "Uninterpretable"
+        ]
+    }
+}
