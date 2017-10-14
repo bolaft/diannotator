@@ -186,9 +186,10 @@ class GraphicalUserInterface(Frame, Styles):
         self.parent.bind("<Control-KP_Add>", lambda event: self.zoom_in())
         self.parent.bind("<Control-KP_Subtract>", lambda event: self.zoom_out())
 
-        # binding click
+        # binding mouse
         self.clickable_text_tag = "clickable_text_tag"
-        self.text.tag_bind(self.clickable_text_tag, '<Button-1>', self.click)
+        self.text.tag_bind(self.clickable_text_tag, "<Button-1>", self.mouse_click)
+        self.text.bind("<Motion>", self.mouse_motion)
 
         Styles.__init__(self)  # initializes style tags
 
@@ -199,9 +200,23 @@ class GraphicalUserInterface(Frame, Styles):
 
         self.free_input = False  # sets whether it's possible to input anything in the entry
 
-    def click(self, event):
+    def mouse_motion(self, event):
         """
-        Returns data on clickable text
+        Returns data when the cursor is on a clickable element
+        """
+        start, end, text = self.examine_mouse_position(event)
+        self.manage_motion(start, end, text)
+
+    def mouse_click(self, event):
+        """
+        Returns data when the cursor clicks on a clickable element
+        """
+        start, end, text = self.examine_mouse_position(event)
+        self.manage_click(start, end, text)
+
+    def examine_mouse_position(self, event):
+        """
+        Examines the mouse position and returns data if a clickable element is hovered
         """
         # get the index of the mouse click
         index = self.text.index("@%s,%s" % (event.x, event.y))
@@ -214,11 +229,19 @@ class GraphicalUserInterface(Frame, Styles):
             # check if the tag matches the mouse click index
             if self.text.compare(start, '<=', index) and self.text.compare(index, '<', end):
                 # deals with string between tag start and end
-                self.manage_click(start, end, self.text.get(start, end))
+                return start, end, self.text.get(start, end)
+
+        return None, None, None
+
+    def manage_motion(self, start, end, text):
+        """
+        Mouse motion management
+        """
+        pass  # pass on purpose
 
     def manage_click(self, start, end, text):
         """
-        Click management
+        Mouse click management
         """
         pass  # pass on purpose
 

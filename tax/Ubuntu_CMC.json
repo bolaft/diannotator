@@ -1,8 +1,8 @@
 {
     "name": "Ubuntu CMC",
-    "default": "Task",
+    "default": "Task Management",
     "colors": {
-        "Task": "#FFFFFF",
+        "Task Management": "#FFFFFF",
         "Feedback Management": "#808080",
         "Social Obligations Management": "#A6E22E",
         "Discourse Structure Management": "#E6DB71",
@@ -24,7 +24,7 @@
         "Rhetoric": "#ffffff"
     },
     "labels": {
-        "Task": [
+        "Task Management": [
             "Request Help",
 
             "Inform",

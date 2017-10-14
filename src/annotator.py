@@ -770,7 +770,6 @@ class Annotator(GraphicalUserInterface):
         """
         # activates click to link segment
         self.click_to_link_type = link_type
-        self.text.config(cursor="cross")
 
         # input target segment
         self.input("prompt.select_link_target", [], lambda n, link_t=link_type: self.link_segment(n, link_t), sort=False, free=True)
@@ -782,7 +781,6 @@ class Annotator(GraphicalUserInterface):
         """
         # disables click to link segment
         self.click_to_link_type = None
-        self.text.config(cursor="arrow")
 
         number = int(number) - 1
 
@@ -1652,9 +1650,15 @@ class Annotator(GraphicalUserInterface):
 
         self.sc.previous()
 
+    def manage_motion(self, start, end, text):
+        """
+        Mouse motion management
+        """
+        pass
+
     def manage_click(self, start, end, text):
         """
-        Click management
+        Mouse click management
         """
         index = int(self.text.get(start, end).split("\t")[0])
 
