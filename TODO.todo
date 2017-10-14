@@ -13,7 +13,6 @@
 
     Features:
 
-        ☐ view menu: show columns to display
         ☐ add all data from ubuntu-fr file
         ☐ command to set dimension color code
         ☐ command to set link color code
@@ -28,6 +27,7 @@
         ☐ make exported JSON importable
         ☐ integrate pyrata for annotation search
         ☐ feature driven annotation
+        ✔ view menu: show columns to display @done (17-10-14 14:52)
         ✔ default taxonomies (ISO, DAMSL, MapTask...) @done (17-10-14 11:42)
         ✔ date/time as datetime @done (17-10-14 11:18)
         ✔ delete link type @done (17-10-14 00:27)

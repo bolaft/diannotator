@@ -11,7 +11,7 @@ Annotation methods
 from collections import OrderedDict
 from copy import deepcopy
 from datetime import datetime, timedelta
-from tkinter import filedialog, messagebox, LEFT
+from tkinter import filedialog, messagebox, colorchooser, LEFT
 from tkinter.ttk import Button
 from undo import stack, undoable
 
@@ -180,6 +180,8 @@ class Annotator(GraphicalUserInterface):
         self.taxonomy_menu.add_command(label="Remove Active Qualifier From Taxonomy", command=self.remove_qualifier)
         self.taxonomy_menu.add_command(label="Remove Active Layer From Taxonomy", command=self.remove_layer)
         self.taxonomy_menu.add_command(label="Remove Active Link Types From Taxonomy", command=self.remove_link_types)
+        self.taxonomy_menu.add_separator()
+        self.taxonomy_menu.add_command(label="Pick Element Color", command=self.select_element_type_to_colorize)
 
         ##################
         # INITIALIZATION #
@@ -217,13 +219,13 @@ class Annotator(GraphicalUserInterface):
         self.previous_key_press = datetime.now() - timedelta(seconds=10)
 
         # show legacy annotations
-        self.show_legacy = True
+        self.show_legacy = True  # show legacy annotations by defaults
 
         # show columns
-        self.show_participant = True
-        self.show_date = False
-        self.show_time = True
-        self.show_id = False
+        self.show_participant = True  # show participant by default
+        self.show_date = False  # hide date by default
+        self.show_time = True  # show time by default
+        self.show_id = False  # hide id by default
 
         # display update
         self.update()
@@ -784,7 +786,7 @@ class Annotator(GraphicalUserInterface):
         """
         Selects the type of element to be added to the taxonomy
         """
-        self.input("select element type", ["Layer", "Label", "Qualifier", "Link Type"], self.add_new_element)
+        self.input("select type of new element", ["Layer", "Label", "Qualifier", "Link Type"], self.add_new_element)
 
     def add_new_element(self, element_type):
         """
@@ -949,6 +951,54 @@ class Annotator(GraphicalUserInterface):
         yield  # undo
 
         self.sc = sc
+
+    def select_element_type_to_colorize(self):
+        """
+        Selects the type of element to be colorized
+        """
+        self.input("select type of element to colorize", ["Layer", "Legacy Layer", "Link Type"], self.select_element_to_colorize)
+
+    def select_element_to_colorize(self, element_type):
+        """
+        Select an element to colorize
+        """
+        if element_type == "Layer":
+            self.input("select layer to colorize", self.sc.labels.keys(), self.pick_color_for_layer)
+
+        if element_type == "Legacy Layer":
+            legacy_layers = []
+
+            for segment in self.sc.full_collection:
+                for layer in segment.legacy.keys():
+                    if layer not in legacy_layers:
+                        legacy_layers.append(layer)
+
+            self.input("select legacy layer to colorize", legacy_layers, self.pick_color_for_layer)
+
+        if element_type == "Link Type":
+            self.input("select link type to colorize", self.sc.links.keys(), self.pick_color_for_link_type)
+
+    def pick_color_for_layer(self, layer):
+        """
+        Color picker for a layer
+        """
+        color = colorchooser.askcolor()
+
+        if len(color) > 0 and color[-1]:
+            self.sc.colors[layer] = color[-1]
+            self.generate_layer_colors()
+            self.update()
+
+    def pick_color_for_link_type(self, link_type):
+        """
+        Color picker for a link type
+        """
+        color = colorchooser.askcolor()
+
+        if len(color) > 0 and color[-1]:
+            self.sc.links[link_type] = color[-1]
+            self.generate_link_colors()
+            self.update()
 
     def select_element(self):
         """
