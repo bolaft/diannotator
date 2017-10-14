@@ -158,7 +158,8 @@ A dictionary, whose keys represent layer names and whose elements are **hexadeci
 
 ```json
 {
-    "name": "Ubuntu CMC",
+    "name": "J-22 Tax",
+    "url": "www.somewhere-university.edu/j22tax",
     "default": "Task",
     "labels": {
         "Task": [
@@ -222,7 +223,7 @@ Removes label and qualifier from the active segment.
 
 If the active segment is not linked to any other segment, links it to a specific segment, selected by index after selecting the link type. If the segment is already linked to another segment of the selected link type, the link is removed.
 
-### Unlink Segment: `Control U`
+#### Unlink Segment: `Control U`
 
 Removes all links emanating from the active segment.
 
