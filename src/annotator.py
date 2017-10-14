@@ -1647,26 +1647,38 @@ class Annotator(GraphicalUserInterface):
                     offset += len(addendum)
 
         # links display
+        links_by_type = {}
+
         for ls, lt in segment.links:
-            if ls in self.sc.collection:
-                addendum = " [{} ⟲ {}]".format(lt, self.sc.collection.index(ls) + 1)
-            else:
-                addendum = " [{} ⟲]".format(lt)
+            if lt not in links_by_type:
+                links_by_type[lt] = []
+
+            links_by_type[lt].append(ls)
+
+        for lt, lls in links_by_type.items():
+            links = [str(self.sc.collection.index(ls) + 1) for ls in lls if ls in self.sc.collection]
+            addendum = " [{} ⟲ {}]".format(lt, ", ".join(sorted(links)))
 
             self.add_to_last_line(addendum, style="link-{}".format(lt), offset=offset)
             offset += len(addendum)
 
         # legacy links display
         if self.show_legacy:
-            for ls, lt in segment.legacy_links:
-                if (ls, lt) not in segment.links:
-                    if ls in self.sc.collection:
-                        addendum = " (({} ⟲ {}))".format(lt, self.sc.collection.index(ls) + 1)
-                    else:
-                        addendum = " (({} ⟲))".format(lt)
+            links_by_type = {}
 
-                    self.add_to_last_line(addendum, style="link-{}".format(lt), offset=offset)
-                    offset += len(addendum)
+            for ls, lt in segment.legacy_links:
+                if (ls, lt) not in segment.links:  # do not display legacy annotations when there is a normal one
+                    if lt not in links_by_type:
+                        links_by_type[lt] = []
+
+                    links_by_type[lt].append(ls)
+
+            for lt, lls in links_by_type.items():
+                links = [str(self.sc.collection.index(ls) + 1) for ls in lls if ls in self.sc.collection]
+                addendum = " (({} ⟲ {}))".format(lt, ", ".join(sorted(links)))
+
+                self.add_to_last_line(addendum, style="link-{}".format(lt), offset=offset)
+                offset += len(addendum)
 
         # note display
         if segment.note is not None:

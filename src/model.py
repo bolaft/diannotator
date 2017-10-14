@@ -743,6 +743,7 @@ class SegmentCollection:
         """
         Imports a new collection from a CSV file
         """
+        # 140027181274280-Feedback,140027181274280-Functional,140027181274280-Functional,140027181274280-Functional
         collection = []
 
         with open(path) as f:
