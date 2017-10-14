@@ -100,13 +100,21 @@ Links must be represented as a dictionary in the optional `links` field of the s
 ```json
 {
     "id": 76,
-    "segment": "Hello guys,",
-    "raw": "Hello guys, how are you doing?",
-    "participant": "jeffrey",
+    "segment": "Hello Gix,",
+    "raw": "Hello Gix, how are you doing?",
+    "participant": "Poggy",
     "datetime": "04-11-17 22:17",
-    "note": self.note,
-    "links": links,
-    "annotations": self.annotations
+    "note": "performed split here",
+    "links": {
+    	"rhetorical relation": [
+    		75
+    	]
+    },
+    "annotations": {
+    	"social obligations management": {
+    		"label": "greet"
+    	}
+	}
 }
 ```
 
