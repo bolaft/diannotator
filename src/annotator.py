@@ -48,9 +48,6 @@ class Annotator(GraphicalUserInterface):
         self.parent.bind(
             "<Prior>",
             lambda event, arg=10: self.go_up(arg))
-        self.parent.bind(
-            "<Control-j>",
-            lambda event: self.select_go_to())
 
         # load / save / close shortcuts
         self.parent.bind(
@@ -135,6 +132,9 @@ class Annotator(GraphicalUserInterface):
         self.parent.bind(
             "<Control-f>",
             lambda event: self.select_filter_type())
+        self.parent.bind(
+            "<Control-j>",
+            lambda event: self.select_go_to())
 
         #################
         # MENU COMMANDS #
@@ -309,7 +309,8 @@ class Annotator(GraphicalUserInterface):
         buttons.update({"[M]erge Segment": self.merge_segment})
         buttons.update({"[A]dd Element": self.select_new_element_type})
         buttons.update({"[R]ename Element": self.select_element})
-        buttons.update({"[F]ilter": self.select_filter_type})
+        buttons.update({"[J]ump To Segment": self.select_go_to})
+        buttons.update({"[F]ilter Collection": self.select_filter_type})
         buttons.update({"Add [N]ote": self.input_new_note})
 
         for text, function in buttons.items():
@@ -1443,7 +1444,6 @@ class Annotator(GraphicalUserInterface):
 
             if len(link_types) > 0:
                 status = "{} - Active Link Type{}: {}".format(status, "s" if len(link_types) > 1 else "", ", ".join(link_types))
-
         else:
             # default title
             self.parent.title(self.window_title)
@@ -1476,7 +1476,7 @@ class Annotator(GraphicalUserInterface):
             style.append(Styles.STRONG)
 
         # segment base text
-        text = "{}\t{}\t{}  \t\t{}".format(i + 1, segment.time, segment.participant, segment.raw)
+        text = "{}\t{}\t{}  \t\t{}".format(i + 1, segment.datetime.strftime("%H:%M"), segment.participant, segment.raw)
         self.output(text, style=style)
 
         # offset for displaying addendums

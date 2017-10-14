@@ -19,6 +19,7 @@ import tempfile
 
 from collections import OrderedDict
 from datetime import datetime
+from dateutil import parser
 from nltk.tokenize import WhitespaceTokenizer
 
 # check if the current file is in a folder name "src"
@@ -29,7 +30,7 @@ MERGE_SYMBOL = "<<MERGED<<"
 
 
 class Segment:
-    def __init__(self, raw, participant, time, date):
+    def __init__(self, raw, participant, datetime):
         """
         Segment constructor
         """
@@ -39,8 +40,7 @@ class Segment:
         self.participant = participant  # speaker name
         self.annotations = {}  # annotations
         self.legacy = {}  # legacy annotations
-        self.date = date  # date as string
-        self.time = time  # time as string
+        self.datetime = datetime  # datetime
         self.links = []  # segment linked to this one
         self.linked = []  # segments that answer an elicitation in this one
         self.note = None  # note about the segment
@@ -65,8 +65,8 @@ class Segment:
             "segment": self.raw,
             "raw": self.original_raw,
             "participant": self.participant,
-            "date": self.date,
-            "time": self.time,
+            "date": self.datetime.strftime("%d-%m-%y"),
+            "time": self.datetime.strftime("%X"),
             "note": self.note,
             "links": links,
             "annotations": self.annotations
@@ -82,8 +82,8 @@ class Segment:
         data.update({"segment": self.raw})
         data.update({"raw": self.original_raw if isinstance(self.original_raw, str) else MERGE_SYMBOL.join(self.original_raw)})
         data.update({"participant": self.participant})
-        data.update({"date": self.date})
-        data.update({"time": self.time})
+        data.update({"date": self.datetime.strftime("%d-%m-%y")})
+        data.update({"time": self.datetime.strftime("%X")})
         data.update({"note": self.note if self.note is not None else ""})
         data.update({"links": ",".join(["{}-{}".format(segment.id, lt) for segment, lt in self.links])})
 
@@ -249,13 +249,11 @@ class Segment:
         """
         Creates and returns a segment with similar attributes but different raw
         """
-        segment = Segment(raw, self.participant, self.time, self.date)
+        segment = Segment(raw, self.participant, self.datetime)
         segment.original_raw = self.original_raw
         segment.annotations = self.annotations.copy()
         segment.legacy = self.legacy.copy()
         segment.links = self.links.copy()
-        segment.time = self.time
-        segment.date = self.date
         segment.linked = self.linked.copy()
         segment.note = self.note
         segment.tokenize()
@@ -628,16 +626,14 @@ class SegmentCollection:
             segment = None
 
             for row in rows:
-                time = previous_segment.time if row["time"] is None or row["time"].strip() == "" else row["time"].strip()
-                date = previous_segment.date if row["date"] is None or row["date"].strip() == "" else row["date"].strip()
+                datetime = parser.parse(row["datetime"]) if row["datetime"] is not None and row["datetime"].strip() != "" else previous_segment.datetime
                 span = row["segment"].strip()
 
                 if row["raw"] is None or row["raw"].strip() == "":
                     segment = Segment(
                         previous_segment.raw,
                         previous_segment.participant,
-                        previous_segment.time,
-                        previous_segment.date
+                        previous_segment.datetime
                     )
                     segment.original_raw = previous_segment.original_raw
 
@@ -664,8 +660,7 @@ class SegmentCollection:
                     segment = Segment(
                         raw,
                         participant,
-                        time,
-                        date
+                        datetime
                     )
 
                 # update the current segment's segment
@@ -679,7 +674,7 @@ class SegmentCollection:
 
                 # loading legacy annotations
                 for key in row.keys():
-                    if key not in ["segment", "raw", "time", "date", "participant", "links", "note", "id"] and row[key] is not None and row[key].strip() != "":
+                    if key not in ["segment", "raw", "datetime", "participant", "links", "note", "id"] and row[key] is not None and row[key].strip() != "":
                         if key.endswith("-value") and row[key]:
                             # getting layer name from column
                             layer = key[:len(key) - len("-value")]

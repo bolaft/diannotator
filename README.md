@@ -38,13 +38,9 @@ The only accepted format is **CSV**. The file must contain a **header** line and
 
 The following columns are used when importing data:
 
-##### `time`
+##### `datetime`
 
-Contains a string representation of the **time** at which the message was sent.
-
-##### `date`
-
-Contains a string representation of the **date** on which the message was sent.
+Contains a string representation of the **date** and **time** on which the message was sent. The string must respect the international standard date and time notation to be parsed correctly.
 
 ##### `raw`
 
@@ -117,6 +113,52 @@ A dictionary, whose keys represent layer names and whose elements are **hexadeci
 
 Black buttons on the bottom of the screen show the possible labels for the active layer. The active segment is the last one displayed, appearing in bold. To apply a label to a segment, click on the appropriate button or type a sufficiently discriminating part of the label (for example, `req dir` for `request directives`) then press Enter.
 
+### Special Commands:
+
+#### Change Layer: `Control C`
+
+Changes the active layer.
+
+#### Erase Annotation: `Control E`
+
+Removes label and qualifier from the active segment.
+
+#### Link Segment: `Control L`
+
+If the active segment is not linked to any other segment, links it to a specific segment, selected by index after selecting the link type. If the segment is already linked to another segment of the selected link type, the link is removed.
+
+### Unlink Segment: `Control U`
+
+Removes all links emanating from the active segment.
+
+#### Split Segment: `Control S`
+
+Splits the active segment in two, on the chosen token. Links, notes, annotations and legacy annotations are preserved.
+
+#### Merge Segment: `Control M`
+
+Merges the active segment to the previous ones. Links, notes, annotations and legacy annotations are preserved.
+
+#### Add Element: `Control A`
+
+Adds a new layer, label, qualifier or link type.
+
+#### Rename Element: `Control R`
+
+Updates the name of the layer, label, qualifier or link type used for the active segment. All segments annotated with this layer, label, qualifier or link type will be affected.
+
+#### Jump To Segment: `Control J`
+
+Jumps to a specific segment, selected by index.
+ 
+#### Filter Collection: `Control F`
+
+Filters the collection by label, legacy label, layer, legacy layer, qualifier or legacy qualifier.
+
+#### Add Note: `Control N`
+
+The next entry creates a note and attaches it to the active segment. If the active segment already has a note attached, the note is deleted.
+
 ### Keyboard Shortcuts:
 
 #### `Enter`
@@ -138,10 +180,6 @@ Moves down ten segments.
 #### `Page Up`
 
 Moves up ten segments.
-
-#### `Control J`
-
-Jumps to a specific segment, selected by index.
 
 #### `Delete`
 
@@ -194,45 +232,3 @@ Opens the "save as..." dialogue.
 #### `Control Shift E`
 
 Opens the "export as..." dialogue.
-
-### Special Commands:
-
-#### Change Layer: `Control C`
-
-Changes the active layer.
-
-#### Erase Annotation: `Control E`
-
-Removes label and qualifier from the active segment.
-
-#### Link Segment: `Control L`
-
-If the active segment is not linked to any other segment, links it to a specific segment, selected by index after selecting the link type. If the segment is already linked to another segment of the selected link type, the link is removed.
-
-### Unlink Segment: `Control U`
-
-Removes all links emanating from the active segment.
-
-#### Split Segment: `Control S`
-
-Splits the active segment in two, on the chosen token. Links, notes, annotations and legacy annotations are preserved.
-
-#### Merge Segment: `Control M`
-
-Merges the active segment to the previous ones. Links, notes, annotations and legacy annotations are preserved.
-
-#### Add Element: `Control A`
-
-Adds a new layer, label, qualifier or link type.
-
-#### Rename Element: `Control R`
-
-Updates the name of the layer, label, qualifier or link type used for the active segment. All segments annotated with this layer, label, qualifier or link type will be affected.
- 
-#### Filter: `Control F`
-
-Filters the collection by label, legacy label, layer, legacy layer, qualifier or legacy qualifier.
-
-#### Add Note: `Control N`
-
-The next entry creates a note and attaches it to the active segment. If the active segment already has a note attached, the note is deleted.
