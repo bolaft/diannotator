@@ -47,6 +47,42 @@ class Segment:
 
         self.tokenize()  # tokenization
 
+    def has(self, layer, annotation=False, qualifier=False, legacy=False):
+        """
+        Check if the segment has the annotation
+        """
+        dic = self.legacy if legacy else self.annotations
+        annotation_type = "qualifier" if qualifier else "label"
+
+        if layer in dic and annotation_type in dic[layer] and (not annotation or dic[layer][annotation_type] == annotation):
+            return True
+        else:
+            return False
+
+    def get(self, layer, qualifier=False, legacy=False):
+        """
+        Returns an annoation
+        """
+        dic = self.legacy if legacy else self.annotations
+        annotation_type = "qualifier" if qualifier else "label"
+
+        if layer in dic and annotation_type in dic[layer]:
+            return dic[layer][annotation_type]
+        else:
+            return False
+
+    def set(self, layer, value, qualifier=False, legacy=False):
+        """
+        Check if the segment has the annotation
+        """
+        dic = self.legacy if legacy else self.annotations
+        annotation_type = "qualifier" if qualifier else "label"
+
+        if layer not in dic:
+            dic[layer] = {}
+
+        dic[layer][annotation_type] = value
+
     ##################
     # EXPORT METHODS #
     ##################

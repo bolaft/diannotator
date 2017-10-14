@@ -862,7 +862,7 @@ class Annotator(GraphicalUserInterface):
         segment = self.sc.get_active()
 
         if self.sc.layer in segment.annotations:
-            label = segment.annotations[self.sc.layer]["label"]
+            label = segment.get(self.sc.layer)
             if messagebox.askyesno("Delete Label", "Are you sure you want to remove the {} label from the taxonomy?".format(label)):
                 self.sc.delete_label(self.sc.layer, label)
                 self.update()
@@ -881,7 +881,7 @@ class Annotator(GraphicalUserInterface):
         segment = self.sc.get_active()
 
         if self.sc.layer in segment.annotations:
-            qualifier = segment.annotations[self.sc.layer]["qualifier"]
+            qualifier = segment.get(self.sc.layer, qualifier=True)
             if messagebox.askyesno("Delete Qualifier", "Are you sure you want to remove the {} qualifier from the taxonomy?".format(qualifier)):
                 self.sc.delete_qualifier(self.sc.layer, qualifier)
                 self.update()
@@ -1009,11 +1009,11 @@ class Annotator(GraphicalUserInterface):
         elements = [self.sc.layer]
 
         if self.sc.layer in segment.annotations:
-            if "label" in segment.annotations[self.sc.layer]:
-                elements.append(segment.annotations[self.sc.layer]["label"])
+            if segment.has(self.sc.layer):
+                elements.append(segment.get(self.sc.layer))
 
-            if "qualifier" in segment.annotations[self.sc.layer]:
-                elements.append(segment.annotations[self.sc.layer]["qualifier"])
+            if segment.has(self.sc.layer, qualifier=True):
+                elements.append(segment.get(self.sc.layer, qualifier=True))
 
         for ls, lt in segment.links:
             elements.append(lt)
@@ -1094,7 +1094,7 @@ class Annotator(GraphicalUserInterface):
         if label:
             self.sc.change_label(
                 self.sc.layer,
-                segment.annotations[self.sc.layer]["label"],
+                segment.get(self.sc.layer),
                 label
             )
 
@@ -1116,7 +1116,7 @@ class Annotator(GraphicalUserInterface):
         if qualifier:
             self.sc.change_qualifier(
                 self.sc.layer,
-                segment.annotations[self.sc.layer]["qualifier"],
+                segment.get(self.sc.layer, qualifier=True),
                 qualifier
             )
 
@@ -1313,7 +1313,7 @@ class Annotator(GraphicalUserInterface):
 
         for segment in self.sc.full_collection:
             for layer in segment.annotations:
-                if "label" in segment.annotations[layer] and label == segment.annotations[layer]["label"]:
+                if segment.has(layer, annotation=label):
                     segments.append(segment)
 
         self.sc.collection = list(set(segments))
@@ -1335,7 +1335,7 @@ class Annotator(GraphicalUserInterface):
 
         for segment in self.sc.full_collection:
             for layer in segment.legacy:
-                if "label" in segment.legacy[layer] and label == segment.legacy[layer]["label"]:
+                if segment.has(layer, annotation=label, legacy=True):
                     segments.append(segment)
 
         self.sc.collection = list(set(segments))
@@ -1357,7 +1357,7 @@ class Annotator(GraphicalUserInterface):
 
         for segment in self.sc.full_collection:
             for layer in segment.annotations:
-                if "qualifier" in segment.annotations[layer] and qualifier == segment.annotations[layer]["qualifier"]:
+                if segment.has(layer, annotation=qualifier, qualifier=True):
                     segments.append(segment)
 
         self.sc.collection = list(set(segments))
@@ -1379,7 +1379,7 @@ class Annotator(GraphicalUserInterface):
 
         for segment in self.sc.full_collection:
             for layer in segment.legacy:
-                if "qualifier" in segment.legacy[layer] and qualifier == segment.legacy[layer]["qualifier"]:
+                if segment.has(layer, annotation=qualifier, qualifier=True, legacy=True):
                     segments.append(segment)
 
         self.sc.collection = list(set(segments))
@@ -1462,12 +1462,9 @@ class Annotator(GraphicalUserInterface):
 
         previous_annotations = segment.annotations.copy()
 
-        # create dict if layer not in annotations
-        if self.sc.layer not in segment.annotations:
-            segment.annotations[self.sc.layer] = {}
+        segment.set(self.sc.layer, annotation)  # set annotation
 
-        segment.annotations[self.sc.layer]["label"] = annotation
-
+        # go to next segment unless a qualifier needs to be set
         if self.sc.layer not in self.sc.qualifiers:
             self.sc.next()
 
@@ -1487,11 +1484,8 @@ class Annotator(GraphicalUserInterface):
         """
         segment = self.sc.get_active()
 
-        # create dict if layer not in annotations
-        if self.sc.layer not in segment.annotations:
-            segment.annotations[self.sc.layer] = {}
+        segment.set(self.sc.layer, annotation, qualifier=True)  # set annotation
 
-        segment.annotations[self.sc.layer]["qualifier"] = annotation
         self.sc.next()
 
         self.update()
@@ -1588,11 +1582,13 @@ class Annotator(GraphicalUserInterface):
 
         # annotations display
         for layer in reversed(sorted(segment.annotations.keys())):
-            if "label" in segment.annotations[layer]:
-                if "qualifier" in segment.annotations[layer]:
-                    addendum = " [{} ➔ {}]".format(segment.annotations[layer]["label"], segment.annotations[layer]["qualifier"])
+            if segment.has(layer):
+                label = segment.get(layer)
+
+                if segment.has(layer, qualifier=True):
+                    addendum = " [{} ➔ {}]".format(label, segment.get(layer, qualifier=True))
                 else:
-                    addendum = " [{}]".format(segment.annotations[layer]["label"])
+                    addendum = " [{}]".format(label)
 
                 self.add_to_last_line(addendum, style="layer-{}".format(layer), offset=offset)
                 offset += len(addendum)
@@ -1601,11 +1597,13 @@ class Annotator(GraphicalUserInterface):
         # legacy annotations display
         if self.show_legacy:
             for layer in reversed(sorted(segment.legacy.keys())):
-                if "label" in segment.legacy[layer] and layer not in legacy_layers_to_ignore:
-                    if "qualifier" in segment.legacy[layer]:
-                        addendum = " (({} ➔ {}))".format(segment.legacy[layer]["label"], segment.legacy[layer]["qualifier"])
+                if segment.has(layer, legacy=True) and layer not in legacy_layers_to_ignore:
+                    label = segment.get(layer, legacy=True)
+
+                    if segment.has(layer, legacy=True, qualifier=True):
+                        addendum = " (({} ➔ {}))".format(label, segment.get(layer, legacy=True, qualifier=True))
                     else:
-                        addendum = " (({}))".format(segment.legacy[layer]["label"])
+                        addendum = " (({}))".format(label)
 
                     self.add_to_last_line(addendum, style="layer-{}".format(layer), offset=offset)
                     offset += len(addendum)
