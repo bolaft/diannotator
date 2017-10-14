@@ -12,6 +12,7 @@ from tkinter import Tk, StringVar, Text, Menu, messagebox, BOTH, DISABLED, END, 
 from tkinter.ttk import Button, Entry, Frame, Label, Scrollbar
 from ttkthemes import ThemedStyle
 
+from strings import Strings
 from styles import Styles
 
 # colors
@@ -189,6 +190,8 @@ class GraphicalUserInterface(Frame, Styles):
         self.default_action = None  # default command action
 
         self.free_input = False  # sets whether it's possible to input anything in the entry
+
+        self.str = Strings()  # strings manager
 
     def return_pressed(self, e):
         """
@@ -386,7 +389,7 @@ class GraphicalUserInterface(Frame, Styles):
         """
         Manages user input
         """
-        self.prompt.set(prompt.title() + ":" if prompt else "")
+        self.prompt.set(self.str.get(prompt).title() + ":" if prompt else "")
         self.free_input = free
         self.action = action
 

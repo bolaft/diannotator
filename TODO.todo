@@ -13,19 +13,18 @@
 
     Features:
 
-        ☐ add all data from ubuntu-fr file
-        ☐ command to set dimension color code
-        ☐ command to set link color code
         ☐ externalize text strings
         ☐ annotations as attributes for simple access
         ☐ JSON config file to tell which columns are what
         ☐ use the mouse (eg for links)
-        ☐ export/import true DiAML
         ☐ unit testing
         ☐ smaller binary file
         ☐ windows executable
         ☐ integrate pyrata for annotation search
+        ☐ french translation
         ☐ feature driven annotation
+        ✔ command to set dimension color code @done (17-10-14 19:19)
+        ✔ command to set link color code @done (17-10-14 19:19)
         ✔ make exported JSON importable @done (17-10-14 19:17)
         ✔ import links from CSV @done (17-10-14 19:17)
         ✔ choose if import are legacy or current @done (17-10-14 18:41)

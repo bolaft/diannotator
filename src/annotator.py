@@ -141,47 +141,47 @@ class Annotator(GraphicalUserInterface):
         #################
 
         # file menu
-        self.file_menu.add_command(label="Open...", accelerator="Ctrl+O", command=self.open_file)
-        self.file_menu.add_command(label="Save As...", accelerator="Ctrl+Shift+S", command=self.save_file)
-        self.file_menu.add_command(label="Import Data...", accelerator="Ctrl+Shift+I", command=self.import_file)
-        self.file_menu.add_command(label="Export Data As...", accelerator="Ctrl+Shift+E", command=self.export_file)
-        self.file_menu.add_command(label="Close File", accelerator="Ctrl+W", command=self.close_file)
+        self.file_menu.add_command(label=self.str.get("file_menu.open_file"), accelerator="Ctrl+O", command=self.open_file)
+        self.file_menu.add_command(label=self.str.get("file_menu.save_file"), accelerator="Ctrl+Shift+S", command=self.save_file)
+        self.file_menu.add_command(label=self.str.get("file_menu.import_file"), accelerator="Ctrl+Shift+I", command=self.import_file)
+        self.file_menu.add_command(label=self.str.get("file_menu.export_file"), accelerator="Ctrl+Shift+E", command=self.export_file)
+        self.file_menu.add_command(label=self.str.get("file_menu.close_file"), accelerator="Ctrl+W", command=self.close_file)
         self.file_menu.add_separator()
-        self.file_menu.add_command(label="Quit", accelerator="Esc", command=self.parent.quit)
+        self.file_menu.add_command(label=self.str.get("file_menu.parent"), accelerator="Esc", command=self.parent.quit)
 
         # edit menu
-        self.edit_menu.add_command(label="Undo", accelerator="Ctrl+Z", command=self.undo)
-        self.edit_menu.add_command(label="Redo", accelerator="Ctrl+Shift+Z", command=self.redo)
+        self.edit_menu.add_command(label=self.str.get("edit_menu.undo"), accelerator="Ctrl+Z", command=self.undo)
+        self.edit_menu.add_command(label=self.str.get("edit_menu.redo"), accelerator="Ctrl+Shift+Z", command=self.redo)
 
         # view menu
         self.view_menu.add_separator()
-        self.view_menu.add_command(label="Show/Hide Participant Column", command=self.toggle_participant_column)
-        self.view_menu.add_command(label="Show/Hide Date Column", command=self.toggle_date_column)
-        self.view_menu.add_command(label="Show/Hide Time Column", command=self.toggle_time_column)
-        self.view_menu.add_command(label="Show/Hide ID Column", command=self.toggle_id_column)
+        self.view_menu.add_command(label=self.str.get("view_menu.toggle_participant_column"), command=self.toggle_participant_column)
+        self.view_menu.add_command(label=self.str.get("view_menu.toggle_date_column"), command=self.toggle_date_column)
+        self.view_menu.add_command(label=self.str.get("view_menu.toggle_time_column"), command=self.toggle_time_column)
+        self.view_menu.add_command(label=self.str.get("view_menu.toggle_id_column"), command=self.toggle_id_column)
         self.view_menu.add_separator()
-        self.view_menu.add_command(label="Show Legacy Annotations", accelerator="F2", command=self.show_legacy_annotations)
-        self.view_menu.add_command(label="Hide Legacy Annotations", accelerator="F3", command=self.hide_legacy_annotations)
+        self.view_menu.add_command(label=self.str.get("view_menu.show_legacy_annotations"), accelerator="F2", command=self.show_legacy_annotations)
+        self.view_menu.add_command(label=self.str.get("view_menu.hide_legacy_annotations"), accelerator="F3", command=self.hide_legacy_annotations)
         self.view_menu.add_separator()
-        self.view_menu.add_command(label="Randomize Participant Colors", accelerator="F4", command=self.generate_participant_colors)
+        self.view_menu.add_command(label=self.str.get("view_menu.generate_participant_colors"), accelerator="F4", command=self.generate_participant_colors)
 
         # filter menu
-        self.filter_menu.add_command(label="Filter By Active Layer", accelerator="F5", command=self.filter_by_active_layer)
-        self.filter_menu.add_command(label="Filter By Active Label", accelerator="F6", command=self.filter_by_active_label)
-        self.filter_menu.add_command(label="Filter By Active Qualifier", accelerator="F7", command=self.filter_by_active_qualifier)
+        self.filter_menu.add_command(label=self.str.get("filter_menu.filter_by_active_layer"), accelerator="F5", command=self.filter_by_active_layer)
+        self.filter_menu.add_command(label=self.str.get("filter_menu.filter_by_active_label"), accelerator="F6", command=self.filter_by_active_label)
+        self.filter_menu.add_command(label=self.str.get("filter_menu.filter_by_active_qualifier"), accelerator="F7", command=self.filter_by_active_qualifier)
 
         # taxonomy menu
-        self.taxonomy_menu.add_command(label="Import Taxonomy...", accelerator="Ctrl+Alt+I", command=self.import_taxonomy)
-        self.taxonomy_menu.add_command(label="Export Taxonomy As...", accelerator="Ctrl+Alt+E", command=self.export_taxonomy)
+        self.taxonomy_menu.add_command(label=self.str.get("taxonomy_menu.import_taxonomy"), accelerator="Ctrl+Alt+I", command=self.import_taxonomy)
+        self.taxonomy_menu.add_command(label=self.str.get("taxonomy_menu.export_taxonomy"), accelerator="Ctrl+Alt+E", command=self.export_taxonomy)
         self.taxonomy_menu.add_separator()
-        self.taxonomy_menu.add_command(label="Set Active Layer As Default", command=self.set_layer_as_default)
+        self.taxonomy_menu.add_command(label=self.str.get("taxonomy_menu.set_layer_as_default"), command=self.set_layer_as_default)
         self.taxonomy_menu.add_separator()
-        self.taxonomy_menu.add_command(label="Remove Active Label From Taxonomy", command=self.remove_label)
-        self.taxonomy_menu.add_command(label="Remove Active Qualifier From Taxonomy", command=self.remove_qualifier)
-        self.taxonomy_menu.add_command(label="Remove Active Layer From Taxonomy", command=self.remove_layer)
-        self.taxonomy_menu.add_command(label="Remove Active Link Types From Taxonomy", command=self.remove_link_types)
+        self.taxonomy_menu.add_command(label=self.str.get("taxonomy_menu.remove_label"), command=self.remove_label)
+        self.taxonomy_menu.add_command(label=self.str.get("taxonomy_menu.remove_qualifier"), command=self.remove_qualifier)
+        self.taxonomy_menu.add_command(label=self.str.get("taxonomy_menu.remove_layer"), command=self.remove_layer)
+        self.taxonomy_menu.add_command(label=self.str.get("taxonomy_menu.remove_link_types"), command=self.remove_link_types)
         self.taxonomy_menu.add_separator()
-        self.taxonomy_menu.add_command(label="Pick Element Color", command=self.select_element_type_to_colorize)
+        self.taxonomy_menu.add_command(label=self.str.get("taxonomy_menu.select_element_type_to_colorize"), command=self.select_element_type_to_colorize)
 
         ##################
         # INITIALIZATION #
@@ -342,17 +342,17 @@ class Annotator(GraphicalUserInterface):
 
         buttons = OrderedDict()
 
-        buttons.update({"[C]hange Layer": self.select_layer})
-        buttons.update({"[E]rase Annotation": self.erase_annotation})
-        buttons.update({"[L]ink Segment": self.select_link_type})
-        buttons.update({"[U]nlink Segment": self.unlink_segment})
-        buttons.update({"[S]plit Segment": self.select_split_token})
-        buttons.update({"[M]erge Segment": self.merge_segment})
-        buttons.update({"[A]dd Element": self.select_new_element_type})
-        buttons.update({"[R]ename Element": self.select_element})
-        buttons.update({"[J]ump To Segment": self.select_go_to})
-        buttons.update({"[F]ilter Collection": self.select_filter_type})
-        buttons.update({"Add [N]ote": self.input_new_note})
+        buttons.update({self.str.get("special_button.select_layer"): self.select_layer})
+        buttons.update({self.str.get("special_button.erase_annotation"): self.erase_annotation})
+        buttons.update({self.str.get("special_button.select_link_type"): self.select_link_type})
+        buttons.update({self.str.get("special_button.unlink_segment"): self.unlink_segment})
+        buttons.update({self.str.get("special_button.select_split_token"): self.select_split_token})
+        buttons.update({self.str.get("special_button.merge_segment"): self.merge_segment})
+        buttons.update({self.str.get("special_button.select_new_element_type"): self.select_new_element_type})
+        buttons.update({self.str.get("special_button.select_element"): self.select_element})
+        buttons.update({self.str.get("special_button.select_go_to"): self.select_go_to})
+        buttons.update({self.str.get("special_button.select_filter_type"): self.select_filter_type})
+        buttons.update({self.str.get("special_button.input_new_note"): self.input_new_note})
 
         for text, function in buttons.items():
             b = Button(
@@ -374,8 +374,11 @@ class Annotator(GraphicalUserInterface):
         """
         path = filedialog.askopenfilename(
             initialdir=SegmentCollection.save_dir,
-            title="Open file",
-            filetypes=(("Pickle serialized files", "*.pic"), ("all files", "*.*"))
+            title=self.str.get("dialog.title.open_file"),
+            filetypes=(
+                (self.str.get("filetype.pickle"), "*.pic"),
+                (self.str.get("filetype.all_files"), "*.*")
+            )
         )
 
         if path == "":
@@ -389,7 +392,10 @@ class Annotator(GraphicalUserInterface):
             self.colorize()
             self.update()
         else:
-            messagebox.showerror("Open File Error", "The file could not be loaded.\n\nIt may be corrupted or is in the wrong format.")
+            messagebox.showerror(
+                self.str.get("error.title.open_file"),
+                self.str.get("error.text.open_file")
+            )
 
     def save_file(self):
         """
@@ -397,8 +403,11 @@ class Annotator(GraphicalUserInterface):
         """
         path = filedialog.asksaveasfilename(
             initialdir=SegmentCollection.save_dir,
-            title="Save as",
-            filetypes=(("Pickle serialized files", "*.pic"), ("all files", "*.*"))
+            title=self.str.get("dialog.title.save_file"),
+            filetypes=(
+                (self.str.get("filetype.pickle"), "*.pic"),
+                (self.str.get("filetype.all_files"), "*.*")
+            )
         )
 
         if path == "":
@@ -407,7 +416,10 @@ class Annotator(GraphicalUserInterface):
         success = self.sc.save(path=path)
 
         if not success:
-            messagebox.showerror("Save File Error", "The target path is invalid.\n\nThe file could not be saved.")
+            messagebox.showerror(
+                self.str.get("error.title.save_file"),
+                self.str.get("error.text.save_file")
+            )
 
     def import_file(self):
         """
@@ -415,8 +427,12 @@ class Annotator(GraphicalUserInterface):
         """
         path = filedialog.askopenfilename(
             initialdir=SegmentCollection.csv_dir,
-            title="Import data file",
-            filetypes=(("CSV data files", "*.csv"), ("JSON data files", "*.json"), ("all files", "*.*"))
+            title=self.str.get("dialog.title.import_file"),
+            filetypes=(
+                (self.str.get("filetype.csv"), "*.csv"),
+                (self.str.get("filetype.json"), "*.json"),
+                (self.str.get("filetype.all_files"), "*.*")
+            )
         )
 
         if path == "":
@@ -430,8 +446,8 @@ class Annotator(GraphicalUserInterface):
 
             # how to use legacy annotations
             if messagebox.askyesno(
-                "Legacy Annotations",
-                "Do you want to import legacy annotations as normal annotations?"
+                self.str.get("box.title.legacy_annotations"),
+                self.str.get("box.text.legacy_annotations")
             ):
                 self.sc.legacy_to_annotations()
 
@@ -440,7 +456,10 @@ class Annotator(GraphicalUserInterface):
             self.colorize()
             self.update()
         else:
-            messagebox.showerror("Open File Error", "The file could not be loaded.\n\nIt may be corrupted or is in the wrong format.")
+            messagebox.showerror(
+                self.str.get("error.title.open_file"),
+                self.str.get("box.text.wrong_format")
+            )
 
     def export_file(self):
         """
@@ -448,8 +467,11 @@ class Annotator(GraphicalUserInterface):
         """
         path = filedialog.asksaveasfilename(
             initialdir=SegmentCollection.out_dir,
-            title="Export as",
-            filetypes=(("CSV data files", "*.csv"), ("JSON data files", "*.json"))
+            title=self.str.get("dialog.title.export_file"),
+            filetypes=(
+                (self.str.get("filetype.csv"), "*.csv"),
+                (self.str.get("filetype.json"), "*.json")
+            )
         )
 
         if path == "":
@@ -458,7 +480,10 @@ class Annotator(GraphicalUserInterface):
         success = self.sc.export_collection(path)
 
         if not success:
-            messagebox.showerror("Export File Error", "The target path is invalid.\n\nThe file could not be created.")
+            messagebox.showerror(
+                self.str.get("error.title.export_file"),
+                self.str.get("error.text.export_file")
+            )
 
     def close_file(self):
         """
@@ -476,8 +501,11 @@ class Annotator(GraphicalUserInterface):
         """
         path = filedialog.askopenfilename(
             initialdir=SegmentCollection.taxo_dir,
-            title="Open taxonomy file",
-            filetypes=(("JSON taxonomy file", "*.json"), ("all files", "*.*"))
+            title=self.str.get("dialog.title.import_taxonomy"),
+            filetypes=(
+                (self.str.get("filetype.json"), "*.json"),
+                (self.str.get("filetype.all_files"), "*.*")
+            )
         )
 
         if path == "":
@@ -489,7 +517,10 @@ class Annotator(GraphicalUserInterface):
             self.colorize()
             self.update()
         else:
-            messagebox.showerror("Import Taxonomy Error", "The file could not be loaded.\n\nIt may be corrupted or is in the wrong format.")
+            messagebox.showerror(
+                self.str.get("error.title.import_taxonomy"),
+                self.str.get("error.text.import_taxonomy")
+            )
 
     def export_taxonomy(self):
         """
@@ -497,8 +528,11 @@ class Annotator(GraphicalUserInterface):
         """
         path = filedialog.asksaveasfilename(
             initialdir=SegmentCollection.custom_taxo_dir,
-            title="Export taxonomy as",
-            filetypes=(("JSON data files", "*.json"), ("all files", "*.*"))
+            title=self.str.get("dialog.title.export_taxonomy"),
+            filetypes=(
+                (self.str.get("filetype.json"), "*.json"),
+                (self.str.get("filetype.all_files"), "*.*")
+            )
         )
 
         if path == "":
@@ -507,7 +541,10 @@ class Annotator(GraphicalUserInterface):
         success = self.sc.export_taxonomy(path)
 
         if not success:
-            messagebox.showerror("Export Taxonomy Error", "The target path is invalid.\n\nThe file could not be created.")
+            messagebox.showerror(
+                self.str.get("error.title.export_taxonomy"),
+                self.str.get("error.text.export_file")
+            )
 
     #######################
     # NAVIGATION COMMANDS #
@@ -566,7 +603,7 @@ class Annotator(GraphicalUserInterface):
         """
         Inputs a target segment to go to
         """
-        self.input("select destination index", [], self.go_to, free=True)
+        self.input("prompt.select_go_to", [], self.go_to, free=True)
 
     @undoable
     def go_to(self, number):
@@ -591,11 +628,15 @@ class Annotator(GraphicalUserInterface):
     ###############################
     # SEGMENT MANAGEMENT COMMANDS #
     ###############################
+
     def delete_segment(self):
         """
         Deletes the active segment
         """
-        if messagebox.askyesno("Delete Segment", "Are you sure you want to remove the active segment from the collection?"):
+        if messagebox.askyesno(
+            self.str.get("dialog.title.delete_segment"),
+            self.str.get("dialog.text.delete_segment")
+        ):
             self.apply_delete_segment()
 
     @undoable
@@ -647,7 +688,7 @@ class Annotator(GraphicalUserInterface):
         segment = self.sc.get_active()
 
         if len(segment.tokens) > 1:
-            self.input("select token on which to split", segment.tokens[:-1], self.split_segment, sort=False)
+            self.input("prompt.select_split_token", segment.tokens[:-1], self.split_segment, sort=False)
 
     @undoable
     def split_segment(self, token):
@@ -708,11 +749,14 @@ class Annotator(GraphicalUserInterface):
         Inputs a link type
         """
         if len(self.sc.links.keys()) == 0:
-            messagebox.showwarning("No Link Available", "The current taxonomy doesn't have any link types defined.")
+            messagebox.showwarning(
+                self.str.get("dialog.title.select_link_type"),
+                self.str.get("dialog.text.select_link_type")
+            )
             return
 
         if self.sc.i > 0:  # first segment can't be linked
-            self.input("select link type", self.sc.links.keys(), self.select_link_target)
+            self.input("prompt.select_link_type", self.sc.links.keys(), self.select_link_target)
 
     def select_link_target(self, link_type):
         """
@@ -721,7 +765,7 @@ class Annotator(GraphicalUserInterface):
         i = self.sc.i - 50 if self.sc.i - 50 >= 1 else 1
 
         # input target segment
-        self.input("select link target", reversed(list(range(i, self.sc.i + 1))), lambda n, link_t=link_type: self.link_segment(n, link_t), sort=False)
+        self.input("prompt.select_link_target", reversed(list(range(i, self.sc.i + 1))), lambda n, link_t=link_type: self.link_segment(n, link_t), sort=False)
 
     @undoable
     def link_segment(self, number, link_type):
@@ -772,7 +816,7 @@ class Annotator(GraphicalUserInterface):
         """
         segment = self.sc.get_active()
         placeholder = "" if segment.note is None else segment.note
-        self.input("input note text", [], self.set_note, placeholder=placeholder, free=True)
+        self.input("prompt.input_new_note", [], self.set_note, placeholder=placeholder, free=True)
 
     @undoable
     def set_note(self, note):
@@ -802,23 +846,28 @@ class Annotator(GraphicalUserInterface):
         """
         Selects the type of element to be added to the taxonomy
         """
-        self.input("select type of new element", ["Layer", "Label", "Qualifier", "Link Type"], self.add_new_element)
+        self.input("prompt.select_new_element_type", [
+                self.str.get("layer"),
+                self.str.get("label"),
+                self.str.get("qualifier"),
+                self.str.get("link_type")
+            ], self.add_new_element)
 
     def add_new_element(self, element_type):
         """
         Adds a new element to the taxonomy
         """
-        if element_type == "Layer":
-            self.input("input new layer name", [], self.add_layer, free=True)
+        if element_type == self.str.get("layer"):
+            self.input("prompt.add_new_element_layer", [], self.add_layer, free=True)
 
-        if element_type == "Label":
-            self.input("input new label name", [], self.add_label, free=True)
+        if element_type == self.str.get("label"):
+            self.input("prompt.add_new_element_label", [], self.add_label, free=True)
 
-        if element_type == "Qualifier":
-            self.input("input new qualifier name", [], self.add_qualifier, free=True)
+        if element_type == self.str.get("qualifier"):
+            self.input("prompt.add_new_element_qualifier", [], self.add_qualifier, free=True)
 
-        if element_type == "Link Type":
-            self.input("input new link type", [], self.add_link_type, free=True)
+        if element_type == self.str.get("link_type"):
+            self.input("prompt.add_new_element_link_typer", [], self.add_link_type, free=True)
 
     @undoable
     def add_layer(self, layer):
@@ -879,7 +928,10 @@ class Annotator(GraphicalUserInterface):
 
         if self.sc.layer in segment.annotations:
             label = segment.get(self.sc.layer)
-            if messagebox.askyesno("Delete Label", "Are you sure you want to remove the {} label from the taxonomy?".format(label)):
+            if messagebox.askyesno(
+                self.str.get("dialog.title.remove_label"),
+                self.str.get("dialog.text.remove_label", label)
+            ):
                 self.sc.delete_label(self.sc.layer, label)
                 self.update()
 
@@ -898,7 +950,10 @@ class Annotator(GraphicalUserInterface):
 
         if self.sc.layer in segment.annotations:
             qualifier = segment.get(self.sc.layer, qualifier=True)
-            if messagebox.askyesno("Delete Qualifier", "Are you sure you want to remove the {} qualifier from the taxonomy?".format(qualifier)):
+            if messagebox.askyesno(
+                self.str.get("dialog.text.remove_label"),
+                self.str.get("dialog.text.remove_qualifier", qualifier)
+            ):
                 self.sc.delete_qualifier(self.sc.layer, qualifier)
                 self.update()
 
@@ -917,8 +972,8 @@ class Annotator(GraphicalUserInterface):
         Removes the active segment's layer from the taxonomy
         """
         if messagebox.askyesno(
-            "Delete Layer",
-            "Are you sure you want to remove the {} layer from the taxonomy?".format(self.sc.layer)
+            self.str.get("dialog.title.remove_layer"),
+            self.str.get("dialog.text.remove_layer", self.sc.layer)
         ):
             self.apply_remove_layer(self.sc.layer)
 
@@ -947,8 +1002,8 @@ class Annotator(GraphicalUserInterface):
                 lts.append(lt)
 
         if messagebox.askyesno(
-            "Delete Link Type{}".format("s" if len(lts) > 1 else ""),
-            "Are you sure you want to remove the {} link type{} from the taxonomy?".format(", ".join(lts), "s" if len(lts) > 1 else "")
+            self.str.get("dialog.title.remove_link_types", "s" if len(lts) > 1 else ""),
+            self.str.get("dialog.text.remove_link_types", ", ".join(lts), "s" if len(lts) > 1 else "")
         ):
             self.apply_remove_link_types(lts)
 
@@ -972,18 +1027,18 @@ class Annotator(GraphicalUserInterface):
         """
         Selects the type of element to be colorized
         """
-        element_types = ["Layer", "Link Type"]
+        element_types = [self.str.get("layer"), self.str.get("link_type")]
 
         for segment in self.sc.full_collection:
             for layer in segment.legacy.keys():
                 # adds Legacy Layer option if there are any original ones
                 if layer not in self.sc.labels.keys():
-                    element_types.append("Legacy Layer")
+                    element_types.append(self.str.get("legacy_layer"))
                     break
             for ls, lt in segment.legacy_links:
                 # adds Legacy Link Type option if there are any original ones
                 if lt not in self.sc.links.keys():
-                    element_types.append("Legacy Link Type")
+                    element_types.append(self.str.get("legacy_link_type"))
                     break
 
         self.input("select type of element to colorize", set(element_types), self.select_element_to_colorize)
@@ -992,10 +1047,10 @@ class Annotator(GraphicalUserInterface):
         """
         Select an element to colorize
         """
-        if element_type == "Layer":
-            self.input("select layer to colorize", self.sc.labels.keys(), self.pick_color_for_layer)
+        if element_type == self.str.get("layer"):
+            self.input("prompt.select_element_to_colorize_layer", self.sc.labels.keys(), self.pick_color_for_layer)
 
-        if element_type == "Legacy Layer":
+        if element_type == self.str.get("legacy_layer"):
             legacy_layers = []
 
             for segment in self.sc.full_collection:
@@ -1003,12 +1058,12 @@ class Annotator(GraphicalUserInterface):
                     if layer not in legacy_layers and layer not in self.sc.labels.keys():
                         legacy_layers.append(layer)
 
-            self.input("select legacy layer to colorize", legacy_layers, self.pick_color_for_layer)
+            self.input("prompt.select_element_to_colorize_legacy_layer", legacy_layers, self.pick_color_for_layer)
 
-        if element_type == "Link Type":
-            self.input("select link type to colorize", self.sc.links.keys(), self.pick_color_for_link_type)
+        if element_type == self.str.get("link_type"):
+            self.input("prompt.select_element_to_colorize_link_type", self.sc.links.keys(), self.pick_color_for_link_type)
 
-        if element_type == "Legacy Link Type":
+        if element_type == self.str.get("legacy_link_type"):
             legacy_link_types = []
 
             for segment in self.sc.full_collection:
@@ -1016,7 +1071,7 @@ class Annotator(GraphicalUserInterface):
                     if lt not in legacy_link_types and lt not in self.sc.links.keys():
                         legacy_link_types.append(lt)
 
-            self.input("select legacy link type to colorize", legacy_link_types, self.pick_color_for_link_type)
+            self.input("prompt.select_element_to_colorize_legacy_link", legacy_link_types, self.pick_color_for_link_type)
 
     def pick_color_for_layer(self, layer):
         """
@@ -1059,7 +1114,7 @@ class Annotator(GraphicalUserInterface):
             elements.append(lt)
 
         self.input(
-            "select element to rename",
+            "prompt.select_element",
             elements,
             self.input_element_new_name
         )
@@ -1072,7 +1127,7 @@ class Annotator(GraphicalUserInterface):
 
         if text == self.sc.layer:
             self.input(
-                "input new layer name",
+                "prompt.input_element_new_name_layer",
                 [],
                 self.rename_layer,
                 placeholder=text,
@@ -1081,7 +1136,7 @@ class Annotator(GraphicalUserInterface):
 
         if text == self.sc.get_active_label():
             self.input(
-                "input new label name",
+                "prompt.input_element_new_name_label",
                 [],
                 self.rename_label,
                 placeholder=text,
@@ -1090,7 +1145,7 @@ class Annotator(GraphicalUserInterface):
 
         if text == self.sc.get_active_qualifier():
             self.input(
-                "input new qualifier name",
+                "prompt.input_element_new_name_qualifier",
                 [],
                 self.rename_qualifier,
                 placeholder=text,
@@ -1100,7 +1155,7 @@ class Annotator(GraphicalUserInterface):
         for ls, lt in segment.links:
             if text == lt:
                 self.input(
-                    "input new relation type name",
+                    "prompt.input_element_new_name_relation_type",
                     [],
                     lambda name: self.rename_link_type(lt, name),
                     placeholder=text,
@@ -1190,7 +1245,15 @@ class Annotator(GraphicalUserInterface):
         Selects a filter type
         """
         if not self.sc.filter:
-            self.input("select filter type", ["Layer", "Legacy Layer", "Label", "Legacy Label", "Qualifier", "Legacy Qualifier"], self.filter)
+            self.input(
+                self.str.get("prompt.select_filter_type"), [
+                    self.str.get("layer"),
+                    self.str.get("legacy_layer"),
+                    self.str.get("label"),
+                    self.str.get("legacy_label"),
+                    self.str.get("qualifier"),
+                    self.str.get("legacy_qualifier")
+                ], self.filter)
         else:
             self.remove_filter()
 
@@ -1217,27 +1280,39 @@ class Annotator(GraphicalUserInterface):
         """
         Filters the collection
         """
-        if filter_type == "Layer":
-            self.input("select layer", self.sc.labels.keys(), self.filter_by_layer)
+        if filter_type == self.str.get("layer"):
+            self.input(
+                "prompt.filter_layer",
+                self.sc.labels.keys(),
+                self.filter_by_layer
+            )
 
-        if filter_type == "Legacy Layer":
+        if filter_type == self.str.get("legacy_layer"):
             legacy_layers = []
 
             for segment in self.sc.full_collection:
                 for layer in segment.legacy.keys():
                     legacy_layers.append(layer)
 
-            self.input("select legacy layer", set(legacy_layers), self.filter_by_legacy_layer)
+            self.input(
+                "prompt.filter_legacy_layer",
+                set(legacy_layers),
+                self.filter_by_legacy_layer
+            )
 
-        if filter_type == "Label":
+        if filter_type == self.str.get("label"):
             labels = []
 
             for layer in self.sc.labels:
                 labels += self.sc.labels[layer]
 
-            self.input("select label", set(labels), self.filter_by_label)
+            self.input(
+                "prompt.filter_label",
+                set(labels),
+                self.filter_by_label
+            )
 
-        if filter_type == "Legacy Label":
+        if filter_type == self.str.get("legacy_label"):
             legacy_labels = []
 
             for segment in self.sc.full_collection:
@@ -1245,17 +1320,25 @@ class Annotator(GraphicalUserInterface):
                     if segment.has(layer, legacy=True):
                         legacy_labels.append(segment.get(layer, legacy=True))
 
-            self.input("select legacy label", set(legacy_labels), self.filter_by_legacy_label)
+            self.input(
+                "prompt.filter_legacy_label",
+                set(legacy_labels),
+                self.filter_by_legacy_label
+            )
 
-        if filter_type == "Qualifier":
+        if filter_type == self.str.get("qualifier"):
             qualifiers = []
 
             for layer in self.sc.qualifiers:
                 qualifiers += self.sc.qualifiers[layer]
 
-            self.input("select qualifier", set(qualifiers), self.filter_by_qualifier)
+            self.input(
+                "prompt.filter_qualifier",
+                set(qualifiers),
+                self.filter_by_qualifier
+            )
 
-        if filter_type == "Legacy Qualifier":
+        if filter_type == self.str.get("legacy_qualifier"):
             legacy_qualifiers = []
 
             for segment in self.sc.full_collection:
@@ -1263,7 +1346,11 @@ class Annotator(GraphicalUserInterface):
                     if segment.has(layer, legacy=True, qualifier=True):
                         legacy_qualifiers.append(segment.get(layer, legacy=True, qualifier=True))
 
-            self.input("select legacy qualifier", set(legacy_qualifiers), self.filter_by_legacy_qualifier)
+            self.input(
+                "prompt.filter_legacy_qualifier",
+                set(legacy_qualifiers),
+                self.filter_by_legacy_qualifier
+            )
 
     def filter_by_active_layer(self):
         """
@@ -1457,10 +1544,17 @@ class Annotator(GraphicalUserInterface):
         Inputs a layer
         """
         if len(self.sc.labels.keys()) == 1:
-            messagebox.showwarning("No Other Layers", "The current taxonomy doesn't have any other layers.")
+            messagebox.showwarning(
+                self.str.get("dialog.title.select_layer"),
+                self.str.get("dialog.text.select_layer")
+            )
             return
 
-        self.input("select layer", self.sc.labels.keys(), self.set_active_layer)
+        self.input(
+            "prompt.select_layer",
+            self.sc.labels.keys(),
+            self.set_active_layer
+        )
 
     @undoable
     def set_active_layer(self, layer):
@@ -1489,9 +1583,19 @@ class Annotator(GraphicalUserInterface):
             return
 
         if self.sc.layer in self.sc.qualifiers and self.sc.get_active_label() and not self.sc.get_active_qualifier():
-            self.input("select qualifier to apply", self.sc.qualifiers[self.sc.layer], self.annotate_qualifier, sort=False)
+            self.input(
+                "prompt.annotation_mode_qualifier",
+                self.sc.qualifiers[self.sc.layer],
+                self.annotate_qualifier,
+                sort=False
+            )
         else:
-            self.input("select label to apply", self.sc.labels[self.sc.layer], self.annotate_label, sort=False)
+            self.input(
+                "prompt.annotation_mode_label",
+                self.sc.labels[self.sc.layer],
+                self.annotate_label,
+                sort=False
+            )
 
     @undoable
     def annotate_label(self, annotation):
@@ -1553,18 +1657,33 @@ class Annotator(GraphicalUserInterface):
             self.parent.title("{} - {}".format(self.window_title, self.sc.save_file))
 
             # status message
-            status = "Active Layer: {}".format(self.sc.layer.title())
+            status = "{}: {}".format(
+                self.str.get("active_layer"),
+                self.sc.layer.title()
+            )
 
             if self.sc.get_active_label():
-                status = "{} - Active Label: {}".format(status, self.sc.get_active_label().title())
+                status = "{} - {}: {}".format(
+                    status,
+                    self.str.get("active_label"),
+                    self.sc.get_active_label().title()
+                )
 
             if self.sc.get_active_qualifier():
-                status = "{} - Active Qualifier: {}".format(status, self.sc.get_active_qualifier().title())
+                status = "{} - {}: {}".format(
+                    status,
+                    self.str.get("active_qualifier"),
+                    self.sc.get_active_qualifier().title()
+                )
 
             link_types = set([lt.title() for ls, lt in self.sc.get_active().links])
 
             if len(link_types) > 0:
-                status = "{} - Active Link Type{}: {}".format(status, "s" if len(link_types) > 1 else "", ", ".join(link_types))
+                status = "{} - {}: {}".format(
+                    status,
+                    self.str.get("active_link_types", "s" if len(link_types) > 1 else ""),
+                    ", ".join(link_types)
+                )
         else:
             # default title
             self.parent.title(self.window_title)
