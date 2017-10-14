@@ -141,47 +141,47 @@ class Annotator(GraphicalUserInterface):
         #################
 
         # file menu
-        self.file_menu.add_command(label=self.str.get("file_menu.open_file"), accelerator="Ctrl+O", command=self.open_file)
-        self.file_menu.add_command(label=self.str.get("file_menu.save_file"), accelerator="Ctrl+Shift+S", command=self.save_file)
-        self.file_menu.add_command(label=self.str.get("file_menu.import_file"), accelerator="Ctrl+Shift+I", command=self.import_file)
-        self.file_menu.add_command(label=self.str.get("file_menu.export_file"), accelerator="Ctrl+Shift+E", command=self.export_file)
-        self.file_menu.add_command(label=self.str.get("file_menu.close_file"), accelerator="Ctrl+W", command=self.close_file)
+        self.file_menu.add_command(label=self._("menu.open_file"), accelerator="Ctrl+O", command=self.open_file)
+        self.file_menu.add_command(label=self._("menu.save_file"), accelerator="Ctrl+Shift+S", command=self.save_file)
+        self.file_menu.add_command(label=self._("menu.import_file"), accelerator="Ctrl+Shift+I", command=self.import_file)
+        self.file_menu.add_command(label=self._("menu.export_file"), accelerator="Ctrl+Shift+E", command=self.export_file)
+        self.file_menu.add_command(label=self._("menu.close_file"), accelerator="Ctrl+W", command=self.close_file)
         self.file_menu.add_separator()
-        self.file_menu.add_command(label=self.str.get("file_menu.parent"), accelerator="Esc", command=self.parent.quit)
+        self.file_menu.add_command(label=self._("menu.parent"), accelerator="Esc", command=self.parent.quit)
 
         # edit menu
-        self.edit_menu.add_command(label=self.str.get("edit_menu.undo"), accelerator="Ctrl+Z", command=self.undo)
-        self.edit_menu.add_command(label=self.str.get("edit_menu.redo"), accelerator="Ctrl+Shift+Z", command=self.redo)
+        self.edit_menu.add_command(label=self._("menu.undo"), accelerator="Ctrl+Z", command=self.undo)
+        self.edit_menu.add_command(label=self._("menu.redo"), accelerator="Ctrl+Shift+Z", command=self.redo)
 
         # view menu
         self.view_menu.add_separator()
-        self.view_menu.add_command(label=self.str.get("view_menu.toggle_participant_column"), command=self.toggle_participant_column)
-        self.view_menu.add_command(label=self.str.get("view_menu.toggle_date_column"), command=self.toggle_date_column)
-        self.view_menu.add_command(label=self.str.get("view_menu.toggle_time_column"), command=self.toggle_time_column)
-        self.view_menu.add_command(label=self.str.get("view_menu.toggle_id_column"), command=self.toggle_id_column)
+        self.view_menu.add_command(label=self._("menu.toggle_participant_column"), command=self.toggle_participant_column)
+        self.view_menu.add_command(label=self._("menu.toggle_date_column"), command=self.toggle_date_column)
+        self.view_menu.add_command(label=self._("menu.toggle_time_column"), command=self.toggle_time_column)
+        self.view_menu.add_command(label=self._("menu.toggle_id_column"), command=self.toggle_id_column)
         self.view_menu.add_separator()
-        self.view_menu.add_command(label=self.str.get("view_menu.show_legacy_annotations"), accelerator="F2", command=self.show_legacy_annotations)
-        self.view_menu.add_command(label=self.str.get("view_menu.hide_legacy_annotations"), accelerator="F3", command=self.hide_legacy_annotations)
+        self.view_menu.add_command(label=self._("menu.show_legacy_annotations"), accelerator="F2", command=self.show_legacy_annotations)
+        self.view_menu.add_command(label=self._("menu.hide_legacy_annotations"), accelerator="F3", command=self.hide_legacy_annotations)
         self.view_menu.add_separator()
-        self.view_menu.add_command(label=self.str.get("view_menu.generate_participant_colors"), accelerator="F4", command=self.generate_participant_colors)
+        self.view_menu.add_command(label=self._("menu.generate_participant_colors"), accelerator="F4", command=self.generate_participant_colors)
 
         # filter menu
-        self.filter_menu.add_command(label=self.str.get("filter_menu.filter_by_active_layer"), accelerator="F5", command=self.filter_by_active_layer)
-        self.filter_menu.add_command(label=self.str.get("filter_menu.filter_by_active_label"), accelerator="F6", command=self.filter_by_active_label)
-        self.filter_menu.add_command(label=self.str.get("filter_menu.filter_by_active_qualifier"), accelerator="F7", command=self.filter_by_active_qualifier)
+        self.filter_menu.add_command(label=self._("menu.filter_by_active_layer"), accelerator="F5", command=self.filter_by_active_layer)
+        self.filter_menu.add_command(label=self._("menu.filter_by_active_label"), accelerator="F6", command=self.filter_by_active_label)
+        self.filter_menu.add_command(label=self._("menu.filter_by_active_qualifier"), accelerator="F7", command=self.filter_by_active_qualifier)
 
         # taxonomy menu
-        self.taxonomy_menu.add_command(label=self.str.get("taxonomy_menu.import_taxonomy"), accelerator="Ctrl+Alt+I", command=self.import_taxonomy)
-        self.taxonomy_menu.add_command(label=self.str.get("taxonomy_menu.export_taxonomy"), accelerator="Ctrl+Alt+E", command=self.export_taxonomy)
+        self.taxonomy_menu.add_command(label=self._("menu.import_taxonomy"), accelerator="Ctrl+Alt+I", command=self.import_taxonomy)
+        self.taxonomy_menu.add_command(label=self._("menu.export_taxonomy"), accelerator="Ctrl+Alt+E", command=self.export_taxonomy)
         self.taxonomy_menu.add_separator()
-        self.taxonomy_menu.add_command(label=self.str.get("taxonomy_menu.set_layer_as_default"), command=self.set_layer_as_default)
+        self.taxonomy_menu.add_command(label=self._("menu.set_layer_as_default"), command=self.set_layer_as_default)
         self.taxonomy_menu.add_separator()
-        self.taxonomy_menu.add_command(label=self.str.get("taxonomy_menu.remove_label"), command=self.remove_label)
-        self.taxonomy_menu.add_command(label=self.str.get("taxonomy_menu.remove_qualifier"), command=self.remove_qualifier)
-        self.taxonomy_menu.add_command(label=self.str.get("taxonomy_menu.remove_layer"), command=self.remove_layer)
-        self.taxonomy_menu.add_command(label=self.str.get("taxonomy_menu.remove_link_types"), command=self.remove_link_types)
+        self.taxonomy_menu.add_command(label=self._("menu.remove_label"), command=self.remove_label)
+        self.taxonomy_menu.add_command(label=self._("menu.remove_qualifier"), command=self.remove_qualifier)
+        self.taxonomy_menu.add_command(label=self._("menu.remove_layer"), command=self.remove_layer)
+        self.taxonomy_menu.add_command(label=self._("menu.remove_link_types"), command=self.remove_link_types)
         self.taxonomy_menu.add_separator()
-        self.taxonomy_menu.add_command(label=self.str.get("taxonomy_menu.select_element_type_to_colorize"), command=self.select_element_type_to_colorize)
+        self.taxonomy_menu.add_command(label=self._("menu.select_element_type_to_colorize"), command=self.select_element_type_to_colorize)
 
         ##################
         # INITIALIZATION #
@@ -342,17 +342,17 @@ class Annotator(GraphicalUserInterface):
 
         buttons = OrderedDict()
 
-        buttons.update({self.str.get("special_button.select_layer"): self.select_layer})
-        buttons.update({self.str.get("special_button.erase_annotation"): self.erase_annotation})
-        buttons.update({self.str.get("special_button.select_link_type"): self.select_link_type})
-        buttons.update({self.str.get("special_button.unlink_segment"): self.unlink_segment})
-        buttons.update({self.str.get("special_button.select_split_token"): self.select_split_token})
-        buttons.update({self.str.get("special_button.merge_segment"): self.merge_segment})
-        buttons.update({self.str.get("special_button.select_new_element_type"): self.select_new_element_type})
-        buttons.update({self.str.get("special_button.select_element"): self.select_element})
-        buttons.update({self.str.get("special_button.select_go_to"): self.select_go_to})
-        buttons.update({self.str.get("special_button.select_filter_type"): self.select_filter_type})
-        buttons.update({self.str.get("special_button.input_new_note"): self.input_new_note})
+        buttons.update({self._("button.select_layer"): self.select_layer})
+        buttons.update({self._("button.erase_annotation"): self.erase_annotation})
+        buttons.update({self._("button.select_link_type"): self.select_link_type})
+        buttons.update({self._("button.unlink_segment"): self.unlink_segment})
+        buttons.update({self._("button.select_split_token"): self.select_split_token})
+        buttons.update({self._("button.merge_segment"): self.merge_segment})
+        buttons.update({self._("button.select_new_element_type"): self.select_new_element_type})
+        buttons.update({self._("button.select_element"): self.select_element})
+        buttons.update({self._("button.select_go_to"): self.select_go_to})
+        buttons.update({self._("button.select_filter_type"): self.select_filter_type})
+        buttons.update({self._("button.input_new_note"): self.input_new_note})
 
         for text, function in buttons.items():
             b = Button(
@@ -374,10 +374,10 @@ class Annotator(GraphicalUserInterface):
         """
         path = filedialog.askopenfilename(
             initialdir=SegmentCollection.save_dir,
-            title=self.str.get("dialog.title.open_file"),
+            title=self._("dialog.title.open_file"),
             filetypes=(
-                (self.str.get("filetype.pickle"), "*.pic"),
-                (self.str.get("filetype.all_files"), "*.*")
+                (self._("filetype.pickle"), "*.pic"),
+                (self._("filetype.all_files"), "*.*")
             )
         )
 
@@ -393,8 +393,8 @@ class Annotator(GraphicalUserInterface):
             self.update()
         else:
             messagebox.showerror(
-                self.str.get("error.title.open_file"),
-                self.str.get("error.text.open_file")
+                self._("error.title.open_file"),
+                self._("error.text.open_file")
             )
 
     def save_file(self):
@@ -403,10 +403,10 @@ class Annotator(GraphicalUserInterface):
         """
         path = filedialog.asksaveasfilename(
             initialdir=SegmentCollection.save_dir,
-            title=self.str.get("dialog.title.save_file"),
+            title=self._("dialog.title.save_file"),
             filetypes=(
-                (self.str.get("filetype.pickle"), "*.pic"),
-                (self.str.get("filetype.all_files"), "*.*")
+                (self._("filetype.pickle"), "*.pic"),
+                (self._("filetype.all_files"), "*.*")
             )
         )
 
@@ -417,8 +417,8 @@ class Annotator(GraphicalUserInterface):
 
         if not success:
             messagebox.showerror(
-                self.str.get("error.title.save_file"),
-                self.str.get("error.text.save_file")
+                self._("error.title.save_file"),
+                self._("error.text.save_file")
             )
 
     def import_file(self):
@@ -427,11 +427,11 @@ class Annotator(GraphicalUserInterface):
         """
         path = filedialog.askopenfilename(
             initialdir=SegmentCollection.csv_dir,
-            title=self.str.get("dialog.title.import_file"),
+            title=self._("dialog.title.import_file"),
             filetypes=(
-                (self.str.get("filetype.csv"), "*.csv"),
-                (self.str.get("filetype.json"), "*.json"),
-                (self.str.get("filetype.all_files"), "*.*")
+                (self._("filetype.csv"), "*.csv"),
+                (self._("filetype.json"), "*.json"),
+                (self._("filetype.all_files"), "*.*")
             )
         )
 
@@ -446,8 +446,8 @@ class Annotator(GraphicalUserInterface):
 
             # how to use legacy annotations
             if messagebox.askyesno(
-                self.str.get("box.title.legacy_annotations"),
-                self.str.get("box.text.legacy_annotations")
+                self._("box.title.legacy_annotations"),
+                self._("box.text.legacy_annotations")
             ):
                 self.sc.legacy_to_annotations()
 
@@ -457,8 +457,8 @@ class Annotator(GraphicalUserInterface):
             self.update()
         else:
             messagebox.showerror(
-                self.str.get("error.title.open_file"),
-                self.str.get("box.text.wrong_format")
+                self._("error.title.open_file"),
+                self._("box.text.wrong_format")
             )
 
     def export_file(self):
@@ -467,10 +467,10 @@ class Annotator(GraphicalUserInterface):
         """
         path = filedialog.asksaveasfilename(
             initialdir=SegmentCollection.out_dir,
-            title=self.str.get("dialog.title.export_file"),
+            title=self._("dialog.title.export_file"),
             filetypes=(
-                (self.str.get("filetype.csv"), "*.csv"),
-                (self.str.get("filetype.json"), "*.json")
+                (self._("filetype.csv"), "*.csv"),
+                (self._("filetype.json"), "*.json")
             )
         )
 
@@ -481,8 +481,8 @@ class Annotator(GraphicalUserInterface):
 
         if not success:
             messagebox.showerror(
-                self.str.get("error.title.export_file"),
-                self.str.get("error.text.export_file")
+                self._("error.title.export_file"),
+                self._("error.text.export_file")
             )
 
     def close_file(self):
@@ -501,10 +501,10 @@ class Annotator(GraphicalUserInterface):
         """
         path = filedialog.askopenfilename(
             initialdir=SegmentCollection.taxo_dir,
-            title=self.str.get("dialog.title.import_taxonomy"),
+            title=self._("dialog.title.import_taxonomy"),
             filetypes=(
-                (self.str.get("filetype.json"), "*.json"),
-                (self.str.get("filetype.all_files"), "*.*")
+                (self._("filetype.json"), "*.json"),
+                (self._("filetype.all_files"), "*.*")
             )
         )
 
@@ -518,8 +518,8 @@ class Annotator(GraphicalUserInterface):
             self.update()
         else:
             messagebox.showerror(
-                self.str.get("error.title.import_taxonomy"),
-                self.str.get("error.text.import_taxonomy")
+                self._("error.title.import_taxonomy"),
+                self._("error.text.import_taxonomy")
             )
 
     def export_taxonomy(self):
@@ -528,10 +528,10 @@ class Annotator(GraphicalUserInterface):
         """
         path = filedialog.asksaveasfilename(
             initialdir=SegmentCollection.custom_taxo_dir,
-            title=self.str.get("dialog.title.export_taxonomy"),
+            title=self._("dialog.title.export_taxonomy"),
             filetypes=(
-                (self.str.get("filetype.json"), "*.json"),
-                (self.str.get("filetype.all_files"), "*.*")
+                (self._("filetype.json"), "*.json"),
+                (self._("filetype.all_files"), "*.*")
             )
         )
 
@@ -542,8 +542,8 @@ class Annotator(GraphicalUserInterface):
 
         if not success:
             messagebox.showerror(
-                self.str.get("error.title.export_taxonomy"),
-                self.str.get("error.text.export_file")
+                self._("error.title.export_taxonomy"),
+                self._("error.text.export_file")
             )
 
     #######################
@@ -634,8 +634,8 @@ class Annotator(GraphicalUserInterface):
         Deletes the active segment
         """
         if messagebox.askyesno(
-            self.str.get("dialog.title.delete_segment"),
-            self.str.get("dialog.text.delete_segment")
+            self._("dialog.title.delete_segment"),
+            self._("dialog.text.delete_segment")
         ):
             self.apply_delete_segment()
 
@@ -750,8 +750,8 @@ class Annotator(GraphicalUserInterface):
         """
         if len(self.sc.links.keys()) == 0:
             messagebox.showwarning(
-                self.str.get("dialog.title.select_link_type"),
-                self.str.get("dialog.text.select_link_type")
+                self._("dialog.title.select_link_type"),
+                self._("dialog.text.select_link_type")
             )
             return
 
@@ -847,26 +847,26 @@ class Annotator(GraphicalUserInterface):
         Selects the type of element to be added to the taxonomy
         """
         self.input("prompt.select_new_element_type", [
-                self.str.get("layer"),
-                self.str.get("label"),
-                self.str.get("qualifier"),
-                self.str.get("link_type")
+                self._("layer"),
+                self._("label"),
+                self._("qualifier"),
+                self._("link_type")
             ], self.add_new_element)
 
     def add_new_element(self, element_type):
         """
         Adds a new element to the taxonomy
         """
-        if element_type == self.str.get("layer"):
+        if element_type == self._("layer"):
             self.input("prompt.add_new_element_layer", [], self.add_layer, free=True)
 
-        if element_type == self.str.get("label"):
+        if element_type == self._("label"):
             self.input("prompt.add_new_element_label", [], self.add_label, free=True)
 
-        if element_type == self.str.get("qualifier"):
+        if element_type == self._("qualifier"):
             self.input("prompt.add_new_element_qualifier", [], self.add_qualifier, free=True)
 
-        if element_type == self.str.get("link_type"):
+        if element_type == self._("link_type"):
             self.input("prompt.add_new_element_link_typer", [], self.add_link_type, free=True)
 
     @undoable
@@ -929,8 +929,8 @@ class Annotator(GraphicalUserInterface):
         if self.sc.layer in segment.annotations:
             label = segment.get(self.sc.layer)
             if messagebox.askyesno(
-                self.str.get("dialog.title.remove_label"),
-                self.str.get("dialog.text.remove_label", label)
+                self._("dialog.title.remove_label"),
+                self._("dialog.text.remove_label", label)
             ):
                 self.sc.delete_label(self.sc.layer, label)
                 self.update()
@@ -951,8 +951,8 @@ class Annotator(GraphicalUserInterface):
         if self.sc.layer in segment.annotations:
             qualifier = segment.get(self.sc.layer, qualifier=True)
             if messagebox.askyesno(
-                self.str.get("dialog.text.remove_label"),
-                self.str.get("dialog.text.remove_qualifier", qualifier)
+                self._("dialog.text.remove_label"),
+                self._("dialog.text.remove_qualifier", qualifier)
             ):
                 self.sc.delete_qualifier(self.sc.layer, qualifier)
                 self.update()
@@ -972,8 +972,8 @@ class Annotator(GraphicalUserInterface):
         Removes the active segment's layer from the taxonomy
         """
         if messagebox.askyesno(
-            self.str.get("dialog.title.remove_layer"),
-            self.str.get("dialog.text.remove_layer", self.sc.layer)
+            self._("dialog.title.remove_layer"),
+            self._("dialog.text.remove_layer", self.sc.layer)
         ):
             self.apply_remove_layer(self.sc.layer)
 
@@ -1002,8 +1002,8 @@ class Annotator(GraphicalUserInterface):
                 lts.append(lt)
 
         if messagebox.askyesno(
-            self.str.get("dialog.title.remove_link_types", "s" if len(lts) > 1 else ""),
-            self.str.get("dialog.text.remove_link_types", ", ".join(lts), "s" if len(lts) > 1 else "")
+            self._("dialog.title.remove_link_types", "s" if len(lts) > 1 else ""),
+            self._("dialog.text.remove_link_types", ", ".join(lts), "s" if len(lts) > 1 else "")
         ):
             self.apply_remove_link_types(lts)
 
@@ -1027,18 +1027,18 @@ class Annotator(GraphicalUserInterface):
         """
         Selects the type of element to be colorized
         """
-        element_types = [self.str.get("layer"), self.str.get("link_type")]
+        element_types = [self._("layer"), self._("link_type")]
 
         for segment in self.sc.full_collection:
             for layer in segment.legacy.keys():
                 # adds Legacy Layer option if there are any original ones
                 if layer not in self.sc.labels.keys():
-                    element_types.append(self.str.get("legacy_layer"))
+                    element_types.append(self._("legacy_layer"))
                     break
             for ls, lt in segment.legacy_links:
                 # adds Legacy Link Type option if there are any original ones
                 if lt not in self.sc.links.keys():
-                    element_types.append(self.str.get("legacy_link_type"))
+                    element_types.append(self._("legacy_link_type"))
                     break
 
         self.input("select type of element to colorize", set(element_types), self.select_element_to_colorize)
@@ -1047,10 +1047,10 @@ class Annotator(GraphicalUserInterface):
         """
         Select an element to colorize
         """
-        if element_type == self.str.get("layer"):
+        if element_type == self._("layer"):
             self.input("prompt.select_element_to_colorize_layer", self.sc.labels.keys(), self.pick_color_for_layer)
 
-        if element_type == self.str.get("legacy_layer"):
+        if element_type == self._("legacy_layer"):
             legacy_layers = []
 
             for segment in self.sc.full_collection:
@@ -1060,10 +1060,10 @@ class Annotator(GraphicalUserInterface):
 
             self.input("prompt.select_element_to_colorize_legacy_layer", legacy_layers, self.pick_color_for_layer)
 
-        if element_type == self.str.get("link_type"):
+        if element_type == self._("link_type"):
             self.input("prompt.select_element_to_colorize_link_type", self.sc.links.keys(), self.pick_color_for_link_type)
 
-        if element_type == self.str.get("legacy_link_type"):
+        if element_type == self._("legacy_link_type"):
             legacy_link_types = []
 
             for segment in self.sc.full_collection:
@@ -1246,13 +1246,13 @@ class Annotator(GraphicalUserInterface):
         """
         if not self.sc.filter:
             self.input(
-                self.str.get("prompt.select_filter_type"), [
-                    self.str.get("layer"),
-                    self.str.get("legacy_layer"),
-                    self.str.get("label"),
-                    self.str.get("legacy_label"),
-                    self.str.get("qualifier"),
-                    self.str.get("legacy_qualifier")
+                self._("prompt.select_filter_type"), [
+                    self._("layer"),
+                    self._("legacy_layer"),
+                    self._("label"),
+                    self._("legacy_label"),
+                    self._("qualifier"),
+                    self._("legacy_qualifier")
                 ], self.filter)
         else:
             self.remove_filter()
@@ -1280,14 +1280,14 @@ class Annotator(GraphicalUserInterface):
         """
         Filters the collection
         """
-        if filter_type == self.str.get("layer"):
+        if filter_type == self._("layer"):
             self.input(
                 "prompt.filter_layer",
                 self.sc.labels.keys(),
                 self.filter_by_layer
             )
 
-        if filter_type == self.str.get("legacy_layer"):
+        if filter_type == self._("legacy_layer"):
             legacy_layers = []
 
             for segment in self.sc.full_collection:
@@ -1300,7 +1300,7 @@ class Annotator(GraphicalUserInterface):
                 self.filter_by_legacy_layer
             )
 
-        if filter_type == self.str.get("label"):
+        if filter_type == self._("label"):
             labels = []
 
             for layer in self.sc.labels:
@@ -1312,7 +1312,7 @@ class Annotator(GraphicalUserInterface):
                 self.filter_by_label
             )
 
-        if filter_type == self.str.get("legacy_label"):
+        if filter_type == self._("legacy_label"):
             legacy_labels = []
 
             for segment in self.sc.full_collection:
@@ -1326,7 +1326,7 @@ class Annotator(GraphicalUserInterface):
                 self.filter_by_legacy_label
             )
 
-        if filter_type == self.str.get("qualifier"):
+        if filter_type == self._("qualifier"):
             qualifiers = []
 
             for layer in self.sc.qualifiers:
@@ -1338,7 +1338,7 @@ class Annotator(GraphicalUserInterface):
                 self.filter_by_qualifier
             )
 
-        if filter_type == self.str.get("legacy_qualifier"):
+        if filter_type == self._("legacy_qualifier"):
             legacy_qualifiers = []
 
             for segment in self.sc.full_collection:
@@ -1545,8 +1545,8 @@ class Annotator(GraphicalUserInterface):
         """
         if len(self.sc.labels.keys()) == 1:
             messagebox.showwarning(
-                self.str.get("dialog.title.select_layer"),
-                self.str.get("dialog.text.select_layer")
+                self._("dialog.title.select_layer"),
+                self._("dialog.text.select_layer")
             )
             return
 
@@ -1658,21 +1658,21 @@ class Annotator(GraphicalUserInterface):
 
             # status message
             status = "{}: {}".format(
-                self.str.get("active_layer"),
+                self._("active_layer"),
                 self.sc.layer.title()
             )
 
             if self.sc.get_active_label():
                 status = "{} - {}: {}".format(
                     status,
-                    self.str.get("active_label"),
+                    self._("active_label"),
                     self.sc.get_active_label().title()
                 )
 
             if self.sc.get_active_qualifier():
                 status = "{} - {}: {}".format(
                     status,
-                    self.str.get("active_qualifier"),
+                    self._("active_qualifier"),
                     self.sc.get_active_qualifier().title()
                 )
 
@@ -1681,7 +1681,7 @@ class Annotator(GraphicalUserInterface):
             if len(link_types) > 0:
                 status = "{} - {}: {}".format(
                     status,
-                    self.str.get("active_link_types", "s" if len(link_types) > 1 else ""),
+                    self._("active_link_types", "s" if len(link_types) > 1 else ""),
                     ", ".join(link_types)
                 )
         else:

@@ -13,7 +13,6 @@
 
     Features:
 
-        ☐ externalize text strings
         ☐ annotations as attributes for simple access
         ☐ JSON config file to tell which columns are what
         ☐ use the mouse (eg for links)
@@ -21,8 +20,9 @@
         ☐ smaller binary file
         ☐ windows executable
         ☐ integrate pyrata for annotation search
-        ☐ french translation
         ☐ feature driven annotation
+        ☐ french translation
+        ✔ externalize text strings @done (17-10-14 21:05)
         ✔ command to set dimension color code @done (17-10-14 19:19)
         ✔ command to set link color code @done (17-10-14 19:19)
         ✔ make exported JSON importable @done (17-10-14 19:17)

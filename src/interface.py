@@ -65,6 +65,10 @@ class GraphicalUserInterface(Frame, Styles):
         self.parent = Tk()
         self.parent.state = False
 
+        # strings manager
+        strings = Strings()
+        self._ = strings.get
+
         # theme
         style = ThemedStyle(self.parent)
         style.set_theme("arc")
@@ -108,21 +112,21 @@ class GraphicalUserInterface(Frame, Styles):
         self.menu_bar = Menu(self.parent, font=self.menu_font_family)
 
         self.file_menu = Menu(self.menu_bar, tearoff=0, font=self.menu_font_family)
-        self.menu_bar.add_cascade(label="File", menu=self.file_menu)
+        self.menu_bar.add_cascade(label=self._("menu.cascade.file"), menu=self.file_menu)
 
         self.edit_menu = Menu(self.menu_bar, tearoff=0, font=self.menu_font_family)
-        self.menu_bar.add_cascade(label="Edit", menu=self.edit_menu)
+        self.menu_bar.add_cascade(label=self._("menu.cascade.edit"), menu=self.edit_menu)
 
         self.view_menu = Menu(self.menu_bar, tearoff=0, font=self.menu_font_family)
-        self.menu_bar.add_cascade(label="View", menu=self.view_menu)
-        self.view_menu.add_command(label="Zoom In", accelerator="Ctrl++", command=self.zoom_in)
-        self.view_menu.add_command(label="Zoom Out", accelerator="Ctrl+-", command=self.zoom_out)
+        self.menu_bar.add_cascade(label=self._("menu.cascade.view"), menu=self.view_menu)
+        self.view_menu.add_command(label=self._("menu.zoom_in"), accelerator="Ctrl++", command=self.zoom_in)
+        self.view_menu.add_command(label=self._("menu.zoom_out"), accelerator="Ctrl+-", command=self.zoom_out)
 
         self.filter_menu = Menu(self.menu_bar, tearoff=0, font=self.menu_font_family)
-        self.menu_bar.add_cascade(label="Filter", menu=self.filter_menu)
+        self.menu_bar.add_cascade(label=self._("menu.cascade.filter"), menu=self.filter_menu)
 
         self.taxonomy_menu = Menu(self.menu_bar, tearoff=0, font=self.menu_font_family)
-        self.menu_bar.add_cascade(label="Taxonomy", menu=self.taxonomy_menu)
+        self.menu_bar.add_cascade(label=self._("menu.cascade.taxonomy"), menu=self.taxonomy_menu)
 
         self.parent.config(menu=self.menu_bar)
 
@@ -190,8 +194,6 @@ class GraphicalUserInterface(Frame, Styles):
         self.default_action = None  # default command action
 
         self.free_input = False  # sets whether it's possible to input anything in the entry
-
-        self.str = Strings()  # strings manager
 
     def return_pressed(self, e):
         """
@@ -389,7 +391,7 @@ class GraphicalUserInterface(Frame, Styles):
         """
         Manages user input
         """
-        self.prompt.set(self.str.get(prompt).title() + ":" if prompt else "")
+        self.prompt.set(self._(prompt).title() + ":" if prompt else "")
         self.free_input = free
         self.action = action
 
