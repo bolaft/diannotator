@@ -72,12 +72,12 @@ Contains the list of links emanating from this segment, their types and their ta
 
 #### Example:
 
-| participant 	| datetime  	| segment                                                            	| raw                                                                	| activity 	| social 	| feedback    	| feedback-value 	|
-|-------------	|-------	|--------------------------------------------------------------------	|--------------------------------------------------------------------	|----------	|--------	|-------------	|----------------	|
-| manu        	| 11-05-17 13:05 	| hi guys!                                              	| hi guys! does anyone know how to install a proprietary graphics card driver? 	|          	| greet  	|             	|                	|
-| manu        	| 11-05-17 13:05 	| does anyone know how to install a proprietary graphics card driver?                       	|                                                                    	| question 	|        	|             	|                	|
-| gabi        	| 11-05-17 13:06 	| search software sources, and then it's in the additional drivers tab | search software sources, and then it's in the additional drivers tab 	| answer   	|        	|             	|                	|
-| manu        	| 11-05-17 13:07 	| k thx!                                                             	| k thx!                                                             	|          	| thanks 	| acknowledge 	| positive       	|
+| participant   | datetime      | segment                                                               | raw                                                                   | activity  | social    | feedback      | feedback-value    |
+|-------------  |-------    |--------------------------------------------------------------------   |--------------------------------------------------------------------   |---------- |--------   |-------------  |----------------   |
+| manu          | 11-05-17 13:05    | hi guys!                                                  | hi guys! does anyone know how to install a proprietary graphics card driver?  |           | greet     |               |                   |
+| manu          | 11-05-17 13:05    | does anyone know how to install a proprietary graphics card driver?                           |                                                                       | question  |           |               |                   |
+| gabi          | 11-05-17 13:06    | search software sources, and then it's in the additional drivers tab | search software sources, and then it's in the additional drivers tab   | answer    |           |               |                   |
+| manu          | 11-05-17 13:07    | k thx!                                                                | k thx!                                                                |           | thanks    | acknowledge   | positive          |
 
 ### JSON Format:
 
@@ -106,15 +106,15 @@ Links must be represented as a dictionary in the optional `links` field of the s
     "datetime": "04-11-17 22:17",
     "note": "performed split here",
     "links": {
-    	"rhetorical relation": [
-    		75
-    	]
+        "rhetorical relation": [
+            75
+        ]
     },
     "annotations": {
-    	"social obligations management": {
-    		"label": "greet"
-    	}
-	}
+        "social obligations management": {
+            "label": "greet"
+        }
+    }
 }
 ```
 
