@@ -762,10 +762,8 @@ class Annotator(GraphicalUserInterface):
         """
         Set a link type then input link target
         """
-        i = self.sc.i - 50 if self.sc.i - 50 >= 1 else 1
-
         # input target segment
-        self.input("prompt.select_link_target", reversed(list(range(i, self.sc.i + 1))), lambda n, link_t=link_type: self.link_segment(n, link_t), sort=False)
+        self.input("prompt.select_link_target", [], lambda n, link_t=link_type: self.link_segment(n, link_t), sort=False, free=True)
 
     @undoable
     def link_segment(self, number, link_type):
@@ -778,12 +776,14 @@ class Annotator(GraphicalUserInterface):
 
         success = False
 
-        if not (self.sc.collection[number], link_type) in segment.links:
-            segment.links.append((self.sc.collection[number], link_type))
-            self.sc.collection[number].linked.append((segment, link_type))
+        if number >= 0 and number < self.sc.collection.index(segment):
+            if not (self.sc.collection[number], link_type) in segment.links:
+                segment.links.append((self.sc.collection[number], link_type))
+                self.sc.collection[number].linked.append((segment, link_type))
 
-            self.update()
-            success = True
+                success = True
+
+        self.update()
 
         yield  # undo
 
