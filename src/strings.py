@@ -26,7 +26,8 @@ class Strings():
         """
         Initializes string list
         """
-        self.data = json.loads(codecs.open(self.file_path, encoding="utf-8").read())
+        with codecs.open(self.file_path, encoding="utf-8") as f:
+            self.data = json.loads(f.read())
 
     def get(self, key, *params):
         """

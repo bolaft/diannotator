@@ -79,7 +79,7 @@
 	"error.text.export_taxonomy": "The target path is invalid.\n\nThe file could not be created.",
 	"box.title.legacy_annotations": "Legacy Annotations",
 	"box.title.legacy_annotations": "Legacy Annotations",
-	"box.text.legacy_annotations": "Do you want to import legacy annotations as normal annotations?",
+	"box.text.legacy_annotations": "Do you want to use legacy annotations as normal annotations, when applicable?",
 	"prompt.select_go_to": "select destination index",
 	"prompt.select_split_token": "select token on which to split",
 	"prompt.select_link_type": "select link type",

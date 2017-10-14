@@ -280,13 +280,16 @@ class Annotator(GraphicalUserInterface):
     # COLOR METHODS #
     #################
 
-    def colorize(self):
+    def colorize(self, layers=True, links=True, participants=True):
         """
         Initializes colors
         """
-        self.generate_layer_colors()
-        self.generate_link_colors()
-        self.generate_participant_colors()
+        if layers:
+            self.generate_layer_colors()
+        if links:
+            self.generate_link_colors()
+        if participants:
+            self.generate_participant_colors()
 
     def generate_participant_colors(self):
         """
@@ -453,7 +456,7 @@ class Annotator(GraphicalUserInterface):
 
             stack().clear()  # reinitializes undo history
 
-            self.colorize()
+            self.colorize(participants=False)
             self.update()
         else:
             messagebox.showerror(

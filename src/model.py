@@ -437,10 +437,15 @@ class SegmentCollection:
                 if layer in self.labels.keys():
                     # setting labels
                     if segment.has(layer, legacy=True):
-                        segment.set(layer, segment.get(layer, legacy=True))
+                        annotation = segment.get(layer, legacy=True)
+                        if annotation in self.labels.keys():
+                            segment.set(layer, annotation)
+
                     # setting qualifiers
                     if segment.has(layer, legacy=True, qualifier=True):
-                        segment.set(layer, segment.get(layer, legacy=True, qualifier=True), qualifier=True)
+                        annotation = segment.get(layer, legacy=True, qualifier=True)
+                        if annotation in self.qualifiers.keys():
+                            segment.set(layer, annotation, qualifier=True)
 
             # setting legacy links
             for ls, lt in segment.legacy_links:
@@ -628,7 +633,8 @@ class SegmentCollection:
         Imports the collection's taxonomy from a JSON file
         """
         try:
-            taxonomy = json.loads(codecs.open(path, encoding="utf-8").read())
+            with codecs.open(path, encoding="utf-8") as f:
+                taxonomy = json.loads(f.read())
 
             self.taxonomy = taxonomy["name"]
             self.layer = self.default_layer = taxonomy["default"]
@@ -706,7 +712,8 @@ class SegmentCollection:
         Imports a new collection from a JSON file
         """
         # JSON data
-        data = json.loads(codecs.open(path, encoding="utf-8").read())
+        with codecs.open(path, encoding="utf-8") as f:
+            data = json.loads(f.read())
 
         collection = []
         segments_by_id = {}
