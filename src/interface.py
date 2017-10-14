@@ -99,12 +99,6 @@ class GraphicalUserInterface(Frame, Styles):
         self.parent.geometry("%dx%d+0+0" % (ws, hs))  # set the dimensions of the window
         self.parent.minsize(w, h)  # minimum size of the window
 
-        # default bindings
-        self.parent.bind("<F11>", lambda event: self.toggle_fullscreen())
-        self.parent.bind("<Escape>", lambda event: self.exit_prompt())
-        self.parent.bind("<Control-KP_Add>", lambda event: self.zoom_in())
-        self.parent.bind("<Control-KP_Subtract>", lambda event: self.zoom_out())
-
         # window title
         self.parent.title(self.window_title)
 
@@ -145,7 +139,7 @@ class GraphicalUserInterface(Frame, Styles):
         self.output_frame.grid_columnconfigure(0, weight=1)
 
         # Text widget
-        self.text = Text(self.output_frame, borderwidth=3, relief=SUNKEN)
+        self.text = Text(self.output_frame, borderwidth=3, relief=SUNKEN, cursor="arrow")
         self.text.grid(row=0, column=0, sticky="nsew", padx=self.padding, pady=(self.padding, 0))
         self.text.config(font=(self.text_font_family, self.text_font_size), undo=True, wrap=WORD, bg=DARK_GRAY, fg=WHITE, highlightbackground=BLACK, highlightcolor=WHITE, state=DISABLED)
 
@@ -186,6 +180,16 @@ class GraphicalUserInterface(Frame, Styles):
         self.special_commands = Frame(self.input_frame)
         self.special_commands.pack(fill=X, side=BOTTOM)
 
+        # default bindings
+        self.parent.bind("<F11>", lambda event: self.toggle_fullscreen())
+        self.parent.bind("<Escape>", lambda event: self.exit_prompt())
+        self.parent.bind("<Control-KP_Add>", lambda event: self.zoom_in())
+        self.parent.bind("<Control-KP_Subtract>", lambda event: self.zoom_out())
+
+        # binding click
+        self.clickable_text_tag = "clickable_text_tag"
+        self.text.tag_bind(self.clickable_text_tag, '<Button-1>', self.click)
+
         Styles.__init__(self)  # initializes style tags
 
         self.command_list = []  # list of potential commands
@@ -194,6 +198,29 @@ class GraphicalUserInterface(Frame, Styles):
         self.default_action = None  # default command action
 
         self.free_input = False  # sets whether it's possible to input anything in the entry
+
+    def click(self, event):
+        """
+        Returns data on clickable text
+        """
+        # get the index of the mouse click
+        index = self.text.index("@%s,%s" % (event.x, event.y))
+
+        # get the indices of all clickable text tags
+        tag_indices = list(self.text.tag_ranges(self.clickable_text_tag))
+
+        # iterate them pairwise (start and end index)
+        for start, end in zip(tag_indices[0::2], tag_indices[1::2]):
+            # check if the tag matches the mouse click index
+            if self.text.compare(start, '<=', index) and self.text.compare(index, '<', end):
+                # deals with string between tag start and end
+                self.manage_click(start, end, self.text.get(start, end))
+
+    def manage_click(self, start, end, text):
+        """
+        Click management
+        """
+        pass  # pass on purpose
 
     def return_pressed(self, e):
         """

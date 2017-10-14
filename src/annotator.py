@@ -11,7 +11,7 @@ Annotation methods
 from collections import OrderedDict
 from copy import deepcopy
 from datetime import datetime, timedelta
-from tkinter import filedialog, messagebox, colorchooser, LEFT
+from tkinter import filedialog, messagebox, colorchooser, LEFT, END
 from tkinter.ttk import Button
 from undo import stack, undoable
 
@@ -217,6 +217,9 @@ class Annotator(GraphicalUserInterface):
 
         # previous key press, for speed checks
         self.previous_key_press = datetime.now() - timedelta(seconds=10)
+
+        # click is go to segment by default
+        self.click_to_link_type = None
 
         # show legacy annotations
         self.show_legacy = True  # show legacy annotations by defaults
@@ -765,6 +768,10 @@ class Annotator(GraphicalUserInterface):
         """
         Set a link type then input link target
         """
+        # activates click to link segment
+        self.click_to_link_type = link_type
+        self.text.config(cursor="cross")
+
         # input target segment
         self.input("prompt.select_link_target", [], lambda n, link_t=link_type: self.link_segment(n, link_t), sort=False, free=True)
 
@@ -773,6 +780,10 @@ class Annotator(GraphicalUserInterface):
         """
         Links the active segment to another
         """
+        # disables click to link segment
+        self.click_to_link_type = None
+        self.text.config(cursor="arrow")
+
         number = int(number) - 1
 
         segment = self.sc.get_active()
@@ -1641,6 +1652,17 @@ class Annotator(GraphicalUserInterface):
 
         self.sc.previous()
 
+    def manage_click(self, start, end, text):
+        """
+        Click management
+        """
+        index = int(self.text.get(start, end).split("\t")[0])
+
+        if self.click_to_link_type is None:
+            self.go_to(index)
+        else:
+            self.link_segment(index, self.click_to_link_type)
+
     def update(self, t=None, annotation_mode=True):
         """
         Updates the application state
@@ -1712,7 +1734,7 @@ class Annotator(GraphicalUserInterface):
         segment = self.sc.collection[i]
 
         # participant color
-        style = ["participant-{}".format(segment.participant)]
+        style = ["participant-{}".format(segment.participant), self.clickable_text_tag]
 
         # active segment is bolded
         if active:
@@ -1732,6 +1754,8 @@ class Annotator(GraphicalUserInterface):
 
         # base text string
         text = "\t".join(columns + ["\t" + segment.raw])
+
+        # output text
         self.output(text, style=style)
 
         # offset for displaying addendums
