@@ -618,7 +618,7 @@ class SegmentCollection:
             self.qualifiers = taxonomy["qualifiers"]  # label qualifier tagsets
             self.colors = taxonomy["colors"]  # layer colors
             self.links = taxonomy["links"]  # link types
-        except Exception as e:
+        except Exception:
             logging.exception("DialogueActCollection.import_taxonomy()")
             return False
 
@@ -640,7 +640,7 @@ class SegmentCollection:
         try:
             with open(path, "w") as f:
                 json.dump(taxonomy, f, indent=4, ensure_ascii=False)
-        except Exception as e:
+        except Exception:
             logging.exception("DialogueActCollection.export_taxonomy()")
             return False
 
@@ -741,7 +741,7 @@ class SegmentCollection:
 
             # writes save path to /tmp
             self.write_save_path_to_tmp()
-        except Exception as e:
+        except Exception:
             self.collection = collection
             self.full_collection = full_collection
 
@@ -760,7 +760,7 @@ class SegmentCollection:
                 self.export_collection_as_json(path)
             elif path.endswith(".csv"):
                 self.export_collection_as_csv(path)
-        except Exception as e:
+        except Exception:
             logging.exception("DialogueActCollection.export_collection()")
             return False
 
@@ -775,7 +775,7 @@ class SegmentCollection:
         try:
             with open(path, "w") as f:
                 json.dump(data, f, indent=4, ensure_ascii=False)
-        except Exception as e:
+        except Exception:
             logging.exception("")
             return False
 
@@ -834,7 +834,7 @@ class SegmentCollection:
 
             with open("{}last_save.tmp".format(SegmentCollection.temp_dir), "w") as tmp:
                 tmp.write(self.save_file)
-        except Exception as e:
+        except Exception:
             logging.exception("DialogueActCollection.write_save_path_to_tmp()")
             return False
 
@@ -884,7 +884,7 @@ class SegmentCollection:
                 sc.write_save_path_to_tmp()
 
                 return sc
-        except Exception as e:
+        except Exception:
             logging.exception("DialogueActCollection.load()")
             return False
 
