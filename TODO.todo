@@ -13,6 +13,8 @@
 
     Features:
 
+        ☐ import links from CSV
+        ☐ choose if import are legacy or current
         ☐ add all data from ubuntu-fr file
         ☐ command to set dimension color code
         ☐ command to set link color code

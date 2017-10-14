@@ -41,8 +41,10 @@ class Segment:
         self.annotations = {}  # annotations
         self.legacy = {}  # legacy annotations
         self.datetime = datetime  # datetime
-        self.links = []  # segment linked to this one
-        self.linked = []  # segments that answer an elicitation in this one
+        self.links = []  # segments linked to this one
+        self.legacy_links = []  # segments linked to this one (legacy)
+        self.linked = []  # segments that this one links to
+        self.legacy_linked = []  # segments that this one links to (legacy)
         self.note = None  # note about the segment
 
         self.tokenize()  # tokenization
@@ -111,8 +113,7 @@ class Segment:
             "segment": self.raw,
             "raw": self.original_raw,
             "participant": self.participant,
-            "date": self.datetime.strftime("%d-%m-%y"),
-            "time": self.datetime.strftime("%X"),
+            "datetime": self.datetime.strftime("%d-%m-%y %X"),
             "note": self.note,
             "links": links,
             "annotations": self.annotations
@@ -128,8 +129,7 @@ class Segment:
         data.update({"segment": self.raw})
         data.update({"raw": self.original_raw if isinstance(self.original_raw, str) else MERGE_SYMBOL.join(self.original_raw)})
         data.update({"participant": self.participant})
-        data.update({"date": self.datetime.strftime("%d-%m-%y")})
-        data.update({"time": self.datetime.strftime("%X")})
+        data.update({"datetime": self.datetime.strftime("%d-%m-%y %X")})
         data.update({"note": self.note if self.note is not None else ""})
         data.update({"links": ",".join(["{}-{}".format(segment.id, lt) for segment, lt in self.links])})
 
@@ -652,86 +652,17 @@ class SegmentCollection:
 
     def import_collection(self, path):
         """
-        Imports a new collection from a CSV file
+        Imports a new collection
         """
         # backup of the full collection
         collection = self.collection
         full_collection = self.full_collection
 
         try:
-            self.full_collection = []
-
-            with open(path) as f:
-                rows = [{k: v for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True, delimiter="\t")]
-
-            previous_segment = None
-            segment = None
-
-            for row in rows:
-                datetime = parser.parse(row["datetime"]) if row["datetime"] is not None and row["datetime"].strip() != "" else previous_segment.datetime
-                span = row["segment"].strip()
-
-                if row["raw"] is None or row["raw"].strip() == "":
-                    segment = Segment(
-                        previous_segment.raw,
-                        previous_segment.participant,
-                        previous_segment.datetime
-                    )
-                    segment.original_raw = previous_segment.original_raw
-
-                    tokenizer = WhitespaceTokenizer()
-
-                    # last token of the previous segment's segment
-                    end_of_previous_span = tokenizer.tokenize(previous_segment.span)[-1]
-
-                    # position of the last token of the previous segment's segment in the full raw
-                    index = previous_segment.raw.index(end_of_previous_span) + len(end_of_previous_span)
-
-                    # ajust the raw of the current segment
-                    segment.raw = previous_segment.raw[index:].strip()
-
-                    # adjust the raw of the previous segment
-                    previous_segment.raw = previous_segment.raw[:index].strip()
-
-                    # update tokens of the previous segment
-                    previous_segment.tokenize()
-                else:
-                    raw = row["raw"].strip()
-                    participant = row["participant"].strip() if row["participant"].strip() != "\\" else segment.participant
-
-                    segment = Segment(
-                        raw,
-                        participant,
-                        datetime
-                    )
-
-                # update the current segment's segment
-                segment.span = span
-
-                # update the current segment's tokens
-                segment.tokenize()
-
-                # set the current segment as the previous segment (for the next iteration)
-                previous_segment = segment
-
-                # loading legacy annotations
-                for key in row.keys():
-                    if key not in ["segment", "raw", "datetime", "participant", "links", "note", "id"] and row[key] is not None and row[key].strip() != "":
-                        if key.endswith("-value") and row[key]:
-                            # getting layer name from column
-                            layer = key[:len(key) - len("-value")]
-
-                            # adding qualifier
-                            segment.set(layer, row[key], qualifier=True, legacy=True)
-                        else:
-                            # adding label
-                            segment.set(key, row[key], legacy=True)
-
-                # set note
-                segment.note = row["note"].strip() if "note" in row and row["note"].strip() else None
-
-                # adds the segment to the full collection
-                self.full_collection.append(segment)
+            if path.endswith("json"):
+                self.full_collection = self.import_collection_from_json(path)
+            else:
+                self.full_collection = self.import_collection_from_csv(path)
 
             # syncs the current collection to the full collection
             self.collection = self.full_collection.copy()
@@ -750,6 +681,123 @@ class SegmentCollection:
             return False
 
         return True
+
+    def import_collection_from_json(self, path):
+        """
+        Imports a new collection from a JSON file
+        """
+        # JSON data
+        data = json.loads(codecs.open(path, encoding="utf-8").read())
+
+        collection = []
+        segments_by_id = {}
+
+        for dic in data:
+            # create segment
+            segment = Segment(
+                dic["raw"],
+                dic["participant"],
+                parser.parse(dic["datetime"])
+            )
+
+            segment.id = dic["id"]
+            segment.legacy = dic["annotations"]
+            segment.note = dic["note"]
+
+            for lt, ids in dic["links"].items():
+                for identifier in ids:
+                    segment.legacy_links.append((segments_by_id[identifier], lt))
+                    segments_by_id[identifier].legacy_linked.append((lt, segment))
+
+            # makes sure all ids are unique
+            if segment.id in segments_by_id:
+                raise Exception
+            segments_by_id[segment.id] = segment
+
+            # adds the segment to the full collection
+            collection.append(segment)
+
+        return collection
+
+    def import_collection_from_csv(self, path):
+        """
+        Imports a new collection from a CSV file
+        """
+        collection = []
+
+        with open(path) as f:
+            rows = [{k: v for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True, delimiter="\t")]
+
+        previous_segment = None
+        segment = None
+
+        for row in rows:
+            datetime = parser.parse(row["datetime"]) if row["datetime"] is not None and row["datetime"].strip() != "" else previous_segment.datetime
+            span = row["segment"].strip()
+
+            if row["raw"] is None or row["raw"].strip() == "":
+                segment = Segment(
+                    previous_segment.raw,
+                    previous_segment.participant,
+                    previous_segment.datetime
+                )
+                segment.original_raw = previous_segment.original_raw
+
+                tokenizer = WhitespaceTokenizer()
+
+                # last token of the previous segment's segment
+                end_of_previous_span = tokenizer.tokenize(previous_segment.span)[-1]
+
+                # position of the last token of the previous segment's segment in the full raw
+                index = previous_segment.raw.index(end_of_previous_span) + len(end_of_previous_span)
+
+                # ajust the raw of the current segment
+                segment.raw = previous_segment.raw[index:].strip()
+
+                # adjust the raw of the previous segment
+                previous_segment.raw = previous_segment.raw[:index].strip()
+
+                # update tokens of the previous segment
+                previous_segment.tokenize()
+            else:
+                raw = row["raw"].strip()
+                participant = row["participant"].strip() if row["participant"].strip() != "\\" else segment.participant
+
+                segment = Segment(
+                    raw,
+                    participant,
+                    datetime
+                )
+
+            # update the current segment's segment
+            segment.span = span
+
+            # update the current segment's tokens
+            segment.tokenize()
+
+            # set the current segment as the previous segment (for the next iteration)
+            previous_segment = segment
+
+            # loading legacy annotations
+            for key in row.keys():
+                if key not in ["segment", "raw", "datetime", "participant", "links", "note", "id"] and row[key] is not None and row[key].strip() != "":
+                    if key.endswith("-value") and row[key]:
+                        # getting layer name from column
+                        layer = key[:len(key) - len("-value")]
+
+                        # adding qualifier
+                        segment.set(layer, row[key], qualifier=True, legacy=True)
+                    else:
+                        # adding label
+                        segment.set(key, row[key], legacy=True)
+
+            # set note
+            segment.note = row["note"].strip() if "note" in row and row["note"].strip() else None
+
+            # adds the segment to the full collection
+            collection.append(segment)
+
+        return collection
 
     def export_collection(self, path):
         """

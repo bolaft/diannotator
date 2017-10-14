@@ -416,7 +416,7 @@ class Annotator(GraphicalUserInterface):
         path = filedialog.askopenfilename(
             initialdir=SegmentCollection.csv_dir,
             title="Import data file",
-            filetypes=(("CSV data files", "*.csv"), ("all files", "*.*"))
+            filetypes=(("CSV data files", "*.csv"), ("JSON data files", "*.json"), ("all files", "*.*"))
         )
 
         if path == "":
@@ -1618,6 +1618,18 @@ class Annotator(GraphicalUserInterface):
 
             self.add_to_last_line(addendum, style="link-{}".format(lt), offset=offset)
             offset += len(addendum)
+
+        # legacy links display
+        if self.show_legacy:
+            for ls, lt in segment.legacy_links:
+                if (ls, lt) not in segment.links:
+                    if ls in self.sc.collection:
+                        addendum = " (({} ⟲ {}))".format(lt, self.sc.collection.index(ls) + 1)
+                    else:
+                        addendum = " (({} ⟲))".format(lt)
+
+                    self.add_to_last_line(addendum, style="link-{}".format(lt), offset=offset)
+                    offset += len(addendum)
 
         # note display
         if segment.note is not None:
