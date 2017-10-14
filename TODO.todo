@@ -13,7 +13,6 @@
 
     Features:
 
-        ☐ annotations as attributes for simple access
         ☐ JSON config file to tell which columns are what
         ☐ use the mouse (eg for links)
         ☐ unit testing

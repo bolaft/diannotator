@@ -20,7 +20,7 @@ class Strings():
     Used to convert string keys to formatted strings
     """
     language = "en"
-    file_path = "../str/{}.json".format(language)
+    file_path = "../lan/{}.json".format(language)
 
     def __init__(self):
         """
