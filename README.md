@@ -120,35 +120,87 @@ Links must be represented as a dictionary in the optional `links` field of the s
 
 # Taxonomy Format
 
-When a data file is loaded, a taxonomy must be chosen before annotation can begin. Taxonomies are saved in JSON format. Their fields are:
+When a data file is loaded, a taxonomy must be chosen before annotation can begin. Taxonomies are saved in JSON format.
 
-#### `name`
+#### Fields:
+
+The taxonomy fields are:
+
+##### `name`
 
 The taxonomy's **name**.
 
-#### `url` (optional)
+##### `url` (optional)
 
 The URL to the taxonomy's **website** or **documentation**.
 
-#### `default`
+##### `default`
 
 The **default layer** of the taxonomy, the first one to be active when first loading a data file.
 
-#### `labels`
+##### `labels`
 
 A dictionary of lists, whose keys represent layer names and the lists' elements represent the layers' **labels' tagsets**.
 
-#### `qualifiers`
+##### `qualifiers`
 
 A dictionary of lists, whose keys represent layer names and the lists' elements represent the layers' **qualifiers' tagsets**.
 
-#### `links`
+##### `links`
 
 A dictionary whose keys represent the different **link types** and whose values represent the colors in which the links should be displayed.
 
-#### `colors`
+##### `colors`
 
 A dictionary, whose keys represent layer names and whose elements are **hexadecimal color codes** used for displaying labels. The `colors` field is mandatory but the dictionary may be left empty, in which case labels will be displayed in a randomly generated color.
+
+#### Example:
+
+```json
+{
+    "name": "Ubuntu CMC",
+    "default": "Task",
+    "labels": {
+        "Task": [
+            "Inform",
+            "Confirm",
+            "Disconfirm",
+            "Commit",
+            "Offer",
+            "Instruct",
+            "Suggest",
+            "Request Information",
+            "Request Directives"
+        ],
+        "Communication": [
+            "Correct",
+            "Completion",
+        ],
+        "Other": [
+            "Announce",
+            "Preclose",
+            "Switch Topic",
+        ],
+    },
+    "qualifiers": {
+        "Communication": [
+            "Perception",
+            "Interpretation",
+            "Evaluation"
+        ]
+    },
+    "links": {
+        "Feedback": "#A6E22E",
+        "Functional": "#54D6EF",
+        "Rhetoric": "#ffffff"
+    },
+    "colors": {
+        "Task": "#FFFFFF",
+        "Communication": "#DB5CD7",
+        "Other": "#DB5CD7"
+    }
+}
+```
 
 # Usage
 
