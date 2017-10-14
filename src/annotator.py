@@ -959,7 +959,21 @@ class Annotator(GraphicalUserInterface):
         """
         Selects the type of element to be colorized
         """
-        self.input("select type of element to colorize", ["Layer", "Legacy Layer", "Link Type"], self.select_element_to_colorize)
+        element_types = ["Layer", "Link Type"]
+
+        for segment in self.sc.full_collection:
+            for layer in segment.legacy.keys():
+                # adds Legacy Layer option if there are any original ones
+                if layer not in self.sc.labels.keys():
+                    element_types.append("Legacy Layer")
+                    break
+            for ls, lt in segment.legacy_links:
+                # adds Legacy Link Type option if there are any original ones
+                if lt not in self.sc.links.keys():
+                    element_types.append("Legacy Link Type")
+                    break
+
+        self.input("select type of element to colorize", set(element_types), self.select_element_to_colorize)
 
     def select_element_to_colorize(self, element_type):
         """
@@ -973,13 +987,23 @@ class Annotator(GraphicalUserInterface):
 
             for segment in self.sc.full_collection:
                 for layer in segment.legacy.keys():
-                    if layer not in legacy_layers:
+                    if layer not in legacy_layers and layer not in self.sc.labels.keys():
                         legacy_layers.append(layer)
 
             self.input("select legacy layer to colorize", legacy_layers, self.pick_color_for_layer)
 
         if element_type == "Link Type":
             self.input("select link type to colorize", self.sc.links.keys(), self.pick_color_for_link_type)
+
+        if element_type == "Legacy Link Type":
+            legacy_link_types = []
+
+            for segment in self.sc.full_collection:
+                for ls, lt in segment.legacy_links:
+                    if lt not in legacy_link_types and lt not in self.sc.links.keys():
+                        legacy_link_types.append(lt)
+
+            self.input("select legacy link type to colorize", legacy_link_types, self.pick_color_for_link_type)
 
     def pick_color_for_layer(self, layer):
         """
