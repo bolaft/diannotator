@@ -61,7 +61,7 @@ class Segment:
 
     def get(self, layer, qualifier=False, legacy=False):
         """
-        Returns an annoation
+        Returns an annotation
         """
         dic = self.legacy if legacy else self.annotations
         annotation_type = "qualifier" if qualifier else "label"
@@ -73,7 +73,7 @@ class Segment:
 
     def set(self, layer, value, qualifier=False, legacy=False):
         """
-        Check if the segment has the annotation
+        Sets the segment's annotation
         """
         dic = self.legacy if legacy else self.annotations
         annotation_type = "qualifier" if qualifier else "label"
@@ -82,6 +82,16 @@ class Segment:
             dic[layer] = {}
 
         dic[layer][annotation_type] = value
+
+    def rem(self, layer, qualifier=False, legacy=False):
+        """
+        Deletes a segment's annotation
+        """
+        dic = self.legacy if legacy else self.annotations
+        annotation_type = "qualifier" if qualifier else "label"
+
+        if layer in dic and annotation_type in dic[layer]:
+            del dic[layer][annotation_type]
 
     ##################
     # EXPORT METHODS #
@@ -124,13 +134,13 @@ class Segment:
         data.update({"links": ",".join(["{}-{}".format(segment.id, lt) for segment, lt in self.links])})
 
         for layer in labels.keys():
-            if layer in self.annotations:
+            if self.has(layer):
                 # label
-                data.update({layer: self.annotations[layer]["label"]})
+                data.update({layer: self.get(layer)})
 
-                if "qualifier" in self.annotations[layer]:
+                if self.has(layer, qualifier=True):
                     # qualifier
-                    data.update({layer: self.annotations[layer]["label"]})
+                    data.update({layer + "-value": self.get(layer, qualifier=True)})
                 else:
                     # empty qualifier
                     data.update({layer + "-value": ""})
@@ -363,8 +373,8 @@ class SegmentCollection:
         """
         segment = self.get_active()
 
-        if self.layer in segment.annotations and "label" in segment.annotations[self.layer]:
-            return segment.annotations[self.layer]["label"]
+        if segment.has(self.layer):
+            return segment.get(self.layer)
         else:
             return False
 
@@ -374,8 +384,8 @@ class SegmentCollection:
         """
         segment = self.get_active()
 
-        if self.layer in segment.annotations and "qualifier" in segment.annotations[self.layer]:
-            return segment.annotations[self.layer]["qualifier"]
+        if segment.has(self.layer, qualifier=True):
+            return segment.get(sel.layer, qualifier=True)
         else:
             return False
 
@@ -464,10 +474,8 @@ class SegmentCollection:
             self.labels[layer].insert(index, new_label)
 
         for segment in self.full_collection:
-            if layer in segment.annotations:
-                if "label" in segment.annotations[layer] and segment.annotations[layer]["label"] == label:
-                    # replace label
-                    segment.annotations[layer]["label"] = new_label
+            if segment.has(layer, annotation=label):
+                segment.set(layer, new_label)
 
     def change_qualifier(self, layer, qualifier, new_qualifier):
         """
@@ -480,10 +488,8 @@ class SegmentCollection:
             self.qualifiers[layer].insert(index, new_qualifier)
 
         for segment in self.full_collection:
-            if layer in segment.annotations:
-                if "qualifier" in segment.annotations[layer] and segment.annotations[layer]["qualifier"] == qualifier:
-                    # replace qualifier
-                    segment.annotations[layer]["qualifier"] = new_qualifier
+            if segment.has(layer, annotation=label, qualifier=True):
+                segment.set(layer, new_qualifier, qualifier=True)
 
     def change_link_type(self, link_type, new_link_type):
         """
@@ -564,8 +570,8 @@ class SegmentCollection:
         self.labels[layer].remove(label)
 
         for segment in self.full_collection:
-            if layer in segment.annotations and "label" in segment.annotations[layer] and segment.annotations[layer]["label"] == label:
-                del segment.annotations[layer]
+            if segment.has(layer, annotation=label):
+                segment.rem(layer)
 
     def delete_qualifier(self, layer, qualifier):
         """
@@ -574,8 +580,8 @@ class SegmentCollection:
         self.qualifiers[layer].remove(qualifier)
 
         for segment in self.full_collection:
-            if layer in segment.annotations and "qualifier" in segment.annotations[layer] and segment.annotations[layer]["qualifier"] == qualifier:
-                del segment.annotations[layer]["qualifier"]
+            if segment.has(layer, annotation=qualifier, qualifier=True):
+                segment.rem(layer, qualifier=True)
 
     def delete_link_type(self, link_type):
         """
@@ -715,19 +721,11 @@ class SegmentCollection:
                             # getting layer name from column
                             layer = key[:len(key) - len("-value")]
 
-                            # create layer if does not exist
-                            if layer not in segment.legacy:
-                                segment.legacy[layer] = {}
-
                             # adding qualifier
-                            segment.legacy[layer]["qualifier"] = row[key]
+                            segment.set(layer, row[key], qualifier=True, legacy=True)
                         else:
-                            # create layer if does not exist
-                            if key not in segment.legacy:
-                                segment.legacy[key] = {}
-
                             # adding label
-                            segment.legacy[key]["label"] = row[key]
+                            segment.set(key, row[key], legacy=True)
 
                 # set note
                 segment.note = row["note"].strip() if "note" in row and row["note"].strip() else None

@@ -683,15 +683,18 @@ class Annotator(GraphicalUserInterface):
         """
         Applies an annotation erasure
         """
-        annotation = segment.annotations[self.sc.layer]
+        label = segment.get(self.sc.layer)
+        qualifier = segment.get(self.sc.layer, qualifier=True)
 
-        del segment.annotations[self.sc.layer]
+        segment.rem(self.sc.layer)
+        segment.rem(self.sc.layer, qualifier=True)
 
         self.update()
 
         yield  # undo
 
-        segment.annotations[self.sc.layer] = annotation
+        segment.set(self.sc.layer, label)
+        segment.set(self.sc.layer, qualifier, qualifier=True)
 
     def select_link_type(self):
         """
@@ -1202,8 +1205,8 @@ class Annotator(GraphicalUserInterface):
 
             for segment in self.sc.full_collection:
                 for layer in segment.legacy.keys():
-                    if "label" in segment.legacy[layer]:
-                        legacy_labels.append(segment.legacy[layer]["label"])
+                    if segment.has(layer, legacy=True):
+                        legacy_labels.append(segment.get(layer, legacy=True))
 
             self.input("select legacy label", set(legacy_labels), self.filter_by_legacy_label)
 
@@ -1220,8 +1223,8 @@ class Annotator(GraphicalUserInterface):
 
             for segment in self.sc.full_collection:
                 for layer in segment.legacy.keys():
-                    if "qualifier" in segment.legacy[layer]:
-                        legacy_qualifiers.append(segment.legacy[layer]["qualifier"])
+                    if segment.has(layer, legacy=True, qualifier=True):
+                        legacy_qualifiers.append(segment.get(layer, legacy=True, qualifier=True))
 
             self.input("select legacy qualifier", set(legacy_qualifiers), self.filter_by_legacy_qualifier)
 
@@ -1460,8 +1463,6 @@ class Annotator(GraphicalUserInterface):
         """
         segment = self.sc.get_active()
 
-        previous_annotations = segment.annotations.copy()
-
         segment.set(self.sc.layer, annotation)  # set annotation
 
         # go to next segment unless a qualifier needs to be set
@@ -1472,7 +1473,7 @@ class Annotator(GraphicalUserInterface):
 
         yield  # undo
 
-        segment.annotations = previous_annotations
+        segment.rem(self.sc.layer)
 
         if self.sc.layer not in self.sc.qualifiers:
             self.sc.previous()
@@ -1492,7 +1493,7 @@ class Annotator(GraphicalUserInterface):
 
         yield  # undo
 
-        del segment.annotations[self.sc.layer]["qualifier"]
+        segment.rem(self.sc.layer, qualifier=True)
 
         self.sc.previous()
 
