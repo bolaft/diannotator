@@ -15,7 +15,7 @@ from ttkthemes import ThemedStyle
 from strings import Strings
 from styles import Styles
 
-# colors
+# base colors
 BLACK = "#000000"
 WHITE = "#ffffff"
 GRAY = "#0f0e0e"
@@ -186,9 +186,10 @@ class GraphicalUserInterface(Frame, Styles):
         self.parent.bind("<Control-KP_Add>", lambda event: self.zoom_in())
         self.parent.bind("<Control-KP_Subtract>", lambda event: self.zoom_out())
 
-        # binding mouse
+        # binding mouse clicks and movement
         self.clickable_text_tag = "clickable_text_tag"
         self.text.tag_bind(self.clickable_text_tag, "<Button-1>", self.mouse_click)
+        self.text.tag_bind(self.clickable_text_tag, "<Button-2>", self.mouse_click)
         self.text.bind("<Motion>", self.mouse_motion)
 
         Styles.__init__(self)  # initializes style tags
@@ -200,6 +201,10 @@ class GraphicalUserInterface(Frame, Styles):
 
         self.free_input = False  # sets whether it's possible to input anything in the entry
 
+    ############################
+    # MOUSE MANAGEMENT METHODS #
+    ############################
+
     def mouse_motion(self, event):
         """
         Returns data when the cursor is on a clickable element
@@ -207,12 +212,19 @@ class GraphicalUserInterface(Frame, Styles):
         start, end, text = self.examine_mouse_position(event)
         self.manage_motion(start, end, text)
 
-    def mouse_click(self, event):
+    def mouse_left_click(self, event):
         """
-        Returns data when the cursor clicks on a clickable element
+        Returns data when the user left clicks on a clickable element
         """
         start, end, text = self.examine_mouse_position(event)
-        self.manage_click(start, end, text)
+        self.manage_left_click(start, end, text)
+
+    def mouse_right_click(self, event):
+        """
+        Returns data when the user right clicks on a clickable element
+        """
+        start, end, text = self.examine_mouse_position(event)
+        self.manage_right_click(start, end, text)
 
     def examine_mouse_position(self, event):
         """
@@ -239,11 +251,21 @@ class GraphicalUserInterface(Frame, Styles):
         """
         pass  # pass on purpose
 
-    def manage_click(self, start, end, text):
+    def manage_right_click(self, start, end, text):
         """
-        Mouse click management
+        Mouse left click management
         """
         pass  # pass on purpose
+
+    def manage_right_click(self, start, end, text):
+        """
+        Mouse right click management
+        """
+        pass  # pass on purpose
+
+    ###############################
+    # KEYBOARD MANAGEMENT METHODS #
+    ##############################
 
     def return_pressed(self, e):
         """
@@ -277,6 +299,10 @@ class GraphicalUserInterface(Frame, Styles):
         """
         self.entry.focus_set()  # sets the focus on the input field
 
+    ############################
+    # INPUT MANAGEMENT METHODS #
+    ############################
+
     def button_pressed(self, b):
         """
         Activates command buttons
@@ -290,6 +316,10 @@ class GraphicalUserInterface(Frame, Styles):
         """
         self.free_input = False
         self.action(t)
+
+    ##############################
+    # DISPLAY MANAGEMENT METHODS #
+    ##############################
 
     def update_status_message(self, text):
         """
@@ -334,6 +364,19 @@ class GraphicalUserInterface(Frame, Styles):
         if disabled:
             b.config(state=DISABLED)
 
+    def toggle_fullscreen(self):
+        """
+        Toggles between windowed and fullscreen
+        """
+        self.parent.state = not self.parent.state  # Just toggling the boolean
+        self.parent.attributes("-fullscreen", self.parent.state)
+
+        return "break"
+
+    ###########################
+    # TEXT MANAGEMENT METHODS #
+    ###########################
+
     def zoom_in(self):
         """
         Increases Text widget font
@@ -358,22 +401,6 @@ class GraphicalUserInterface(Frame, Styles):
         self.text.tag_config(Styles.STRONG, font=(self.text_font_family, self.text_font_size, "bold"))
         self.text.tag_config(Styles.ITALIC, font=(self.text_font_family, self.text_font_size, "italic"))
         self.text.see(END)  # move the scrollbar to the bottom
-
-    def toggle_fullscreen(self):
-        """
-        Toggles between windowed and fullscreen
-        """
-        self.parent.state = not self.parent.state  # Just toggling the boolean
-        self.parent.attributes("-fullscreen", self.parent.state)
-
-        return "break"
-
-    def exit_prompt(self):
-        """
-        Show an exit prompt
-        """
-        if messagebox.askyesno("Quit", "Do you want to quit?"):
-            self.parent.quit()
 
     def clear_screen(self):
         """
@@ -436,6 +463,17 @@ class GraphicalUserInterface(Frame, Styles):
         if n > 0:
             # sleep(self.delay * delay)  # small pause between outputs
             self.add_text("" + "\n" * (n - 1))
+
+    def exit_prompt(self):
+        """
+        Show an exit prompt
+        """
+        if messagebox.askyesno("Quit", "Do you want to quit?"):
+            self.parent.quit()
+
+    #########################
+    # IO MANAGEMENT METHODS #
+    #########################
 
     def input(self, prompt, commands, action, prompt_params=[], prompt_delay=0, free=False, sort=True, placeholder=""):
         """
