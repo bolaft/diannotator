@@ -1643,7 +1643,10 @@ class Annotator(GraphicalUserInterface):
         """
         Mouse motion management
         """
-        pass
+        if start is not None and self.click_to_link_type is not None:
+            self.text.config(cursor="target")
+        else:
+            self.text.config(cursor="arrow")
 
     def manage_click(self, start, end, text):
         """
@@ -1655,6 +1658,7 @@ class Annotator(GraphicalUserInterface):
             self.go_to(index)
         else:
             self.link_segment(index, self.click_to_link_type)
+            self.text.config(cursor="arrow")
 
     def update(self, t=None, annotation_mode=True):
         """
