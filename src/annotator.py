@@ -77,11 +77,8 @@ class Annotator(GraphicalUserInterface):
             "<Delete>",
             lambda event: self.delete_segment())
         self.parent.bind(
-            "<F2>",
-            lambda event: self.show_legacy_annotations())
-        self.parent.bind(
             "<F3>",
-            lambda event: self.hide_legacy_annotations())
+            lambda event: self.toggle_legacy_annotations())
         self.parent.bind(
             "<F4>",
             lambda event: self.generate_participant_colors())
@@ -160,8 +157,7 @@ class Annotator(GraphicalUserInterface):
         self.view_menu.add_command(label=self._("menu.toggle_time_column"), command=self.toggle_time_column)
         self.view_menu.add_command(label=self._("menu.toggle_id_column"), command=self.toggle_id_column)
         self.view_menu.add_separator()
-        self.view_menu.add_command(label=self._("menu.show_legacy_annotations"), accelerator="F2", command=self.show_legacy_annotations)
-        self.view_menu.add_command(label=self._("menu.hide_legacy_annotations"), accelerator="F3", command=self.hide_legacy_annotations)
+        self.view_menu.add_command(label=self._("menu.toggle_legacy_annotations"), accelerator="F3", command=self.toggle_legacy_annotations)
         self.view_menu.add_separator()
         self.view_menu.add_command(label=self._("menu.generate_participant_colors"), accelerator="F4", command=self.generate_participant_colors)
 
@@ -265,18 +261,11 @@ class Annotator(GraphicalUserInterface):
         self.show_id = not self.show_id
         self.update()
 
-    def show_legacy_annotations(self):
+    def toggle_legacy_annotations(self):
         """
-        Sets legacy annotations to be displayed
+        Toggles legacy annotations display
         """
-        self.show_legacy = True
-        self.update()
-
-    def hide_legacy_annotations(self):
-        """
-        Sets legacy annotations to not be displayed
-        """
-        self.show_legacy = False
+        self.show_legacy = not self.show_legacy
         self.update()
 
     #################
