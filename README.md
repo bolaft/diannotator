@@ -283,6 +283,10 @@ Deletes the active segment.
 
 #### `F3`
 
+Toggles legacy annotations display. 
+
+#### `F4`
+
 Randomizes participant colors.
 
 #### `F5`
@@ -317,14 +321,30 @@ Decreases text font size.
 
 Moves focus from button to button, and back to the entry field.
 
+#### `Control W`
+
+Closes the current file.
+
 #### `Control O`
 
-Opens the "open data file" dialogue.
+Opens the "open file" dialogue.
 
 #### `Control Shift S`
 
 Opens the "save as..." dialogue.
 
+#### `Control Shift I`
+
+Opens the "import file" dialogue.
+
 #### `Control Shift E`
 
 Opens the "export as..." dialogue.
+
+#### `Control Alt I`
+
+Opens the "import taxonomy" dialogue.
+
+#### `Control Alt E`
+
+Opens the "export taxonomy as..." dialogue.
