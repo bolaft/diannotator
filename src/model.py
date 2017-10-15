@@ -18,6 +18,7 @@ import pickle
 import tempfile
 
 from collections import OrderedDict
+from copy import deepcopy
 from datetime import datetime
 from dateutil import parser
 from nltk.tokenize import WhitespaceTokenizer
@@ -48,6 +49,10 @@ class Segment:
         self.note = None  # note about the segment
 
         self.tokenize()  # tokenization
+
+    #############################
+    # ANNOTATION ACCESS METHODS #
+    #############################
 
     def has(self, layer, annotation=False, qualifier=False, legacy=False):
         """
@@ -212,9 +217,9 @@ class Segment:
     # SEGMENT MODIFICATION METHODS #
     ################################
 
-    def split(self, token):
+    def split_on_token(self, token):
         """
-        Returns two halves of the segments
+        Returns two halves of the segment
         """
         # index of the split
         split_index = self.tokens.index(token) + 1
@@ -231,6 +236,45 @@ class Segment:
             ls.replace_links(self, s2)
 
         return [s1, s2]
+
+    def split_on_selection(self, selection):
+        """
+        Returns two (or three) parts of the segment
+        """
+        if self.raw.startswith(selection):  # selection at beginning
+            raws = [
+                selection,
+                self.raw[len(selection):]
+            ]
+
+            selection_position = 0
+        elif self.raw.endswith(selection):  # selection at end
+            raws = [
+                self.raw[:len(self.raw) - len(selection)],
+                selection
+            ]
+
+            selection_position = 1
+        else:  # selection in middle
+            raws = [
+                self.raw[:self.raw.index(selection)],
+                selection,
+                self.raw[self.raw.index(selection) + len(selection):]
+            ]
+
+            selection_position = 1
+
+        splits = [self.copy(raw.strip()) for raw in raws]
+
+        # outgoing links are removed for latter splits
+        for split in splits[1:]:
+            split.links = []
+
+        # preserves links
+        for ls, lt in self.linked:
+            ls.replace_links(self, splits[-1])
+
+        return splits, splits[selection_position]
 
     def merge(self, segment):
         """
@@ -297,11 +341,14 @@ class Segment:
         """
         segment = Segment(raw, self.participant, self.datetime)
         segment.original_raw = self.original_raw
-        segment.annotations = self.annotations.copy()
-        segment.legacy = self.legacy.copy()
-        segment.links = self.links.copy()
-        segment.linked = self.linked.copy()
+        segment.annotations = deepcopy(self.annotations)
+        segment.legacy = deepcopy(self.legacy)
+        segment.links = deepcopy(self.links)
+        segment.linked = deepcopy(self.linked)
+        segment.legacy_links = deepcopy(self.links)
+        segment.legacy_linked = deepcopy(self.linked)
         segment.note = self.note
+
         segment.tokenize()
 
         return segment
@@ -385,7 +432,7 @@ class SegmentCollection:
         segment = self.get_active()
 
         if segment.has(self.layer, qualifier=True):
-            return segment.get(sel.layer, qualifier=True)
+            return segment.get(self.layer, qualifier=True)
         else:
             return False
 
@@ -827,10 +874,6 @@ class SegmentCollection:
                     else:
                         # adding label
                         segment.set(key, row[key], legacy=True)
-
-            # ",".join(["{}-{}".format(segment.id, lt) for segment, lt in self.links])
-            # 140027181274280-Feedback,140027181274280-Functional,140027181274280-Functional,140027181274280-Functional
-            # 140027181274280-Feedback
 
             # link extraction
             if "links" in row and row["links"] != "":

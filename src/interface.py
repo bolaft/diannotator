@@ -187,10 +187,16 @@ class GraphicalUserInterface(Frame, Styles):
         self.parent.bind("<Control-KP_Subtract>", lambda event: self.zoom_out())
 
         # binding mouse clicks and movement
+        self.text.bind("<Button-1>", lambda event: self.record_click(self.text.index("@%s,%s" % (event.x, event.y))))
+        self.text.bind("<Button-2>", lambda event: self.record_click(self.text.index("@%s,%s" % (event.x, event.y))))
+        self.text.bind("<ButtonRelease-1>", lambda event: self.record_release(self.text.index("@%s,%s" % (event.x, event.y))))
+        self.text.bind("<ButtonRelease-2>", lambda event: self.record_release(self.text.index("@%s,%s" % (event.x, event.y))))
         self.clickable_text_tag = "clickable_text_tag"
-        self.text.tag_bind(self.clickable_text_tag, "<Button-1>", self.mouse_click)
-        self.text.tag_bind(self.clickable_text_tag, "<Button-2>", self.mouse_click)
+        self.text.tag_bind(self.clickable_text_tag, "<Button-1>", self.mouse_left_click)
+        self.text.tag_bind(self.clickable_text_tag, "<Button-2>", self.mouse_right_click)
         self.text.bind("<Motion>", self.mouse_motion)
+
+        self.last_click_index = None
 
         Styles.__init__(self)  # initializes style tags
 
@@ -204,6 +210,18 @@ class GraphicalUserInterface(Frame, Styles):
     ############################
     # MOUSE MANAGEMENT METHODS #
     ############################
+
+    def record_click(self, index):
+        """
+        Records last click index
+        """
+        self.last_click_index = index
+
+    def record_release(self, index):
+        """
+        Records last click release index
+        """
+        self.last_release_index = index
 
     def mouse_motion(self, event):
         """

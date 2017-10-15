@@ -13,12 +13,16 @@ from copy import deepcopy
 from datetime import datetime, timedelta
 from tkinter import filedialog, messagebox, colorchooser, LEFT, END
 from tkinter.ttk import Button
-from undo import stack, undoable
+from undo import stack, undoable, group
 
 from colors import generate_random_color
 from interface import GraphicalUserInterface
 from model import SegmentCollection
 from styles import Styles
+
+# special chars to mark beginning and end of raw segment text
+BEGIN_CHAR = "\uFEFF"
+END_CHAR = "\u200b"
 
 
 class Annotator(GraphicalUserInterface):
@@ -214,7 +218,7 @@ class Annotator(GraphicalUserInterface):
         # previous key press, for speed checks
         self.previous_key_press = datetime.now() - timedelta(seconds=10)
 
-        # click is go to segment by default
+        # click does not link by default
         self.click_to_link_type = None
 
         # show legacy annotations
@@ -573,7 +577,7 @@ class Annotator(GraphicalUserInterface):
         self.sc.next(n=n)
         self.update()
 
-        yield  # undo
+        yield "cycle_down"
 
         self.cycle_up(n)
 
@@ -590,7 +594,7 @@ class Annotator(GraphicalUserInterface):
         self.sc.previous(n=n)
         self.update()
 
-        yield  # undo
+        yield "cycle_up"
 
         self.cycle_down(n)
 
@@ -616,7 +620,7 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
-        yield  # undo
+        yield "go_to"
 
         self.go_to(i)
 
@@ -641,7 +645,7 @@ class Annotator(GraphicalUserInterface):
         self.sc.remove(segment)
         self.update()
 
-        yield  # undo
+        yield "apply_delete_segment"
 
         self.sc.insert(i, fi, segment)
 
@@ -669,7 +673,7 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
-        yield  # undo
+        yield "apply_merge_segment"
 
         self.sc.remove(segment)
         self.sc.insert(i, fi, original)
@@ -678,30 +682,89 @@ class Annotator(GraphicalUserInterface):
 
     def select_split_token(self):
         """
-        Inputs the token on which the active segment will be split
+        Inputs the token on which the active segment will be split, or performs split on selection
         """
-        segment = self.sc.get_active()
+        segment, has_split = self.split_on_selection()
 
-        if len(segment.tokens) > 1:
-            self.input("prompt.select_split_token", segment.tokens[:-1], self.split_segment, sort=False)
+        if not has_split and len(segment.tokens) > 1:
+            self.input("prompt.select_split_token", segment.tokens[:-1], lambda token: self.split_segment_on_token(segment, token), sort=False)
 
     @undoable
-    def split_segment(self, token):
+    def split_on_selection(self):
+        """
+        Splits on selection and returns segment to affect
+        """
+        # index to go to
+        go_to_i = self.sc.i
+
+        active_segment = self.sc.get_active()
+
+        # check if te annotation should be applied to a mouse selection
+        if self.last_click_index:
+            selection, selected_segment = self.apply_to_selection()
+        else:
+            selected_segment = False
+
+        # whether a split occured
+        has_split = False
+
+        if selected_segment:
+            if selection is True:
+                # apply annotation to the clicked segment
+                segment = selected_segment
+
+                if segment == active_segment:
+                    go_to_i += 1
+            else:
+                has_split = True
+
+                # get indexes of selected segment
+                i, fi = self.sc.get_segment_indexes(selected_segment)
+                # split segment and apply annotation
+                splits, segment = selected_segment.split_on_selection(selection)
+
+                # insert splits
+                for split in reversed(splits):
+                    self.sc.insert(i, fi, split)
+
+                # remove original segment
+                self.sc.remove(selected_segment)
+
+                for i in range(len(splits) - 1):
+                    # moving index
+                    self.sc.next()
+        else:
+            # the annotation is applied to the active segment
+            segment = active_segment
+
+        self.update()
+
+        yield "split_on_selection", segment, has_split
+
+        if selected_segment and selection is not True:
+            # remove splits
+            for split in splits:
+                self.sc.remove(split)
+
+            # insert selected_segment
+            self.sc.insert(i, fi, selected_segment)
+
+    @undoable
+    def split_segment_on_token(self, segment, token):
         """
         Splits the active segment in two
         """
-        segment = self.sc.get_active()
         i, fi = self.sc.get_segment_indexes(segment)
-        splits = segment.split(token)
+        splits = segment.split_on_token(token)
 
         for split in reversed(splits):
-            self.sc.insert_after_active(split)
+            self.sc.insert(i, fi, split)
 
         self.sc.remove(segment)
 
         self.update()
 
-        yield  # undo
+        yield "split_segment_on_token", splits
 
         for split in splits:
             self.sc.remove(split)
@@ -734,7 +797,7 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
-        yield  # undo
+        yield "apply_erase_annotation"
 
         segment.set(self.sc.layer, label)
         segment.set(self.sc.layer, qualifier, qualifier=True)
@@ -786,7 +849,7 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
-        yield  # undo
+        yield "link_segment"
 
         if success:
             segment.links.remove((self.sc.collection[number], link_type))
@@ -806,7 +869,7 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
-        yield  # undo
+        yield "unlink_segment"
 
         for ls, lt in links:
             segment.create_link(ls, lt)
@@ -835,7 +898,7 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
-        yield  # undo
+        yield "set_note"
 
         segment.note = previous_note
 
@@ -878,7 +941,7 @@ class Annotator(GraphicalUserInterface):
         self.sc.add_layer(layer)
         self.update()
 
-        yield  # undo
+        yield "add_layer"
 
         self.sc.delete_layer(layer)
 
@@ -890,7 +953,7 @@ class Annotator(GraphicalUserInterface):
         self.sc.add_label(self.sc.layer, label)
         self.update()
 
-        yield  # undo
+        yield "add_label"
 
         self.sc.delete_label(self.sc.layer, label)
 
@@ -902,7 +965,7 @@ class Annotator(GraphicalUserInterface):
         self.sc.add_qualifier(self.sc.layer, qualifier)
         self.update()
 
-        yield  # undo
+        yield "add_qualifier"
 
         self.sc.delete_qualifier(self.sc.layer, qualifier)
 
@@ -914,7 +977,7 @@ class Annotator(GraphicalUserInterface):
         self.sc.add_link_type(link_type)
         self.update()
 
-        yield  # undo
+        yield "add_link_type"
 
         self.sc.delete_link_type(link_type)
 
@@ -936,7 +999,7 @@ class Annotator(GraphicalUserInterface):
                 self.sc.delete_label(self.sc.layer, label)
                 self.update()
 
-        yield  # undo
+        yield "remove_label"
 
         self.sc = sc
 
@@ -958,7 +1021,7 @@ class Annotator(GraphicalUserInterface):
                 self.sc.delete_qualifier(self.sc.layer, qualifier)
                 self.update()
 
-        yield  # undo
+        yield "remove_qualifier"
 
         self.sc = sc
 
@@ -988,7 +1051,7 @@ class Annotator(GraphicalUserInterface):
         self.sc.delete_layer(layer)
         self.update()
 
-        yield  # undo
+        yield "apply_remove_layer"
 
         self.sc = sc
 
@@ -1020,7 +1083,7 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
-        yield  # undo
+        yield "apply_remove_link_types"
 
         self.sc = sc
 
@@ -1173,7 +1236,7 @@ class Annotator(GraphicalUserInterface):
         self.update()
         self.generate_layer_colors()
 
-        yield  # undo
+        yield "rename_layer"
 
         if success:
             self.sc = sc
@@ -1196,7 +1259,7 @@ class Annotator(GraphicalUserInterface):
 
             self.update()
 
-        yield  # undo
+        yield "rename_label"
 
         if label:
             self.sc = sc
@@ -1218,7 +1281,7 @@ class Annotator(GraphicalUserInterface):
 
             self.update()
 
-        yield  # undo
+        yield "rename_qualifier"
 
         if qualifier:
             self.sc = sc
@@ -1232,7 +1295,7 @@ class Annotator(GraphicalUserInterface):
         success = self.sc.change_link_type(link_type, name)
         self.update()
 
-        yield  # undo
+        yield "rename_link_type"
 
         if success:
             self.sc = sc
@@ -1273,7 +1336,7 @@ class Annotator(GraphicalUserInterface):
 
         self.update()
 
-        yield  # undo
+        yield "remove_filter"
 
         self.sc = sc
 
@@ -1411,7 +1474,7 @@ class Annotator(GraphicalUserInterface):
         self.sc.filter = "|{}|".format(layer)
         self.finish_filter()
 
-        yield  # undo
+        yield "filter_by_layer"
 
         self.sc = sc
 
@@ -1426,7 +1489,7 @@ class Annotator(GraphicalUserInterface):
         self.sc.filter = "|{}|".format(layer)
         self.finish_filter()
 
-        yield  # undo
+        yield "filter_by_legacy_layer"
 
         self.sc = sc
 
@@ -1448,7 +1511,7 @@ class Annotator(GraphicalUserInterface):
         self.sc.filter = "[{}]".format(label)
         self.finish_filter()
 
-        yield  # undo
+        yield "filter_by_label"
 
         self.sc = sc
 
@@ -1470,7 +1533,7 @@ class Annotator(GraphicalUserInterface):
         self.sc.filter = "[{}]".format(label)
         self.finish_filter()
 
-        yield  # undo
+        yield "filter_by_legacy_label"
 
         self.sc = sc
 
@@ -1492,7 +1555,7 @@ class Annotator(GraphicalUserInterface):
         self.sc.filter = "[➔ {}]".format(qualifier)
         self.finish_filter()
 
-        yield  # undo
+        yield "filter_by_qualifier"
 
         self.sc = sc
 
@@ -1514,7 +1577,7 @@ class Annotator(GraphicalUserInterface):
         self.sc.filter = "((➔ {}))".format(qualifier)
         self.finish_filter()
 
-        yield  # undo
+        yield "filter_by_legacy_qualifier"
 
         self.sc = sc
 
@@ -1567,13 +1630,49 @@ class Annotator(GraphicalUserInterface):
         self.sc.layer = layer
         self.update()
 
-        yield  # undo
+        yield "set_active_layer"
 
         self.sc.layer = previous_layer
 
-    ###################
-    # GENERAL METHODS #
-    ###################
+    ############################
+    # MOUSE MANAGEMENT METHODS #
+    ############################
+
+    def manage_motion(self, start, end, text):
+        """
+        Mouse motion changes the cursor style
+        """
+        if start is not None and self.click_to_link_type is not None:
+            self.text.config(cursor="target")
+        else:
+            self.text.config(cursor="arrow")
+
+    def manage_left_click(self, start, end, text):
+        """
+        Left mouse clicks either trigger go_to or link_segment
+        """
+        # get index of clicked segment in collection
+        i = self.get_segment_index_from_x_y(start, end)
+
+        if self.click_to_link_type is not None:
+            self.link_segment(i + 1, self.click_to_link_type)
+            self.text.config(cursor="arrow")
+
+    def manage_right_click(self, start, end, text):
+        """
+        Right mouse clicks trigger
+        """
+        pass
+
+    def get_segment_index_from_x_y(self, start, end):
+        """
+        Returns a segment index from text index
+        """
+        return int(self.text.get("{}.0".format(str(start).split(".")[0]), end).split("\t")[0]) - 1
+
+    ######################
+    # ANNOTATION METHODS #
+    ######################
 
     def annotation_mode(self):
         """
@@ -1587,78 +1686,101 @@ class Annotator(GraphicalUserInterface):
             self.input(
                 "prompt.annotation_mode_qualifier",
                 self.sc.qualifiers[self.sc.layer],
-                self.annotate_qualifier,
+                lambda annotation: self.annotate(annotation, qualifier=True),
                 sort=False
             )
         else:
             self.input(
                 "prompt.annotation_mode_label",
                 self.sc.labels[self.sc.layer],
-                self.annotate_label,
+                lambda annotation: self.annotate(annotation),
                 sort=False
             )
 
+    def apply_to_selection(self):
+        """
+        Checks if the annotation should be applied to a mouse selection
+        """
+        try:
+            selection = self.text.selection_get()
+            selection = False if selection == "" else selection
+        except Exception:
+            selection = False
+
+        if selection:
+            i = self.get_segment_index_from_x_y(self.last_click_index, END)
+            clicked_segment = self.sc.collection[i]
+
+            j = self.get_segment_index_from_x_y(self.last_release_index, END)
+            release_segment = self.sc.collection[j]
+
+            if release_segment is clicked_segment:
+                # remove parts of the selection that are not in the text segment
+                if BEGIN_CHAR in selection:
+                    selection = selection[selection.index(BEGIN_CHAR) + 1:]
+                if END_CHAR in selection:
+                    selection = selection[:selection.index(END_CHAR)]
+
+                if clicked_segment.raw == selection:
+                    # apply selection to full segment?
+                    if messagebox.askyesno(
+                        self._("box.title.apply_to_selection"),
+                        self._("box.text.apply_to_selection_full_segment")
+                    ):
+                        return True, clicked_segment
+                    else:
+                        return False, False
+                else:
+                    # apply selection to partial segment and split?
+                    if messagebox.askyesno(
+                        self._("box.title.apply_to_selection"),
+                        self._("box.text.apply_to_selection_partial_segment")
+                    ):
+                        return selection, clicked_segment
+                    else:
+                        return False, False
+            else:
+                messagebox.showwarning(
+                    self._("dialog.title.apply_to_selection_multiple_segments"),
+                    self._("dialog.text.apply_to_selection_multiple_segments")
+                )
+
+        return False, False
+
     @undoable
-    def annotate_label(self, annotation):
+    def annotate(self, annotation, qualifier=False):
         """
-        Adds a label to the active segment annotations
+        Adds a label or qualifier to the active segment annotations
         """
-        segment = self.sc.get_active()
+        start_i = self.sc.i
+        segment, has_split = self.split_on_selection()
 
-        segment.set(self.sc.layer, annotation)  # set annotation
+        original_annotation = segment.get(self.sc.layer, qualifier=qualifier)  # get annotation
+        segment.set(self.sc.layer, annotation, qualifier=qualifier)  # set annotation
 
-        # go to next segment unless a qualifier needs to be set
-        if self.sc.layer not in self.sc.qualifiers:
+        if segment == self.sc.get_active() and not(segment == self.sc.get_active() and not segment.has(self.sc.layer, qualifier=True) and self.sc.layer in self.sc.qualifiers.keys()):
+            # moving index
             self.sc.next()
 
         self.update()
 
-        yield  # undo
+        yield
 
-        segment.rem(self.sc.layer)
+        self.undo()
 
-        if self.sc.layer not in self.sc.qualifiers:
-            self.sc.previous()
-
-    @undoable
-    def annotate_qualifier(self, annotation):
-        """
-        Adds a qualifier to the active segment annotations
-        """
-        segment = self.sc.get_active()
-
-        segment.set(self.sc.layer, annotation, qualifier=True)  # set annotation
-
-        self.sc.next()
-
-        self.update()
-
-        yield  # undo
-
-        segment.rem(self.sc.layer, qualifier=True)
-
-        self.sc.previous()
-
-    def manage_motion(self, start, end, text):
-        """
-        Mouse motion management
-        """
-        if start is not None and self.click_to_link_type is not None:
-            self.text.config(cursor="target")
+        if original_annotation:
+            # reset annotation
+            segment.set(self.sc.layer, original_annotation, qualifier=qualifier)
         else:
-            self.text.config(cursor="arrow")
+            # remove annotation
+            segment.rem(self.sc.layer, qualifier=qualifier)
 
-    def manage_click(self, start, end, text):
-        """
-        Mouse click management
-        """
-        index = int(self.text.get(start, end).split("\t")[0])
+        # moving index back
+        self.sc.i = start_i
 
-        if self.click_to_link_type is None:
-            self.go_to(index)
-        else:
-            self.link_segment(index, self.click_to_link_type)
-            self.text.config(cursor="arrow")
+    ###################
+    # DISPLAY METHODS #
+    ###################
 
     def update(self, t=None, annotation_mode=True):
         """
@@ -1731,11 +1853,7 @@ class Annotator(GraphicalUserInterface):
         segment = self.sc.collection[i]
 
         # participant color
-        style = ["participant-{}".format(segment.participant), self.clickable_text_tag]
-
-        # active segment is bolded
-        if active:
-            style.append(Styles.STRONG)
+        style = ["participant-{}".format(segment.participant)]
 
         # columns to be displayed
         columns = [str(i + 1)]  # the index is the first column
@@ -1750,13 +1868,24 @@ class Annotator(GraphicalUserInterface):
             columns.append(segment.participant)
 
         # base text string
-        text = "\t".join(columns + ["\t" + segment.raw])
+        text = "\t".join(columns + ["\t"])
 
         # output text
         self.output(text, style=style)
 
         # offset for displaying addendums
         offset = len(text) + 1
+
+        # active segment is bolded
+        if active:
+            style.append(Styles.STRONG)
+
+        # clickable text
+        style.append(self.clickable_text_tag)
+
+        # display raw text
+        self.add_to_last_line(BEGIN_CHAR + segment.raw + END_CHAR, style=style, offset=offset)
+        offset += len(segment.raw) + 1
 
         # ignore legacy layers where there is already an annotation
         legacy_layers_to_ignore = []
