@@ -393,11 +393,15 @@ class Annotator(GraphicalUserInterface):
             stack().clear()  # reinitializes undo history
             self.colorize()
             self.update()
+
+            return True
         else:
             messagebox.showerror(
                 self._("error.title.open_file"),
                 self._("error.text.open_file")
             )
+
+            return False
 
     def save_file(self):
         """
@@ -423,6 +427,10 @@ class Annotator(GraphicalUserInterface):
                 self._("error.text.save_file")
             )
 
+            return False
+        else:
+            return True
+
     def import_file(self):
         """
         Loads a .csv file through dialogue
@@ -444,24 +452,32 @@ class Annotator(GraphicalUserInterface):
 
         if success:
             # choose a taxonomy
-            self.import_taxonomy()
+            success_bis = self.import_taxonomy()
 
-            # how to use legacy annotations
-            if messagebox.askyesno(
-                self._("box.title.legacy_annotations"),
-                self._("box.text.legacy_annotations")
-            ):
-                self.sc.legacy_to_annotations()
+            if success_bis:
+                if self.sc.has_valid_legacy():
+                    # how to use valid legacy annotations
+                    if messagebox.askyesno(
+                        self._("box.title.legacy_annotations"),
+                        self._("box.text.legacy_annotations")
+                    ):
+                        self.sc.legacy_to_annotations()
 
-            stack().clear()  # reinitializes undo history
+                stack().clear()  # reinitializes undo history
 
-            self.colorize(participants=False)
-            self.update()
+                self.colorize(participants=False)
+                self.update()
+
+                return True
+            else:
+                return False
         else:
             messagebox.showerror(
                 self._("error.title.open_file"),
                 self._("box.text.wrong_format")
             )
+
+            return False
 
     def export_file(self):
         """
@@ -487,6 +503,10 @@ class Annotator(GraphicalUserInterface):
                 self._("error.text.export_file")
             )
 
+            return False
+        else:
+            return True
+
     def close_file(self):
         """
         Closes the current file
@@ -511,18 +531,22 @@ class Annotator(GraphicalUserInterface):
         )
 
         if path == "":
-            return  # no path selected
+            return False  # no path selected
 
         success = self.sc.import_taxonomy(path)
 
         if success:
             self.colorize()
             self.update()
+
+            return True
         else:
             messagebox.showerror(
                 self._("error.title.import_taxonomy"),
                 self._("error.text.import_taxonomy")
             )
+
+        return False
 
     def export_taxonomy(self):
         """
@@ -538,7 +562,7 @@ class Annotator(GraphicalUserInterface):
         )
 
         if path == "":
-            return  # no path selected
+            return False  # no path selected
 
         success = self.sc.export_taxonomy(path)
 
@@ -547,6 +571,10 @@ class Annotator(GraphicalUserInterface):
                 self._("error.title.export_taxonomy"),
                 self._("error.text.export_file")
             )
+
+            return False
+        else:
+            return True
 
     #######################
     # NAVIGATION COMMANDS #

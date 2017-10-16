@@ -506,19 +506,39 @@ class SegmentCollection:
                     # setting labels
                     if segment.has(layer, legacy=True):
                         annotation = segment.get(layer, legacy=True)
-                        if annotation in self.labels.keys():
+                        if layer in self.labels and annotation in self.labels[layer]:
                             segment.set(layer, annotation)
 
                     # setting qualifiers
                     if segment.has(layer, legacy=True, qualifier=True):
                         annotation = segment.get(layer, legacy=True, qualifier=True)
-                        if annotation in self.qualifiers.keys():
+                        if layer in self.qualifiers and annotation in self.qualifiers[layer]:
                             segment.set(layer, annotation, qualifier=True)
 
             # setting legacy links
             for ls, lt in segment.legacy_links:
                 if lt in self.links:
                     segment.create_link(ls, lt)
+
+    def has_valid_legacy(self):
+        """
+        Checks if the collection has valid legacy annotations
+        """
+        for segment in self.full_collection:
+            for layer in segment.legacy:
+                if layer in self.labels.keys() or layer in self.qualifiers.keys():
+                    if segment.get(layer, legacy=True) in self.labels[layer]:
+                        return True
+
+                    if segment.get(layer, legacy=True, qualifier=True) in self.qualifiers[layer]:
+                        return True
+
+            # setting legacy links
+            for ls, lt in segment.legacy_links:
+                if lt in self.links.keys():
+                    return True
+
+        return False
 
     #################################
     # TAXONOMY MODIFICATION METHODS #
