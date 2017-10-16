@@ -335,23 +335,32 @@ class Segment:
                 data1[k] = data2[k]
         return data1
 
-    def copy(self, raw):
+    def copy(self, s):
         """
-        Creates and returns a segment with similar attributes but different raw
+        Creates and returns a copy
         """
-        segment = Segment(raw, self.participant, self.datetime)
-        segment.original_raw = self.original_raw
-        segment.annotations = deepcopy(self.annotations)
-        segment.legacy = deepcopy(self.legacy)
-        segment.links = deepcopy(self.links)
-        segment.linked = deepcopy(self.linked)
-        segment.legacy_links = deepcopy(self.links)
-        segment.legacy_linked = deepcopy(self.linked)
-        segment.note = self.note
+        # copy segment values to self
+        if isinstance(s, Segment):
+            copy = self
+            copy.raw = s.raw
+            source = s
+        # make a new copy
+        else:
+            copy = Segment(s, self.participant, self.datetime)
+            source = self
 
-        segment.tokenize()
+        copy.original_raw = source.original_raw
+        copy.annotations = deepcopy(source.annotations)
+        copy.legacy = deepcopy(source.legacy)
+        copy.links = deepcopy(source.links)
+        copy.linked = deepcopy(source.linked)
+        copy.legacy_links = deepcopy(source.links)
+        copy.legacy_linked = deepcopy(source.linked)
+        copy.note = source.note
 
-        return segment
+        copy.tokenize()
+
+        return copy
 
 
 class SegmentCollection:
@@ -440,7 +449,19 @@ class SegmentCollection:
         """
         Return a tuple of segment indexes
         """
-        return (self.collection.index(segment), self.full_collection.index(segment))
+        cs = None
+        for s in self.collection:
+            if s.id == segment.id:
+                cs = s
+                break
+
+        fcs = None
+        for s in self.full_collection:
+            if s.id == segment.id:
+                fcs = s
+                break
+
+        return (self.collection.index(cs), self.full_collection.index(fcs))
 
     ########################
     # MODIFICATION METHODS #
@@ -450,10 +471,10 @@ class SegmentCollection:
         """
         Removes a segment
         """
-        ci = self.collection.index(segment)
-        self.collection.remove(segment)
-        fi = self.full_collection.index(segment)
-        self.full_collection.remove(segment)
+        ci, fi = self.get_segment_indexes(segment)
+
+        del self.collection[ci]
+        del self.full_collection[fi]
 
     def insert(self, i, fi, insert):
         """

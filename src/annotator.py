@@ -13,7 +13,7 @@ from copy import deepcopy
 from datetime import datetime, timedelta
 from tkinter import filedialog, messagebox, colorchooser, LEFT, END
 from tkinter.ttk import Button
-from undo import stack, undoable
+from undo import stack, undoable, group
 
 from colors import generate_random_color
 from interface import GraphicalUserInterface
@@ -668,7 +668,8 @@ class Annotator(GraphicalUserInterface):
         Applies a merge
         """
         i, fi = self.sc.get_segment_indexes(segment)
-        original = deepcopy(segment)
+
+        original = segment.copy(segment.raw)
         segment.merge(previous)
 
         self.sc.remove(previous)
@@ -679,34 +680,36 @@ class Annotator(GraphicalUserInterface):
         yield "apply_merge_segment"
 
         self.sc.remove(segment)
-        self.sc.insert(i, fi, original)
-        self.sc.insert(i, fi, previous)
-        self.sc.next(n=2)
+
+        segment.copy(original)
+
+        # insert splits back
+        self.sc.insert(i - 1, fi - 1, segment)
+        self.sc.insert(i - 1, fi - 1, previous)
+
+        # cycle to next
+        self.sc.next()
 
     def select_split_token(self):
         """
         Inputs the token on which the active segment will be split, or performs split on selection
         """
-        segment, has_split = self.split_on_selection()
+        # check if te annotation should be applied to a mouse selection
+        selection, selected_segment = self.apply_to_selection()
+
+        segment, has_split = self.split_on_selection(selection, selected_segment)
 
         if not has_split and len(segment.tokens) > 1:
             self.input("prompt.select_split_token", segment.tokens[:-1], lambda token: self.split_segment_on_token(segment, token), sort=False)
 
     @undoable
-    def split_on_selection(self):
+    def split_on_selection(self, selection, selected_segment):
         """
         Splits on selection and returns segment to affect
         """
-        # index to go to
-        go_to_i = self.sc.i
+        sc = deepcopy(self.sc)
 
         active_segment = self.sc.get_active()
-
-        # check if te annotation should be applied to a mouse selection
-        if self.last_click_index:
-            selection, selected_segment = self.apply_to_selection()
-        else:
-            selected_segment = False
 
         # whether a split occured
         has_split = False
@@ -715,10 +718,8 @@ class Annotator(GraphicalUserInterface):
             if selection is True:
                 # apply annotation to the clicked segment
                 segment = selected_segment
-
-                if segment == active_segment:
-                    go_to_i += 1
             else:
+                # self.last_selection = self.text.index("sel.first"), self.text.index("sel.last")
                 has_split = True
 
                 # get indexes of selected segment
@@ -733,9 +734,8 @@ class Annotator(GraphicalUserInterface):
                 # remove original segment
                 self.sc.remove(selected_segment)
 
-                for i in range(len(splits) - 1):
-                    # moving index
-                    self.sc.next()
+                # moving index
+                self.sc.next(n=len(splits) - 1)
         else:
             # the annotation is applied to the active segment
             segment = active_segment
@@ -744,13 +744,7 @@ class Annotator(GraphicalUserInterface):
 
         yield "split_on_selection", segment, has_split
 
-        if selected_segment and selection is not True:
-            # remove splits
-            for split in splits:
-                self.sc.remove(split)
-
-            # insert selected_segment
-            self.sc.insert(i, fi, selected_segment)
+        self.sc = sc
 
     @undoable
     def split_segment_on_token(self, segment, token):
@@ -764,6 +758,7 @@ class Annotator(GraphicalUserInterface):
             self.sc.insert(i, fi, split)
 
         self.sc.remove(segment)
+        self.sc.next()
 
         self.update()
 
@@ -773,6 +768,7 @@ class Annotator(GraphicalUserInterface):
             self.sc.remove(split)
 
         self.sc.insert(i, fi, segment)
+        self.sc.previous()
 
     ##################################
     # ANNOTATION MANAGEMENT COMMANDS #
@@ -1733,7 +1729,7 @@ class Annotator(GraphicalUserInterface):
                         return True, clicked_segment
                     else:
                         return False, False
-                else:
+                elif selection in clicked_segment.raw:
                     # apply selection to partial segment and split?
                     if messagebox.askyesno(
                         self._("box.title.apply_to_selection"),
@@ -1750,13 +1746,28 @@ class Annotator(GraphicalUserInterface):
 
         return False, False
 
-    @undoable
     def annotate(self, annotation, qualifier=False):
         """
         Adds a label or qualifier to the active segment annotations
         """
+        # check if te annotation should be applied to a mouse selection
+        selection, selected_segment = self.apply_to_selection()
+
+        with group("annotate"):  # undo group
+            segment, has_split = self.split_on_selection(selection, selected_segment)
+            ci, fi = self.sc.get_segment_indexes(segment)
+            self.apply_annotation(annotation, ci, qualifier=qualifier)
+
+        self.update()
+
+    @undoable
+    def apply_annotation(self, annotation, index, qualifier=False):
+        """
+        Applies an annotation
+        """
         start_i = self.sc.i
-        segment, has_split = self.split_on_selection()
+
+        segment = self.sc.collection[index]
 
         original_annotation = segment.get(self.sc.layer, qualifier=qualifier)  # get annotation
         segment.set(self.sc.layer, annotation, qualifier=qualifier)  # set annotation
@@ -1765,11 +1776,7 @@ class Annotator(GraphicalUserInterface):
             # moving index
             self.sc.next()
 
-        self.update()
-
-        yield
-
-        self.undo()
+        yield "apply_annotation"
 
         if original_annotation:
             # reset annotation
@@ -1847,7 +1854,7 @@ class Annotator(GraphicalUserInterface):
         self.annotation_mode()
         self.is_annotation_mode = True
 
-        self.sc.save()
+        self.sc.save()  # autosave
 
     def output_segment(self, i, active=False):
         """
@@ -1895,44 +1902,22 @@ class Annotator(GraphicalUserInterface):
 
         # annotations display
         for layer in reversed(sorted(segment.annotations.keys())):
-            if segment.has(layer) and segment.has(layer, qualifier=True):
-                addendum = " [{} ➔ {}]".format(
-                    segment.get(layer),
-                    segment.get(layer, qualifier=True)
-                )
-            elif segment.has(layer):
-                addendum = " [{}]".format(
-                    segment.get(layer)
-                )
-            elif segment.has(layer, qualifier=True):
-                addendum = " [➔ {}]".format(
-                    segment.get(layer, qualifier=True)
-                )
+            addendum = self.make_addendum(segment, layer)
 
-            self.add_to_last_line(addendum, style="layer-{}".format(layer), offset=offset)
-            offset += len(addendum)
-            legacy_layers_to_ignore.append(layer)
+            if addendum:
+                self.add_to_last_line(addendum, style="layer-{}".format(layer), offset=offset)
+                offset += len(addendum)
+                legacy_layers_to_ignore.append(layer)
 
         # legacy annotations display
         if self.show_legacy:
             for layer in reversed(sorted(segment.legacy.keys())):
                 if layer not in legacy_layers_to_ignore:
-                    if segment.has(layer, legacy=True) and segment.has(layer, qualifier=True, legacy=True):
-                        addendum = " [{} ➔ {}]".format(
-                            segment.get(layer, legacy=True),
-                            segment.get(layer, qualifier=True, legacy=True)
-                        )
-                    elif segment.has(layer, legacy=True):
-                        addendum = " [{}]".format(
-                            segment.get(layer, legacy=True)
-                        )
-                    elif segment.has(layer, qualifier=True, legacy=True):
-                        addendum = " [➔ {}]".format(
-                            segment.get(layer, qualifier=True, legacy=True)
-                        )
+                    addendum = self.make_addendum(segment, layer, legacy=True)
 
-                    self.add_to_last_line(addendum, style="layer-{}".format(layer), offset=offset)
-                    offset += len(addendum)
+                    if addendum:
+                        self.add_to_last_line(addendum, style="layer-{}".format(layer), offset=offset)
+                        offset += len(addendum)
 
         # links display
         links_by_type = {}
@@ -1971,6 +1956,31 @@ class Annotator(GraphicalUserInterface):
         # note display
         if segment.note is not None:
             self.output("\t\t\t\t ⤷ {}".format(segment.note), style=Styles.ITALIC)
+
+    def make_addendum(self, segment, layer, legacy=False):
+        """
+        Makes annotation addendum string
+        """
+        addendum = False
+
+        if segment.has(layer, legacy=legacy) and segment.has(layer, qualifier=True, legacy=legacy):
+            addendum = " [{} ➔ {}]".format(
+                segment.get(layer, legacy=legacy),
+                segment.get(layer, qualifier=True, legacy=legacy)
+            )
+        elif segment.has(layer, legacy=legacy):
+            addendum = " [{}]".format(
+                segment.get(layer, legacy=legacy)
+            )
+        elif segment.has(layer, qualifier=True, legacy=legacy):
+            addendum = " [➔ {}]".format(
+                segment.get(layer, qualifier=True, legacy=legacy)
+            )
+
+        if legacy:
+            addendum = addendum.replace("[", ("((")).replace("]", "))")
+
+        return addendum
 
     ####################
     # OVERRIDE METHODS #

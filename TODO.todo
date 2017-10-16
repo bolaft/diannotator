@@ -1,6 +1,6 @@
     Bugs:
 
-        ☐ redo doesn't work for selected text annotation
+        ✔ redo doesn't work for selected text annotation @done (17-10-16 17:41)
         ✔ when quitting file dialogue, warning shows up @done (17-10-13 12:42)
         ✔ bug with undo when less than max backups @done (17-10-12 16:51)
         ✔ date/time not loaded on all segments @done (17-10-11 17:30)
@@ -14,7 +14,6 @@
 
     Features:
 
-        ☐ display qualifiers even if no label for segment
         ☐ do something with right click
         ☐ JSON config file to tell which columns are what
         ☐ unit testing
@@ -23,6 +22,7 @@
         ☐ integrate pyrata for annotation search
         ☐ feature driven annotation
         ☐ french translation
+        ✔ display qualifiers even if no label for segment @done (17-10-16 12:11)
         ✔ if part of segment selected and split, split on segment @done (17-10-15 21:55)
         ✔ if part of segment selected and annotation applied, split if not full segment and apply annotation @done (17-10-15 20:28)
         ✔ use the mouse (eg for links) @done (17-10-15 00:18)

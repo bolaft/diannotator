@@ -8,7 +8,7 @@
 Grapical User Interface
 """
 
-from tkinter import Tk, StringVar, Text, Menu, messagebox, BOTH, DISABLED, END, LEFT, BOTTOM, NORMAL, N, X, WORD, NSEW, SUNKEN
+from tkinter import Tk, StringVar, Text, Menu, messagebox, BOTH, DISABLED, END, LEFT, BOTTOM, NORMAL, N, X, WORD, NSEW, SUNKEN, INSERT, SEL
 from tkinter.ttk import Button, Entry, Frame, Label, Scrollbar
 from ttkthemes import ThemedStyle
 
@@ -196,7 +196,8 @@ class GraphicalUserInterface(Frame, Styles):
         self.text.tag_bind(self.clickable_text_tag, "<Button-2>", self.mouse_right_click)
         self.text.bind("<Motion>", self.mouse_motion)
 
-        self.last_click_index = None
+        self.last_click_index = "1.0"
+        self.last_release_index = "1.0"
 
         Styles.__init__(self)  # initializes style tags
 
@@ -394,6 +395,13 @@ class GraphicalUserInterface(Frame, Styles):
     ###########################
     # TEXT MANAGEMENT METHODS #
     ###########################
+
+    def select(self, start, end):
+        """
+        Selects text
+        """
+        self.text.tag_add(SEL, start, end)
+        self.text.mark_set(INSERT, "1.0")
 
     def zoom_in(self):
         """
