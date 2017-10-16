@@ -13,7 +13,7 @@ from copy import deepcopy
 from datetime import datetime, timedelta
 from tkinter import filedialog, messagebox, colorchooser, LEFT, END
 from tkinter.ttk import Button
-from undo import stack, undoable, group
+from undo import stack, undoable
 
 from colors import generate_random_color
 from interface import GraphicalUserInterface
@@ -210,7 +210,7 @@ class Annotator(GraphicalUserInterface):
         self.make_special_buttons()
 
         # default action (when return is pressed without context)
-        self.default_action = lambda arg=1: self.go_down(arg)
+        self.default_action = lambda arg=1: self.go_down(arg) if self.is_annotation_mode else self.annotation_mode()
 
         # clear undo stack
         stack().clear()
@@ -220,6 +220,9 @@ class Annotator(GraphicalUserInterface):
 
         # click does not link by default
         self.click_to_link_type = None
+
+        # does not start automatically true
+        self.is_annotation_mode = False
 
         # show legacy annotations
         self.show_legacy = True  # show legacy annotations by defaults
@@ -834,7 +837,7 @@ class Annotator(GraphicalUserInterface):
         # disables click to link segment
         self.click_to_link_type = None
 
-        number = int(number) - 1
+        number = int(number) - 1 if number else -1
 
         segment = self.sc.get_active()
 
@@ -1782,7 +1785,7 @@ class Annotator(GraphicalUserInterface):
     # DISPLAY METHODS #
     ###################
 
-    def update(self, t=None, annotation_mode=True):
+    def update(self):
         """
         Updates the application state
         """
@@ -1841,8 +1844,8 @@ class Annotator(GraphicalUserInterface):
 
         self.update_status_message(status)
 
-        if annotation_mode:
-            self.annotation_mode()
+        self.annotation_mode()
+        self.is_annotation_mode = True
 
         self.sc.save()
 
@@ -1884,8 +1887,8 @@ class Annotator(GraphicalUserInterface):
         style.append(self.clickable_text_tag)
 
         # display raw text
-        self.add_to_last_line(BEGIN_CHAR + segment.raw + END_CHAR, style=style, offset=offset)
-        offset += len(segment.raw) + 1
+        self.add_to_last_line(BEGIN_CHAR + segment.raw.strip() + END_CHAR, style=style, offset=offset)
+        offset += len(segment.raw.strip()) + 1
 
         # ignore legacy layers where there is already an annotation
         legacy_layers_to_ignore = []
@@ -1968,3 +1971,15 @@ class Annotator(GraphicalUserInterface):
         # note display
         if segment.note is not None:
             self.output("\t\t\t\t ⤷ {}".format(segment.note), style=Styles.ITALIC)
+
+    ####################
+    # OVERRIDE METHODS #
+    ####################
+
+    def input(self, prompt, commands, action, prompt_params=[], prompt_delay=0, free=False, sort=True, placeholder=""):
+        """
+        Manages user input
+        """
+        super(Annotator, self).input(prompt, commands, action, prompt_params=prompt_params, prompt_delay=prompt_delay, free=free, sort=sort, placeholder=placeholder)
+
+        self.is_annotation_mode = False  # changes action status

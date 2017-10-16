@@ -269,7 +269,7 @@ class GraphicalUserInterface(Frame, Styles):
         """
         pass  # pass on purpose
 
-    def manage_right_click(self, start, end, text):
+    def manage_left_click(self, start, end, text):
         """
         Mouse left click management
         """

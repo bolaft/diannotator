@@ -264,7 +264,7 @@ class Segment:
 
             selection_position = 1
 
-        splits = [self.copy(raw.strip()) for raw in raws]
+        splits = [self.copy(raw) for raw in raws]
 
         # outgoing links are removed for latter splits
         for split in splits[1:]:
