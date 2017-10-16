@@ -1892,28 +1892,41 @@ class Annotator(GraphicalUserInterface):
 
         # annotations display
         for layer in reversed(sorted(segment.annotations.keys())):
-            if segment.has(layer):
-                label = segment.get(layer)
+            if segment.has(layer) and segment.has(layer, qualifier=True):
+                addendum = " [{} ➔ {}]".format(
+                    segment.get(layer),
+                    segment.get(layer, qualifier=True)
+                )
+            elif segment.has(layer):
+                addendum = " [{}]".format(
+                    segment.get(layer)
+                )
+            elif segment.has(layer, qualifier=True):
+                addendum = " [➔ {}]".format(
+                    segment.get(layer, qualifier=True)
+                )
 
-                if segment.has(layer, qualifier=True):
-                    addendum = " [{} ➔ {}]".format(label, segment.get(layer, qualifier=True))
-                else:
-                    addendum = " [{}]".format(label)
-
-                self.add_to_last_line(addendum, style="layer-{}".format(layer), offset=offset)
-                offset += len(addendum)
-                legacy_layers_to_ignore.append(layer)
+            self.add_to_last_line(addendum, style="layer-{}".format(layer), offset=offset)
+            offset += len(addendum)
+            legacy_layers_to_ignore.append(layer)
 
         # legacy annotations display
         if self.show_legacy:
             for layer in reversed(sorted(segment.legacy.keys())):
-                if segment.has(layer, legacy=True) and layer not in legacy_layers_to_ignore:
-                    label = segment.get(layer, legacy=True)
-
-                    if segment.has(layer, legacy=True, qualifier=True):
-                        addendum = " (({} ➔ {}))".format(label, segment.get(layer, legacy=True, qualifier=True))
-                    else:
-                        addendum = " (({}))".format(label)
+                if layer not in legacy_layers_to_ignore:
+                    if segment.has(layer, legacy=True) and segment.has(layer, qualifier=True, legacy=True):
+                        addendum = " [{} ➔ {}]".format(
+                            segment.get(layer, legacy=True),
+                            segment.get(layer, qualifier=True, legacy=True)
+                        )
+                    elif segment.has(layer, legacy=True):
+                        addendum = " [{}]".format(
+                            segment.get(layer, legacy=True)
+                        )
+                    elif segment.has(layer, qualifier=True, legacy=True):
+                        addendum = " [➔ {}]".format(
+                            segment.get(layer, qualifier=True, legacy=True)
+                        )
 
                     self.add_to_last_line(addendum, style="layer-{}".format(layer), offset=offset)
                     offset += len(addendum)
