@@ -16,7 +16,6 @@
     Features:
 
         ☐ do something with right click
-        ☐ configurable key bindings
         ☐ JSON config file to tell which columns are what
         ☐ unit testing
         ☐ smaller binary file
@@ -27,6 +26,7 @@
         ☐ use term "tag"
         ☐ make annotations more legible
         ☐ french translation
+        ✔ configurable key bindings @done (17-10-17 13:13)
         ✔ INI config file for colors, fonts, text size... @done (17-10-17 12:37)
         ✔ on scroll up, display earlier segments, .see(BEGIN) @done (17-10-17 12:00)
         ✔ going back up moves selected segment, but not window (active is not always last) @done (17-10-17 12:00)

@@ -100,8 +100,8 @@ class GraphicalUserInterface(Frame, Styles):
         # root window initialization
         Frame.__init__(self, self.parent)
 
-        w = 1280  # width for the Tk parent
-        h = 800  # height for the Tk parent
+        w = config.get_int("minimum_window_width", 1280)  # minimum width for the Tk parent
+        h = config.get_int("minimum_window_height", 800)  # minimum height for the Tk parent
 
         # get screen width and height
         ws = self.parent.winfo_screenwidth()  # width of the screen
