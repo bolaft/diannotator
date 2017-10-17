@@ -527,10 +527,10 @@ class SegmentCollection:
         for segment in self.full_collection:
             for layer in segment.legacy:
                 if layer in self.labels.keys() or layer in self.qualifiers.keys():
-                    if segment.get(layer, legacy=True) in self.labels[layer]:
+                    if layer in self.labels and segment.get(layer, legacy=True) in self.labels[layer]:
                         return True
 
-                    if segment.get(layer, legacy=True, qualifier=True) in self.qualifiers[layer]:
+                    if layer in self.qualifiers and segment.get(layer, legacy=True, qualifier=True) in self.qualifiers[layer]:
                         return True
 
             # setting legacy links

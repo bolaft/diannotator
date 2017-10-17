@@ -1781,21 +1781,24 @@ class Annotator(GraphicalUserInterface):
         # check if te annotation should be applied to a mouse selection
         selection, selected_segment = self.apply_to_selection()
 
-        with group("annotate"):  # undo group
-            segment, has_split = self.split_on_selection(selection, selected_segment)
-            ci, fi = self.sc.get_segment_indexes(segment)
-            self.apply_annotation(annotation, ci, qualifier=qualifier)
+        if selection:
+            with group("annotate"):  # undo group
+                segment, has_split = self.split_on_selection(selection, selected_segment)
+                ci, fi = self.sc.get_segment_indexes(segment)
+                self.apply_annotation(annotation, ci, qualifier=qualifier)
+        else:
+            self.apply_annotation(annotation, self.sc.get_active(), qualifier=qualifier)
 
         self.update()
 
     @undoable
-    def apply_annotation(self, annotation, index, qualifier=False):
+    def apply_annotation(self, annotation, segment, qualifier=False):
         """
         Applies an annotation
         """
         start_i = self.sc.i
 
-        segment = self.sc.collection[index]
+        segment = self.sc.collection[segment] if isinstance(segment, int) else segment
 
         original_annotation = segment.get(self.sc.layer, qualifier=qualifier)  # get annotation
         segment.set(self.sc.layer, annotation, qualifier=qualifier)  # set annotation

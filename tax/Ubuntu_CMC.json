@@ -28,12 +28,18 @@
             "Request Help",
 
             "Inform",
+            "Specify",
+            "Agree",
+            "Disagree",
+            "Accept",
+            "Decline",
             "Confirm",
             "Disconfirm",
             "Commit",
             "Offer",
             "Instruct",
             "Suggest",
+            "Advise",
             "Request Information",
             "Request Directives"
         ],
@@ -43,26 +49,39 @@
             "Request",
 
             "Inform",
+            "Specify",
+            "Agree",
+            "Disagree",
+            "Accept",
+            "Decline",
             "Confirm",
             "Disconfirm",
             "Commit",
             "Offer",
             "Instruct",
             "Suggest",
+            "Advise",
             "Request Information",
             "Request Directives"
         ],
         "Contact Management": [
+            "Address",
             "Check Contact",
             "Indicate Contact",
 
             "Inform",
+            "Specify",
+            "Agree",
+            "Disagree",
+            "Accept",
+            "Decline",
             "Confirm",
             "Disconfirm",
             "Commit",
             "Offer",
             "Instruct",
             "Suggest",
+            "Advise",
             "Request Information",
             "Request Directives"
         ],
@@ -71,12 +90,18 @@
             "Completion",
 
             "Inform",
+            "Specify",
+            "Agree",
+            "Disagree",
+            "Accept",
+            "Decline",
             "Confirm",
             "Disconfirm",
             "Commit",
             "Offer",
             "Instruct",
             "Suggest",
+            "Advise",
             "Request Information",
             "Request Directives"
         ],
@@ -86,12 +111,18 @@
             "Switch Topic",
 
             "Inform",
+            "Specify",
+            "Agree",
+            "Disagree",
+            "Accept",
+            "Decline",
             "Confirm",
             "Disconfirm",
             "Commit",
             "Offer",
             "Instruct",
             "Suggest",
+            "Advise",
             "Request Information",
             "Request Directives"
         ],
@@ -103,58 +134,89 @@
             "Thank",
             "Downplay Thanks",
             "Valediction",
+            "Wish",
 
             "Inform",
+            "Specify",
+            "Agree",
+            "Disagree",
+            "Accept",
+            "Decline",
             "Confirm",
             "Disconfirm",
             "Commit",
             "Offer",
             "Instruct",
             "Suggest",
+            "Advise",
             "Request Information",
             "Request Directives"
         ],
         "Knowledge Management": [
             "Inform",
+            "Specify",
+            "Agree",
+            "Disagree",
+            "Accept",
+            "Decline",
             "Confirm",
             "Disconfirm",
             "Commit",
             "Offer",
             "Instruct",
             "Suggest",
+            "Advise",
             "Request Information",
             "Request Directives"
         ],
         "Opinion Management": [
             "Inform",
+            "Specify",
+            "Agree",
+            "Disagree",
+            "Accept",
+            "Decline",
             "Confirm",
             "Disconfirm",
             "Commit",
             "Offer",
             "Instruct",
             "Suggest",
+            "Advise",
             "Request Information",
             "Request Directives"
         ],
         "Sentiment Management": [
             "Inform",
+            "Specify",
+            "Agree",
+            "Disagree",
+            "Accept",
+            "Decline",
             "Confirm",
             "Disconfirm",
             "Commit",
             "Offer",
             "Instruct",
             "Suggest",
+            "Advise",
             "Request Information",
             "Request Directives"
         ],
         "Emotion Management": [
             "Inform",
+            "Specify",
+            "Agree",
+            "Disagree",
+            "Accept",
+            "Decline",
             "Confirm",
             "Disconfirm",
             "Commit",
             "Offer",
             "Instruct",
             "Suggest",
+            "Advise",
             "Request Information",
             "Request Directives"
         ],
@@ -176,12 +238,18 @@
             "Propose Information",
             "Propose Instruction",
             "Inform",
+            "Specify",
+            "Agree",
+            "Disagree",
+            "Accept",
+            "Decline",
             "Confirm",
             "Disconfirm",
             "Commit",
             "Offer",
             "Instruct",
             "Suggest",
+            "Advise",
             "Request Information",
             "Request Directives"
         ],
@@ -197,6 +265,19 @@
         ],
         "Irony": [
             "Ironic"
+        ],
+        "Extra Discourse": [
+            "Formatting"
+        ],
+        "Language": [
+            "Other Language",
+            "Reported Speech"
+        ],
+        "Participant": [
+            "Bot"
+        ],
+        "Extra Channel": [
+            "Link Resource"
         ]
     },
     "qualifiers": {
@@ -221,6 +302,10 @@
             "Loving",
             "Surprised",
             "Angry"
+        ],
+        "Language": [
+            "Machine Language",
+            "Human Language"
         ]
     }
 }

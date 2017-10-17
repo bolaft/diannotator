@@ -14,13 +14,18 @@
 
     Features:
 
+        ☐ don't ask if use legacy annotations when loading taxonomy unless possible
         ☐ do something with right click
         ☐ JSON config file to tell which columns are what
         ☐ unit testing
+        ☐ on scroll up, display earlier segments, .see(BEGIN)
         ☐ smaller binary file
         ☐ windows executable
         ☐ integrate pyrata for annotation search
         ☐ feature driven annotation
+        ☐ one tag to cover several segments
+        ☐ use term "tag"
+        ☐ make annotations more legible
         ☐ french translation
         ✔ display qualifiers even if no label for segment @done (17-10-16 12:11)
         ✔ if part of segment selected and split, split on segment @done (17-10-15 21:55)
