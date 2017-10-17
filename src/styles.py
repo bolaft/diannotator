@@ -15,6 +15,7 @@ class Styles:
     """
     STRONG = "STRONG"
     ITALIC = "ITALIC"
+    HIGHLIGHT = "HIGHLIGHT"
 
     def __init__(self):
         """
@@ -29,6 +30,11 @@ class Styles:
         self.add_tag(
             Styles.ITALIC,
             font_weight="italic"
+        )
+
+        self.add_tag(
+            Styles.HIGHLIGHT,
+            background="#332f2f"
         )
 
     def add_tag(self, name, foreground=None, background=None, justify=None, font_weight=None):

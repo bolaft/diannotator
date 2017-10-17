@@ -446,6 +446,15 @@ class GraphicalUserInterface(Frame, Styles):
 
         self.add_blank_lines(1)
 
+    def highlight_last_line(self):
+        """
+        Highlights the last line
+        """
+        start = "{}.{}".format(int(self.text.index(END).split(".")[0]) - 2, 0)  # start position of the line to output
+        end = "{}.{}".format(int(self.text.index(END).split(".")[0]) - 1, 0)
+        # adds style to the text
+        self.text.tag_add(Styles.HIGHLIGHT, start, end)
+
     def add_text(self, text, added=False, style=None, offset=0):
         """
         Adds text to the text widget

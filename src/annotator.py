@@ -1926,7 +1926,7 @@ class Annotator(GraphicalUserInterface):
 
         # display raw text
         self.add_to_last_line(BEGIN_CHAR + segment.raw.strip() + END_CHAR, style=style, offset=offset)
-        offset += len(segment.raw.strip()) + 1
+        offset += len(segment.raw.strip()) + 2
 
         # ignore legacy layers where there is already an annotation
         legacy_layers_to_ignore = []
@@ -1987,6 +1987,10 @@ class Annotator(GraphicalUserInterface):
         # note display
         if segment.note is not None:
             self.output("\t\t\t\t ⤷ {}".format(segment.note), style=Styles.ITALIC)
+
+        # highlight active line
+        if active:
+            self.highlight_last_line()
 
     def make_addendum(self, segment, layer, legacy=False):
         """
