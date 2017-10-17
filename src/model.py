@@ -383,6 +383,7 @@ class SegmentCollection:
 
         self.full_collection = []  # full collection of segments
         self.collection = self.full_collection.copy()  # current collection used
+        self.display_range = 0, 0  # current range of display
         self.annotations = {}  # list of annotations
 
         self.taxonomy = None  # taxonomy name
@@ -407,11 +408,31 @@ class SegmentCollection:
         """
         self.i = self.i + n if self.i + n < len(self.collection) else self.i
 
+        first, last = self.display_range
+
+        if self.i > last:
+            last = self.i
+
+        if last - first > 50:
+            first += n
+
+        self.display_range = first, last
+
     def previous(self, n=1):
         """
         Sets the index to the previous segment
         """
         self.i = self.i - n if self.i - n >= 0 and self.collection else self.i  # must check if collection not empty
+
+        first, last = self.display_range
+
+        if self.i < first:
+            first = self.i
+
+        if last - first > 50:
+            last -= n
+
+        self.display_range = first, last
 
     ##################
     # ACCESS METHODS #
@@ -792,6 +813,9 @@ class SegmentCollection:
             logging.exception("DialogueActCollection.import_collection()")
 
             return False
+
+        self.display_range = 0, 0
+        self.i = 0
 
         return True
 

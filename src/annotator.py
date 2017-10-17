@@ -601,12 +601,12 @@ class Annotator(GraphicalUserInterface):
         """
         if self.is_slow_enough():
             self.cycle_down(n=n)
+        self.update()
 
     @undoable
     def cycle_down(self, n):
         # cycles through the collection
         self.sc.next(n=n)
-        self.update()
 
         yield "cycle_down"
 
@@ -619,11 +619,12 @@ class Annotator(GraphicalUserInterface):
         if self.is_slow_enough():
             self.cycle_up(n=n)
 
+        self.update()
+
     @undoable
     def cycle_up(self, n):
         # cycles through the collection
         self.sc.previous(n=n)
-        self.update()
 
         yield "cycle_up"
 
@@ -641,13 +642,12 @@ class Annotator(GraphicalUserInterface):
         Moves to a specific segment by index in collection
         """
         i = self.sc.i
-        self.sc.i = int(number) - 1
+        destination = int(number) - 1
 
-        if self.sc.i >= len(self.sc.collection):
-            self.sc.i = len(self.sc.collection) - 1
-
-        if self.sc.i < 0:
-            self.sc.i = 0
+        if destination > self.sc.i:
+            self.sc.next(destination - self.sc.i)
+        else:
+            self.sc.previous(self.sc.i - destination)
 
         self.update()
 
@@ -1831,12 +1831,17 @@ class Annotator(GraphicalUserInterface):
 
         # if the collection is not empty
         if self.sc.collection:
-            n_previous = self.sc.i if self.sc.i < 50 else 50
+            first, last = self.sc.display_range
 
-            for j in range(self.sc.i - n_previous, self.sc.i):
-                self.output_segment(j)
+            for j in range(first, last + 1):
+                active = True if j == self.sc.i else False
+                self.output_segment(j, active=active)
 
-            self.output_segment(self.sc.i, active=True)
+                # see active segment
+                if active:
+                    see_position = "{}.0".format(int(self.text.index(END).split(".")[0]) - 2)
+
+            self.text.see(see_position)  # move the scrollbar to the active segment
 
             # title with filepath
             self.parent.title("{} - {}".format(self.window_title, self.sc.save_file))
@@ -1916,10 +1921,6 @@ class Annotator(GraphicalUserInterface):
 
         # offset for displaying addendums
         offset = len(text) + 1
-
-        # active segment is bolded
-        if active:
-            style.append(Styles.STRONG)
 
         # clickable text
         style.append(self.clickable_text_tag)

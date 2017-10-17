@@ -374,7 +374,7 @@ class GraphicalUserInterface(Frame, Styles):
                 if len([c for c in chunks if c.lower() in s.lower()]) == len(chunks):
                     self.make_button(s)
 
-        self.text.see(END)  # move the scrollbar to the bottom
+        # self.text.see(END)  # move the scrollbar to the bottom
 
     def make_button(self, text, bg=DARK_GRAY, fg=WHITE, disabled=False):
         b = Button(self.commands, text=text, command=lambda n=text: self.button_pressed(n))
@@ -427,7 +427,7 @@ class GraphicalUserInterface(Frame, Styles):
         self.text.config(font=(self.text_font_family, self.text_font_size))
         self.text.tag_config(Styles.STRONG, font=(self.text_font_family, self.text_font_size, "bold"))
         self.text.tag_config(Styles.ITALIC, font=(self.text_font_family, self.text_font_size, "italic"))
-        self.text.see(END)  # move the scrollbar to the bottom
+        # self.text.see(END)  # move the scrollbar to the bottom
 
     def clear_screen(self):
         """
@@ -477,7 +477,7 @@ class GraphicalUserInterface(Frame, Styles):
                 self.text.tag_add(style, start, end)
 
         self.text.config(state=DISABLED)  # disabe the text field
-        self.text.see(END)  # move the scrollbar to the bottom
+        # self.text.see(END)  # move the scrollbar to the bottom
 
         self.previous_tag_name = style
         self.previous_line_length = len(text)
