@@ -8,6 +8,10 @@
 Style management
 """
 
+from config import ConfigFile
+
+config = ConfigFile()  # INI configuration file
+
 
 class Styles:
     """
@@ -34,7 +38,7 @@ class Styles:
 
         self.add_tag(
             Styles.HIGHLIGHT,
-            background="#332f2f"
+            background=config.get_string("select_background", "#332f2f")
         )
 
     def add_tag(self, name, foreground=None, background=None, justify=None, font_weight=None):

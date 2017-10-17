@@ -16,6 +16,7 @@ from tkinter.ttk import Button
 from undo import stack, undoable, group
 
 from colors import generate_random_color
+from config import ConfigFile
 from interface import GraphicalUserInterface
 from model import SegmentCollection
 from styles import Styles
@@ -23,6 +24,8 @@ from styles import Styles
 # special chars to mark beginning and end of raw segment text
 BEGIN_CHAR = "\uFEFF"
 END_CHAR = "\u200b"
+
+config = ConfigFile()  # INI configuration file
 
 
 class Annotator(GraphicalUserInterface):
@@ -228,10 +231,10 @@ class Annotator(GraphicalUserInterface):
         self.show_legacy = True  # show legacy annotations by defaults
 
         # show columns
-        self.show_participant = True  # show participant by default
-        self.show_date = False  # hide date by default
-        self.show_time = True  # show time by default
-        self.show_id = False  # hide id by default
+        self.show_participant = config.get_bool("show_participant", True)  # show participant by default
+        self.show_date = config.get_bool("show_date", False)  # hide date by default
+        self.show_time = config.get_bool("show_time", True)  # show time by default
+        self.show_id = config.get_bool("show_id", False)  # hide id by default
 
         # display update
         self.update()

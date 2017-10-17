@@ -12,49 +12,59 @@ from tkinter import Tk, StringVar, Text, Menu, messagebox, BOTH, DISABLED, END, 
 from tkinter.ttk import Button, Entry, Frame, Label, Scrollbar
 from ttkthemes import ThemedStyle
 
+from config import ConfigFile
 from strings import Strings
 from styles import Styles
 
-# base colors
-BLACK = "#000000"
-WHITE = "#ffffff"
-GRAY = "#0f0e0e"
-MEDIUM_GRAY = "#353131"
-DARK_GRAY = "#171717"
-SELECTION_GRAY = "#332f2f"
+config = ConfigFile()  # INI configuration file
 
 
 class GraphicalUserInterface(Frame, Styles):
     """
     Graphical User Interface class
     """
+
     window_title = "DiAnnotator"  # window title
 
-    padding = 25  # padding for text area
-    wrap_length = 960  # max length of labels before automatic newline
+    padding = config.get_int("padding", 25)  # padding for text area")
+    wrap_length = config.get_int("wrap_length", 960)  # max length of labels before automatic newline")
 
     # text parameters
-    text_font_family = "mono"
-    text_font_size = 12
-    text_font_weight = "normal"
+    text_font_family = config.get_string("text_font_family", "mono")
+    text_font_size = config.get_int("text_font_size", 12)
+    text_font_weight = config.get_string("text_font_weight", "normal")
+    text_foreground = config.get_string("text_foreground", "#ffffff")
+    text_background = config.get_string("text_background", "#171717")
 
     # label parameters
-    label_font_family = "mono"
-    label_font_size = 12
-    label_font_weight = "normal"
+    label_font_family = config.get_string("label_font_family", "mono")
+    label_font_size = config.get_int("label_font_size", 12)
+    label_font_weight = config.get_string("label_font_weight", "normal")
 
     # entry parameters
-    entry_font_family = "TkDefaultFont"
-    entry_font_size = 14
-    entry_font_weight = "normal"
+    entry_font_family = config.get_string("entry_font_family", "TkDefaultFont")
+    entry_font_size = config.get_int("entry_font_size", 14)
+    entry_font_weight = config.get_string("entry_font_weight", "normal")
 
     # menu parameters
-    menu_font_family = "modern"
+    menu_font_family = config.get_string("menu_font_family", "modern")
+
+    # button parameters
+    button_font_family = config.get_string("button_font_family", "modern")
 
     # special button parameters
-    special_button_font_family = "mono"
-    special_button_font_size = 11
-    special_button_font_weight = "bold"
+    special_button_font_family = config.get_string("special_button_font_family", "mono")
+    special_button_font_size = config.get_int("special_button_font_size", 11)
+    special_button_font_weight = config.get_string("special_button_font_weight", "bold")
+    special_button_active = config.get_string("special_button_active", "#353131")
+
+    # prompt parameters
+    prompt_font_family = config.get_string("prompt_font_family", "modern")
+    prompt_font_size = config.get_int("prompt_font_size", 12)
+    prompt_font_weight = config.get_string("prompt_font_weight", "bold")
+
+    # selection parameters
+    select_background = config.get_string("select_background", "#332f2f")
 
     special_button_style = "Special.TButton"
 
@@ -75,7 +85,7 @@ class GraphicalUserInterface(Frame, Styles):
         style.set_theme("arc")
 
         # button style
-        style.configure("TButton", font=self.label_font_family)
+        style.configure("TButton", font=self.button_font_family)
 
         # special button style
         style.configure(self.special_button_style, font=(
@@ -85,7 +95,7 @@ class GraphicalUserInterface(Frame, Styles):
         ))
 
         # make buttons change foreground when hovered
-        style.map('TButton', foreground=[("active", MEDIUM_GRAY)])
+        style.map("TButton", foreground=[("active", self.special_button_active)])
 
         # root window initialization
         Frame.__init__(self, self.parent)
@@ -138,11 +148,11 @@ class GraphicalUserInterface(Frame, Styles):
         self.output_frame.grid_rowconfigure(0, weight=30)  # implement stretchability
         self.output_frame.grid_rowconfigure(1, weight=1)  # implement stretchability
         self.output_frame.grid_columnconfigure(0, weight=1)
+        self.text = Text(self.output_frame, borderwidth=3, relief=SUNKEN, cursor="arrow", selectbackground=self.select_background, inactiveselectbackground=self.select_background)
 
         # Text widget
-        self.text = Text(self.output_frame, borderwidth=3, relief=SUNKEN, cursor="arrow", selectbackground=SELECTION_GRAY, inactiveselectbackground=SELECTION_GRAY)
         self.text.grid(row=0, column=0, sticky="nsew", padx=self.padding, pady=(self.padding, 0))
-        self.text.config(font=(self.text_font_family, self.text_font_size), undo=True, wrap=WORD, bg=DARK_GRAY, fg=WHITE, highlightbackground=BLACK, highlightcolor=WHITE, state=DISABLED)
+        self.text.config(font=(self.text_font_family, self.text_font_size), undo=True, wrap=WORD, bg=self.text_background, fg=self.text_foreground, state=DISABLED)
 
         # creates a Scrollbar and associate it with text
         self.scrollbar = Scrollbar(self.output_frame, command=self.text.yview)
@@ -174,7 +184,7 @@ class GraphicalUserInterface(Frame, Styles):
         self.commands.pack(fill=X, side=BOTTOM)
 
         self.prompt = StringVar()
-        self.prompt_label = Label(self.commands, font=(self.menu_font_family, self.label_font_size, "bold"), textvariable=self.prompt)
+        self.prompt_label = Label(self.commands, font=(self.prompt_font_family, self.prompt_font_size, self.prompt_font_weight), textvariable=self.prompt)
         self.prompt_label.pack(side=LEFT, padx=(10, 15), pady=10)
 
         # creates the frame containing special buttons
@@ -376,7 +386,7 @@ class GraphicalUserInterface(Frame, Styles):
 
         # self.text.see(END)  # move the scrollbar to the bottom
 
-    def make_button(self, text, bg=DARK_GRAY, fg=WHITE, disabled=False):
+    def make_button(self, text, disabled=False):
         b = Button(self.commands, text=text, command=lambda n=text: self.button_pressed(n))
         b.bind("<Return>", self.return_pressed)  # binds the Return key to the return_pressed method
         b.pack(side=LEFT)

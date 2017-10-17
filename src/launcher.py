@@ -17,6 +17,7 @@ import sys
 from optparse import OptionParser
 
 from annotator import Annotator
+from config import ConfigFile
 
 APP_TITLE = "DiAnnotator"  # hardcoded application title
 VERSION_NUMBER = "alpha 17.10.12"  # hardcoded version number
@@ -26,6 +27,8 @@ def parse_args():
     """
     Parses command line options and arguments
     """
+    config = ConfigFile()
+
     op = OptionParser(usage="usage: %prog [opts]")
 
     op.add_option(
@@ -38,7 +41,7 @@ def parse_args():
     op.add_option(
         "-f", "--fullscreen",
         dest="fullscreen",
-        default=False,
+        default=config.get_bool("fullscreen", False),
         action="store_true",
         help="starts the application in fullscreen mode")
 
