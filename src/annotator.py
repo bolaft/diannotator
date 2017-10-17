@@ -44,65 +44,65 @@ class Annotator(GraphicalUserInterface):
 
         # navigation shortcuts
         self.parent.bind(
-            "<Down>",
+            config.get_string("go_down", "<Down>"),
             lambda event, arg=1: self.go_down(arg))
         self.parent.bind(
-            "<Up>",
+            config.get_string("go_up", "<Up>"),
             lambda event, arg=1: self.go_up(arg))
         self.parent.bind(
-            "<Next>",
+            config.get_string("go_down_10", "<Next>"),
             lambda event, arg=10: self.go_down(arg))
         self.parent.bind(
-            "<Prior>",
+            config.get_string("go_up_10", "<Prior>"),
             lambda event, arg=10: self.go_up(arg))
 
         # load / save / close shortcuts
         self.parent.bind(
-            "<Control-o>",
+            config.get_string("open_file", "<Control-o>"),
             lambda event: self.open_file())
         self.parent.bind(
-            "<Control-S>",
+            config.get_string("save_file", "<Control-S>"),
             lambda event: self.save_file())
         self.parent.bind(
-            "<Control-I>",
+            config.get_string("import_file", "<Control-I>"),
             lambda event: self.import_file())
         self.parent.bind(
-            "<Control-E>",
+            config.get_string("export_file", "<Control-E>"),
             lambda event: self.export_file())
         self.parent.bind(
-            "<Control-w>",
+            config.get_string("close_file", "<Control-w>"),
             lambda event: self.close_file())
         self.parent.bind(
-            "<Control-Alt-e>",
+            config.get_string("export_taxonomy", "<Control-Alt-e>"),
             lambda event: self.export_taxonomy())
         self.parent.bind(
-            "<Control-Alt-i>",
+            config.get_string("import_taxonomy", "<Control-Alt-i>"),
             lambda event: self.import_taxonomy())
 
         # other shortcuts
         self.parent.bind(
-            "<Delete>",
+            config.get_string("delete_segment", "<Delete>"),
             lambda event: self.delete_segment())
         self.parent.bind(
-            "<F3>",
+            config.get_string("toggle_legacy_annotations", "<F3>"),
             lambda event: self.toggle_legacy_annotations())
         self.parent.bind(
-            "<F4>",
+            config.get_string("generate_participant_colors", "<F4>"),
             lambda event: self.generate_participant_colors())
         self.parent.bind(
-            "<F5>",
+            config.get_string("filter_by_active_layer", "<F5>"),
             lambda event: self.filter_by_active_layer())
         self.parent.bind(
-            "<F6>",
+            config.get_string("filter_by_active_label", "<F6>"),
             lambda event: self.filter_by_active_label())
         self.parent.bind(
-            "<F7>",
+            config.get_string("filter_by_active_qualifier", "<F7>"),
             lambda event: self.filter_by_active_qualifier())
         self.parent.bind(
-            "<Control-z>",
+            config.get_string("undo", "<Control-z>"),
             lambda event: self.undo())
         self.parent.bind(
-            "<Control-Z>",
+            config.get_string("redo", "<Control-Z>"),
             lambda event: self.redo())
 
         # special commands

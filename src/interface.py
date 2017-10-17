@@ -192,10 +192,10 @@ class GraphicalUserInterface(Frame, Styles):
         self.special_commands.pack(fill=X, side=BOTTOM)
 
         # default bindings
-        self.parent.bind("<F11>", lambda event: self.toggle_fullscreen())
-        self.parent.bind("<Escape>", lambda event: self.exit_prompt())
-        self.parent.bind("<Control-KP_Add>", lambda event: self.zoom_in())
-        self.parent.bind("<Control-KP_Subtract>", lambda event: self.zoom_out())
+        self.parent.bind(config.get_string("toggle_fullscreen", "<F11>"), lambda event: self.toggle_fullscreen())
+        self.parent.bind(config.get_string("exit_prompt", "<Escape>"), lambda event: self.exit_prompt())
+        self.parent.bind(config.get_string("zoom_in", "<Control-KP_Add>"), lambda event: self.zoom_in())
+        self.parent.bind(config.get_string("zoom_out", "<Control-KP_Subtract>"), lambda event: self.zoom_out())
 
         # binding mouse clicks and movement
         self.text.bind("<Button-1>", lambda event: self.record_click(self.text.index("@%s,%s" % (event.x, event.y))))
