@@ -21,6 +21,7 @@ WHITE = "#ffffff"
 GRAY = "#0f0e0e"
 MEDIUM_GRAY = "#353131"
 DARK_GRAY = "#171717"
+SELECTION_GRAY = "#332f2f"
 
 
 class GraphicalUserInterface(Frame, Styles):
@@ -139,7 +140,7 @@ class GraphicalUserInterface(Frame, Styles):
         self.output_frame.grid_columnconfigure(0, weight=1)
 
         # Text widget
-        self.text = Text(self.output_frame, borderwidth=3, relief=SUNKEN, cursor="arrow")
+        self.text = Text(self.output_frame, borderwidth=3, relief=SUNKEN, cursor="arrow", selectbackground=SELECTION_GRAY, inactiveselectbackground=SELECTION_GRAY)
         self.text.grid(row=0, column=0, sticky="nsew", padx=self.padding, pady=(self.padding, 0))
         self.text.config(font=(self.text_font_family, self.text_font_size), undo=True, wrap=WORD, bg=DARK_GRAY, fg=WHITE, highlightbackground=BLACK, highlightcolor=WHITE, state=DISABLED)
 
