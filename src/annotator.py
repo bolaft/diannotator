@@ -195,6 +195,7 @@ class Annotator(GraphicalUserInterface):
 
         if previous_save:
             self.sc = SegmentCollection.load(previous_save)
+            self.sc.display_range = self.sc.display_range[0], self.sc.i
 
         if not hasattr(self, "sc"):
             # initializing the segment collection
@@ -637,7 +638,7 @@ class Annotator(GraphicalUserInterface):
         """
         Inputs a target segment to go to
         """
-        self.input("prompt.select_go_to", [], self.go_to, free=True)
+        self.input("prompt.select_go_to", [], lambda n: self.go_to(int(n) - 1), free=True)
 
     @undoable
     def go_to(self, number):
@@ -645,12 +646,11 @@ class Annotator(GraphicalUserInterface):
         Moves to a specific segment by index in collection
         """
         i = self.sc.i
-        destination = int(number) - 1
 
-        if destination > self.sc.i:
-            self.sc.next(destination - self.sc.i)
+        if number > self.sc.i:
+            self.sc.next(number - self.sc.i)
         else:
-            self.sc.previous(self.sc.i - destination)
+            self.sc.previous(self.sc.i - number)
 
         self.update()
 
@@ -1359,7 +1359,7 @@ class Annotator(GraphicalUserInterface):
         sc = deepcopy(self.sc)
 
         if self.sc.collection:
-            self.sc.i = self.sc.full_collection.index(self.sc.get_active())
+            self.go_to(self.sc.full_collection.index(self.sc.get_active()))
 
         self.sc.collection = self.sc.full_collection.copy()
         self.sc.filter = False
@@ -1488,7 +1488,10 @@ class Annotator(GraphicalUserInterface):
             segment = self.sc.full_collection[i]
             if segment in self.sc.collection:
                 # adjust the current index in the new collection
-                self.sc.i = self.sc.collection.index(segment)
+                index = self.sc.collection.index(segment)
+                self.go_to(index)
+                start = 0 if index <= 50 else index - 50
+                self.sc.display_range = start, index
                 break
 
         self.update()
@@ -1673,7 +1676,11 @@ class Annotator(GraphicalUserInterface):
         Mouse motion changes the cursor style
         """
         if start is not None and self.click_to_link_type is not None:
-            self.text.config(cursor="target")
+            i = self.get_segment_index_from_x_y(start, end)
+            if i < self.sc.i:
+                self.text.config(cursor="target")
+            else:
+                self.text.config(cursor="arrow")
         else:
             self.text.config(cursor="arrow")
 
@@ -1820,7 +1827,7 @@ class Annotator(GraphicalUserInterface):
             segment.rem(self.sc.layer, qualifier=qualifier)
 
         # moving index back
-        self.sc.i = start_i
+        self.go_to(start_i)
 
     ###################
     # DISPLAY METHODS #
