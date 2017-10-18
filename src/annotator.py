@@ -749,7 +749,6 @@ class Annotator(GraphicalUserInterface):
                 # apply annotation to the clicked segment
                 segment = selected_segment
             else:
-                # self.last_selection = self.text.index("sel.first"), self.text.index("sel.last")
                 has_split = True
 
                 # get indexes of selected segment
@@ -1687,33 +1686,51 @@ class Annotator(GraphicalUserInterface):
         """
         Left mouse clicks either trigger go_to or link_segment
         """
-        # get index of clicked segment in collection
-        i = self.get_segment_index_from_x_y(start, end)
+        if hasattr(self, "popup"):
+            self.popup.destroy()
+
+        try:
+            i = self.get_segment_index_from_x_y(start, end)
+        except Exception:
+            return
 
         if self.click_to_link_type is not None:
             self.link_segment(i + 1, self.click_to_link_type)
             self.text.config(cursor="arrow")
         else:
-            self.go_to(i)
+            try:
+                selection = self.text.selection_get()
+                selection = False if selection == "" else selection
+            except Exception:
+                selection = False
+
+            if not selection:
+                self.go_to(i)
 
     def manage_right_click(self, start, end, x, y, text):
         """
         Right mouse clicks trigger go_to and select an annotation
         """
-        i = self.get_segment_index_from_x_y(start, end)
-        self.go_to(i)
-
-        popup = Menu(self, tearoff=0, font=self.menu_font_family)
-        popup.add_command(label="Close")
-        popup.add_separator()
-
-        for command in self.command_list:
-            popup.add_command(label=command, command=lambda command=command: self.process_input(command))
+        if hasattr(self, "popup"):
+            self.popup.destroy()
 
         try:
-            popup.tk_popup(x, y, 0)
+            i = self.get_segment_index_from_x_y(start, end)
+            self.go_to(i)
+        except Exception:
+            return
+
+        self.popup = Menu(self, tearoff=0, font=self.menu_font_family)
+        self.popup.add_command(label="Close")
+        self.popup.add_separator()
+
+        for command in self.command_list:
+            self.popup.add_command(label=command, command=lambda command=command: self.process_input(command))
+
+        try:
+            self.popup.post(x, y)
         finally:
-            popup.grab_release()
+            self.popup.grab_release()
 
     def get_segment_index_from_x_y(self, start, end):
         """
@@ -1748,7 +1765,7 @@ class Annotator(GraphicalUserInterface):
                 sort=False
             )
 
-    def apply_to_selection(self):
+    def apply_to_selection(self, messages=True):
         """
         Checks if the annotation should be applied to a mouse selection
         """
@@ -1765,7 +1782,7 @@ class Annotator(GraphicalUserInterface):
             j = self.get_segment_index_from_x_y(self.last_release_index, END)
             release_segment = self.sc.collection[j]
 
-            if release_segment is clicked_segment:
+            if release_segment == clicked_segment:
                 # remove parts of the selection that are not in the text segment
                 if BEGIN_CHAR in selection:
                     selection = selection[selection.index(BEGIN_CHAR) + 1:]
@@ -1774,7 +1791,7 @@ class Annotator(GraphicalUserInterface):
 
                 if clicked_segment.raw == selection:
                     # apply selection to full segment?
-                    if messagebox.askyesno(
+                    if not messages or messagebox.askyesno(
                         self._("box.title.apply_to_selection"),
                         self._("box.text.apply_to_selection_full_segment")
                     ):
@@ -1783,7 +1800,7 @@ class Annotator(GraphicalUserInterface):
                         return False, False
                 elif selection in clicked_segment.raw:
                     # apply selection to partial segment and split?
-                    if messagebox.askyesno(
+                    if not messages or messagebox.askyesno(
                         self._("box.title.apply_to_selection"),
                         self._("box.text.apply_to_selection_partial_segment")
                     ):
@@ -1791,10 +1808,11 @@ class Annotator(GraphicalUserInterface):
                     else:
                         return False, False
             else:
-                messagebox.showwarning(
-                    self._("dialog.title.apply_to_selection_multiple_segments"),
-                    self._("dialog.text.apply_to_selection_multiple_segments")
-                )
+                if messages:
+                    messagebox.showwarning(
+                        self._("dialog.title.apply_to_selection_multiple_segments"),
+                        self._("dialog.text.apply_to_selection_multiple_segments")
+                    )
 
         return False, False
 

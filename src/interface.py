@@ -69,6 +69,9 @@ class GraphicalUserInterface(Frame):
     # selection parameters
     select_background = config.get_string("select_background", "#332f2f")
 
+    # highlight parameters
+    highlight_background = config.get_string("highlight_background", "#332f2f")
+
     special_button_style = "Special.TButton"
 
     def __init__(self):
@@ -201,13 +204,11 @@ class GraphicalUserInterface(Frame):
         self.parent.bind(config.get_string("zoom_out", "<Control-KP_Subtract>"), lambda event: self.zoom_out())
 
         # binding mouse clicks and movement
-        self.text.bind("<Button-1>", lambda event: self.record_click(self.text.index("@%s,%s" % (event.x, event.y))))
-        self.text.bind("<Button-2>", lambda event: self.record_click(self.text.index("@%s,%s" % (event.x, event.y))))
-        self.text.bind("<ButtonRelease-1>", lambda event: self.record_release(self.text.index("@%s,%s" % (event.x, event.y))))
-        self.text.bind("<ButtonRelease-2>", lambda event: self.record_release(self.text.index("@%s,%s" % (event.x, event.y))))
+        self.text.bind("<Button-1>", self.record_click)
+        self.text.bind("<Button-2>", self.record_click)
         self.clickable_text_tag = "clickable_text_tag"
-        self.text.tag_bind(self.clickable_text_tag, "<Button-1>", self.mouse_left_click)
-        self.text.tag_bind(self.clickable_text_tag, "<Button-3>", self.mouse_right_click)
+        self.text.bind("<ButtonRelease-1>", self.mouse_left_click)
+        self.text.bind("<ButtonRelease-3>", self.mouse_right_click)
         self.text.bind("<Motion>", self.mouse_motion)
 
         self.last_click_index = "1.0"
@@ -224,22 +225,26 @@ class GraphicalUserInterface(Frame):
 
         self.add_tag(GraphicalUserInterface.STRONG, font_weight="bold")
         self.add_tag(GraphicalUserInterface.ITALIC, font_weight="italic")
-        self.add_tag(GraphicalUserInterface.HIGHLIGHT, background=self.select_background)
+        self.add_tag(GraphicalUserInterface.HIGHLIGHT, background=self.highlight_background)
+
+        self.text.tag_raise(SEL)  # makes sure the selection is fisible
 
     ############################
     # MOUSE MANAGEMENT METHODS #
     ############################
 
-    def record_click(self, index):
+    def record_click(self, event):
         """
         Records last click index
         """
+        index = self.text.index("@%s,%s" % (event.x, event.y))
         self.last_click_index = index
 
-    def record_release(self, index):
+    def record_release(self, event):
         """
         Records last click release index
         """
+        index = self.text.index("@%s,%s" % (event.x, event.y))
         self.last_release_index = index
 
     def mouse_motion(self, event):
@@ -253,6 +258,8 @@ class GraphicalUserInterface(Frame):
         """
         Returns data when the user left clicks on a clickable element
         """
+        self.record_release(event)
+
         start, end, text = self.examine_mouse_position(event)
         self.manage_left_click(start, end, event.x_root, event.y_root, text)
 
@@ -260,6 +267,8 @@ class GraphicalUserInterface(Frame):
         """
         Returns data when the user right clicks on a clickable element
         """
+        self.record_release(event)
+
         start, end, text = self.examine_mouse_position(event)
         self.manage_right_click(start, end, event.x_root, event.y_root, text)
 
@@ -391,8 +400,6 @@ class GraphicalUserInterface(Frame):
                 if len([c for c in chunks if c.lower() in s.lower()]) == len(chunks):
                     self.make_button(s)
 
-        # self.text.see(END)  # move the scrollbar to the bottom
-
     def make_button(self, text, disabled=False):
         b = Button(self.commands, text=text, command=lambda n=text: self.button_pressed(n))
         b.bind("<Return>", self.return_pressed)  # binds the Return key to the return_pressed method
@@ -451,7 +458,7 @@ class GraphicalUserInterface(Frame):
         self.text.config(font=(self.text_font_family, self.text_font_size))
         self.text.tag_config(GraphicalUserInterface.STRONG, font=(self.text_font_family, self.text_font_size, "bold"))
         self.text.tag_config(GraphicalUserInterface.ITALIC, font=(self.text_font_family, self.text_font_size, "italic"))
-        # self.text.see(END)  # move the scrollbar to the bottom
+        self.text.see(END)  # move the scrollbar to the bottom
 
     def clear_screen(self):
         """
@@ -501,7 +508,6 @@ class GraphicalUserInterface(Frame):
                 self.text.tag_add(style, start, end)
 
         self.text.config(state=DISABLED)  # disabe the text field
-        # self.text.see(END)  # move the scrollbar to the bottom
 
         self.previous_tag_name = style
         self.previous_line_length = len(text)
@@ -521,7 +527,6 @@ class GraphicalUserInterface(Frame):
         Adds blank lines to the text widget
         """
         if n > 0:
-            # sleep(self.delay * delay)  # small pause between outputs
             self.add_text("" + "\n" * (n - 1))
 
     def add_tag(self, name, foreground=None, background=None, justify=None, font_weight=None):
