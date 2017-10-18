@@ -11,7 +11,7 @@ Annotation methods
 from collections import OrderedDict
 from copy import deepcopy
 from datetime import datetime, timedelta
-from tkinter import filedialog, messagebox, colorchooser, LEFT, END
+from tkinter import filedialog, messagebox, colorchooser, Menu, LEFT, END, DISABLED
 from tkinter.ttk import Button
 from undo import stack, undoable, group
 
@@ -1683,7 +1683,7 @@ class Annotator(GraphicalUserInterface):
         else:
             self.text.config(cursor="arrow")
 
-    def manage_left_click(self, start, end, text):
+    def manage_left_click(self, start, end, x, y, text):
         """
         Left mouse clicks either trigger go_to or link_segment
         """
@@ -1696,11 +1696,24 @@ class Annotator(GraphicalUserInterface):
         else:
             self.go_to(i)
 
-    def manage_right_click(self, start, end, text):
+    def manage_right_click(self, start, end, x, y, text):
         """
-        Right mouse clicks trigger
+        Right mouse clicks trigger go_to and select an annotation
         """
-        pass
+        i = self.get_segment_index_from_x_y(start, end)
+        self.go_to(i)
+
+        popup = Menu(self, tearoff=0, font=self.menu_font_family)
+        popup.add_command(label="Close")
+        popup.add_separator()
+
+        for command in self.command_list:
+            popup.add_command(label=command, command=lambda command=command: self.process_input(command))
+
+        try:
+            popup.tk_popup(x, y, 0)
+        finally:
+            popup.grab_release()
 
     def get_segment_index_from_x_y(self, start, end):
         """

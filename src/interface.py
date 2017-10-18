@@ -207,7 +207,7 @@ class GraphicalUserInterface(Frame):
         self.text.bind("<ButtonRelease-2>", lambda event: self.record_release(self.text.index("@%s,%s" % (event.x, event.y))))
         self.clickable_text_tag = "clickable_text_tag"
         self.text.tag_bind(self.clickable_text_tag, "<Button-1>", self.mouse_left_click)
-        self.text.tag_bind(self.clickable_text_tag, "<Button-2>", self.mouse_right_click)
+        self.text.tag_bind(self.clickable_text_tag, "<Button-3>", self.mouse_right_click)
         self.text.bind("<Motion>", self.mouse_motion)
 
         self.last_click_index = "1.0"
@@ -254,14 +254,14 @@ class GraphicalUserInterface(Frame):
         Returns data when the user left clicks on a clickable element
         """
         start, end, text = self.examine_mouse_position(event)
-        self.manage_left_click(start, end, text)
+        self.manage_left_click(start, end, event.x_root, event.y_root, text)
 
     def mouse_right_click(self, event):
         """
         Returns data when the user right clicks on a clickable element
         """
         start, end, text = self.examine_mouse_position(event)
-        self.manage_right_click(start, end, text)
+        self.manage_right_click(start, end, event.x_root, event.y_root, text)
 
     def examine_mouse_position(self, event):
         """
@@ -288,13 +288,13 @@ class GraphicalUserInterface(Frame):
         """
         pass  # pass on purpose
 
-    def manage_left_click(self, start, end, text):
+    def manage_left_click(self, start, end, x, y, text):
         """
         Mouse left click management
         """
         pass  # pass on purpose
 
-    def manage_right_click(self, start, end, text):
+    def manage_right_click(self, start, end, x, y, text):
         """
         Mouse right click management
         """
