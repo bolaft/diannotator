@@ -422,7 +422,7 @@ class SegmentCollection:
         """
         Sets the index to the previous segment
         """
-        self.i = self.i - n if self.i - n >= 0 and self.collection else 0  # must check if collection not empty
+        self.i = self.i - n if self.i - n >= 0 and self.collection else self.i  # must check if collection not empty
 
         first, last = self.display_range
 

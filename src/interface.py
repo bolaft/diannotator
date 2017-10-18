@@ -8,8 +8,8 @@
 Grapical User Interface
 """
 
-from tkinter import Tk, StringVar, Text, Menu, messagebox, BOTH, DISABLED, END, LEFT, BOTTOM, NORMAL, N, X, WORD, NSEW, SUNKEN, INSERT, SEL
-from tkinter.ttk import Button, Entry, Frame, Label, Scrollbar
+from tkinter import Tk, StringVar, Text, Menu, messagebox, BOTH, DISABLED, END, LEFT, BOTTOM, NORMAL, N, X, WORD, SUNKEN, INSERT, SEL
+from tkinter.ttk import Button, Entry, Frame, Label
 from ttkthemes import ThemedStyle
 
 from config import ConfigFile
@@ -159,11 +159,6 @@ class GraphicalUserInterface(Frame):
         # Text widget
         self.text.grid(row=0, column=0, sticky="nsew", padx=self.padding, pady=(self.padding, 0))
         self.text.config(font=(self.text_font_family, self.text_font_size), undo=True, wrap=WORD, bg=self.text_background, fg=self.text_foreground, state=DISABLED)
-
-        # creates a Scrollbar and associate it with text
-        self.scrollbar = Scrollbar(self.output_frame, command=self.text.yview)
-        self.scrollbar.grid(row=0, rowspan=3, column=1, sticky=NSEW)
-        self.text["yscrollcommand"] = self.scrollbar.set
 
         # status bar
         self.status = Label(self.output_frame, font=(self.label_font_family, self.label_font_size, "bold"))
@@ -421,8 +416,11 @@ class GraphicalUserInterface(Frame):
         """
         Show an exit prompt
         """
-        if messagebox.askyesno("Quit", "Do you want to quit?"):
-            self.parent.quit()
+        if messagebox.askyesno(
+            self._("box.title.quit"),
+            self._("box.text.quit")
+        ):
+            self.parent.destroy()
 
     ###########################
     # TEXT MANAGEMENT METHODS #

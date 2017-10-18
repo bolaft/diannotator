@@ -11,7 +11,7 @@ Annotation methods
 from collections import OrderedDict
 from copy import deepcopy
 from datetime import datetime, timedelta
-from tkinter import filedialog, messagebox, colorchooser, Menu, LEFT, END, DISABLED
+from tkinter import filedialog, messagebox, colorchooser, Menu, LEFT, END, SEL_FIRST, SEL_LAST, SEL
 from tkinter.ttk import Button
 from undo import stack, undoable, group
 
@@ -46,8 +46,14 @@ class Annotator(GraphicalUserInterface):
             config.get_string("go_down", "<Down>"),
             lambda event, arg=1: self.go_down(arg))
         self.parent.bind(
+            "<Button-5>",
+            lambda event, arg=1: self.go_down(arg, delay=50))
+        self.parent.bind(
             config.get_string("go_up", "<Up>"),
             lambda event, arg=1: self.go_up(arg))
+        self.parent.bind(
+            "<Button-4>",
+            lambda event, arg=1: self.go_up(arg, delay=50))
         self.parent.bind(
             config.get_string("go_down_10", "<Next>"),
             lambda event, arg=10: self.go_down(arg))
@@ -598,40 +604,44 @@ class Annotator(GraphicalUserInterface):
 
             return True
 
-    def go_down(self, n):
+    def go_down(self, n, delay=True):
         """
         Moves to an ulterior segment
         """
-        if self.is_slow_enough():
+        if self.is_slow_enough(milliseconds=delay):
             self.cycle_down(n=n)
         self.update()
 
     @undoable
     def cycle_down(self, n):
+        i = self.sc.i
+
         # cycles through the collection
         self.sc.next(n=n)
 
         yield "cycle_down"
 
-        self.cycle_up(n)
+        self.go_to(i)
 
-    def go_up(self, n, limit_speed=True):
+    def go_up(self, n, delay=True):
         """
         Moves to a previous segment
         """
-        if self.is_slow_enough():
+        if self.is_slow_enough(milliseconds=delay):
             self.cycle_up(n=n)
 
         self.update()
 
     @undoable
     def cycle_up(self, n):
+        i = self.sc.i
+
         # cycles through the collection
         self.sc.previous(n=n)
 
         yield "cycle_up"
 
-        self.cycle_down(n)
+        self.go_to(i)
 
     def select_go_to(self):
         """
@@ -1357,10 +1367,13 @@ class Annotator(GraphicalUserInterface):
         sc = deepcopy(self.sc)
 
         if self.sc.collection:
-            self.go_to(self.sc.full_collection.index(self.sc.get_active()))
+            i = self.sc.full_collection.index(self.sc.get_active())
+        else:
+            i = self.sc.i
 
         self.sc.collection = self.sc.full_collection.copy()
         self.sc.filter = False
+        self.go_to(i)
 
         self.update()
 
@@ -1484,12 +1497,14 @@ class Annotator(GraphicalUserInterface):
         # look first for a target from the active segment to the end, and then backwards from the position of the active segment
         for i in list(range(self.sc.i, len(self.sc.full_collection))) + list(reversed(range(0, self.sc.i))):
             segment = self.sc.full_collection[i]
+
             if segment in self.sc.collection:
                 # adjust the current index in the new collection
                 index = self.sc.collection.index(segment)
-                self.go_to(index)
-                start = 0 if index <= 50 else index - 50
+                start = 0 if index < 50 else index - 50
                 self.sc.display_range = start, index
+
+                self.go_to(index)
                 break
 
         self.update()
@@ -1538,7 +1553,7 @@ class Annotator(GraphicalUserInterface):
                 if segment.has(layer, annotation=label):
                     segments.append(segment)
 
-        self.sc.collection = list(set(segments))
+        self.sc.collection = segments
         self.sc.filter = "[{}]".format(label)
         self.finish_filter()
 
@@ -1560,7 +1575,7 @@ class Annotator(GraphicalUserInterface):
                 if segment.has(layer, annotation=label, legacy=True):
                     segments.append(segment)
 
-        self.sc.collection = list(set(segments))
+        self.sc.collection = segments
         self.sc.filter = "[{}]".format(label)
         self.finish_filter()
 
@@ -1582,7 +1597,7 @@ class Annotator(GraphicalUserInterface):
                 if segment.has(layer, annotation=qualifier, qualifier=True):
                     segments.append(segment)
 
-        self.sc.collection = list(set(segments))
+        self.sc.collection = segments
         self.sc.filter = "[➔ {}]".format(qualifier)
         self.finish_filter()
 
@@ -1604,7 +1619,7 @@ class Annotator(GraphicalUserInterface):
                 if segment.has(layer, annotation=qualifier, qualifier=True, legacy=True):
                     segments.append(segment)
 
-        self.sc.collection = list(set(segments))
+        self.sc.collection = segments
         self.sc.filter = "((➔ {}))".format(qualifier)
         self.finish_filter()
 
@@ -1699,12 +1714,12 @@ class Annotator(GraphicalUserInterface):
             self.text.config(cursor="arrow")
         else:
             try:
-                selection = self.text.selection_get()
+                selection = self.text.get(SEL_FIRST, SEL_LAST)
                 selection = False if selection == "" else selection
             except Exception:
                 selection = False
 
-            if not selection:
+            if not selection and i != self.sc.i:
                 self.go_to(i)
 
     def manage_right_click(self, start, end, x, y, text):
@@ -1770,7 +1785,7 @@ class Annotator(GraphicalUserInterface):
         Checks if the annotation should be applied to a mouse selection
         """
         try:
-            selection = self.text.selection_get()
+            selection = self.text.get(SEL_FIRST, SEL_LAST)
             selection = False if selection == "" else selection
         except Exception:
             selection = False

@@ -71,5 +71,5 @@ if __name__ == "__main__":
     if options.fullscreen:
         annotator.toggle_fullscreen()  # toggles fullscreen
 
-    annotator.parent.protocol("WM_DELETE_WINDOW", annotator.quit)  # quit event handler
+    annotator.parent.protocol("WM_DELETE_WINDOW", annotator.exit_prompt)  # quit event handler
     annotator.mainloop()  # runs the main tkinter loop
