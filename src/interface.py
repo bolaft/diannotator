@@ -14,15 +14,18 @@ from ttkthemes import ThemedStyle
 
 from config import ConfigFile
 from strings import Strings
-from styles import Styles
 
 config = ConfigFile()  # INI configuration file
 
 
-class GraphicalUserInterface(Frame, Styles):
+class GraphicalUserInterface(Frame):
     """
     Graphical User Interface class
     """
+    # constant tag names
+    STRONG = "STRONG"
+    ITALIC = "ITALIC"
+    HIGHLIGHT = "HIGHLIGHT"
 
     window_title = "DiAnnotator"  # window title
 
@@ -210,14 +213,18 @@ class GraphicalUserInterface(Frame, Styles):
         self.last_click_index = "1.0"
         self.last_release_index = "1.0"
 
-        Styles.__init__(self)  # initializes style tags
-
         self.command_list = []  # list of potential commands
 
         self.action = None  # default command action
         self.default_action = None  # default command action
 
         self.free_input = False  # sets whether it's possible to input anything in the entry
+
+        # basic text tags
+
+        self.add_tag(GraphicalUserInterface.STRONG, font_weight="bold")
+        self.add_tag(GraphicalUserInterface.ITALIC, font_weight="italic")
+        self.add_tag(GraphicalUserInterface.HIGHLIGHT, background=self.select_background)
 
     ############################
     # MOUSE MANAGEMENT METHODS #
@@ -403,6 +410,13 @@ class GraphicalUserInterface(Frame, Styles):
 
         return "break"
 
+    def exit_prompt(self):
+        """
+        Show an exit prompt
+        """
+        if messagebox.askyesno("Quit", "Do you want to quit?"):
+            self.parent.quit()
+
     ###########################
     # TEXT MANAGEMENT METHODS #
     ###########################
@@ -435,8 +449,8 @@ class GraphicalUserInterface(Frame, Styles):
         Updates Text widget font size
         """
         self.text.config(font=(self.text_font_family, self.text_font_size))
-        self.text.tag_config(Styles.STRONG, font=(self.text_font_family, self.text_font_size, "bold"))
-        self.text.tag_config(Styles.ITALIC, font=(self.text_font_family, self.text_font_size, "italic"))
+        self.text.tag_config(GraphicalUserInterface.STRONG, font=(self.text_font_family, self.text_font_size, "bold"))
+        self.text.tag_config(GraphicalUserInterface.ITALIC, font=(self.text_font_family, self.text_font_size, "italic"))
         # self.text.see(END)  # move the scrollbar to the bottom
 
     def clear_screen(self):
@@ -464,7 +478,7 @@ class GraphicalUserInterface(Frame, Styles):
         start = "{}.{}".format(int(self.text.index(END).split(".")[0]) - 2, 0)  # start position of the line to output
         end = "{}.{}".format(int(self.text.index(END).split(".")[0]) - 1, 0)
         # adds style to the text
-        self.text.tag_add(Styles.HIGHLIGHT, start, end)
+        self.text.tag_add(GraphicalUserInterface.HIGHLIGHT, start, end)
 
     def add_text(self, text, added=False, style=None, offset=0):
         """
@@ -510,12 +524,21 @@ class GraphicalUserInterface(Frame, Styles):
             # sleep(self.delay * delay)  # small pause between outputs
             self.add_text("" + "\n" * (n - 1))
 
-    def exit_prompt(self):
+    def add_tag(self, name, foreground=None, background=None, justify=None, font_weight=None):
         """
-        Show an exit prompt
+        Creates a new tag
         """
-        if messagebox.askyesno("Quit", "Do you want to quit?"):
-            self.parent.quit()
+        if foreground:
+            self.text.tag_config(name, foreground=foreground)
+
+        if background:
+            self.text.tag_config(name, background=background)
+
+        if justify:
+            self.text.tag_config(name, justify=justify)
+
+        if font_weight:
+            self.text.tag_config(name, font=(self.text_font_family, self.text_font_size, font_weight))
 
     #########################
     # IO MANAGEMENT METHODS #

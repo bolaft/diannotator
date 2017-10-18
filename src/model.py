@@ -873,12 +873,15 @@ class SegmentCollection:
         previous_segment = None
         segment = None
 
+        # quotes remover
         remove_start_quotes = lambda s: s[1:] if s.startswith("\"") else s
         remove_end_quotes = lambda s: s[:-1] if s.endswith("\"") else s
         remove_quotes = lambda s: remove_start_quotes(remove_end_quotes(s))
 
         for row in rows:
+            # remove start and end quotes
             row = {k: remove_quotes(v) for k, v in row.items()}
+
             datetime = parser.parse(row["datetime"]) if row["datetime"] is not None and row["datetime"].strip() != "" else previous_segment.datetime
             span = row["segment"].strip()
 

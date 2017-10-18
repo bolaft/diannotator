@@ -19,7 +19,6 @@ from colors import generate_random_color
 from config import ConfigFile
 from interface import GraphicalUserInterface
 from model import SegmentCollection
-from styles import Styles
 
 # special chars to mark beginning and end of raw segment text
 BEGIN_CHAR = "\uFEFF"
@@ -1997,7 +1996,7 @@ class Annotator(GraphicalUserInterface):
 
         # note display
         if segment.note is not None:
-            self.output("\t\t\t\t ⤷ {}".format(segment.note), style=Styles.ITALIC)
+            self.output("\t\t\t\t ⤷ {}".format(segment.note), style=GraphicalUserInterface.ITALIC)
 
         # highlight active line
         if active:
