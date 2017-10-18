@@ -1693,6 +1693,8 @@ class Annotator(GraphicalUserInterface):
         if self.click_to_link_type is not None:
             self.link_segment(i + 1, self.click_to_link_type)
             self.text.config(cursor="arrow")
+        else:
+            self.go_to(i)
 
     def manage_right_click(self, start, end, text):
         """
@@ -1994,13 +1996,17 @@ class Annotator(GraphicalUserInterface):
                 self.add_to_last_line(addendum, style="link-{}".format(lt), offset=offset)
                 offset += len(addendum)
 
+        # highlight active line
+        if active:
+            self.highlight_last_line()
+
         # note display
         if segment.note is not None:
             self.output("\t\t\t\t ⤷ {}".format(segment.note), style=GraphicalUserInterface.ITALIC)
 
-        # highlight active line
-        if active:
-            self.highlight_last_line()
+            # highlight active comment
+            if active:
+                self.highlight_last_line()
 
     def make_addendum(self, segment, layer, legacy=False):
         """
