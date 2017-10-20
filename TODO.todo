@@ -1,5 +1,8 @@
     Bugs:
 
+        ☐ weird double click behaviour on non active line
+        ✔ times are in legaly label filters @done (17-10-18 16:25)
+        ✔ select is not seen on highlighted line @done (17-10-18 13:39)
         ✔ when note, highlight only on note @done (17-10-18 12:39)
         ✔ Styles class cannot be parent of GraphicalUserInterface @done (17-10-18 11:54)
         ✔ not full csv imported, only 1600 @done (17-10-18 11:47)
@@ -19,7 +22,9 @@
 
         ☐ JSON config file to tell which columns are what
         ☐ unit testing
+        ☐ click anywhere on line to go_to
         ☐ smaller binary file
+        ☐ executable file that includes modules
         ☐ windows executable
         ☐ integrate pyrata for annotation search
         ☐ feature driven annotation

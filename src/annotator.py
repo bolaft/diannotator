@@ -11,7 +11,7 @@ Annotation methods
 from collections import OrderedDict
 from copy import deepcopy
 from datetime import datetime, timedelta
-from tkinter import filedialog, messagebox, colorchooser, Menu, LEFT, END, SEL_FIRST, SEL_LAST, SEL
+from tkinter import filedialog, messagebox, colorchooser, Menu, LEFT, END, SEL_FIRST, SEL_LAST
 from tkinter.ttk import Button
 from undo import stack, undoable, group
 
@@ -47,19 +47,25 @@ class Annotator(GraphicalUserInterface):
             lambda event, arg=1: self.go_down(arg))
         self.parent.bind(
             "<Button-5>",
-            lambda event, arg=1: self.go_down(arg, delay=50))
+            lambda event, arg=1: self.go_down(arg))
         self.parent.bind(
             config.get_string("go_up", "<Up>"),
             lambda event, arg=1: self.go_up(arg))
         self.parent.bind(
             "<Button-4>",
-            lambda event, arg=1: self.go_up(arg, delay=50))
+            lambda event, arg=1: self.go_up(arg))
         self.parent.bind(
             config.get_string("go_down_10", "<Next>"),
             lambda event, arg=10: self.go_down(arg))
         self.parent.bind(
             config.get_string("go_up_10", "<Prior>"),
             lambda event, arg=10: self.go_up(arg))
+        self.parent.bind(
+            "<Control-Down>",
+            lambda event, arg=99999: self.go_to(arg))
+        self.parent.bind(
+            "<Control-Up>",
+            lambda event, arg=0: self.go_to(arg))
 
         # load / save / close shortcuts
         self.parent.bind(
@@ -195,26 +201,6 @@ class Annotator(GraphicalUserInterface):
         # INITIALIZATION #
         ##################
 
-        # attempt to load previous save
-        previous_save = SegmentCollection.read_save_path_from_tmp()
-
-        if previous_save:
-            self.sc = SegmentCollection.load(previous_save)
-            self.sc.display_range = self.sc.display_range[0], self.sc.i
-
-        if not hasattr(self, "sc"):
-            # initializing the segment collection
-            self.sc = SegmentCollection()  # load command
-
-        # colorization
-        self.colorize()
-
-        # make a backup of the collection
-        self.sc.save(
-            path="{}backup/auto-{}.pic".format(SegmentCollection.save_dir, datetime.now().strftime("%d-%m-%y_%X")),
-            backup=True
-        )
-
         # special buttons
         self.make_special_buttons()
 
@@ -241,6 +227,25 @@ class Annotator(GraphicalUserInterface):
         self.show_date = config.get_bool("show_date", False)  # hide date by default
         self.show_time = config.get_bool("show_time", True)  # show time by default
         self.show_id = config.get_bool("show_id", False)  # hide id by default
+
+        # attempt to load previous save
+        previous_save = SegmentCollection.read_save_path_from_tmp()
+
+        if previous_save:
+            self.sc = SegmentCollection.load(previous_save)
+
+        if not hasattr(self, "sc"):
+            # initializing the segment collection
+            self.sc = SegmentCollection()  # load command
+
+        # colorization
+        self.colorize()
+
+        # make a backup of the collection
+        self.sc.save(
+            path="{}backup/auto-{}.pic".format(SegmentCollection.save_dir, datetime.now().strftime("%d-%m-%y_%X")),
+            backup=True
+        )
 
         # display update
         self.update()
@@ -604,12 +609,15 @@ class Annotator(GraphicalUserInterface):
 
             return True
 
-    def go_down(self, n, delay=True):
+    def go_down(self, n):
         """
         Moves to an ulterior segment
         """
-        if self.is_slow_enough(milliseconds=delay):
+        if self.is_slow_enough():
             self.cycle_down(n=n)
+
+        self.going_down = True
+
         self.update()
 
     @undoable
@@ -623,13 +631,14 @@ class Annotator(GraphicalUserInterface):
 
         self.go_to(i)
 
-    def go_up(self, n, delay=True):
+    def go_up(self, n):
         """
         Moves to a previous segment
         """
-        if self.is_slow_enough(milliseconds=delay):
+        if self.is_slow_enough():
             self.cycle_up(n=n)
 
+        self.going_down = False
         self.update()
 
     @undoable
@@ -1501,9 +1510,6 @@ class Annotator(GraphicalUserInterface):
             if segment in self.sc.collection:
                 # adjust the current index in the new collection
                 index = self.sc.collection.index(segment)
-                start = 0 if index < 50 else index - 50
-                self.sc.display_range = start, index
-
                 self.go_to(index)
                 break
 
@@ -1894,14 +1900,11 @@ class Annotator(GraphicalUserInterface):
                 active = True if j == self.sc.i else False
                 self.output_segment(j, active=active)
 
-                # see active segment
                 if active:
                     see_position = "{}.0".format(int(self.text.index(END).split(".")[0]) - 2)
 
-            self.text.see(see_position)  # move the scrollbar to the active segment
-
-            # title with filepath
-            self.parent.title("{} - {}".format(self.window_title, self.sc.save_file))
+            self.text.see("1.0")
+            self.text.see(see_position)
 
             # status message
             status = "{}: {}".format(

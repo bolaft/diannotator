@@ -406,15 +406,14 @@ class SegmentCollection:
         """
         Sets the index to the next segment
         """
-        self.i = self.i + n if self.i + n < len(self.collection) else self.i
+        n = n if self.i + n < len(self.collection) else len(self.collection) - self.i - 1
+        self.i = self.i + n
 
         first, last = self.display_range
 
         if self.i > last:
-            last = self.i
-
-        if last - first > 50:
-            first += n
+            last = min(self.i, len(self.collection))
+            first = max(self.i - 50, 0)
 
         self.display_range = first, last
 
@@ -422,15 +421,14 @@ class SegmentCollection:
         """
         Sets the index to the previous segment
         """
-        self.i = self.i - n if self.i - n >= 0 and self.collection else self.i  # must check if collection not empty
+        n = n if self.i - n >= 0 else self.i
+        self.i = self.i - n
 
         first, last = self.display_range
 
         if self.i < first:
-            first = self.i
-
-        if last - first > 50:
-            last -= n
+            first = max(0, self.i)
+            last = min(first + 50, len(self.collection) - 1)
 
         self.display_range = first, last
 
@@ -814,8 +812,8 @@ class SegmentCollection:
 
             return False
 
-        self.display_range = 0, 0
         self.i = 0
+        self.display_range = 0, min(len(self.collection) - 1, 50)
 
         return True
 
@@ -1103,6 +1101,7 @@ class SegmentCollection:
             with open(path, "rb") as f:
                 sc = pickle.load(f)
                 sc.write_save_path_to_tmp()
+                sc.display_range = sc.i, min(len(sc.collection) - 1, sc.i + 50)
 
                 return sc
         except Exception:
