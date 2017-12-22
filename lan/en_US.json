@@ -19,6 +19,7 @@
 	"menu.toggle_time_column": "Show/Hide Time Column",
 	"menu.toggle_id_column": "Show/Hide ID Column",
 	"menu.toggle_legacy_annotations": "Show/Hide Legacy Annotations",
+	"menu.toggle_annotations": "Show/Hide Annotations",
 	"menu.generate_participant_colors": "Randomize Participant Colors",
 	"menu.filter_by_active_layer": "Filter By Active Layer",
 	"menu.filter_by_active_label": "Filter By Active Label",

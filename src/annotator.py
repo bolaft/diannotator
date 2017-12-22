@@ -550,7 +550,7 @@ class Annotator(GraphicalUserInterface):
         success = self.sc.import_taxonomy(path)
 
         if success:
-            self.colorize()
+            self.colorize(participants=False)
             self.update()
 
             return True
@@ -1894,6 +1894,9 @@ class Annotator(GraphicalUserInterface):
 
         # if the collection is not empty
         if self.sc.collection:
+            # default title
+            self.parent.title("{} - {}".format(self.window_title, self.sc.save_file))
+
             first, last = self.sc.display_range
 
             for j in range(first, last + 1):
@@ -2038,12 +2041,12 @@ class Annotator(GraphicalUserInterface):
 
                     links_by_type[lt].append(ls)
 
-            for lt, lls in links_by_type.items():
-                links = [str(self.sc.collection.index(ls) + 1) for ls in lls if ls in self.sc.collection]
-                addendum = " (({} ⟲ {}))".format(lt, ", ".join(sorted(links)))
+            # for lt, lls in links_by_type.items():
+                # links = [str(self.sc.collection.index(ls) + 1) for ls in lls if ls in self.sc.collection]
+                # addendum = " (({} ⟲ {}))".format(lt, ", ".join(sorted(links)))
 
-                self.add_to_last_line(addendum, style="link-{}".format(lt), offset=offset)
-                offset += len(addendum)
+                # self.add_to_last_line(addendum, style="link-{}".format(lt), offset=offset)
+                # offset += len(addendum)
 
         # highlight active line
         if active:
