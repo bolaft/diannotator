@@ -997,333 +997,333 @@ requestForAction																	nov. 02 2014 03:02	@uBOTu-fr	Utilisez http://pa
 																	nov. 02 2014 03:24	beaver	bein , hm ou pas dae _, si t' as un probleme matériel sous Windows , ça se résulte par un Bsod en general	bein, hm ou pas dae_, si t'as un probleme matériel sous Windows, ça se résulte par un Bsod en general
 requestForAction																	nov. 02 2014 03:24	dae_	sans les abréaviation svp	sans les abréaviation svp
 		inform							inform	happy							nov. 02 2014 03:24	beaver	"svp "" n'est pas une abréviation 03:25 (beaver)> ;)	""svp"" n'est pas une abréviation
-																	nov. 02 2014	beaver		;)
-correct																	nov. 02 2014	beaver	bsod blue screen of death	bsod blue screen of death
-		answerPositively							inform	love				conditional			nov. 02 2014	beaver	si tu preferes .	si tu preferes.
-		inform															nov. 02 2014	dae_	Svp est une abréviation courrante de la langue francaise là e te parled ' abréviation technique que je ne connais pas	Svp est une abréviation courrante de la langue francaise là e te parled 'abréviation technique que je ne connais pas
-			execution	answerPositively													nov. 02 2014	dae_	ha ok	ha ok
-							inform	promote									nov. 02 2014	dae_	justement windows est ( presque ) plus tollerent avec le materiel	justement windows est (presque) plus tollerent avec le materiel
-																	nov. 02 2014	beaver	si j' avais un probleme matériel , sous Ubuntu , à mon avis j' aurai eu des kernel panic	si j'avais un probleme matériel, sous Ubuntu, à mon avis j'aurai eu des kernel panic
-																	nov. 02 2014	beaver	non dae _ ^^	non dae_ ^^
-																	nov. 02 2014	beaver	si ton matériel a des defaillances , windows n'est pas magicien	si ton matériel a des defaillances, windows n'est pas magicien
-																	nov. 02 2014	beaver	ça va planter d'une maniere ou d'une autre , il va te faire comprendre qu'il y'a un truc ,	ça va planter d'une maniere ou d'une autre, il va te faire comprendre qu'il y'a un truc, c'est G/Linux qui est justement plus tollérant
+																	nov. 02 2014 03:25	beaver		;)
+correct																	nov. 02 2014 03:25	beaver	bsod blue screen of death	bsod blue screen of death
+		answerPositively							inform	love				conditional			nov. 02 2014 03:25	beaver	si tu preferes .	si tu preferes.
+		inform															nov. 02 2014 03:25	dae_	Svp est une abréviation courrante de la langue francaise là e te parled ' abréviation technique que je ne connais pas	Svp est une abréviation courrante de la langue francaise là e te parled 'abréviation technique que je ne connais pas
+			execution	answerPositively													nov. 02 2014 03:25	dae_	ha ok	ha ok
+							inform	promote									nov. 02 2014 03:26	dae_	justement windows est ( presque ) plus tollerent avec le materiel	justement windows est (presque) plus tollerent avec le materiel
+																	nov. 02 2014 03:26	beaver	si j' avais un probleme matériel , sous Ubuntu , à mon avis j' aurai eu des kernel panic	si j'avais un probleme matériel, sous Ubuntu, à mon avis j'aurai eu des kernel panic
+																	nov. 02 2014 03:26	beaver	non dae _ ^^	non dae_ ^^
+																	nov. 02 2014 03:27	beaver	si ton matériel a des defaillances , windows n'est pas magicien	si ton matériel a des defaillances, windows n'est pas magicien
+																	nov. 02 2014 03:27	beaver	ça va planter d'une maniere ou d'une autre , il va te faire comprendre qu'il y'a un truc ,	ça va planter d'une maniere ou d'une autre, il va te faire comprendre qu'il y'a un truc, c'est G/Linux qui est justement plus tollérant
 																		\	c' est G/Linux qui est justement plus tollérant	
-																	nov. 02 2014	dae_	magicien non , mais ils a plus de driver et des gens payé pour resoudre les problemes 03:27 (dae_)> =)	magicien non, mais ils a plus de driver et des gens payé pour resoudre les problemes
-																	nov. 02 2014	dae_		Err :508
-																	nov. 02 2014	dae_	chose qui changera en avril	chose qui changera en avril
-																	nov. 02 2014	dae_	ta essayer d'installer les paquet comme ils disent sur doc.ubuntu ?	ta essayer d'installer les paquet comme ils disent sur doc.ubuntu ?
-																	nov. 02 2014	dae_	et le ppa nvidia ?	et le ppa nvidia ?
-							inform	depreciate						conditional			nov. 02 2014	beaver	une meilleur prise en charge de ton matériel sur un o/s prédéfini , ne veut pas dire qu'il sera plus tollérent aux pannes dae _ :/,	une meilleur prise en charge de ton matériel sur un o/s prédéfini, ne veut pas dire qu'il sera plus tollérent aux pannes dae_ :/, le ppa nvidia, c'est quoi au juste ? il te propose la derniere version de ton driver ?
+																	nov. 02 2014 03:27	dae_	magicien non , mais ils a plus de driver et des gens payé pour resoudre les problemes 03:27 (dae_)> =)	magicien non, mais ils a plus de driver et des gens payé pour resoudre les problemes
+																	nov. 02 2014 03:27	dae_		Err :508
+																	nov. 02 2014 03:27	dae_	chose qui changera en avril	chose qui changera en avril
+																	nov. 02 2014 03:29	dae_	ta essayer d'installer les paquet comme ils disent sur doc.ubuntu ?	ta essayer d'installer les paquet comme ils disent sur doc.ubuntu ?
+																	nov. 02 2014 03:29	dae_	et le ppa nvidia ?	et le ppa nvidia ?
+							inform	depreciate						conditional			nov. 02 2014 03:30	beaver	une meilleur prise en charge de ton matériel sur un o/s prédéfini , ne veut pas dire qu'il sera plus tollérent aux pannes dae _ :/,	une meilleur prise en charge de ton matériel sur un o/s prédéfini, ne veut pas dire qu'il sera plus tollérent aux pannes dae_ :/, le ppa nvidia, c'est quoi au juste ? il te propose la derniere version de ton driver ?
 																		\	le ppa nvidia , c' est quoi au juste ?	
 																		\	il te propose la derniere version de ton driver ?	
-																	nov. 02 2014	beaver	meilleure (*)	meilleure(*)
-		answerPositively													uncertain		nov. 02 2014	dae_	je suppose	je suppose
-		inform															nov. 02 2014	dae_	je suis sous intel moi	je suis sous intel moi
-																	nov. 02 2014	beaver	tolérent (*) :),	tolérent(*) :), mh, bein j'ai essayé via le .run en fait aussi, le probleme est le meme
+																	nov. 02 2014 03:30	beaver	meilleure (*)	meilleure(*)
+		answerPositively													uncertain		nov. 02 2014 03:31	dae_	je suppose	je suppose
+		inform															nov. 02 2014 03:31	dae_	je suis sous intel moi	je suis sous intel moi
+																	nov. 02 2014 03:31	beaver	tolérent (*) :),	tolérent(*) :), mh, bein j'ai essayé via le .run en fait aussi, le probleme est le meme
 					inform	unsatisfied												\	mh , bein j' ai essayé via le . run en fait aussi , le probleme est le meme	
-																	nov. 02 2014	beaver	le . run que j' ai téléchargé propose la derniere version de mon driver	le .run que j'ai téléchargé propose la derniere version de mon driver
-					inform	unsatisfied											nov. 02 2014	beaver	ça démarre tout ça … mais le probleme persiste	ça démarre tout ça … mais le probleme persiste
-									inform	unhappy							nov. 02 2014	beaver	ok 03:35 (beaver)> c'est desesperant ..	ok
-																	nov. 02 2014	beaver		c'est desesperant..
-									requestForInformation	unhappy							nov. 02 2014	dae_	tu veux un truc vraiment désesperant ?	tu veux un truc vraiment désesperant ? mon frigo/placard /compte en banque vide
+																	nov. 02 2014 03:31	beaver	le . run que j' ai téléchargé propose la derniere version de mon driver	le .run que j'ai téléchargé propose la derniere version de mon driver
+					inform	unsatisfied											nov. 02 2014 03:32	beaver	ça démarre tout ça … mais le probleme persiste	ça démarre tout ça … mais le probleme persiste
+									inform	unhappy							nov. 02 2014 03:32	beaver	ok 03:35 (beaver)> c'est desesperant ..	ok
+																	nov. 02 2014 03:35	beaver		c'est desesperant..
+									requestForInformation	unhappy							nov. 02 2014 03:37	dae_	tu veux un truc vraiment désesperant ?	tu veux un truc vraiment désesperant ? mon frigo/placard /compte en banque vide
 					inform	unsatisfied												\	mon frigo/placard / compte en banque vide	
-																	nov. 02 2014	dae_	je sort une boule de patte brisé de mon freeze que j' avais préparré "" au cas ou "" une envis de tarte me prenne	je sort une boule de patte brisé de mon freeze que j'avais préparré ""au cas ou"" une envis de tarte me prenne
-									inform	anger							nov. 02 2014	dae_	bah elle a moisie dans mon freeze cette salope !!	bah elle a moisie dans mon freeze cette salope !!
-					inform	unsatisfied											nov. 02 2014	beaver	je te rassure dae _ c' est un probleme de plus me concernant , il manque 150€ pour mon loyer , je trouve pas … c' est la rue en hiver	je te rassure dae_ c'est un probleme de plus me concernant, il manque 150€ pour mon loyer, je trouve pas … c'est la rue en hiver
-									inform	unhappy							nov. 02 2014	dae_	ça c' est vraiment desesperent	ça c'est vraiment desesperent
-		inform															nov. 02 2014	dae_	legalement ta un bon delais avant de te faire expulsé	legalement ta un bon delais avant de te faire expulsé
-		inform							inform	happy				conditional			nov. 02 2014	beaver	sauf , si t' es pas déclaré que t' as aucun bail :), bref	sauf, si t'es pas déclaré que t'as aucun bail :), bref
-		commit												conditional			nov. 02 2014	dae_	si ta besoin de conseil la dessus je peux te donner quelques info en privat	si ta besoin de conseil la dessus je peux te donner quelques info en privat
-		answerByRequestForAction												conditional			nov. 02 2014	beaver	beins viens si tu veux	beins viens si tu veux
-																	nov. 02 2014	dae_	tu es abs	tu es abs
-									inform	happy		conclude			uncertain		nov. 02 2014	beaver	bon donc pour mon probleme nvidia , on a fait le tour je pense :)	bon donc pour mon probleme nvidia, on a fait le tour je pense :)
-																	nov. 02 2014	soulseek	bonjour aux lève tôt	bonjour aux lève tôt
-									inform	love		introduceTopic					nov. 02 2014	soulseek	je cherhce à intaller sousseek sur ubuntu	je  cherhce à intaller sousseek sur ubuntu
-																	nov. 02 2014	soulseek	ai téléchargé le soft sur http://www.soulseekqt.net/news/node/1	ai téléchargé le soft sur  http://www.soulseekqt.net/news/node/1
-					inform	unsatisfied											nov. 02 2014	soulseek	mai désormais suis bloqué	mai désormais suis bloqué
-																	nov. 02 2014	soulseek	Il faut installer des paquets ?	Il faut installer des paquets ? Via le terminal ?
+																	nov. 02 2014 03:37	dae_	je sort une boule de patte brisé de mon freeze que j' avais préparré "" au cas ou "" une envis de tarte me prenne	je sort une boule de patte brisé de mon freeze que j'avais préparré ""au cas ou"" une envis de tarte me prenne
+									inform	anger							nov. 02 2014 03:38	dae_	bah elle a moisie dans mon freeze cette salope !!	bah elle a moisie dans mon freeze cette salope !!
+					inform	unsatisfied											nov. 02 2014 03:38	beaver	je te rassure dae _ c' est un probleme de plus me concernant , il manque 150€ pour mon loyer , je trouve pas … c' est la rue en hiver	je te rassure dae_ c'est un probleme de plus me concernant, il manque 150€ pour mon loyer, je trouve pas … c'est la rue en hiver
+									inform	unhappy							nov. 02 2014 03:38	dae_	ça c' est vraiment desesperent	ça c'est vraiment desesperent
+		inform															nov. 02 2014 03:38	dae_	legalement ta un bon delais avant de te faire expulsé	legalement ta un bon delais avant de te faire expulsé
+		inform							inform	happy				conditional			nov. 02 2014 03:39	beaver	sauf , si t' es pas déclaré que t' as aucun bail :), bref	sauf, si t'es pas déclaré que t'as aucun bail :), bref
+		commit												conditional			nov. 02 2014 03:39	dae_	si ta besoin de conseil la dessus je peux te donner quelques info en privat	si ta besoin de conseil la dessus je peux te donner quelques info en privat
+		answerByRequestForAction												conditional			nov. 02 2014 03:39	beaver	beins viens si tu veux	beins viens si tu veux
+																	nov. 02 2014 03:41	dae_	tu es abs	tu es abs
+									inform	happy		conclude			uncertain		nov. 02 2014 04:18	beaver	bon donc pour mon probleme nvidia , on a fait le tour je pense :)	bon donc pour mon probleme nvidia, on a fait le tour je pense :)
+																	nov. 02 2014 06:20	soulseek	bonjour aux lève tôt	bonjour aux lève tôt
+									inform	love		introduceTopic					nov. 02 2014 06:21	soulseek	je cherhce à intaller sousseek sur ubuntu	je  cherhce à intaller sousseek sur ubuntu
+																	nov. 02 2014 06:22	soulseek	ai téléchargé le soft sur http://www.soulseekqt.net/news/node/1	ai téléchargé le soft sur  http://www.soulseekqt.net/news/node/1
+					inform	unsatisfied											nov. 02 2014 06:22	soulseek	mai désormais suis bloqué	mai désormais suis bloqué
+																	nov. 02 2014 06:23	soulseek	Il faut installer des paquets ?	Il faut installer des paquets ? Via le terminal ?
 																		\	Via le terminal ?	
-		requestForHelp															nov. 02 2014	soulseek	si vous avez une idée	si vous avez une idée
-																	nov. 02 2014	AlexxC	bonjour	bonjour
-																	nov. 02 2014	OERIAS	Bonjour Black-Devil	Bonjour Black-Devil
-	requestForInformation																nov. 02 2014	OERIAS	Ça Va ?	Ça Va?
-																	nov. 02 2014	Black-Devil	Salut ,	Salut, oui, je me porte bien. Et toi ?
+		requestForHelp															nov. 02 2014 06:23	soulseek	si vous avez une idée	si vous avez une idée
+																	nov. 02 2014 08:44	AlexxC	bonjour	bonjour
+																	nov. 02 2014 10:03	OERIAS	Bonjour Black-Devil	Bonjour Black-Devil
+	requestForInformation																nov. 02 2014 10:04	OERIAS	Ça Va ?	Ça Va?
+																	nov. 02 2014 10:04	Black-Devil	Salut ,	Salut, oui, je me porte bien. Et toi ?
 	answerPositively																	\	oui , je me porte bien	
 	requestForInformation																	\	Et toi ?	
-		requestForInformation										introduceTopic					nov. 02 2014	Black-Devil	Est-ce que quelqu'un a quelques astuces pour accélérer un peu Xubuntu 14.04 ?	Est-ce que quelqu'un a quelques astuces pour accélérer un peu Xubuntu 14.04 ?
-							inform	depreciate								ironie	nov. 02 2014	coyotus	utilise un SSD 10:08 (coyotus)> :p	utilise un SSD
-																	nov. 02 2014	coyotus		:p
-		requestForAction														ironie	nov. 02 2014	coyotus	utilise windows un mois	utilise windows un mois
-		answer														ironie	nov. 02 2014	coyotus	quand tu reviendra dessus tu trouvera xubuntu vachement rapide	quand tu reviendra dessus tu trouvera xubuntu vachement rapide
-									inform	anger						ironie	nov. 02 2014	Black-Devil	Sacrilège !	Sacrilège ! Tu as prononcé le mot interdit !
+		requestForInformation										introduceTopic					nov. 02 2014 10:08	Black-Devil	Est-ce que quelqu'un a quelques astuces pour accélérer un peu Xubuntu 14.04 ?	Est-ce que quelqu'un a quelques astuces pour accélérer un peu Xubuntu 14.04 ?
+							inform	depreciate								ironie	nov. 02 2014 10:08	coyotus	utilise un SSD 10:08 (coyotus)> :p	utilise un SSD
+																	nov. 02 2014 10:08	coyotus		:p
+		requestForAction														ironie	nov. 02 2014 10:08	coyotus	utilise windows un mois	utilise windows un mois
+		answer														ironie	nov. 02 2014 10:09	coyotus	quand tu reviendra dessus tu trouvera xubuntu vachement rapide	quand tu reviendra dessus tu trouvera xubuntu vachement rapide
+									inform	anger						ironie	nov. 02 2014 10:10	Black-Devil	Sacrilège !	Sacrilège ! Tu as prononcé le mot interdit !
 									inform	anger						ironie		\	Tu as prononcé le mot interdit !	
-																	nov. 02 2014	soulsseek	bonjour	bonjour
-																	nov. 02 2014	soulsseek	ai téléchargé soulseekQT	ai téléchargé soulseekQT
-																	nov. 02 2014	Black-Devil	Salut	Salut
-					inform	unsatisfied											nov. 02 2014	soulsseek	mais ne sai pas comment l' installer	mais ne sai pas comment l'installer
-		answerPositively							inform	happy						ironie	nov. 02 2014	Black-Devil	Mouais , faudrait que j' essaie ça coyotus : D	Mouais, faudrait que j'essaie �a coyotus :D
-																	nov. 02 2014	soulsseek	il faut télécharger des paquets ou passer par le terminal 10:11 (soulsseek)> ?	il faut télécharger des paquets ou passer par le terminal
-																	nov. 02 2014	soulsseek		?
-																	nov. 02 2014	soulsseek	je suis avec une version 13.04 d'ubuntu	je suis avec une version 13.04 d'ubuntu
-																	nov. 02 2014	Black-Devil	attends	attends je fais des recherches sur ce qu'est soulsseekQT et je te dis ce que j'en pense
+																	nov. 02 2014 10:10	soulsseek	bonjour	bonjour
+																	nov. 02 2014 10:10	soulsseek	ai téléchargé soulseekQT	ai téléchargé soulseekQT
+																	nov. 02 2014 10:10	Black-Devil	Salut	Salut
+					inform	unsatisfied											nov. 02 2014 10:10	soulsseek	mais ne sai pas comment l' installer	mais ne sai pas comment l'installer
+		answerPositively							inform	happy						ironie	nov. 02 2014 10:10	Black-Devil	Mouais , faudrait que j' essaie ça coyotus : D	Mouais, faudrait que j'essaie �a coyotus :D
+																	nov. 02 2014 10:11	soulsseek	il faut télécharger des paquets ou passer par le terminal 10:11 (soulsseek)> ?	il faut télécharger des paquets ou passer par le terminal
+																	nov. 02 2014 10:11	soulsseek		?
+																	nov. 02 2014 10:11	soulsseek	je suis avec une version 13.04 d'ubuntu	je suis avec une version 13.04 d'ubuntu
+																	nov. 02 2014 10:11	Black-Devil	attends	attends je fais des recherches sur ce qu'est soulsseekQT et je te dis ce que j'en pense
 		commit																\	je fais des recherches sur ce qu'est soulsseekQT et je te dis ce que j' en pense	
-																	nov. 02 2014	soulsseek	c'est genre emule	c'est genre emule
-																	nov. 02 2014	Calinou	la 13.04 n'est plus prise en charge 10:12 (Calinou)> (depuis janvier 2014 )	la 13.04 n'est plus prise en charge
-																	nov. 02 2014	Calinou		(depuis janvier 2014)
-																	nov. 02 2014	soulsseek	un client peer-to-peer	un client peer-to-peer
-																	nov. 02 2014	soulsseek	yep calinou avais vu que a 13.04 était obsolète	yep calinou avais vu que a 13.04 était obsolète
-																	nov. 02 2014	soulsseek	tu me conseilles quoi	tu me conseilles quoi
-																	nov. 02 2014	Black-Devil	Ah ouas effectivement ,	Ah ouas effectivement, tu as essayé une upgrade vers une version plus récente ?
+																	nov. 02 2014 10:12	soulsseek	c'est genre emule	c'est genre emule
+																	nov. 02 2014 10:12	Calinou	la 13.04 n'est plus prise en charge 10:12 (Calinou)> (depuis janvier 2014 )	la 13.04 n'est plus prise en charge
+																	nov. 02 2014 10:12	Calinou		(depuis janvier 2014)
+																	nov. 02 2014 10:12	soulsseek	un client peer-to-peer	un client peer-to-peer
+																	nov. 02 2014 10:12	soulsseek	yep calinou avais vu que a 13.04 était obsolète	yep calinou avais vu que a 13.04 était obsolète
+																	nov. 02 2014 10:12	soulsseek	tu me conseilles quoi	tu me conseilles quoi
+																	nov. 02 2014 10:13	Black-Devil	Ah ouas effectivement ,	Ah ouas effectivement, tu as essayé une upgrade vers une version plus récente ?
 																		\	tu as essayé une upgrade vers une version plus récente ?	
-																	nov. 02 2014	Black-Devil	ouais *	ouais*
-		requestForInformation															nov. 02 2014	soulsseek	de passer à la 14.04	de passer à la 14.04
-		answerPositively															nov. 02 2014	Black-Devil	Par exemple	Par exemple
-																	nov. 02 2014	soulsseek	(qui est un LTS )	(qui est un LTS )
-																	nov. 02 2014	soulsseek	ok ...	ok...
-																	nov. 02 2014	soulsseek	Est-ce que les logiciels vont migrer eux même 10:14 (soulsseek)> où je devrais tout réinstaller 10:14 (soulsseek)> ?	Est-ce que les logiciels vont migrer eux même
-																	nov. 02 2014	soulsseek		où je devrais tout réinstaller
-																	nov. 02 2014	soulsseek		?
-		answer												conditional			nov. 02 2014	Black-Devil	En fait , si tu fais une mise à niveau ( et le but d'une mise à niveau d'ailleurs ) c' est que tu gardes tous tes documents et logiciels	En fait, si tu fais une mise à niveau ( et le but d'une mise à niveau d'ailleurs ) c'est que tu gardes tous tes documents et logiciels
-			execution	answerPositively									partial		uncertain		nov. 02 2014	coyotus	normalement ceux des dépots oui	normalement ceux des dépots oui
-			execution	answerNegatively									partial				nov. 02 2014	coyotus	ceux installé manuellement non	ceux installé manuellement non
-																	nov. 02 2014	Black-Devil	Et les logiciels que tu as installés vont se mettre à jour	Et les logiciels que tu as installés vont se mettre à jour
-		answerNegatively											partial				nov. 02 2014	coyotus	pas tous	pas tous
-																	nov. 02 2014	Black-Devil	Enfin , oui , eux que tu as installé via les dépots	Enfin, oui, eux que tu as installé via les dépots
-correct																	nov. 02 2014	Black-Devil	ceux *	ceux*
-																	nov. 02 2014	Black-Devil	Une mise à niveau te prends plusieurs heures , fais ça quand tu as le tems	Une mise à niveau te prends plusieurs heures, fais ça quand tu as le tems
-correct																	nov. 02 2014	Black-Devil	temps *	temps*
-																	nov. 03 2014	hanjo	Bonsoir	Bonsoir
-		requestForHelp															nov. 03 2014	hanjo	Qui peut m' aider avec mon petit problème ?	Qui peut m'aider avec mon petit problème ?
-		requestForAction															nov. 03 2014	tobiasBora	Pose ta question ,	Pose ta question, si quelqu'un peut t'aider il se manifestera ;)
+																	nov. 02 2014 10:13	Black-Devil	ouais *	ouais*
+		requestForInformation															nov. 02 2014 10:13	soulsseek	de passer à la 14.04	de passer à la 14.04
+		answerPositively															nov. 02 2014 10:13	Black-Devil	Par exemple	Par exemple
+																	nov. 02 2014 10:13	soulsseek	(qui est un LTS )	(qui est un LTS )
+																	nov. 02 2014 10:13	soulsseek	ok ...	ok...
+																	nov. 02 2014 10:14	soulsseek	Est-ce que les logiciels vont migrer eux même 10:14 (soulsseek)> où je devrais tout réinstaller 10:14 (soulsseek)> ?	Est-ce que les logiciels vont migrer eux même
+																	nov. 02 2014 10:14	soulsseek		où je devrais tout réinstaller
+																	nov. 02 2014 10:14	soulsseek		?
+		answer												conditional			nov. 02 2014 10:15	Black-Devil	En fait , si tu fais une mise à niveau ( et le but d'une mise à niveau d'ailleurs ) c' est que tu gardes tous tes documents et logiciels	En fait, si tu fais une mise à niveau ( et le but d'une mise à niveau d'ailleurs ) c'est que tu gardes tous tes documents et logiciels
+			execution	answerPositively									partial		uncertain		nov. 02 2014 10:15	coyotus	normalement ceux des dépots oui	normalement ceux des dépots oui
+			execution	answerNegatively									partial				nov. 02 2014 10:15	coyotus	ceux installé manuellement non	ceux installé manuellement non
+																	nov. 02 2014 10:15	Black-Devil	Et les logiciels que tu as installés vont se mettre à jour	Et les logiciels que tu as installés vont se mettre à jour
+		answerNegatively											partial				nov. 02 2014 10:15	coyotus	pas tous	pas tous
+																	nov. 02 2014 10:16	Black-Devil	Enfin , oui , eux que tu as installé via les dépots	Enfin, oui, eux que tu as installé via les dépots
+correct																	nov. 02 2014 10:16	Black-Devil	ceux *	ceux*
+																	nov. 02 2014 10:17	Black-Devil	Une mise à niveau te prends plusieurs heures , fais ça quand tu as le tems	Une mise à niveau te prends plusieurs heures, fais ça quand tu as le tems
+correct																	nov. 02 2014 10:18	Black-Devil	temps *	temps*
+																	nov. 03 2014 00:00	hanjo	Bonsoir	Bonsoir
+		requestForHelp															nov. 03 2014 00:01	hanjo	Qui peut m' aider avec mon petit problème ?	Qui peut m'aider avec mon petit problème ?
+		requestForAction															nov. 03 2014 00:03	tobiasBora	Pose ta question ,	Pose ta question, si quelqu'un peut t'aider il se manifestera ;)
 		commit												conditional				\	si quelqu'un peut t' aider il se manifestera ;)	
-		requestForDirectives										introduceTopic					nov. 03 2014	hanjo	Comment supprimer ( ou corriger ) java ?	Comment supprimer (ou corriger) java ?
-		requestForInformation	evaluation	answerNegatively													nov. 03 2014	tobiasBora	Corriger	Corriger ?
-																	nov. 03 2014	tobiasBora	Pour supprimer java c' est juste sudo apt-get remove java	Pour supprimer java c'est juste sudo apt-get remove java
-					inform	unsatisfied											nov. 03 2014	hanjo	Java plante a chanque demarage	Java plante a chanque demarage
-																	nov. 03 2014	tobiasBora	Comment ?	Comment ?
-																	nov. 03 2014	tobiasBora	(Tu as un message d'erreur d'un logiciel en particulier ?)	(Tu as un message d'erreur d'un logiciel en particulier ?)
-																	nov. 03 2014	aliasananas	C'est le java "" officiel "" ou openjdk ?	C'est le java ""officiel"" ou openjdk ?
-																	nov. 03 2014	hanjo	Le message d'erreur est toujours trop lent à s' afficher ,	Le message d'erreur est toujours trop lent à s'afficher, c'est java officiel aparamant.
+		requestForDirectives										introduceTopic					nov. 03 2014 00:04	hanjo	Comment supprimer ( ou corriger ) java ?	Comment supprimer (ou corriger) java ?
+		requestForInformation	evaluation	answerNegatively													nov. 03 2014 00:04	tobiasBora	Corriger	Corriger ?
+																	nov. 03 2014 00:04	tobiasBora	Pour supprimer java c' est juste sudo apt-get remove java	Pour supprimer java c'est juste sudo apt-get remove java
+					inform	unsatisfied											nov. 03 2014 00:04	hanjo	Java plante a chanque demarage	Java plante a chanque demarage
+																	nov. 03 2014 00:05	tobiasBora	Comment ?	Comment ?
+																	nov. 03 2014 00:05	tobiasBora	(Tu as un message d'erreur d'un logiciel en particulier ?)	(Tu as un message d'erreur d'un logiciel en particulier ?)
+																	nov. 03 2014 00:05	aliasananas	C'est le java "" officiel "" ou openjdk ?	C'est le java ""officiel"" ou openjdk ?
+																	nov. 03 2014 00:06	hanjo	Le message d'erreur est toujours trop lent à s' afficher ,	Le message d'erreur est toujours trop lent à s'afficher, c'est java officiel aparamant.
 																		\	c' est java officiel aparamant .	
-																	nov. 03 2014	aliasananas	Comment tu t' en rends compte que ça plante ?	Comment tu t'en rends compte que ça plante ?
-	apologizing																nov. 03 2014	tobiasBora	Euh en effet pardon	Euh en effet pardon ça devrait être apt-get remove openjdk-<ta version>
+																	nov. 03 2014 00:07	aliasananas	Comment tu t' en rends compte que ça plante ?	Comment tu t'en rends compte que ça plante ?
+	apologizing																nov. 03 2014 00:07	tobiasBora	Euh en effet pardon	Euh en effet pardon ça devrait être apt-get remove openjdk-<ta version>
 																		\	ça devrait être apt-get remove openjdk- <ta version>	
-																	nov. 03 2014	hanjo	Unmessage d'erreur dit qu'ubuntu a rencontré une erreur , en fouillant un peut j' au vu marqué java	Unmessage d'erreur dit qu'ubuntu a rencontré une erreur, en fouillant un peut j'au vu marqué java
-																	nov. 03 2014	tobiasBora	Uhm	Uhm
-		correct													uncertain		nov. 03 2014	tobiasBora	Je doute que supprimer java résoudre ton problème	Je doute que supprimer java résoudre ton problème
-																	nov. 03 2014	tobiasBora	tu as tenté une mise à jour de ton système ?	tu as tenté une mise à jour de ton système ?
-		requestForAction															nov. 03 2014	tobiasBora	(via sudo apt-get update && sudo apt-get upgrade )	(via sudo apt-get update && sudo apt-get upgrade)
-																	nov. 03 2014	hanjo	Oui	Oui et aucun changement
+																	nov. 03 2014 00:08	hanjo	Unmessage d'erreur dit qu'ubuntu a rencontré une erreur , en fouillant un peut j' au vu marqué java	Unmessage d'erreur dit qu'ubuntu a rencontré une erreur, en fouillant un peut j'au vu marqué java
+																	nov. 03 2014 00:11	tobiasBora	Uhm	Uhm
+		correct													uncertain		nov. 03 2014 00:11	tobiasBora	Je doute que supprimer java résoudre ton problème	Je doute que supprimer java résoudre ton problème
+																	nov. 03 2014 00:11	tobiasBora	tu as tenté une mise à jour de ton système ?	tu as tenté une mise à jour de ton système ?
+		requestForAction															nov. 03 2014 00:11	tobiasBora	(via sudo apt-get update && sudo apt-get upgrade )	(via sudo apt-get update && sudo apt-get upgrade)
+																	nov. 03 2014 00:13	hanjo	Oui	Oui et aucun changement
 					inform	unsatisfied												\	et aucun changement	
-		inform															nov. 03 2014	tobiasBora	Il doit y avoir un moyen d'avoir plus d'infos sur l' erreur	Il doit y avoir un moyen d'avoir plus d'infos sur l'erreur
-		inform															nov. 03 2014	tobiasBora	Typiquement à coup de cat / var/log/ <fichierxxx>	Typiquement à coup de cat /var/log/<fichierxxx> mais je ne sais pas où ubuntu à l'habitude de mettre ce type d'erreurs
+		inform															nov. 03 2014 00:14	tobiasBora	Il doit y avoir un moyen d'avoir plus d'infos sur l' erreur	Il doit y avoir un moyen d'avoir plus d'infos sur l'erreur
+		inform															nov. 03 2014 00:15	tobiasBora	Typiquement à coup de cat / var/log/ <fichierxxx>	Typiquement à coup de cat /var/log/<fichierxxx> mais je ne sais pas où ubuntu à l'habitude de mettre ce type d'erreurs
 																		\	mais je ne sais pas où ubuntu à l' habitude de mettre ce type d'erreurs	
-		requestForAction															nov. 03 2014	tobiasBora	essaye voir de faire "" cat . xsession-errors | pastebinit "	"essaye voir de faire ""cat .xsession-errors | pastebinit"""
-																	nov. 03 2014 00:17	tobiasBora	Par contre je suis désolé	Par contre je suis désolé mais je dois y aller
-												preclosing					 	\	mais je dois y aller	
-																	nov. 03 2014 00:45	dourmo	salut tlm	salut tlm
-																	nov. 03 2014 01:48	cisse125	slt tt le monde	slt tt le monde
-																	nov. 03 2014 01:48	cisse125	je suis nv ici	je suis nv ici
-																	nov. 03 2014 04:56	soulseek	soir	'soir
-																	nov. 03 2014 04:56	soulseek	aux noctambumes	aux noctambumes
-																	nov. 03 2014 04:56	soulseek	noctambules *	noctambules*
-																	nov. 03 2014 05:03	soulseek	quelqu'un saurait-il comment supprimer les mots de passes retenus par ubuntu	quelqu'un saurait-il comment supprimer les mots de passes retenus par ubuntu
-																	nov. 03 2014 05:03	soulseek	?	?
-																	nov. 03 2014 05:03	soulseek	suis allé voir dans mon trosseau de clés	suis allé voir dans mon trosseau de clés
-					inform	unsatisfied											nov. 03 2014 05:03	soulseek	mais je ne vois rien	mais je ne vois rien
-																	nov. 03 2014 05:04	soulseek	:(	:(
-																	nov. 03 2014 09:41	jluc	Hello	Hello
-					inform	unsatisfied											nov. 03 2014 09:42	jluc	Bien que l' application calculatrice soit bien associée à la touche calculatrice , la calculatrice ne se lance pas quand j' appuie sur la touche calculatrice	Bien que l'application calculatrice soit bien associée à la touche calculatrice, la calculatrice ne se lance pas quand j'appuie sur la touche calculatrice
-																	nov. 03 2014 09:43	jluc	Comment corriger cela ?	Comment corriger cela ?
-																	nov. 03 2014 09:43	Marmotte	quelle touche calculatrice ?	quelle touche calculatrice ?
-																	nov. 03 2014 09:43	jluc	la touche calculatrice de mon clavier	la touche calculatrice de mon clavier
-																	nov. 03 2014 09:44	jluc	"appelée "" calculator "" dans le dialogue de réglage clavier Ubuntu"	"appelée ""calculator"" dans le dialogue de réglage clavier Ubuntu"
-																	nov. 03 2014 09:44	avelldiroll	"probablement un clavier "" etendu "" avec des touches dans un format proprio , avec un souvent un support aleatoire sous linux"	"probablement un clavier ""etendu"" avec des touches dans un format proprio, avec un souvent un support aleatoire sous linux"
-					inform	unsatisfied											nov. 03 2014 09:44	jluc	ça marchait ya pas si longtemps	ça marchait ya pas si longtemps
-		inform													uncertain		nov. 03 2014 09:45	jluc	Je me souviens plus trop ce que j' ai fait pour que ça marche plus	Je me souviens plus trop ce que j'ai fait pour que ça marche plus
-		inform													uncertain		nov. 03 2014 09:46	jluc	peut être j' ai édité un fichier de raccourcis quelque part - mais je vois pas pourquoi - j' édite les fichiers qui associent un type mime avec une extension , mais pas les raccourcis claviers	peut être j'ai édité un fichier de raccourcis quelque part - mais je vois pas pourquoi - j'édite les fichiers qui associent un type mime avec une extension, mais pas les raccourcis claviers
-signalError																	nov. 03 2014 09:46	jluc	euh je voulais écrire :	euh je voulais écrire : qui associent un type mime avec une application
-correct																	 	\	qui associent un type mime avec une application	
-		inform													uncertain		nov. 03 2014 09:47	jluc	peut être j' ai simplement désassocié temporairement la calculatrice de la touche ' calculator ' avec les réglages ubuntu , et ça revient pas correctement en arrière	peut être j'ai simplement désassocié temporairement la calculatrice de la touche 'calculator' avec les réglages ubuntu, et ça revient pas correctement en arrière
-																	nov. 03 2014 09:48	jluc	"Et la lense "" calcul "" n'est pas activée dans unity non plus"	"Et la lense ""calcul"" n'est pas activée dans unity non plus"
-					inform	satisfied											nov. 03 2014 09:55	jluc	Bon j' ai installé compizsetting-manager et j' ai pu régler ça	Bon j'ai installé compizsetting-manager et j'ai pu régler ça
-																	nov. 03 2014 09:56	jluc	compizconfig-settings-manager plutôt	compizconfig-settings-manager plutôt
-																	nov. 03 2014 09:57	jluc	merci http://askubuntu.com/questions/321525/how-to-connect-a-calculator-button-on-a-keyboard-with-a-call-of-a-calculator	merci http://askubuntu.com/questions/321525/how-to-connect-a-calculator-button-on-a-keyboard-with-a-call-of-a-calculator
-																	nov. 03 2014 10:57	davlefou	Bonjour ,	Bonjour,
-																	nov. 03 2014 10:57	davlefou	si on gnome shell , doit on supprimer unity ?	si on gnome shell, doit on supprimer unity?
-					inform	unsatisfied											nov. 03 2014 11:01	avelldiroll	a priori non , enfin je n'utilise ni l' un ni l' autre , mais je ne vois pas de raison que ca bloque	a priori non, enfin je n'utilise ni l'un ni l'autre, mais je ne vois pas de raison que ca bloque
-signalError																	nov. 03 2014 11:04	Marmotte	la réponse dépend peut être du mot manquant : D	la réponse dépend peut être du mot manquant :D
-																	nov. 03 2014 11:06	avelldiroll	:)	:)
-																	nov. 03 2014 11:07	avelldiroll	exact ,	"exact, je repondais avec le mot ""installe"" dans la question"
-correct																	 	\	"je repondais avec le mot "" installe "" dans la question"	
-inform																	nov. 03 2014 11:07	avelldiroll	"mais ca marche aussi avec "" utilise """	"mais ca marche aussi avec ""utilise"""
-inform																	nov. 03 2014 11:07	avelldiroll	"avec "" supprime "" y a un on potentiel de betises par contre"	"avec ""supprime"" y a un on potentiel de betises par contre"
-requestForInformation																	nov. 03 2014 11:08	Marmotte	"et avec "" développe "", ça donne quoi ?"	"et avec ""développe"", ça donne quoi ? ^^"
-																	 	\	^^	
-																	nov. 03 2014 11:50	nW44b	haha	haha
-																	nov. 03 2014 12:06	Kobbb	Bonjour tout le monde .	Bonjour tout le monde.
-																	nov. 03 2014 13:03	cool	bonjour	bonjour je cherche un tutoriel pour installer glpi sous ubuntu
-									inform	love							 	\	je cherche un tutoriel pour installer glpi sous ubuntu	
-																	nov. 03 2014 13:27	Marmotte	!wiki glpi	!wiki glpi
-									inform	unhappy							nov. 03 2014 13:28	Marmotte	tiens , il boude : o	tiens, il boude :o
-																	nov. 03 2014 13:28	Marmotte	http://doc.ubuntu-fr.org/glpi	http://doc.ubuntu-fr.org/glpi
-																	nov. 03 2014 13:33	@uBOTu-fr	http://doc.ubuntu-fr.org/glpi	http://doc.ubuntu-fr.org/glpi
-																	nov. 03 2014 13:34	Marmotte	...	... merci uBOTu-fr xD
-																	 	\	merci uBOTu-fr xD	
-																	nov. 03 2014 15:54	o_be_one	hello	hello
-																	nov. 03 2014 15:55	o_be_one	ptite rappel viteuf , comment on voit déjà ladate de creation ( pas de modif ) d'un fichier ?	ptite rappel viteuf, comment on voit déjà ladate de creation (pas de modif) d'un fichier ?
-																	nov. 03 2014 16:03	hackar1en	slt tt le monde	slt tt le monde
-																	nov. 03 2014 16:04	hackar1en	ya kelkun	ya kelkun
-																	nov. 03 2014 16:05	hackar1en	slt ubotu	slt ubotu
-																	nov. 03 2014 16:07	hackar1en_	slt	slt
-requestForAction									inform	happy							nov. 03 2014 16:08	Sp4rKy	évite le sms déja :)	évite le sms déja :)
-																	nov. 03 2014 16:08	Sp4rKy	et pose dont une vrai question	et pose dont une vrai question
-																	nov. 03 2014 16:08	Sp4rKy	vraie *	vraie*
-																	nov. 03 2014 16:09	hackar1en_	pas de souci	pas de souci
-									inform	love							nov. 03 2014 16:09	hackar1en_	je voulais en savoir plus sur le system backbox ce que l,on peut en tirer	je voulais en savoir plus sur le system backbox ce que l,on peut en tirer
-																	nov. 03 2014 16:13	hackar1en_	sp4rky pas de reponsse	sp4rky pas de reponsse pas grave a plus tard
-					inform	satisfied											 	\	pas grave	
-																	 	\	a plus tard	
-																	nov. 03 2014 16:32	ubuntu_	Plop	Plop
-																	nov. 03 2014 16:32	ubuntu_	Y a t-il quelqu'un ???	Y a t-il quelqu'un ???
-																ironie	nov. 03 2014 16:32	Marmotte	jamais ,	jamais, pourquoi cette question ?
-																	 	\	pourquoi cette question ?	
-					inform	unsatisfied											nov. 03 2014 16:33	ubuntu_	Un probleme sur la doc , un truc a virer vite fait , logiciel pas net , landes eternelles	Un probleme sur la doc , un truc a virer vite fait, logiciel pas net , landes eternelles
-					inform	unsatisfied											nov. 03 2014 16:34	ubuntu_	Ce loge dans le swap ....	Ce loge dans le swap ....
-					inform	unsatisfied											nov. 03 2014 16:35	ubuntu_	Forum vérolé ...	Forum vérolé ...
-					inform	unsatisfied											nov. 03 2014 16:36	ubuntu_	Je n'ai pas mes identifiants sous la main sinon je l' aurais viré ...	Je n'ai pas mes identifiants sous la main sinon je l'aurais viré ...
-																	nov. 03 2014 16:37	nesthib	tu peux être un peu plus explicite ?	tu peux être un peu plus explicite ?
-							inform	depreciate									nov. 03 2014 16:37	nesthib	parce que là tu ne donne aucune information	parce que là tu ne donne aucune information
-					inform	unsatisfied											nov. 03 2014 16:38	ubuntu_	"Jeu pas net , DNS empoisonné , lien vereux envoyés depuis le jeu , Et peut etre meme manipulation psychologique une fois dedans ....	""Jeu pas net, DNS empoisonné, lien vereux envoyés depuis le jeu, Et peut etre meme manipulation psychologique une fois dedans ....
-																	nov. 03 2014	nesthib	donne le lien de la page de doc en question	donne le lien de la page de doc en question
-																	nov. 03 2014	ubuntu_	Je suis un vieux de la doc , mimilus	Je suis un vieux de la doc, mimilus
-							inform	depreciate									nov. 03 2014	nesthib	parce que là ton intervention ne sert à rien	parce que là ton intervention ne sert à rien
-																	nov. 03 2014	nesthib	(sans parler du fait que tu es HS sur ce canal )	(sans parler du fait que tu es HS sur ce canal)
-																	nov. 03 2014	ubuntu_	regarde dans les changements recents dans la doc	regarde dans les changements recents dans la doc j'ai mis un petit mot sur le machin landes eternelles
+		requestForAction															nov. 03 2014 00:15	tobiasBora	essaye voir de faire "" cat . xsession-errors | pastebinit "	"essaye voir de faire ""cat .xsession-errors | pastebinit"""
+																	nov. 03 2014 00:17 	tobiasBora	Par contre je suis désolé	Par contre je suis désolé mais je dois y aller
+												preclosing					 	 	mais je dois y aller	
+																	nov 00:17. 03 2014 00:45 	dourmo	salut tlm	salut tlm
+																	nov. 03 201 00:454 01:48 	cisse125	slt tt le monde	slt tt le monde
+																	nov. 03 201 01:484 01:48 	cisse125	je suis nv ici	je suis nv ici
+																	nov. 03 201 01:484 04:56 	soulseek	soir	'soir
+																	nov. 03 201 04:564 04:56 	soulseek	aux noctambumes	aux noctambumes
+																	nov. 03 201 04:564 04:56 	soulseek	noctambules *	noctambules*
+																	nov. 03 201 04:564 05:03 	soulseek	quelqu'un saurait-il comment supprimer les mots de passes retenus par ubuntu	quelqu'un saurait-il comment supprimer les mots de passes retenus par ubuntu
+																	nov. 03 201 05:034 05:03 	soulseek	?	?
+																	nov. 03 201 05:034 05:03 	soulseek	suis allé voir dans mon trosseau de clés	suis allé voir dans mon trosseau de clés
+					inform	unsatisfied											nov. 03 201 05:034 05:03 	soulseek	mais je ne vois rien	mais je ne vois rien
+																	nov. 03 201 05:034 05:04 	soulseek	:(	:(
+																	nov. 03 201 05:044 09:41 	jluc	Hello	Hello
+					inform	unsatisfied											nov. 03 201 09:414 09:42 	jluc	Bien que l' application calculatrice soit bien associée à la touche calculatrice , la calculatrice ne se lance pas quand j' appuie sur la touche calculatrice	Bien que l'application calculatrice soit bien associée à la touche calculatrice, la calculatrice ne se lance pas quand j'appuie sur la touche calculatrice
+																	nov. 03 201 09:424 09:43 	jluc	Comment corriger cela ?	Comment corriger cela ?
+																	nov. 03 201 09:434 09:43 	Marmotte	quelle touche calculatrice ?	quelle touche calculatrice ?
+																	nov. 03 201 09:434 09:43 	jluc	la touche calculatrice de mon clavier	la touche calculatrice de mon clavier
+																	nov. 03 201 09:434 09:44 	jluc	"appelée "" calculator "" dans le dialogue de réglage clavier Ubuntu"	"appelée ""calculator"" dans le dialogue de réglage clavier Ubuntu"
+																	nov. 03 201 09:444 09:44 	avelldiroll	"probablement un clavier "" etendu "" avec des touches dans un format proprio , avec un souvent un support aleatoire sous linux"	"probablement un clavier ""etendu"" avec des touches dans un format proprio, avec un souvent un support aleatoire sous linux"
+					inform	unsatisfied											nov. 03 201 09:444 09:44 	jluc	ça marchait ya pas si longtemps	ça marchait ya pas si longtemps
+		inform													uncertain		nov. 03 201 09:444 09:45 	jluc	Je me souviens plus trop ce que j' ai fait pour que ça marche plus	Je me souviens plus trop ce que j'ai fait pour que ça marche plus
+		inform													uncertain		nov. 03 201 09:454 09:46 	jluc	peut être j' ai édité un fichier de raccourcis quelque part - mais je vois pas pourquoi - j' édite les fichiers qui associent un type mime avec une extension , mais pas les raccourcis claviers	peut être j'ai édité un fichier de raccourcis quelque part - mais je vois pas pourquoi - j'édite les fichiers qui associent un type mime avec une extension, mais pas les raccourcis claviers
+signalError																	nov. 03 201 09:464 09:46 	jluc	euh je voulais écrire :	euh je voulais écrire : qui associent un type mime avec une application
+correct																	 	 	qui associent un type mime avec une application	
+		inform													uncertain		nov 09:46. 03 2014 09:47 	jluc	peut être j' ai simplement désassocié temporairement la calculatrice de la touche ' calculator ' avec les réglages ubuntu , et ça revient pas correctement en arrière	peut être j'ai simplement désassocié temporairement la calculatrice de la touche 'calculator' avec les réglages ubuntu, et ça revient pas correctement en arrière
+																	nov. 03 201 09:474 09:48 	jluc	"Et la lense "" calcul "" n'est pas activée dans unity non plus"	"Et la lense ""calcul"" n'est pas activée dans unity non plus"
+					inform	satisfied											nov. 03 201 09:484 09:55 	jluc	Bon j' ai installé compizsetting-manager et j' ai pu régler ça	Bon j'ai installé compizsetting-manager et j'ai pu régler ça
+																	nov. 03 201 09:554 09:56 	jluc	compizconfig-settings-manager plutôt	compizconfig-settings-manager plutôt
+																	nov. 03 201 09:564 09:57 	jluc	merci http://askubuntu.com/questions/321525/how-to-connect-a-calculator-button-on-a-keyboard-with-a-call-of-a-calculator	merci http://askubuntu.com/questions/321525/how-to-connect-a-calculator-button-on-a-keyboard-with-a-call-of-a-calculator
+																	nov. 03 201 09:574 10:57 	davlefou	Bonjour ,	Bonjour,
+																	nov. 03 201 10:574 10:57 	davlefou	si on gnome shell , doit on supprimer unity ?	si on gnome shell, doit on supprimer unity?
+					inform	unsatisfied											nov. 03 201 10:574 11:01 	avelldiroll	a priori non , enfin je n'utilise ni l' un ni l' autre , mais je ne vois pas de raison que ca bloque	a priori non, enfin je n'utilise ni l'un ni l'autre, mais je ne vois pas de raison que ca bloque
+signalError																	nov. 03 201 11:014 11:04 	Marmotte	la réponse dépend peut être du mot manquant : D	la réponse dépend peut être du mot manquant :D
+																	nov. 03 201 11:044 11:06 	avelldiroll	:)	:)
+																	nov. 03 201 11:064 11:07 	avelldiroll	exact ,	"exact, je repondais avec le mot ""installe"" dans la question"
+correct																	 	 	"je repondais avec le mot "" installe "" dans la question"	
+inform																	nov 11:07. 03 2014 11:07 	avelldiroll	"mais ca marche aussi avec "" utilise """	"mais ca marche aussi avec ""utilise"""
+inform																	nov. 03 201 11:074 11:07 	avelldiroll	"avec "" supprime "" y a un on potentiel de betises par contre"	"avec ""supprime"" y a un on potentiel de betises par contre"
+requestForInformation																	nov. 03 201 11:074 11:08 	Marmotte	"et avec "" développe "", ça donne quoi ?"	"et avec ""développe"", ça donne quoi ? ^^"
+																	 	 	^^	
+																	nov 11:08. 03 2014 11:50 	nW44b	haha	haha
+																	nov. 03 201 11:504 12:06 	Kobbb	Bonjour tout le monde .	Bonjour tout le monde.
+																	nov. 03 201 12:064 13:03 	cool	bonjour	bonjour je cherche un tutoriel pour installer glpi sous ubuntu
+									inform	love							 	 	je cherche un tutoriel pour installer glpi sous ubuntu	
+																	nov 13:03. 03 2014 13:27 	Marmotte	!wiki glpi	!wiki glpi
+									inform	unhappy							nov. 03 201 13:274 13:28 	Marmotte	tiens , il boude : o	tiens, il boude :o
+																	nov. 03 201 13:284 13:28 	Marmotte	http://doc.ubuntu-fr.org/glpi	http://doc.ubuntu-fr.org/glpi
+																	nov. 03 201 13:284 13:33 	@uBOTu-fr	http://doc.ubuntu-fr.org/glpi	http://doc.ubuntu-fr.org/glpi
+																	nov. 03 201 13:334 13:34 	Marmotte	...	... merci uBOTu-fr xD
+																	 	 	merci uBOTu-fr xD	
+																	nov 13:34. 03 2014 15:54 	o_be_one	hello	hello
+																	nov. 03 201 15:544 15:55 	o_be_one	ptite rappel viteuf , comment on voit déjà ladate de creation ( pas de modif ) d'un fichier ?	ptite rappel viteuf, comment on voit déjà ladate de creation (pas de modif) d'un fichier ?
+																	nov. 03 201 15:554 16:03 	hackar1en	slt tt le monde	slt tt le monde
+																	nov. 03 201 16:034 16:04 	hackar1en	ya kelkun	ya kelkun
+																	nov. 03 201 16:044 16:05 	hackar1en	slt ubotu	slt ubotu
+																	nov. 03 201 16:054 16:07 	hackar1en_	slt	slt
+requestForAction									inform	happy							nov. 03 201 16:074 16:08 	Sp4rKy	évite le sms déja :)	évite le sms déja :)
+																	nov. 03 201 16:084 16:08 	Sp4rKy	et pose dont une vrai question	et pose dont une vrai question
+																	nov. 03 201 16:084 16:08 	Sp4rKy	vraie *	vraie*
+																	nov. 03 201 16:084 16:09 	hackar1en_	pas de souci	pas de souci
+									inform	love							nov. 03 201 16:094 16:09 	hackar1en_	je voulais en savoir plus sur le system backbox ce que l,on peut en tirer	je voulais en savoir plus sur le system backbox ce que l,on peut en tirer
+																	nov. 03 201 16:094 16:13 	hackar1en_	sp4rky pas de reponsse	sp4rky pas de reponsse pas grave a plus tard
+					inform	satisfied											 	 	pas grave	
+																	16:13:00	16:13:00	a plus tard	
+																	nov. 03 2014 16:32 	ubuntu_	Plop	Plop
+																	nov. 03 201 16:324 16:32 	ubuntu_	Y a t-il quelqu'un ???	Y a t-il quelqu'un ???
+																ironie	nov. 03 201 16:324 16:32 	Marmotte	jamais ,	jamais, pourquoi cette question ?
+																	 	 	pourquoi cette question ?	
+					inform	unsatisfied											nov 16:32. 03 2014 16:33 	ubuntu_	Un probleme sur la doc , un truc a virer vite fait , logiciel pas net , landes eternelles	Un probleme sur la doc , un truc a virer vite fait, logiciel pas net , landes eternelles
+					inform	unsatisfied											nov. 03 201 16:334 16:34 	ubuntu_	Ce loge dans le swap ....	Ce loge dans le swap ....
+					inform	unsatisfied											nov. 03 201 16:344 16:35 	ubuntu_	Forum vérolé ...	Forum vérolé ...
+					inform	unsatisfied											nov. 03 201 16:354 16:36 	ubuntu_	Je n'ai pas mes identifiants sous la main sinon je l' aurais viré ...	Je n'ai pas mes identifiants sous la main sinon je l'aurais viré ...
+																	nov. 03 201 16:364 16:37 	nesthib	tu peux être un peu plus explicite ?	tu peux être un peu plus explicite ?
+							inform	depreciate									nov. 03 201 16:374 16:37 	nesthib	parce que là tu ne donne aucune information	parce que là tu ne donne aucune information
+					inform	unsatisfied											nov. 03 201 16:374 16:38 	ubuntu_	"Jeu pas net , DNS empoisonné , lien vereux envoyés depuis le jeu , Et peut etre meme manipulation psychologique une fois dedans ....	""Jeu pas net, DNS empoisonné, lien vereux envoyés depuis le jeu, Et peut etre meme manipulation psychologique une fois dedans ....
+																	nov. 03 201 16:384 16:39	nesthib	donne le lien de la page de doc en question	donne le lien de la page de doc en question
+																	nov. 03 2014 16:39	ubuntu_	Je suis un vieux de la doc , mimilus	Je suis un vieux de la doc, mimilus
+							inform	depreciate									nov. 03 2014 16:39	nesthib	parce que là ton intervention ne sert à rien	parce que là ton intervention ne sert à rien
+																	nov. 03 2014 16:39	nesthib	(sans parler du fait que tu es HS sur ce canal )	(sans parler du fait que tu es HS sur ce canal)
+																	nov. 03 2014 16:40	ubuntu_	regarde dans les changements recents dans la doc	regarde dans les changements recents dans la doc j'ai mis un petit mot sur le machin landes eternelles
 																		\	j' ai mis un petit mot sur le machin landes eternelles	
-																	nov. 03 2014	nesthib	ça serait bien de motiver un peu ton analyse , envoie donc un mail à la ML doc	ça serait bien de motiver un peu ton analyse, envoie donc un mail à la ML doc
-		commit															nov. 03 2014	ubuntu_	je vais aller voir sur doc-ubuntu	je vais aller voir sur doc-ubuntu
-																	nov. 03 2014	nesthib	#ubuntu-fr-doc	#ubuntu-fr-doc
-		requestForAction															nov. 03 2014	nesthib	mais fais un effort d'explication	mais fais un effort d'explication
-																	nov. 03 2014	ubuntu_	Nesthib créer une vm et essaye le ...	Nesthib créer une vm et essaye le ... tu comprendras... ce n'est pas un truc tres net, on te balance des liens a la con pour que tu ouvre avec ton navigateur, on essaie d'obtenir des informations sur toi ...
+																	nov. 03 2014 16:41	nesthib	ça serait bien de motiver un peu ton analyse , envoie donc un mail à la ML doc	ça serait bien de motiver un peu ton analyse, envoie donc un mail à la ML doc
+		commit															nov. 03 2014 16:42	ubuntu_	je vais aller voir sur doc-ubuntu	je vais aller voir sur doc-ubuntu
+																	nov. 03 2014 16:43	nesthib	#ubuntu-fr-doc	#ubuntu-fr-doc
+		requestForAction															nov. 03 2014 16:43	nesthib	mais fais un effort d'explication	mais fais un effort d'explication
+																	nov. 03 2014 16:47	ubuntu_	Nesthib créer une vm et essaye le ...	Nesthib créer une vm et essaye le ... tu comprendras... ce n'est pas un truc tres net, on te balance des liens a la con pour que tu ouvre avec ton navigateur, on essaie d'obtenir des informations sur toi ...
 																		\	tu comprendras ...	
 																		\	ce n'est pas un truc tres net , on te balance des liens a la con pour que tu ouvre avec ton navigateur , on essaie d'obtenir des informations sur toi ...	
-																	nov. 03 2014	ubuntu_	Bref c' est a enlever vite fait de la doc , ca n'a pas sa place ...	Bref c'est a enlever vite fait de la doc, ca n'a pas sa place ...
-					inform	unsatisfied											nov. 03 2014	nesthib	je n'ai ni le temps ni l' envie de faire ça ubuntu _	je n'ai ni le temps ni l'envie de faire ça ubuntu_
-																	nov. 03 2014	nesthib	donc si tu as des infos , donne les ,	donc si tu as des infos, donne les, sinon tu fais aussi perdre leur temps à ceux à qui tu déclares que cette page est à supprimer
+																	nov. 03 2014 16:48	ubuntu_	Bref c' est a enlever vite fait de la doc , ca n'a pas sa place ...	Bref c'est a enlever vite fait de la doc, ca n'a pas sa place ...
+					inform	unsatisfied											nov. 03 2014 16:48	nesthib	je n'ai ni le temps ni l' envie de faire ça ubuntu _	je n'ai ni le temps ni l'envie de faire ça ubuntu_
+																	nov. 03 2014 16:48	nesthib	donc si tu as des infos , donne les ,	donc si tu as des infos, donne les, sinon tu fais aussi perdre leur temps à ceux à qui tu déclares que cette page est à supprimer
 																		\	sinon tu fais aussi perdre leur temps à ceux à qui tu déclares que cette page est à supprimer	
-																	nov. 03 2014	nesthib	et tu es HS sur ce canal ,	et tu es HS sur ce canal, continue donc sur #ubuntu-fr-doc
+																	nov. 03 2014 16:49	nesthib	et tu es HS sur ce canal ,	et tu es HS sur ce canal, continue donc sur #ubuntu-fr-doc
 																		\	continue donc sur # ubuntu-fr-doc	
-																	nov. 03 2014	ubuntu_	j'y suis maintenant	j'y suis maintenant
-																	nov. 03 2014	guig33k	salut	salut
-					inform	satisfied											nov. 03 2014	guig33k	je suis tres content de ubuntu contrairement a debian testing le driver fglrx proprietaire marche !!!	je suis tres content de ubuntu contrairement a debian testing le driver fglrx proprietaire marche !!!
-					inform	unsatisfied											nov. 03 2014	guig33k	je ne comprends pas pourquoi sur debian testing ca ne passe pas sachant que ubuntu est basé sur debian	je ne comprends pas pourquoi sur debian testing ca ne passe pas sachant que ubuntu est basé sur debian
-																	nov. 03 2014	guig33k	petite question j ai vu que sur ubuntu on a le choix pour 2 drivers	petite question j ai vu que sur ubuntu on a le choix pour 2 drivers
-																	nov. 03 2014	guig33k	fglrx	fglrx
-																	nov. 03 2014	guig33k	et fglrx-update	et fglrx-update
-																	nov. 03 2014	guig33k	j ai lu que fglrx-update etait le dernier driver	j ai lu que fglrx-update etait le dernier driver
-																	nov. 03 2014	guig33k	et ce qu il vaut mieux utiliser fglrx ou fglrx-update	et ce qu il vaut mieux utiliser fglrx ou fglrx-update
-																	nov. 03 2014	guig33k	?	?
-																	nov. 03 2014	guig33k	y a quelqu un ?	y a quelqu un ?
-												announceTopicShift					nov. 03 2014	guig33k	j ai une autre question	j ai une autre question
-		requestForInformation										introduceTopic					nov. 03 2014	guig33k	sur ubuntu-fr.org il dise de faire la mise a niveau a partir d un cd est ce que si je la fais a partir du gestionnaire de package ca pose pb ?	sur ubuntu-fr.org il dise de faire la mise a niveau a partir d un cd est ce que si je la fais a partir du gestionnaire de package ca pose pb ?
-									inform	disgust							nov. 03 2014	guig33k	j ai pas envis de graver chaque fois un dvd	j ai pas envis de graver chaque fois un dvd
-																	nov. 03 2014	nesthib	tu peux faire la mise à niveau avec internet	tu peux faire la mise à niveau avec internet
-		requestForInformation			requestForInformation	satisfied											nov. 03 2014	guig33k	ca va pas poser de pb	ca va pas poser de pb car sur votre site il dise qu il vaut mieux graver le dvd
+																	nov. 03 2014 16:50	ubuntu_	j'y suis maintenant	j'y suis maintenant
+																	nov. 03 2014 17:12	guig33k	salut	salut
+					inform	satisfied											nov. 03 2014 17:13	guig33k	je suis tres content de ubuntu contrairement a debian testing le driver fglrx proprietaire marche !!!	je suis tres content de ubuntu contrairement a debian testing le driver fglrx proprietaire marche !!!
+					inform	unsatisfied											nov. 03 2014 17:13	guig33k	je ne comprends pas pourquoi sur debian testing ca ne passe pas sachant que ubuntu est basé sur debian	je ne comprends pas pourquoi sur debian testing ca ne passe pas sachant que ubuntu est basé sur debian
+																	nov. 03 2014 17:14	guig33k	petite question j ai vu que sur ubuntu on a le choix pour 2 drivers	petite question j ai vu que sur ubuntu on a le choix pour 2 drivers
+																	nov. 03 2014 17:14	guig33k	fglrx	fglrx
+																	nov. 03 2014 17:14	guig33k	et fglrx-update	et fglrx-update
+																	nov. 03 2014 17:14	guig33k	j ai lu que fglrx-update etait le dernier driver	j ai lu que fglrx-update etait le dernier driver
+																	nov. 03 2014 17:15	guig33k	et ce qu il vaut mieux utiliser fglrx ou fglrx-update	et ce qu il vaut mieux utiliser fglrx ou fglrx-update
+																	nov. 03 2014 17:15	guig33k	?	?
+																	nov. 03 2014 17:18	guig33k	y a quelqu un ?	y a quelqu un ?
+												announceTopicShift					nov. 03 2014 17:18	guig33k	j ai une autre question	j ai une autre question
+		requestForInformation										introduceTopic					nov. 03 2014 17:19	guig33k	sur ubuntu-fr.org il dise de faire la mise a niveau a partir d un cd est ce que si je la fais a partir du gestionnaire de package ca pose pb ?	sur ubuntu-fr.org il dise de faire la mise a niveau a partir d un cd est ce que si je la fais a partir du gestionnaire de package ca pose pb ?
+									inform	disgust							nov. 03 2014 17:19	guig33k	j ai pas envis de graver chaque fois un dvd	j ai pas envis de graver chaque fois un dvd
+																	nov. 03 2014 17:28	nesthib	tu peux faire la mise à niveau avec internet	tu peux faire la mise à niveau avec internet
+		requestForInformation			requestForInformation	satisfied											nov. 03 2014 17:29	guig33k	ca va pas poser de pb	ca va pas poser de pb car sur votre site il dise qu il vaut mieux graver le dvd
 		inform					inform	promote										\	car sur votre site il dise qu il vaut mieux graver le dvd	
-		requestForInformation															nov. 03 2014	nesthib	où ça ?	où ça ?
-		answer															nov. 03 2014	guig33k	http://doc.ubuntu-fr.org/migration	http://doc.ubuntu-fr.org/migration
-		answerNegatively															nov. 03 2014	nesthib	la page ne dit pas ça	la page ne dit pas ça
-		correct												conditional			nov. 03 2014	nesthib	elle dit que tu peux tester avec un live CD ou USB et que tu peux utiliser un CD si tu n'as pas update manager	elle dit que tu peux tester avec un live CD ou USB et que tu peux utiliser un CD si tu n'as pas update manager
-		inform															nov. 03 2014	Zic	et pour fglrx , le paquet - update contient la dernière version releasée par AMD/ATI , tandis que le paquet "" fglrx "" tout court est d'abord testé quelques temps par Ubuntu	et pour fglrx, le paquet -update contient la dernière version releasée par AMD/ATI, tandis que le paquet ""fglrx"" tout court est d'abord testé quelques temps par Ubuntu
-		answer							inform	happy		conclude		conditional			nov. 03 2014	Zic	globalement , tout dépend si tu fais plutôt confiance ou pas à ton constructeur :)	globalement, tout dépend si tu fais plutôt confiance ou pas à ton constructeur :)
-												reformulate					nov. 03 2014	Zic	ou plus en pratique	ou plus en pratique : as-tu vraiment besoin d'avoir toujours en permanence la dernière version de ton pilote graphique (vidéaste ? gamer ?)
+		requestForInformation															nov. 03 2014 17:29	nesthib	où ça ?	où ça ?
+		answer															nov. 03 2014 17:29	guig33k	http://doc.ubuntu-fr.org/migration	http://doc.ubuntu-fr.org/migration
+		answerNegatively															nov. 03 2014 17:30	nesthib	la page ne dit pas ça	la page ne dit pas ça
+		correct												conditional			nov. 03 2014 17:31	nesthib	elle dit que tu peux tester avec un live CD ou USB et que tu peux utiliser un CD si tu n'as pas update manager	elle dit que tu peux tester avec un live CD ou USB et que tu peux utiliser un CD si tu n'as pas update manager
+		inform															nov. 03 2014 17:37	Zic	et pour fglrx , le paquet - update contient la dernière version releasée par AMD/ATI , tandis que le paquet "" fglrx "" tout court est d'abord testé quelques temps par Ubuntu	et pour fglrx, le paquet -update contient la dernière version releasée par AMD/ATI, tandis que le paquet ""fglrx"" tout court est d'abord testé quelques temps par Ubuntu
+		answer							inform	happy		conclude		conditional			nov. 03 2014 17:37	Zic	globalement , tout dépend si tu fais plutôt confiance ou pas à ton constructeur :)	globalement, tout dépend si tu fais plutôt confiance ou pas à ton constructeur :)
+												reformulate					nov. 03 2014 17:38	Zic	ou plus en pratique	ou plus en pratique : as-tu vraiment besoin d'avoir toujours en permanence la dernière version de ton pilote graphique (vidéaste ? gamer ?)
 									requestForInformation	love								\	as-tu vraiment besoin d'avoir toujours en permanence la dernière version de ton pilote graphique ( vidéaste ?	
 																		\	gamer ?)	
-		answerPositively							inform	love							nov. 03 2014	guig33k	bah j aimerai bien pouvoir jouer au jeux natif sous linux nottement avec steam	bah j aimerai bien pouvoir jouer au jeux natif sous linux nottement avec steam
-									inform	love							nov. 03 2014	guig33k	apres j aimerai avoir une version des driver qui marche	apres j aimerai avoir une version des driver qui marche
-																	nov. 03 2014	guig33k	se peut il que la derniere version des drivers ne soit pas compatible avec ubuntu ?	se peut il que la derniere version des drivers ne soit pas compatible avec ubuntu ?
-		requestForHelp															nov. 03 2014	guig33k	je ne sais pas quoi faire tu me conseil quoi ?	je ne sais pas quoi faire tu me conseil quoi ?
-		requestForInformation															nov. 03 2014	guig33k	fglrx ou fglrx-update	fglrx ou fglrx-update
-									inform	love				conditional			nov. 03 2014	guig33k	sachant que j aimerai pouvoir jouer au jeux natif sous linux	sachant que j aimerai pouvoir jouer au jeux natif sous linux
-																	nov. 03 2014	ubuntu_	Est-il possible de lancer une session invite en live cd ???	Est-il possible de lancer une session invite en live cd ???
-																	nov. 03 2014	guig33k	salut	salut j essaye d install ubuntu sur mon ordi j ai dl la 10.14 mais depuis 15minutes ca reste au chargement ubuntu et 5 petits points qui se remplisse de rouge
+		answerPositively							inform	love							nov. 03 2014 17:39	guig33k	bah j aimerai bien pouvoir jouer au jeux natif sous linux nottement avec steam	bah j aimerai bien pouvoir jouer au jeux natif sous linux nottement avec steam
+									inform	love							nov. 03 2014 17:39	guig33k	apres j aimerai avoir une version des driver qui marche	apres j aimerai avoir une version des driver qui marche
+																	nov. 03 2014 17:40	guig33k	se peut il que la derniere version des drivers ne soit pas compatible avec ubuntu ?	se peut il que la derniere version des drivers ne soit pas compatible avec ubuntu ?
+		requestForHelp															nov. 03 2014 17:40	guig33k	je ne sais pas quoi faire tu me conseil quoi ?	je ne sais pas quoi faire tu me conseil quoi ?
+		requestForInformation															nov. 03 2014 17:40	guig33k	fglrx ou fglrx-update	fglrx ou fglrx-update
+									inform	love				conditional			nov. 03 2014 17:40	guig33k	sachant que j aimerai pouvoir jouer au jeux natif sous linux	sachant que j aimerai pouvoir jouer au jeux natif sous linux
+																	nov. 03 2014 18:32	ubuntu_	Est-il possible de lancer une session invite en live cd ???	Est-il possible de lancer une session invite en live cd ???
+																	nov. 03 2014 18:44	guig33k	salut	salut j essaye d install ubuntu sur mon ordi j ai dl la 10.14 mais depuis 15minutes ca reste au chargement ubuntu et 5 petits points qui se remplisse de rouge
 					inform	unsatisfied						introduceTopic						\	j essaye d install ubuntu sur mon ordi j ai dl la 10.14 mais depuis 15minutes ca reste au chargement ubuntu et 5 petits points qui se remplisse de rouge	
-		answerByRequestForAction															nov. 03 2014	ubuntu_	wiki !	wiki!
-correct		answerByRequestForAction										reformulate					nov. 03 2014	ubuntu_	!wiki live	!wiki live
-		answerByRequestForAction															nov. 03 2014	@uBOTu-fr	http://doc.ubuntu-fr.org/abuledulive | http://doc.ubuntu-fr.org/cclive | http://doc.ubuntu-fr.org/clive | http://doc.ubuntu-fr.org/compiz-plugins-livewallpapers | http://doc.ubuntu-fr.org/disque_reseau_livebox_sagem	http://doc.ubuntu-fr.org/abuledulive | http://doc.ubuntu-fr.org/cclive | http://doc.ubuntu-fr.org/clive | http://doc.ubuntu-fr.org/compiz-plugins-livewallpapers | http://doc.ubuntu-fr.org/disque_reseau_livebox_sagem
-correct		answerByRequestForAction															nov. 03 2014	ubuntu_	!wiki live invite	!wiki live invite
-		answerByRequestForAction															nov. 03 2014	@uBOTu-fr	[Seeks ] :	[Seeks] : http://www.ubuntu-fr.org / http://doc.ubuntu-fr.org/tutoriel/live_usb_install4 / http://doc.ubuntu-fr.org/clonezilla / http://doc.ubuntu-fr.org/tutoriel/comment_changer_son_mot_de_passe_principal
+		answerByRequestForAction															nov. 03 2014 18:54	ubuntu_	wiki !	wiki!
+correct		answerByRequestForAction										reformulate					nov. 03 2014 18:54	ubuntu_	!wiki live	!wiki live
+		answerByRequestForAction															nov. 03 2014 18:54	@uBOTu-fr	http://doc.ubuntu-fr.org/abuledulive | http://doc.ubuntu-fr.org/cclive | http://doc.ubuntu-fr.org/clive | http://doc.ubuntu-fr.org/compiz-plugins-livewallpapers | http://doc.ubuntu-fr.org/disque_reseau_livebox_sagem	http://doc.ubuntu-fr.org/abuledulive | http://doc.ubuntu-fr.org/cclive | http://doc.ubuntu-fr.org/clive | http://doc.ubuntu-fr.org/compiz-plugins-livewallpapers | http://doc.ubuntu-fr.org/disque_reseau_livebox_sagem
+correct		answerByRequestForAction															nov. 03 2014 18:55	ubuntu_	!wiki live invite	!wiki live invite
+		answerByRequestForAction															nov. 03 2014 18:55	@uBOTu-fr	[Seeks ] :	[Seeks] : http://www.ubuntu-fr.org / http://doc.ubuntu-fr.org/tutoriel/live_usb_install4 / http://doc.ubuntu-fr.org/clonezilla / http://doc.ubuntu-fr.org/tutoriel/comment_changer_son_mot_de_passe_principal
 		answerByRequestForAction																\	http://www.ubuntu-fr.org / http://doc.ubuntu-fr.org/tutoriel/live_usb_install4 / http://doc.ubuntu-fr.org/clonezilla / http://doc.ubuntu-fr.org/tutoriel/comment_changer_son_mot_de_passe_principal	
-		answerByRequestForAction															nov. 03 2014	ubuntu_	!wiki session invite	!wiki session invite
-		answerByRequestForAction															nov. 03 2014	@uBOTu-fr	[Seeks ] :	[Seeks] : http://www.ubuntu-fr.org / http://doc.ubuntu-fr.org/lightdm / http://doc.ubuntu-fr.org/tutoriel/comment_changer_son_mot_de_passe_principal / http://doc.ubuntu-fr.org/gdm
+		answerByRequestForAction															nov. 03 2014 18:55	ubuntu_	!wiki session invite	!wiki session invite
+		answerByRequestForAction															nov. 03 2014 18:55	@uBOTu-fr	[Seeks ] :	[Seeks] : http://www.ubuntu-fr.org / http://doc.ubuntu-fr.org/lightdm / http://doc.ubuntu-fr.org/tutoriel/comment_changer_son_mot_de_passe_principal / http://doc.ubuntu-fr.org/gdm
 		answerByRequestForAction																\	http://www.ubuntu-fr.org / http://doc.ubuntu-fr.org/lightdm / http://doc.ubuntu-fr.org/tutoriel/comment_changer_son_mot_de_passe_principal / http://doc.ubuntu-fr.org/gdm	
-																	nov. 03 2014	rzyz	bonjour	bonjour
-		requestForInformation										introduceTopic					nov. 03 2014	rzyz	comment lancer gparted en ligne de commande ?	comment lancer gparted en ligne de commande?
-					inform	unsatisfied											nov. 03 2014	rzyz	sudo , gksu , gksudo fonctionnent pas	sudo, gksu, gksudo fonctionnent pas
-					inform	unsatisfied											nov. 03 2014	rzyz	demande de mot de passe et rien ne se passe	demande de mot de passe et rien ne se passe
-																	nov. 03 2014	ubuntu_	est-il installé ???	est-il installé ???
-																	nov. 03 2014	ubuntu_	en ligne de commande c' est parted	en ligne de commande c'est parted
-																	nov. 03 2014	Ool	mais sinon gksudo gparted devrait marcher sans soucis ( dans un environnement graphique )	mais sinon gksudo gparted devrait marcher sans soucis (dans un environnement graphique)
-																	nov. 03 2014	Ool	si bien sur il est installé	si bien sur il est installé
-																	nov. 03 2014	ubuntu_	!wiki parted	!wiki parted
-																	nov. 03 2014	@uBOTu-fr	http://doc.ubuntu-fr.org/gparted	http://doc.ubuntu-fr.org/gparted
-																	nov. 03 2014	Ool	d'ailleurs via l' interface graphique quand on lance gparted il demande un mot de passe pour avoir les droits	d'ailleurs via l'interface graphique quand on lance gparted il demande un mot de passe pour avoir les droits
-		answer												conditional			nov. 03 2014	ubuntu_	si c' est juste pour voir les partitions sans y toucher pas besoin d'etre root	si c'est juste pour voir les partitions sans y toucher pas besoin d'etre root
-	apologizing																nov. 03 2014	rzyz	dsl pour le retard ( pas d'alerte ),	dsl pour le retard( pas d'alerte), oui gparted est installé (utilisée plein de fois), mais il se lance correctement depuis le gestionnaire de paramètres xfce
+																	nov. 03 2014 18:57	rzyz	bonjour	bonjour
+		requestForInformation										introduceTopic					nov. 03 2014 18:57	rzyz	comment lancer gparted en ligne de commande ?	comment lancer gparted en ligne de commande?
+					inform	unsatisfied											nov. 03 2014 18:57	rzyz	sudo , gksu , gksudo fonctionnent pas	sudo, gksu, gksudo fonctionnent pas
+					inform	unsatisfied											nov. 03 2014 18:58	rzyz	demande de mot de passe et rien ne se passe	demande de mot de passe et rien ne se passe
+																	nov. 03 2014 19:03	ubuntu_	est-il installé ???	est-il installé ???
+																	nov. 03 2014 19:03	ubuntu_	en ligne de commande c' est parted	en ligne de commande c'est parted
+																	nov. 03 2014 19:04	Ool	mais sinon gksudo gparted devrait marcher sans soucis ( dans un environnement graphique )	mais sinon gksudo gparted devrait marcher sans soucis (dans un environnement graphique)
+																	nov. 03 2014 19:04	Ool	si bien sur il est installé	si bien sur il est installé
+																	nov. 03 2014 19:04	ubuntu_	!wiki parted	!wiki parted
+																	nov. 03 2014 19:04	@uBOTu-fr	http://doc.ubuntu-fr.org/gparted	http://doc.ubuntu-fr.org/gparted
+																	nov. 03 2014 19:05	Ool	d'ailleurs via l' interface graphique quand on lance gparted il demande un mot de passe pour avoir les droits	d'ailleurs via l'interface graphique quand on lance gparted il demande un mot de passe pour avoir les droits
+		answer												conditional			nov. 03 2014 19:10	ubuntu_	si c' est juste pour voir les partitions sans y toucher pas besoin d'etre root	si c'est juste pour voir les partitions sans y toucher pas besoin d'etre root
+	apologizing																nov. 03 2014 19:10	rzyz	dsl pour le retard ( pas d'alerte ),	dsl pour le retard( pas d'alerte), oui gparted est installé (utilisée plein de fois), mais il se lance correctement depuis le gestionnaire de paramètres xfce
 																		\	oui gparted est installé	
 					inform	satisfied												\	( utilisée plein de fois ), mais il se lance correctement depuis le gestionnaire de paramètres xfce	
-					inform	unsatisfied											nov. 03 2014	rzyz	mais pas depuis la ligne de commande	mais pas depuis la ligne de commande
-																	nov. 03 2014	ubuntu_	xfce c' est un peu special ...	xfce c'est un peu special ...
-									inform	unhappy							nov. 03 2014	rzyz	aaa	aaa
-					inform	unsatisfied											nov. 03 2014	rzyz	gksudo fonctionne pas non plus avec wireshark	gksudo fonctionne pas non plus avec wireshark
-					inform	satisfied											nov. 03 2014	rzyz	pour wireshark , je passe en root pour que cela fonctionne avec ( su - )	pour wireshark, je passe en root pour que cela fonctionne avec ( su - )
-																	nov. 03 2014	ubuntu_	oO ???	oO ???
-					inform	satisfied											nov. 03 2014	rzyz	gparted fonctionne également si je le lance avec cette méthode .	gparted fonctionne également si je le lance avec cette méthode.
-		requestForInformation							inform	negativeSurprise							nov. 03 2014	rzyz	c'est bizarre quand même , nan ?	c'est bizarre quand même, nan?
-																	nov. 03 2014	ubuntu_	t'as mais xfce par dessus une ubuntu standart ???	t'as mais xfce par dessus une ubuntu standart ???
-																	nov. 03 2014	ubuntu_	mais/mis *	mais/mis*
-		answer							inform	happy					uncertain		nov. 03 2014	rzyz	euh , ça je sais pas ( ou plus ), car depuis le temps j' ai du faire 3-4 fois "" do-release-upgrade "", mdr	 euh, ça je sais pas (ou plus), car depuis le temps j'ai du faire 3-4 fois ""do-release-upgrade"", mdr
-																	nov. 03 2014	rzyz	je ne sais pas comment savoir ça .	je ne sais pas comment savoir ça.
-																	nov. 03 2014	ubuntu_	oO	oO
-																	nov. 03 2014	julien456	bonsoir	bonsoir
-																	nov. 03 2014	rzyz	je dirais ubuntu , puis installation xfce	je dirais ubuntu, puis installation xfce
-		inform										introduceTopic					nov. 03 2014	julien456	avec optimus j' ai constaté que souvent ( tout le temps ?), la carte discrete NVIDIA était du type 3D Controller ( classe 302 ) et non VGA Controller ( classe 300 ),	avec optimus j'ai constaté que souvent (tout le temps ?), la carte discrete NVIDIA était du type 3D Controller (classe 302) et non VGA Controller (classe 300), savez-vous si en désactivant la carte Intel dans le BIOS la carte NVIDIA sera en 3D Controller ou en VGA Controller ?
+					inform	unsatisfied											nov. 03 2014 19:11	rzyz	mais pas depuis la ligne de commande	mais pas depuis la ligne de commande
+																	nov. 03 2014 19:12	ubuntu_	xfce c' est un peu special ...	xfce c'est un peu special ...
+									inform	unhappy							nov. 03 2014 19:12	rzyz	aaa	aaa
+					inform	unsatisfied											nov. 03 2014 19:17	rzyz	gksudo fonctionne pas non plus avec wireshark	gksudo fonctionne pas non plus avec wireshark
+					inform	satisfied											nov. 03 2014 19:17	rzyz	pour wireshark , je passe en root pour que cela fonctionne avec ( su - )	pour wireshark, je passe en root pour que cela fonctionne avec ( su - )
+																	nov. 03 2014 19:18	ubuntu_	oO ???	oO ???
+					inform	satisfied											nov. 03 2014 19:18	rzyz	gparted fonctionne également si je le lance avec cette méthode .	gparted fonctionne également si je le lance avec cette méthode.
+		requestForInformation							inform	negativeSurprise							nov. 03 2014 19:18	rzyz	c'est bizarre quand même , nan ?	c'est bizarre quand même, nan?
+																	nov. 03 2014 19:22	ubuntu_	t'as mais xfce par dessus une ubuntu standart ???	t'as mais xfce par dessus une ubuntu standart ???
+																	nov. 03 2014 19:22	ubuntu_	mais/mis *	mais/mis*
+		answer							inform	happy					uncertain		nov. 03 2014 19:29	rzyz	euh , ça je sais pas ( ou plus ), car depuis le temps j' ai du faire 3-4 fois "" do-release-upgrade "", mdr	 euh, ça je sais pas (ou plus), car depuis le temps j'ai du faire 3-4 fois ""do-release-upgrade"", mdr
+																	nov. 03 2014 19:29	rzyz	je ne sais pas comment savoir ça .	je ne sais pas comment savoir ça.
+																	nov. 03 2014 19:30	ubuntu_	oO	oO
+																	nov. 03 2014 19:37	julien456	bonsoir	bonsoir
+																	nov. 03 2014 19:38	rzyz	je dirais ubuntu , puis installation xfce	je dirais ubuntu, puis installation xfce
+		inform										introduceTopic					nov. 03 2014 19:40	julien456	avec optimus j' ai constaté que souvent ( tout le temps ?), la carte discrete NVIDIA était du type 3D Controller ( classe 302 ) et non VGA Controller ( classe 300 ),	avec optimus j'ai constaté que souvent (tout le temps ?), la carte discrete NVIDIA était du type 3D Controller (classe 302) et non VGA Controller (classe 300), savez-vous si en désactivant la carte Intel dans le BIOS la carte NVIDIA sera en 3D Controller ou en VGA Controller ?
 																		\	savez-vous si en désactivant la carte Intel dans le BIOS la carte NVIDIA sera en 3D Controller ou en VGA Controller ?	
-																	nov. 03 2014	Ool	sur une 14.04 ?	sur une 14.04 ?
-		answer													uncertain		nov. 03 2014	Ool	me semblait qu'avant avec optimus d'activer dans le BIOS onvoyait 2 VGA	me semblait qu'avant avec optimus d'activer dans le BIOS onvoyait 2 VGA
-																	nov. 03 2014	Ool	et oui ça semble logique ce que tu dis	et oui ça semble logique ce que tu dis
-																	nov. 03 2014	Ool	que la carte passe en VGA quand elle est seule ( optimus descativé	que la carte passe en VGA quand elle est seule (optimus descativé)
-					inform	unsatisfied											nov. 03 2014	Ool	mais je n'ai pas de telle machine pour tester	mais je n'ai pas de telle machine pour tester
-																	nov. 03 2014	julien456	j'ai constaté sur ubuntu 12 et 14 mais il me semble que sur d'autres machines j' ai cru voir 2 VGA	j'ai constaté sur ubuntu 12 et 14 mais il me semble que sur d'autres machines j'ai cru voir 2 VGA
-																	nov. 03 2014	Ool	https://doc.ubuntu-fr.org/nvidia_optimus https://doc.ubuntu-fr.org/bumblebee	https://doc.ubuntu-fr.org/nvidia_optimus https://doc.ubuntu-fr.org/bumblebee
-							inform	promote									nov. 03 2014	Ool	les pages datent un peu mais son bien écritent	les pages datent un peu mais son bien écritent
-																	nov. 03 2014	Ool	après il y a peut-etre moyen de contacter leur auteur ( via le forum je crois	après il y a peut-etre moyen de contacter leur auteur (via le forum je crois)
-		inform															nov. 03 2014	Ool	http://forum.ubuntu-fr.org/viewtopic.php?id=1230851	http://forum.ubuntu-fr.org/viewtopic.php?id=1230851
-												reportSpeech					nov. 03 2014	Ool	il précise lspci - vnn | egrep ' VGA|3D '	il précise lspci -vnn | egrep 'VGA|3D'
-																	nov. 03 2014	Ool	donc çadoit dépendre des modèles de portables	donc çadoit dépendre des modèles de portables
-																	nov. 03 2014	Ool	remarque sur la doc c' est par les ID que l' on grep :	remarque sur la doc c'est par les ID que l'on grep:  lspci -vnn | grep '\''[030[02]\]'
+																	nov. 03 2014 19:42	Ool	sur une 14.04 ?	sur une 14.04 ?
+		answer													uncertain		nov. 03 2014 19:42	Ool	me semblait qu'avant avec optimus d'activer dans le BIOS onvoyait 2 VGA	me semblait qu'avant avec optimus d'activer dans le BIOS onvoyait 2 VGA
+																	nov. 03 2014 19:42	Ool	et oui ça semble logique ce que tu dis	et oui ça semble logique ce que tu dis
+																	nov. 03 2014 19:43	Ool	que la carte passe en VGA quand elle est seule ( optimus descativé	que la carte passe en VGA quand elle est seule (optimus descativé)
+					inform	unsatisfied											nov. 03 2014 19:43	Ool	mais je n'ai pas de telle machine pour tester	mais je n'ai pas de telle machine pour tester
+																	nov. 03 2014 19:44	julien456	j'ai constaté sur ubuntu 12 et 14 mais il me semble que sur d'autres machines j' ai cru voir 2 VGA	j'ai constaté sur ubuntu 12 et 14 mais il me semble que sur d'autres machines j'ai cru voir 2 VGA
+																	nov. 03 2014 19:45	Ool	https://doc.ubuntu-fr.org/nvidia_optimus https://doc.ubuntu-fr.org/bumblebee	https://doc.ubuntu-fr.org/nvidia_optimus https://doc.ubuntu-fr.org/bumblebee
+							inform	promote									nov. 03 2014 19:45	Ool	les pages datent un peu mais son bien écritent	les pages datent un peu mais son bien écritent
+																	nov. 03 2014 19:46	Ool	après il y a peut-etre moyen de contacter leur auteur ( via le forum je crois	après il y a peut-etre moyen de contacter leur auteur (via le forum je crois)
+		inform															nov. 03 2014 19:47	Ool	http://forum.ubuntu-fr.org/viewtopic.php?id=1230851	http://forum.ubuntu-fr.org/viewtopic.php?id=1230851
+												reportSpeech					nov. 03 2014 19:47	Ool	il précise lspci - vnn | egrep ' VGA|3D '	il précise lspci -vnn | egrep 'VGA|3D'
+																	nov. 03 2014 19:48	Ool	donc çadoit dépendre des modèles de portables	donc çadoit dépendre des modèles de portables
+																	nov. 03 2014 19:49	Ool	remarque sur la doc c' est par les ID que l' on grep :	remarque sur la doc c'est par les ID que l'on grep:  lspci -vnn | grep '\''[030[02]\]'
 																		\	lspci - vnn | grep '\''[030[02 ]\]'	
-																	nov. 03 2014	julien456	yes	yes
-																	nov. 03 2014	Ool	depuis 14.04 par contre il y a https://doc.ubuntu-fr.org/prime	depuis 14.04 par contre il y a https://doc.ubuntu-fr.org/prime
-							inform	depreciate									nov. 03 2014	Ool	mais en fait j' ai toujours éviter avec soin ce genre de machine	mais en fait j'ai toujours éviter avec soin ce genre de machine
-							inform	depreciate									nov. 03 2014	julien456	j'avoue c' est pas au point sur linux	j'avoue c'est pas au point sur linux
-																	nov. 03 2014	Ool	ba et puis un portable pour moi c' est surtout pour avoir de l' autonomie , une grosse carte graphique ça se met bien dans un desktop … enfin tout ça c' est un peu offtopic	ba et puis un portable pour moi c'est surtout pour avoir de l'autonomie, une grosse carte graphique ça se met bien dans un desktop… enfin tout ça c'est un peu offtopic
-																	nov. 03 2014	rzyz	salut	 salut est-tu la?
+																	nov. 03 2014 19:49	julien456	yes	yes
+																	nov. 03 2014 19:50	Ool	depuis 14.04 par contre il y a https://doc.ubuntu-fr.org/prime	depuis 14.04 par contre il y a https://doc.ubuntu-fr.org/prime
+							inform	depreciate									nov. 03 2014 19:50	Ool	mais en fait j' ai toujours éviter avec soin ce genre de machine	mais en fait j'ai toujours éviter avec soin ce genre de machine
+							inform	depreciate									nov. 03 2014 19:52	julien456	j'avoue c' est pas au point sur linux	j'avoue c'est pas au point sur linux
+																	nov. 03 2014 19:57	Ool	ba et puis un portable pour moi c' est surtout pour avoir de l' autonomie , une grosse carte graphique ça se met bien dans un desktop … enfin tout ça c' est un peu offtopic	ba et puis un portable pour moi c'est surtout pour avoir de l'autonomie, une grosse carte graphique ça se met bien dans un desktop… enfin tout ça c'est un peu offtopic
+																	nov. 03 2014 20:25	rzyz	salut	 salut est-tu la?
 																		\	est-tu la ?	
-																	nov. 03 2014	Scorp-	Bonsoir	Bonsoir
-									inform	love							nov. 03 2014	mezen	je t' aime	je t'aime
-		requestForAction							inform	happy							nov. 03 2014	Scorp-	Ne nous enflammons pas : D	Ne nous enflammons pas :D
-																	nov. 03 2014	AlexxC	bonsoir	bonsoir
-																	nov. 03 2014	lyntoo	salut	salut
-																	nov. 03 2014	BlueGone	Salut	Salut
-																	nov. 03 2014	davlefouAMD	Bonsoir,j	Bonsoir,j
-		inform			inform	unsatisfied						introduceTopic					nov. 03 2014	davlefouAMD	j'ai un message glib Critical , id x perdu	j'ai un message glib Critical, id x perdu
-																	nov. 03 2014	davlefouAMD	et je dois falre alt+f2 pour relance gnome shell	et je dois falre alt+f2 pour relance gnome shell
-																	nov. 03 2014	davlefouAMD	GLib-CRITICAL **:	GLib-CRITICAL **: Source ID 15745 was not found when attempting to remove it
+																	nov. 03 2014 20:27	Scorp-	Bonsoir	Bonsoir
+									inform	love							nov. 03 2014 20:54	mezen	je t' aime	je t'aime
+		requestForAction							inform	happy							nov. 03 2014 20:57	Scorp-	Ne nous enflammons pas : D	Ne nous enflammons pas :D
+																	nov. 03 2014 21:20	AlexxC	bonsoir	bonsoir
+																	nov. 03 2014 21:26	lyntoo	salut	salut
+																	nov. 03 2014 22:06	BlueGone	Salut	Salut
+																	nov. 03 2014 22:36	davlefouAMD	Bonsoir,j	Bonsoir,j
+		inform			inform	unsatisfied						introduceTopic					nov. 03 2014 22:36	davlefouAMD	j'ai un message glib Critical , id x perdu	j'ai un message glib Critical, id x perdu
+																	nov. 03 2014 22:37	davlefouAMD	et je dois falre alt+f2 pour relance gnome shell	et je dois falre alt+f2 pour relance gnome shell
+																	nov. 03 2014 22:38	davlefouAMD	GLib-CRITICAL **:	GLib-CRITICAL **: Source ID 15745 was not found when attempting to remove it
 																		\	Source ID 15745 was not found when attempting to remove it	
-																	nov. 03 2014	davlefouAMD	par exemple	par exemple,
-																	nov. 04 2014	mregg	Bonjour à tous	Bonjour à tous -- j'ai monté Ubuntu 14.04.1 Serveur sur un Intel NUC (core i3). Ca marche vraiment bien, sauf en ce qui concerne la connexion réseau. Si la machine obtient une adresse IP via le serveur DHCP, tout va bien. En revanche, si je fixe l'IP en static, je vais perdre la connexion après 10 min. (ifconfig dit que tout va bien, mais je ne peux plus atteindre la machine via ssh ou autre). Si je mets un cron pour faire pinger une au
+																	nov. 03 2014 22:38	davlefouAMD	par exemple	par exemple,
+																	nov. 04 2014 10:33	mregg	Bonjour à tous	Bonjour à tous -- j'ai monté Ubuntu 14.04.1 Serveur sur un Intel NUC (core i3). Ca marche vraiment bien, sauf en ce qui concerne la connexion réseau. Si la machine obtient une adresse IP via le serveur DHCP, tout va bien. En revanche, si je fixe l'IP en static, je vais perdre la connexion après 10 min. (ifconfig dit que tout va bien, mais je ne peux plus atteindre la machine via ssh ou autre). Si je mets un cron pour faire pinger une au
 		inform										introduceTopic						\	-- j' ai monté Ubuntu 14.04.1 Serveur sur un Intel NUC ( core i3 ).	
 					inform	satisfied												\	Ca marche vraiment bien ,	
 					inform	unsatisfied												\	sauf en ce qui concerne la connexion réseau .	
@@ -1331,168 +1331,168 @@ correct		answerByRequestForAction															nov. 03 2014	ubuntu_	!wiki live 
 					inform	unsatisfied								conditional				\	En revanche , si je fixe l' IP en static , je vais perdre la connexion après 10 min .	
 					inform	unsatisfied												\	(ifconfig dit que tout va bien , mais je ne peux plus atteindre la machine via ssh ou autre ).	
 																		\	Si je mets un cron pour faire pinger une au	
-																	nov. 04 2014	Sp4rKy	tu la règles comment en static ?	tu la règles comment en static ?
-																	nov. 04 2014	Sp4rKy	quasi sur que t' as un dhclient qui se relance ;)	quasi sur que t'as un dhclient qui se relance ;)
-		requestForDirectives															nov. 04 2014	mregg	tu veux que je poste mon / etc/network/interfaces ?	tu veux que je poste mon /etc/network/interfaces ?
-																	nov. 04 2014	Galeade	Bonjour	Bonjour
-		requestForAction															nov. 04 2014	Sp4rKy	fait plutot un ' ps aux|grep dhcl '	fait plutot un 'ps aux|grep dhcl'
-																	nov. 04 2014	mregg	bon évidemment , Murphy est là et je n'ai plus accès à la machine en SSH .	bon évidemment, Murphy est là et je n'ai plus accès à la machine en SSH. Je pense que tu as raison, car je n'ai pas désactivé dhclient.
+																	nov. 04 2014 10:34	Sp4rKy	tu la règles comment en static ?	tu la règles comment en static ?
+																	nov. 04 2014 10:34	Sp4rKy	quasi sur que t' as un dhclient qui se relance ;)	quasi sur que t'as un dhclient qui se relance ;)
+		requestForDirectives															nov. 04 2014 10:35	mregg	tu veux que je poste mon / etc/network/interfaces ?	tu veux que je poste mon /etc/network/interfaces ?
+																	nov. 04 2014 10:37	Galeade	Bonjour	Bonjour
+		requestForAction															nov. 04 2014 10:38	Sp4rKy	fait plutot un ' ps aux|grep dhcl '	fait plutot un 'ps aux|grep dhcl'
+																	nov. 04 2014 10:40	mregg	bon évidemment , Murphy est là et je n'ai plus accès à la machine en SSH .	bon évidemment, Murphy est là et je n'ai plus accès à la machine en SSH. Je pense que tu as raison, car je n'ai pas désactivé dhclient.
 																		\	Je pense que tu as raison ,	
 																		\	car je n'ai pas désactivé dhclient .	
-			execution	answerPositively													nov. 04 2014	Sp4rKy	ok	ok
-																	nov. 04 2014	Sp4rKy	tu pourras vérifier ça	tu pourras vérifier ça
-																	nov. 04 2014	mregg	Une fois que je peux ssh à ma machine , comment je désactive dhclient ?	Une fois que je peux ssh à ma machine, comment je désactive dhclient ?
-																	nov. 04 2014	Sp4rKy	faut modifier dans network manager sinon il cherche toujours à faire du dhcp	faut modifier dans network manager sinon il cherche toujours à faire du dhcp
-																	nov. 04 2014	mregg	je suis en mode serveur , donc uniquement accès via terminal .	je suis en mode serveur, donc uniquement accès via terminal. J'ai un accès à network-manager comme ça? J'ai pas l'impression.
+			execution	answerPositively													nov. 04 2014 10:42	Sp4rKy	ok	ok
+																	nov. 04 2014 10:42	Sp4rKy	tu pourras vérifier ça	tu pourras vérifier ça
+																	nov. 04 2014 10:42	mregg	Une fois que je peux ssh à ma machine , comment je désactive dhclient ?	Une fois que je peux ssh à ma machine, comment je désactive dhclient ?
+																	nov. 04 2014 10:42	Sp4rKy	faut modifier dans network manager sinon il cherche toujours à faire du dhcp	faut modifier dans network manager sinon il cherche toujours à faire du dhcp
+																	nov. 04 2014 10:43	mregg	je suis en mode serveur , donc uniquement accès via terminal .	je suis en mode serveur, donc uniquement accès via terminal. J'ai un accès à network-manager comme ça? J'ai pas l'impression.
 																		\	J'ai un accès à network-manager comme ça ?	
 																		\	J'ai pas l' impression .	
-																	nov. 04 2014	Marmotte	si tu veux juste gérer ton interface avec / etc/network/interfaces , tu peux juste virer network-manager : D	si tu veux juste gérer ton interface avec /etc/network/interfaces, tu peux juste virer network-manager :D
-																	nov. 04 2014	Marmotte	mais oui , tu as accès aux fichiers de configuration via le terminal , sinon ^^	mais oui, tu as accès aux fichiers de configuration via le terminal, sinon ^^
-																	nov. 04 2014	Ool	ba si il n'y aucune interface graphique , il ne devrait pas y avoir N-M d'installer	ba si il n'y aucune interface graphique, il ne devrait pas y avoir N-M d'installer
-																	nov. 04 2014	Marmotte	pourquoi ?	pourquoi ?
-																	nov. 04 2014	Marmotte	c'est un démon , il peut très bien fonctionner sans GUI :)	c'est un démon, il peut très bien fonctionner sans GUI :)
-																	nov. 04 2014	rcspam	Bonjour ,	Bonjour, Qulequ un connait-il yad ?
+																	nov. 04 2014 10:45	Marmotte	si tu veux juste gérer ton interface avec / etc/network/interfaces , tu peux juste virer network-manager : D	si tu veux juste gérer ton interface avec /etc/network/interfaces, tu peux juste virer network-manager :D
+																	nov. 04 2014 10:45	Marmotte	mais oui , tu as accès aux fichiers de configuration via le terminal , sinon ^^	mais oui, tu as accès aux fichiers de configuration via le terminal, sinon ^^
+																	nov. 04 2014 10:46	Ool	ba si il n'y aucune interface graphique , il ne devrait pas y avoir N-M d'installer	ba si il n'y aucune interface graphique, il ne devrait pas y avoir N-M d'installer
+																	nov. 04 2014 10:48	Marmotte	pourquoi ?	pourquoi ?
+																	nov. 04 2014 10:48	Marmotte	c'est un démon , il peut très bien fonctionner sans GUI :)	c'est un démon, il peut très bien fonctionner sans GUI :)
+																	nov. 04 2014 14:12	rcspam	Bonjour ,	Bonjour, Qulequ un connait-il yad ?
 																		\	Qulequ un connait-il yad ?	
-																	nov. 04 2014	jokx	bonjour	bonjour
-		requestForHelp															nov. 04 2014	jokx	Si une bonne âme pouvait m' aider ,	Si une bonne âme pouvait m'aider, je suis coincé sur un problème qui va me rendre chêvre.
+																	nov. 04 2014 15:07	jokx	bonjour	bonjour
+		requestForHelp															nov. 04 2014 15:08	jokx	Si une bonne âme pouvait m' aider ,	Si une bonne âme pouvait m'aider, je suis coincé sur un problème qui va me rendre chêvre.
 					inform	unsatisfied												\	je suis coincé sur un problème qui va me rendre chêvre .	
-																	nov. 04 2014	jokx	J'ai ici un compte qui dispose d'une clé SSH pour ce connecter à une machine distante .	J'ai ici un compte qui dispose d'une clé SSH pour ce connecter à une machine distante.
-																	nov. 04 2014	jokx	Lorsque depuis un terminal je lance un script qui utilise ssh pour synchro des données entre les deux machines tout ce passe sans qu'un mot de passe me soit réclamé	Lorsque depuis un terminal je lance un script qui utilise ssh pour synchro des données entre les deux machines tout ce passe sans qu'un mot de passe me soit réclamé
-					inform	unsatisfied											nov. 04 2014	jokx	Si je lance ce même script depuis un fichier *.desktop , le mot de passe de la clé SSH m' est réclamé !	Si je lance ce même script depuis un fichier *.desktop, le mot de passe de la clé SSH m'est réclamé !
-																	nov. 04 2014	jokx	(Seahorse déverouille normalement la clé à l' ouverture de session )	(Seahorse déverouille normalement la clé à l'ouverture de session)
-																	nov. 04 2014	jokx	Autrement , lorsqu'un appel au script à lieu via un fichier *.desktop , la variable d'environnement SSH_AUTH_SOCK disparait :'(	Autrement, lorsqu'un appel au script à lieu via un fichier *.desktop, la variable d'environnement SSH_AUTH_SOCK disparait :'(
-		requestForHelp															nov. 04 2014	jokx	Quelqu'un aurait-il une vague idée du pourquoi du comment ?	Quelqu'un aurait-il une vague idée du pourquoi du comment ? Siouplait ?
+																	nov. 04 2014 15:09	jokx	J'ai ici un compte qui dispose d'une clé SSH pour ce connecter à une machine distante .	J'ai ici un compte qui dispose d'une clé SSH pour ce connecter à une machine distante.
+																	nov. 04 2014 15:09	jokx	Lorsque depuis un terminal je lance un script qui utilise ssh pour synchro des données entre les deux machines tout ce passe sans qu'un mot de passe me soit réclamé	Lorsque depuis un terminal je lance un script qui utilise ssh pour synchro des données entre les deux machines tout ce passe sans qu'un mot de passe me soit réclamé
+					inform	unsatisfied											nov. 04 2014 15:10	jokx	Si je lance ce même script depuis un fichier *.desktop , le mot de passe de la clé SSH m' est réclamé !	Si je lance ce même script depuis un fichier *.desktop, le mot de passe de la clé SSH m'est réclamé !
+																	nov. 04 2014 15:10	jokx	(Seahorse déverouille normalement la clé à l' ouverture de session )	(Seahorse déverouille normalement la clé à l'ouverture de session)
+																	nov. 04 2014 15:12	jokx	Autrement , lorsqu'un appel au script à lieu via un fichier *.desktop , la variable d'environnement SSH_AUTH_SOCK disparait :'(	Autrement, lorsqu'un appel au script à lieu via un fichier *.desktop, la variable d'environnement SSH_AUTH_SOCK disparait :'(
+		requestForHelp															nov. 04 2014 15:12	jokx	Quelqu'un aurait-il une vague idée du pourquoi du comment ?	Quelqu'un aurait-il une vague idée du pourquoi du comment ? Siouplait ?
 	anticipateThanking																	\	Siouplait ?	
-																	nov. 04 2014	nesthib	tu es sûr que tu utilises les même comptes utilisateurs ( et donc la même clé ssh) ?	tu es sûr que tu utilises les même comptes utilisateurs (et donc la même clé ssh) ?
-																	nov. 04 2014	avelldiroll	un shell definit un environnement , un . desktop herite l' environnement de X qui est minimal	un shell definit un environnement, un .desktop herite l'environnement de X qui est minimal
-																	nov. 04 2014	jokx	oui oui , un seul compte sur la machine de toute façon	oui oui, un seul compte sur la machine de toute façon
-																	nov. 04 2014	nesthib	sinon tu peux définir ta variable d'environnement	sinon tu peux définir ta variable d'environnement
-																	nov. 04 2014	jokx	je l' ai export ...	je l'ai export ... ça change rien
+																	nov. 04 2014 15:14	nesthib	tu es sûr que tu utilises les même comptes utilisateurs ( et donc la même clé ssh) ?	tu es sûr que tu utilises les même comptes utilisateurs (et donc la même clé ssh) ?
+																	nov. 04 2014 15:14	avelldiroll	un shell definit un environnement , un . desktop herite l' environnement de X qui est minimal	un shell definit un environnement, un .desktop herite l'environnement de X qui est minimal
+																	nov. 04 2014 15:14	jokx	oui oui , un seul compte sur la machine de toute façon	oui oui, un seul compte sur la machine de toute façon
+																	nov. 04 2014 15:14	nesthib	sinon tu peux définir ta variable d'environnement	sinon tu peux définir ta variable d'environnement
+																	nov. 04 2014 15:15	jokx	je l' ai export ...	je l'ai export ... ça change rien
 					inform	unsatisfied												\	ça change rien	
-																	nov. 04 2014	nesthib	dans ton . desktop → VAR=… commande	dans ton .desktop → VAR=… commande
-																	nov. 04 2014	avelldiroll	donc soit tu precises l' enfironnement dans ton script ( en sourcant ton profile ), soit tu lance un shell avec le . desktop avant de lancer ton script	donc soit tu precises l'enfironnement dans ton script ( en sourcant ton profile), soit tu lance un shell avec le .desktop avant de lancer ton script
-																	nov. 04 2014	jokx	de toutes manière c' est seahorse qui l' exporte ,	de toutes manière c'est seahorse qui l'exporte, et il le fait, un terminal lancé depuis ce même bureau ne réclame pas de mot de passe
+																	nov. 04 2014 15:15	nesthib	dans ton . desktop → VAR=… commande	dans ton .desktop → VAR=… commande
+																	nov. 04 2014 15:15	avelldiroll	donc soit tu precises l' enfironnement dans ton script ( en sourcant ton profile ), soit tu lance un shell avec le . desktop avant de lancer ton script	donc soit tu precises l'enfironnement dans ton script ( en sourcant ton profile), soit tu lance un shell avec le .desktop avant de lancer ton script
+																	nov. 04 2014 15:15	jokx	de toutes manière c' est seahorse qui l' exporte ,	de toutes manière c'est seahorse qui l'exporte, et il le fait, un terminal lancé depuis ce même bureau ne réclame pas de mot de passe
 																		\	et il le fait , un terminal lancé depuis ce même bureau ne réclame pas de mot de passe	
-																	nov. 04 2014	Mooglie	Bjr ,	Bjr, 1 question de candide qui démarre: le nom de l' .iso comporte ""amd64""= pas de problème pour un intel I7 ?... ( Chui un peu bête sans doute, c tout :)
+																	nov. 04 2014 15:15	Mooglie	Bjr ,	Bjr, 1 question de candide qui démarre: le nom de l' .iso comporte ""amd64""= pas de problème pour un intel I7 ?... ( Chui un peu bête sans doute, c tout :)
 												opening						\	1 question de candide qui démarre :	
 																		\	le nom de l ' . iso comporte "" amd64 ""= pas de problème pour un intel I7 ?...	
 							inform	depreciate								ironie		\	( Chui un peu bête sans doute , c tout :)	
-																	nov. 04 2014	nesthib	vérifie les environnements , pour être sûr qu'il n'y ait pas d'autres variables manquantes	vérifie les environnements, pour être sûr qu'il n'y ait pas d'autres variables manquantes (ex. HOME, ça peut être embêtant)
+																	nov. 04 2014 15:16	nesthib	vérifie les environnements , pour être sûr qu'il n'y ait pas d'autres variables manquantes	vérifie les environnements, pour être sûr qu'il n'y ait pas d'autres variables manquantes (ex. HOME, ça peut être embêtant)
 																		\	( ex . 15:16 (nesthib)>+ HOME , ça peut être embêtant )	
-																	nov. 04 2014	nesthib	amd64 est OK pour intel ou amd , dès lors que c' est 64 bits ;)	amd64 est OK pour intel ou amd, dès lors que c'est 64 bits ;)
-																	nov. 04 2014	nesthib	c'est juste un nom historique , il n'y a pas de lien avec la marque	c'est juste un nom historique, il n'y a pas de lien avec la marque
-requestForAction																	nov. 04 2014	avelldiroll	evite le sms ,	evite le sms, mais sinon, oui les intel core i7 sont de l'architecture amd64
+																	nov. 04 2014 15:16	nesthib	amd64 est OK pour intel ou amd , dès lors que c' est 64 bits ;)	amd64 est OK pour intel ou amd, dès lors que c'est 64 bits ;)
+																	nov. 04 2014 15:16	nesthib	c'est juste un nom historique , il n'y a pas de lien avec la marque	c'est juste un nom historique, il n'y a pas de lien avec la marque
+requestForAction																	nov. 04 2014 15:16	avelldiroll	evite le sms ,	evite le sms, mais sinon, oui les intel core i7 sont de l'architecture amd64
 																		\	mais sinon , oui les intel core i7 sont de l' architecture amd64	
-																	nov. 04 2014	Mooglie	Bien aimable ,	Bien aimable, merki !
+																	nov. 04 2014 15:17	Mooglie	Bien aimable ,	Bien aimable, merki !
 																		\	merki !	
-																	nov. 04 2014	avelldiroll	pas tout à fait ca	pas tout à fait ca
-																	nov. 04 2014	nesthib	oui ,	oui, il y a un lien avec l'architecture d'amd dans les années 2000 si je me souviens bien, mais ce que je veux dire c'est quand maintenant ça ne veut plus rien dire si ce n'est 64 bits
+																	nov. 04 2014 15:17	avelldiroll	pas tout à fait ca	pas tout à fait ca
+																	nov. 04 2014 15:18	nesthib	oui ,	oui, il y a un lien avec l'architecture d'amd dans les années 2000 si je me souviens bien, mais ce que je veux dire c'est quand maintenant ça ne veut plus rien dire si ce n'est 64 bits
 		correct													uncertain			\	il y a un lien avec l' architecture d'amd dans les années 2000 si je me souviens bien ,	
 																		\	mais ce que je veux dire c' est quand maintenant ça ne veut plus rien dire si ce n'est 64 bits	
-																	nov. 04 2014	jokx	justemnet , la variable d'environement SSH_AUTH_SOCK n'est pas communiqué au script si il est appelé par un *.deskto , alors qu'il n'est si je l' exécute depuis un terminal	justemnet, la variable d'environement SSH_AUTH_SOCK n'est pas communiqué au script si il est appelé par un *.deskto, alors qu'il n'est si je l'exécute depuis un terminal
-																	nov. 04 2014	nesthib	enfin bref , ne te prends pas la tête Mooglie ,	enfin bref, ne te prends pas la tête Mooglie, ça fonctionnera ;)
+																	nov. 04 2014 15:18	jokx	justemnet , la variable d'environement SSH_AUTH_SOCK n'est pas communiqué au script si il est appelé par un *.deskto , alors qu'il n'est si je l' exécute depuis un terminal	justemnet, la variable d'environement SSH_AUTH_SOCK n'est pas communiqué au script si il est appelé par un *.deskto, alors qu'il n'est si je l'exécute depuis un terminal
+																	nov. 04 2014 15:18	nesthib	enfin bref , ne te prends pas la tête Mooglie ,	enfin bref, ne te prends pas la tête Mooglie, ça fonctionnera ;)
 					inform	satisfied												\	ça fonctionnera ;)	
-			execution	answerPositively													nov. 04 2014	nesthib	oui ,	oui, c'est pour ça que tu peux préciser la variable dans le .desktop ou comme le suggère avelldiroll, utiliser un script ou un shell pour encapsuler ta commande, ça celui ci héritera de ta config shell
+			execution	answerPositively													nov. 04 2014 15:19	nesthib	oui ,	oui, c'est pour ça que tu peux préciser la variable dans le .desktop ou comme le suggère avelldiroll, utiliser un script ou un shell pour encapsuler ta commande, ça celui ci héritera de ta config shell
 																		\	c' est pour ça que tu peux préciser la variable dans le . desktop ou comme le suggère avelldiroll , utiliser un script ou un shell pour encapsuler ta commande	
 																		\	ça celui ci héritera de ta config shell	
-																	nov. 04 2014	jokx	au départ j' appel un script , j' ai tenter d'appeler le script depuis un *.desktop , puis j' ai tenter de l' appeler depuis un bash - c mon_script lui meme appeler par *.desktop , j' ai aussi demandé au *.destkop d'appeler un xterm qui execute le script ...	au départ j'appel un script, j'ai tenter d'appeler le script depuis un *.desktop, puis j'ai tenter de l'appeler depuis un bash -c mon_script lui meme appeler par *.desktop, j'ai aussi demandé au *.destkop d'appeler un xterm qui execute le script ... rien à faire, ... pas de SSH_AUTH_SOCK dans aucun des cas de figure
+																	nov. 04 2014 15:21	jokx	au départ j' appel un script , j' ai tenter d'appeler le script depuis un *.desktop , puis j' ai tenter de l' appeler depuis un bash - c mon_script lui meme appeler par *.desktop , j' ai aussi demandé au *.destkop d'appeler un xterm qui execute le script ...	au départ j'appel un script, j'ai tenter d'appeler le script depuis un *.desktop, puis j'ai tenter de l'appeler depuis un bash -c mon_script lui meme appeler par *.desktop, j'ai aussi demandé au *.destkop d'appeler un xterm qui execute le script ... rien à faire, ... pas de SSH_AUTH_SOCK dans aucun des cas de figure
 																		\	rien à faire , ...	
 																		\	pas de SSH_AUTH_SOCK dans aucun des cas de figure	
-		requestForInformation			inform	unsatisfied											nov. 04 2014	jokx	la vrai question c' est comment gnome-shell peux exécuter un terminal via un *.desktop qui à SSH_AUTH_SOCK et juste à coté un autre *.desktop qui ne l' a pas !	la vrai question c'est comment gnome-shell peux exécuter un terminal via un *.desktop qui à SSH_AUTH_SOCK et juste à coté un autre *.desktop qui ne l'a pas ! :'(
+		requestForInformation			inform	unsatisfied											nov. 04 2014 15:23	jokx	la vrai question c' est comment gnome-shell peux exécuter un terminal via un *.desktop qui à SSH_AUTH_SOCK et juste à coté un autre *.desktop qui ne l' a pas !	la vrai question c'est comment gnome-shell peux exécuter un terminal via un *.desktop qui à SSH_AUTH_SOCK et juste à coté un autre *.desktop qui ne l'a pas ! :'(
 																		\	:'(	
-																	nov. 04 2014	avelldiroll	IA-32 ou i386 , designait la 3e generation de x86 chez intel , et les processeur des autres marques etaient souvent appelés i386-compatibles .	IA-32 ou i386, designait la 3e generation de x86 chez intel, et les processeur des autres marques etaient souvent appelés i386-compatibles. IA-64 c'est l'itanieun de chez Intel, sorti en 64 bits et incompatible avec le code x86 en 32 bits et qui est un flop commercial (en tout cas pour le grand public), en reaction AMD sort l'architecture x86_64 ou amd64 capable de fontionner en mode x86_32 et x86_64 ...
+																	nov. 04 2014 15:24	avelldiroll	IA-32 ou i386 , designait la 3e generation de x86 chez intel , et les processeur des autres marques etaient souvent appelés i386-compatibles .	IA-32 ou i386, designait la 3e generation de x86 chez intel, et les processeur des autres marques etaient souvent appelés i386-compatibles. IA-64 c'est l'itanieun de chez Intel, sorti en 64 bits et incompatible avec le code x86 en 32 bits et qui est un flop commercial (en tout cas pour le grand public), en reaction AMD sort l'architecture x86_64 ou amd64 capable de fontionner en mode x86_32 et x86_64 ...
 																		\	IA-64 c' est l' itanieun de chez Intel , sorti en 64 bits et incompatible avec le code x86 en 32 bits et qui est un flop commercial ( en tout cas pour le grand public ), en reaction AMD sort l' architecture x86_64 ou amd64 capable de fontionner en mode x86_32 et x86_64 ...	
-																	nov. 04 2014	avelldiroll	Intel , à la traine , finira par adopter le x86_64 en l' appelant EM64T	Intel, à la traine, finira par adopter le x86_64 en l'appelant EM64T
-																	nov. 04 2014	jokx	on appel souvent les architecture x86_64 des amd64 tout comme on appel les architecture x86_32 des i*86 parce que c' est amd/intel qui ont inventé l' architecture	on appel souvent les architecture x86_64 des amd64 tout comme on appel les architecture x86_32 des i*86 parce que c'est amd/intel qui ont inventé l'architecture
-																	nov. 04 2014	jokx	amd pour ... 15:26 (jokx)>+ amd , i pour intel	amd pour ... amd, i pour intel
-												summarize					nov. 04 2014	avelldiroll	pour resumer :	pour resumer : x86 == IA-32 == i386 == 32 bits only, IA-64 == Itanium == 64 bits only et tres rare, x86_64 == amd64 == EM64T == 64 bits et mode 32 bits
+																	nov. 04 2014 15:24	avelldiroll	Intel , à la traine , finira par adopter le x86_64 en l' appelant EM64T	Intel, à la traine, finira par adopter le x86_64 en l'appelant EM64T
+																	nov. 04 2014 15:25	jokx	on appel souvent les architecture x86_64 des amd64 tout comme on appel les architecture x86_32 des i*86 parce que c' est amd/intel qui ont inventé l' architecture	on appel souvent les architecture x86_64 des amd64 tout comme on appel les architecture x86_32 des i*86 parce que c'est amd/intel qui ont inventé l'architecture
+																	nov. 04 2014 15:26	jokx	amd pour ... 15:26 (jokx)>+ amd , i pour intel	amd pour ... amd, i pour intel
+												summarize					nov. 04 2014 15:26	avelldiroll	pour resumer :	pour resumer : x86 == IA-32 == i386 == 32 bits only, IA-64 == Itanium == 64 bits only et tres rare, x86_64 == amd64 == EM64T == 64 bits et mode 32 bits
 																		\	(avelldiroll)>+ x86 == IA-32 == i386 == 32 bits only , IA-64 == Itanium == 64 bits only et tres rare , x86_64 == amd64 == EM64T == 64 bits et mode 32 bits	
-																	nov. 04 2014	jokx	en claire , amd fabriquait des intel-386 et aujourd'hui c' est intel qui fabrique des amd64 : p	en claire, amd fabriquait des intel-386 et aujourd'hui c'est intel qui fabrique des amd64 :p
-																	nov. 04 2014	avelldiroll	et oui ,	et oui, c'est souvent donné par la boite ayant concu l'architecture qui est conservé
+																	nov. 04 2014 15:26	jokx	en claire , amd fabriquait des intel-386 et aujourd'hui c' est intel qui fabrique des amd64 : p	en claire, amd fabriquait des intel-386 et aujourd'hui c'est intel qui fabrique des amd64 :p
+																	nov. 04 2014 15:26	avelldiroll	et oui ,	et oui, c'est souvent donné par la boite ayant concu l'architecture qui est conservé
 																		\	c' est souvent donné par la boite ayant concu l' architecture qui est conservé	
-																	nov. 04 2014	yoritomo	bonjour	bonjour
-																	nov. 04 2014	JoNaT	tu	allo
-																	nov. 04 2014	JoNaT	je suis sur la version 13.10 et voudrais upgrader sur 14.04.1 esse posible ?	je suis sur la version 13.10 et voudrais upgrader sur 14.04.1 esse posible?
-																	nov. 04 2014	mikeit	oui	oui
-																	nov. 04 2014	JoNaT	jimagine quil faut redemarer ? 15:59 (JoNaT)>+ :(	jimagine quil faut redemarer? :(
-		answerPositively															nov. 04 2014	Marmotte	oui	oui
-		answer					inform	depreciate								ironie	nov. 04 2014	Marmotte	après la mise à niveau : P	après la mise à niveau :P
-			execution	answerPositively													nov. 04 2014	JoNaT	ok	ok merci!
+																	nov. 04 2014 15:43	yoritomo	bonjour	bonjour
+																	nov. 04 2014 15:57	JoNaT	tu	allo
+																	nov. 04 2014 15:58	JoNaT	je suis sur la version 13.10 et voudrais upgrader sur 14.04.1 esse posible ?	je suis sur la version 13.10 et voudrais upgrader sur 14.04.1 esse posible?
+																	nov. 04 2014 15:58	mikeit	oui	oui
+																	nov. 04 2014 15:59	JoNaT	jimagine quil faut redemarer ? 15:59 (JoNaT)>+ :(	jimagine quil faut redemarer? :(
+		answerPositively															nov. 04 2014 16:00	Marmotte	oui	oui
+		answer					inform	depreciate								ironie	nov. 04 2014 16:00	Marmotte	après la mise à niveau : P	après la mise à niveau :P
+			execution	answerPositively													nov. 04 2014 16:01	JoNaT	ok	ok merci!
 																		\	merci !	
-																	nov. 04 2014	zmaster	bonjour	bonjour
-					inform	unsatisfied											nov. 04 2014	yoritomo	sous xubuntu 12.04 j' ai un drôle de phénomène avec l' icône du contrôleur de volume , si j' utilise les touches multimédia du clavier , une barre noire s' ouvre et le curseur de volume varie mais je ne sait pas ce qu'il controle	sous xubuntu 12.04 j'ai un drôle de phénomène avec l'icône du contrôleur de volume, si j'utilise les touches multimédia du clavier, une barre noire s'ouvre et le curseur de volume varie mais je ne sait pas ce qu'il controle
-																	nov. 04 2014	yoritomo	si je cliqur sur l' icone j' ai une barre grise qui fonctionne sur le volume de sortie master	si je cliqur sur l'icone j'ai une barre grise qui fonctionne sur le volume de sortie master
-																	nov. 04 2014	yoritomo	ma question , comment faire pour régenter les touches de volume du clavier pour contrôler le master ?	ma question, comment faire pour régenter les touches de volume du clavier pour contrôler le master ?
-																	nov. 04 2014	zmaster	comment faire pour formater un disque dur avec ubuntu	comment faire pour formater un disque dur avec ubuntu
-																	nov. 04 2014	yoritomo	quand j' ouvre alsamixer je ne vois rien bouger par les touches de volume , pourtant la barre varie dans le gui	quand j'ouvre alsamixer je ne vois rien bouger  par les touches de volume , pourtant la barre varie dans le gui
-		requestForAction															nov. 04 2014	yoritomo	utilise gparted	utilise gparted
-		requestForAction															nov. 04 2014	yoritomo	sudo apt-get install gparted	sudo apt-get install gparted
-		requestForAction							inform	happy							nov. 04 2014	yoritomo	et ne pas se tromper de disque dur ;-)	et ne pas se tromper de disque dur  ;-)
-		requestForInformation															nov. 04 2014	zmaster	et je le trouve ou gparted	et je le trouve ou gparted
-		answer															nov. 04 2014	yoritomo	il s' installe par la commande que j' ai donné	il s'installe par la commande que j'ai donné
-		answer													uncertain		nov. 04 2014	yoritomo	et puis on le trouve dans le menu système , ou le panneau de contrôle selon la version d'ubuntu	et puis on le trouve dans le menu système, ou le panneau de contrôle selon la version d'ubuntu
-			execution	answerPositively													nov. 04 2014	zmaster	ok	ok je vais essayer
+																	nov. 04 2014 16:05	zmaster	bonjour	bonjour
+					inform	unsatisfied											nov. 04 2014 16:07	yoritomo	sous xubuntu 12.04 j' ai un drôle de phénomène avec l' icône du contrôleur de volume , si j' utilise les touches multimédia du clavier , une barre noire s' ouvre et le curseur de volume varie mais je ne sait pas ce qu'il controle	sous xubuntu 12.04 j'ai un drôle de phénomène avec l'icône du contrôleur de volume, si j'utilise les touches multimédia du clavier, une barre noire s'ouvre et le curseur de volume varie mais je ne sait pas ce qu'il controle
+																	nov. 04 2014 16:08	yoritomo	si je cliqur sur l' icone j' ai une barre grise qui fonctionne sur le volume de sortie master	si je cliqur sur l'icone j'ai une barre grise qui fonctionne sur le volume de sortie master
+																	nov. 04 2014 16:09	yoritomo	ma question , comment faire pour régenter les touches de volume du clavier pour contrôler le master ?	ma question, comment faire pour régenter les touches de volume du clavier pour contrôler le master ?
+																	nov. 04 2014 16:09	zmaster	comment faire pour formater un disque dur avec ubuntu	comment faire pour formater un disque dur avec ubuntu
+																	nov. 04 2014 16:11	yoritomo	quand j' ouvre alsamixer je ne vois rien bouger par les touches de volume , pourtant la barre varie dans le gui	quand j'ouvre alsamixer je ne vois rien bouger  par les touches de volume , pourtant la barre varie dans le gui
+		requestForAction															nov. 04 2014 16:11	yoritomo	utilise gparted	utilise gparted
+		requestForAction															nov. 04 2014 16:11	yoritomo	sudo apt-get install gparted	sudo apt-get install gparted
+		requestForAction							inform	happy							nov. 04 2014 16:11	yoritomo	et ne pas se tromper de disque dur ;-)	et ne pas se tromper de disque dur  ;-)
+		requestForInformation															nov. 04 2014 16:12	zmaster	et je le trouve ou gparted	et je le trouve ou gparted
+		answer															nov. 04 2014 16:12	yoritomo	il s' installe par la commande que j' ai donné	il s'installe par la commande que j'ai donné
+		answer													uncertain		nov. 04 2014 16:13	yoritomo	et puis on le trouve dans le menu système , ou le panneau de contrôle selon la version d'ubuntu	et puis on le trouve dans le menu système, ou le panneau de contrôle selon la version d'ubuntu
+			execution	answerPositively													nov. 04 2014 16:13	zmaster	ok	ok je vais essayer
 		commit																\	je vais essayer	
-		inform															nov. 04 2014	yoritomo	c'est le logiciel de partitionnement de l' installateur du cd ubuntu	c'est le logiciel de partitionnement  de l'installateur du cd ubuntu
-					inform	satisfied											nov. 04 2014	zmaster	je viens de trouver	je viens de trouver
-		inform															nov. 04 2014	yoritomo	il y à un petit menu déroulant en haut à droite pour choisir le disque dur	il y à un petit menu déroulant en haut à droite pour choisir le disque dur
-			execution	answerPositively													nov. 04 2014	zmaster	j'ai bien choisie le bon	j'ai bien choisie le bon mais après je vois pas trop comment faire
+		inform															nov. 04 2014 16:14	yoritomo	c'est le logiciel de partitionnement de l' installateur du cd ubuntu	c'est le logiciel de partitionnement  de l'installateur du cd ubuntu
+					inform	satisfied											nov. 04 2014 16:15	zmaster	je viens de trouver	je viens de trouver
+		inform															nov. 04 2014 16:19	yoritomo	il y à un petit menu déroulant en haut à droite pour choisir le disque dur	il y à un petit menu déroulant en haut à droite pour choisir le disque dur
+			execution	answerPositively													nov. 04 2014 16:19	zmaster	j'ai bien choisie le bon	j'ai bien choisie le bon mais après je vois pas trop comment faire
 																		\	mais après je vois pas trop comment faire	
-		inform							inform	love							nov. 04 2014	zmaster	j'ai en tout 3 partition et j' aimerai les formater intégralement	j'ai en tout 3 partition et j'aimerai les formater intégralement
-																	nov. 04 2014	yoritomo	clique sur la partition puis clic droit et choisir "" formater en "" puis choisir un type de partition , généralement ext4 pour un Linux moderne	clique sur la partition puis clic droit et choisir ""formater en"" puis choisir un type de partition, généralement ext4 pour un Linux moderne
-		requestForAction												conditional			nov. 04 2014	yoritomo	si nécessaire supprimer les partitions et en récréer , s' assurer que rien d'important ne s' y trouve	si nécessaire supprimer les partitions et en récréer, s'assurer que rien d'important ne s'y trouve
-																	nov. 04 2014	zmaster	et ça veux dire quoi ext4	et ça veux dire quoi ext4
-																	nov. 04 2014	yoritomo	ext2fs ext3fs ext4fs sont les types de partition pour Linux , NTFS ou FAT pour windows , BFS pour Haiku ou BeOS ...	ext2fs ext3fs ext4fs sont les types de partition pour Linux,  NTFS ou FAT pour windows, BFS pour Haiku ou BeOS ...
-									inform	love							nov. 04 2014	zmaster	ce que je veux c' est formater intégralement le disque dur que j' ai sur mon pc portable , pour réinstaller windows	ce que je veux c'est formater intégralement le disque dur que j'ai sur mon pc portable, pour réinstaller windows
-																	nov. 04 2014	yoritomo	si la partition doit rester accessible à un windows , et que l' on y installe pas Linux on peut parfois la mettre en NTFS , mais Ubuntu dans ce cas ne pourra pas réparer les problèmes éventuels	si la partition doit rester accessible à un windows, et que l'on y installe pas Linux on peut parfois la mettre en NTFS, mais Ubuntu dans ce cas ne pourra pas réparer les problèmes éventuels
-																	nov. 04 2014	zmaster	donc dans mon cas apres "" formate to "" je dois choisir cleared	donc dans mon cas apres ""formate to"" je dois choisir cleared
-																	nov. 04 2014	yoritomo	dans ce cas c' est plus simple d'y mettre le cd de windows directement et le faire par l' installateur de Windows au moment venu	dans ce cas c'est plus simple d'y mettre le cd de windows directement et le faire par l'installateur de Windows au moment venu
-			execution	answerPositively													nov. 04 2014	zmaster	ok	ok
-																	nov. 04 2014	yoritomo	il faut choisir NTFS pour windows xp ou 7 , mais ce n'est aps vraiment le sujet de ce Chan Ubuntu	il faut choisir NTFS pour windows xp ou 7, mais ce n'est aps vraiment le sujet de ce Chan Ubuntu
-																	nov. 04 2014	yoritomo	heu il n'y à qu'un disque dur dans la machine ?	heu il n'y à qu'un disque dur dans la machine ?
-																	nov. 04 2014	yoritomo	dans ce cas Ubuntu ne peut se formater lui-même !!	dans ce cas Ubuntu ne peut se formater lui-même !!
-																	nov. 04 2014	yoritomo	il faudra le faire à partir du cd d'installation windows	il faudra le faire à partir du cd d'installation windows
-																	nov. 04 2014	zmaster	oui	oui mais je mis ubuntu sur une clef usb
+		inform							inform	love							nov. 04 2014 16:20	zmaster	j'ai en tout 3 partition et j' aimerai les formater intégralement	j'ai en tout 3 partition et j'aimerai les formater intégralement
+																	nov. 04 2014 16:21	yoritomo	clique sur la partition puis clic droit et choisir "" formater en "" puis choisir un type de partition , généralement ext4 pour un Linux moderne	clique sur la partition puis clic droit et choisir ""formater en"" puis choisir un type de partition, généralement ext4 pour un Linux moderne
+		requestForAction												conditional			nov. 04 2014 16:21	yoritomo	si nécessaire supprimer les partitions et en récréer , s' assurer que rien d'important ne s' y trouve	si nécessaire supprimer les partitions et en récréer, s'assurer que rien d'important ne s'y trouve
+																	nov. 04 2014 16:22	zmaster	et ça veux dire quoi ext4	et ça veux dire quoi ext4
+																	nov. 04 2014 16:23	yoritomo	ext2fs ext3fs ext4fs sont les types de partition pour Linux , NTFS ou FAT pour windows , BFS pour Haiku ou BeOS ...	ext2fs ext3fs ext4fs sont les types de partition pour Linux,  NTFS ou FAT pour windows, BFS pour Haiku ou BeOS ...
+									inform	love							nov. 04 2014 16:24	zmaster	ce que je veux c' est formater intégralement le disque dur que j' ai sur mon pc portable , pour réinstaller windows	ce que je veux c'est formater intégralement le disque dur que j'ai sur mon pc portable, pour réinstaller windows
+																	nov. 04 2014 16:24	yoritomo	si la partition doit rester accessible à un windows , et que l' on y installe pas Linux on peut parfois la mettre en NTFS , mais Ubuntu dans ce cas ne pourra pas réparer les problèmes éventuels	si la partition doit rester accessible à un windows, et que l'on y installe pas Linux on peut parfois la mettre en NTFS, mais Ubuntu dans ce cas ne pourra pas réparer les problèmes éventuels
+																	nov. 04 2014 16:25	zmaster	donc dans mon cas apres "" formate to "" je dois choisir cleared	donc dans mon cas apres ""formate to"" je dois choisir cleared
+																	nov. 04 2014 16:25	yoritomo	dans ce cas c' est plus simple d'y mettre le cd de windows directement et le faire par l' installateur de Windows au moment venu	dans ce cas c'est plus simple d'y mettre le cd de windows directement et le faire par l'installateur de Windows au moment venu
+			execution	answerPositively													nov. 04 2014 16:26	zmaster	ok	ok
+																	nov. 04 2014 16:26	yoritomo	il faut choisir NTFS pour windows xp ou 7 , mais ce n'est aps vraiment le sujet de ce Chan Ubuntu	il faut choisir NTFS pour windows xp ou 7, mais ce n'est aps vraiment le sujet de ce Chan Ubuntu
+																	nov. 04 2014 16:27	yoritomo	heu il n'y à qu'un disque dur dans la machine ?	heu il n'y à qu'un disque dur dans la machine ?
+																	nov. 04 2014 16:28	yoritomo	dans ce cas Ubuntu ne peut se formater lui-même !!	dans ce cas Ubuntu ne peut se formater lui-même !!
+																	nov. 04 2014 16:28	yoritomo	il faudra le faire à partir du cd d'installation windows	il faudra le faire à partir du cd d'installation windows
+																	nov. 04 2014 16:28	zmaster	oui	oui mais je mis ubuntu sur une clef usb
 																		\	mais je mis ubuntu sur une clef usb	
-			execution														nov. 04 2014	yoritomo	ok	ok
-																	nov. 04 2014	yoritomo	oui la c' est bon	oui la c'est bon
-																	nov. 04 2014	zmaster	donc je choisie cleared une fois selectionné ma partition	donc je choisie cleared une fois selectionné ma partition
-																	nov. 04 2014	zmaster	je te remercie yoritomo	je te remercie yoritomo j'ai plus rien sur mon disque dur interne car il me demande de choisir un boot
+			execution														nov. 04 2014 16:28	yoritomo	ok	ok
+																	nov. 04 2014 16:28	yoritomo	oui la c' est bon	oui la c'est bon
+																	nov. 04 2014 16:29	zmaster	donc je choisie cleared une fois selectionné ma partition	donc je choisie cleared une fois selectionné ma partition
+																	nov. 04 2014 16:33	zmaster	je te remercie yoritomo	je te remercie yoritomo j'ai plus rien sur mon disque dur interne car il me demande de choisir un boot
 																		\	j' ai plus rien sur mon disque dur interne car il me demande de choisir un boot	
-																	nov. 04 2014	yoritomo	moi j' enléverais tout et je repartitionerais c' est plus propre , et formater	moi j'enlèverais tout et je repartitionerais c'est plus propre, et formater
-																	nov. 04 2014	yoritomo	à mais pas d'inquiétude pour ça , windows s' en occupera	à mais pas d'inquiétude pour ça, windows s'en occupera
-		requestForInformation															nov. 04 2014	yoritomo	personne pour mon problème de réglage de volume ?	personne pour mon problème de réglage de volume ?
-																	nov. 04 2014	jokx	Eureka !	Eureka ! pour véhiculer le déverouillage de votre clé SSH par gnome-keyring dans un script appeler par un *.desktop il suffit d'ajouter au début du script : SSH_AUTH_SOCK=$(ss -xl | grep -o ""/run/user/$UID/keyring-.*/ssh""); [ -z ""$SSH_AUTH_SOCK"" ] || export  SSH_AUTH_SOCK
+																	nov. 04 2014 16:36	yoritomo	moi j' enléverais tout et je repartitionerais c' est plus propre , et formater	moi j'enlèverais tout et je repartitionerais c'est plus propre, et formater
+																	nov. 04 2014 16:36	yoritomo	à mais pas d'inquiétude pour ça , windows s' en occupera	à mais pas d'inquiétude pour ça, windows s'en occupera
+		requestForInformation															nov. 04 2014 16:37	yoritomo	personne pour mon problème de réglage de volume ?	personne pour mon problème de réglage de volume ?
+																	nov. 04 2014 16:57	jokx	Eureka !	Eureka ! pour véhiculer le déverouillage de votre clé SSH par gnome-keyring dans un script appeler par un *.desktop il suffit d'ajouter au début du script : SSH_AUTH_SOCK=$(ss -xl | grep -o ""/run/user/$UID/keyring-.*/ssh""); [ -z ""$SSH_AUTH_SOCK"" ] || export  SSH_AUTH_SOCK
 																		\	pour véhiculer le déverouillage de votre clé SSH par gnome-keyring dans un script appeler par un *.desktop il suffit d'ajouter au début du script	
 																		\	SSH_AUTH_SOCK=$(ss - xl | grep - o ""/run/user/$UID/keyring-.*/ssh ""); [ -z ""$SSH_AUTH_SOCK "" ] || export SSH_AUTH_SOCK	
-																	nov. 04 2014	jokx	En claire il faut aller à la pêche au socket :)	En claire il faut aller à la pêche au socket :)
-																	nov. 04 2014	jokx	merci :	merci : https://wiki.archlinux.org/index.php/GNOME_Keyring
+																	nov. 04 2014 16:57	jokx	En claire il faut aller à la pêche au socket :)	En claire il faut aller à la pêche au socket :)
+																	nov. 04 2014 16:58	jokx	merci :	merci : https://wiki.archlinux.org/index.php/GNOME_Keyring
 																		\	https://wiki.archlinux.org/index.php/GNOME_Keyring	
-																	nov. 04 2014	ben123	bonjour	bonjour besoin d'aide avec dolphin
+																	nov. 04 2014 17:13	ben123	bonjour	bonjour besoin d'aide avec dolphin
 		requestForHelp																\	besoin d'aide avec dolphin	
-																	nov. 04 2014	manchutao		0
-		requestForHelp															nov. 04 2014	ben123	qui peut m' aider ??	qui peut m'aider ??
-		requestForHelp															nov. 04 2014	ben123	qui peut pas m' aider ?	qui peut pas m'aider ?
-																	nov. 04 2014	RaS_Le_BoL_Des_B		?
-					inform	unsatisfied											nov. 04 2014	ben123	serieux quand je lance gufw sa lance pipelight en root	serieux quand je lance gufw sa lance pipelight en root
-							inform	depreciate									nov. 04 2014	ben123	y a pas mieux en faille de sécurité	y a pas mieux en faille de sécurité
-																	nov. 04 2014	ben123	gufw [ PIPELIGHT:LIN:unknown ] attached to process .	gufw [PIPELIGHT:LIN:unknown] attached to process.
-					inform	unsatisfied											nov. 04 2014	ben123	sa devrais pas exister ce genre de chose	sa devrais pas exister ce genre de chose
-																	nov. 04 2014	ben123	[ PIPELIGHT:LIN:silverlight5.1 ] WARNING !	 [PIPELIGHT:LIN:silverlight5.1] WARNING! YOU ARE RUNNING THIS PIPELIGHT PLUGIN AS ROOT!
-							inform	depreciate									nov. 04 2014	ben123	chaud quand même la faille de sécurité	chaud quand même la faille de sécurité
-																	nov. 04 2014	Ool	ben utilise directement ufw	ben utilise directement ufw
-							inform	depreciate									nov. 04 2014	ben123	c'est autant sur kde , gnome shell ou unity se bug	c'est autant sur kde, gnome shell ou unity se bug
-																	nov. 04 2014	Ool	c'est ahma plus simple à utiliser que le truc en GUI	c'est ahma plus simple à utiliser que le truc en GUI
-																	nov. 04 2014	avelldiroll	moui , enfin c' est une faille que quand sa pose un probleme de secu , faut un exploit	moui, enfin c'est une faille que quand sa pose un probleme de secu, faut un exploit
-																	nov. 04 2014	ben123	j'ai essayer les 3 distributions pareil	j'ai essayer les 3 distributions pareil
-																	nov. 04 2014	avelldiroll	en l' occurence ca affiche du web local	en l'occurence ca affiche du web local
-																	nov. 04 2014	Calinou	tu as vraiment besoin d'un pare-feu ?	tu as vraiment besoin d'un pare-feu ?
-							inform	depreciate									nov. 04 2014	avelldiroll	mais bon , une gui ou une webui pour gerer un firewall , ce sera toujours moche	mais bon, une gui ou une webui pour gerer un firewall, ce sera toujours moche
-																	nov. 04 2014	Calinou	(c'est-à-dire es-tu avec une box qui n'utilise pas de NAT ? 17:37 (Calinou)>+ très rare )	(c'est-à-dire es-tu avec une box qui n'utilise pas de NAT ? très rare)
-							inform	depreciate									nov. 04 2014	avelldiroll	meme ufw , ca simplifie , mais ca arrive avec ses propres soucis	meme ufw, ca simplifie, mais ca arrive avec ses propres soucis
-		requestForInformation	evaluation	answerNegatively													nov. 04 2014	ben123	j'ai cas pas installer pipelight ses sa ?	j'ai cas pas installer pipelight ses sa ?
-							inform	depreciate									nov. 04 2014	ben123	c'est fou toutes les failles que j' ai trouver dans la 14.10	c'est fou toutes les failles que j'ai trouver dans la 14.10
-																	nov. 04 2014	avelldiroll		""je n'ai qu'à pas installer pipelight, c'est ça?"
+																	nov. 04 2014 17:16	manchutao		0
+		requestForHelp															nov. 04 2014 17:22	ben123	qui peut m' aider ??	qui peut m'aider ??
+		requestForHelp															nov. 04 2014 17:27	ben123	qui peut pas m' aider ?	qui peut pas m'aider ?
+																	nov. 04 2014 17:28	RaS_Le_BoL_Des_B		?
+					inform	unsatisfied											nov. 04 2014 17:34	ben123	serieux quand je lance gufw sa lance pipelight en root	serieux quand je lance gufw sa lance pipelight en root
+							inform	depreciate									nov. 04 2014 17:34	ben123	y a pas mieux en faille de sécurité	y a pas mieux en faille de sécurité
+																	nov. 04 2014 17:34	ben123	gufw [ PIPELIGHT:LIN:unknown ] attached to process .	gufw [PIPELIGHT:LIN:unknown] attached to process.
+					inform	unsatisfied											nov. 04 2014 17:34	ben123	sa devrais pas exister ce genre de chose	sa devrais pas exister ce genre de chose
+																	nov. 04 2014 17:35	ben123	[ PIPELIGHT:LIN:silverlight5.1 ] WARNING !	 [PIPELIGHT:LIN:silverlight5.1] WARNING! YOU ARE RUNNING THIS PIPELIGHT PLUGIN AS ROOT!
+							inform	depreciate									nov. 04 2014 17:35	ben123	chaud quand même la faille de sécurité	chaud quand même la faille de sécurité
+																	nov. 04 2014 17:35	Ool	ben utilise directement ufw	ben utilise directement ufw
+							inform	depreciate									nov. 04 2014 17:36	ben123	c'est autant sur kde , gnome shell ou unity se bug	c'est autant sur kde, gnome shell ou unity se bug
+																	nov. 04 2014 17:36	Ool	c'est ahma plus simple à utiliser que le truc en GUI	c'est ahma plus simple à utiliser que le truc en GUI
+																	nov. 04 2014 17:36	avelldiroll	moui , enfin c' est une faille que quand sa pose un probleme de secu , faut un exploit	moui, enfin c'est une faille que quand sa pose un probleme de secu, faut un exploit
+																	nov. 04 2014 17:36	ben123	j'ai essayer les 3 distributions pareil	j'ai essayer les 3 distributions pareil
+																	nov. 04 2014 17:36	avelldiroll	en l' occurence ca affiche du web local	en l'occurence ca affiche du web local
+																	nov. 04 2014 17:36	Calinou	tu as vraiment besoin d'un pare-feu ?	tu as vraiment besoin d'un pare-feu ?
+							inform	depreciate									nov. 04 2014 17:36	avelldiroll	mais bon , une gui ou une webui pour gerer un firewall , ce sera toujours moche	mais bon, une gui ou une webui pour gerer un firewall, ce sera toujours moche
+																	nov. 04 2014 17:37	Calinou	(c'est-à-dire es-tu avec une box qui n'utilise pas de NAT ? 17:37 (Calinou)>+ très rare )	(c'est-à-dire es-tu avec une box qui n'utilise pas de NAT ? très rare)
+							inform	depreciate									nov. 04 2014 17:37	avelldiroll	meme ufw , ca simplifie , mais ca arrive avec ses propres soucis	meme ufw, ca simplifie, mais ca arrive avec ses propres soucis
+		requestForInformation	evaluation	answerNegatively													nov. 04 2014 17:37	ben123	j'ai cas pas installer pipelight ses sa ?	j'ai cas pas installer pipelight ses sa ?
+							inform	depreciate									nov. 04 2014 17:38	ben123	c'est fou toutes les failles que j' ai trouver dans la 14.10	c'est fou toutes les failles que j'ai trouver dans la 14.10
+																	nov. 04 2014 17:38	avelldiroll		""je n'ai qu'à pas installer pipelight, c'est ça?"
 			interpretation	answerNegatively													nov. 04 2014 17:38	avelldiroll	et je n'ai pas dit ca	et je n'ai pas dit ca
 																	nov. 04 2014 17:38	avelldiroll	je dis juste que ce n'est une faille que lorsque l' on peut l' exploiter	je dis juste que ce n'est une faille que lorsque l'on peut l'exploiter
 																	nov. 04 2014 17:38	avelldiroll	et avec ce que tu as decris , je ne vois pas de vecteur d'attaque	et avec ce que tu as decris, je ne vois pas de vecteur d'attaque

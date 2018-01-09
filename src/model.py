@@ -124,7 +124,7 @@ class Segment:
             "annotations": self.annotations
         }
 
-    def to_csv_dict(self, labels):
+    def to_csv_dict(self, labels, legacy_layers):
         """
         Returns a dict representation of the object for CSV export
         """
@@ -154,6 +154,23 @@ class Segment:
                 data.update({layer: ""})
                 # empty qualifier
                 data.update({layer + "-value": ""})
+
+        for layer in legacy_layers:
+            if self.has(layer, legacy=True):
+                # label
+                data.update({"legacy-" + layer: self.get(layer)})
+
+                if self.has(layer, qualifier=True, legacy=True):
+                    # qualifier
+                    data.update({"legacy-" + layer + "-value": self.get(layer, qualifier=True, legacy=True)})
+                else:
+                    # empty qualifier
+                    data.update({"legacy-" + layer + "-value": ""})
+            else:
+                # empty label
+                data.update({"legacy-" + layer: ""})
+                # empty qualifier
+                data.update({"legacy-" + layer + "-value": ""})
 
         return data
 
@@ -1004,13 +1021,20 @@ class SegmentCollection:
         """
         Exports the collection in CSV format
         """
+        legacy_layers = []
+
+        for segment in self.full_collection:
+            for layer in segment.legacy.keys():
+                if layer not in legacy_layers:
+                    legacy_layers.append(layer)
+
         with open(path, "w") as f:
-            w = csv.DictWriter(f, self.full_collection[0].to_csv_dict(self.labels).keys(), delimiter="\t")
+            w = csv.DictWriter(f, self.full_collection[0].to_csv_dict(self.labels, legacy_layers).keys(), delimiter="\t")
             w.writeheader()
 
             previous_raw = None
             for segment in self.full_collection:
-                row = segment.to_csv_dict(self.labels)
+                row = segment.to_csv_dict(self.labels, legacy_layers)
 
                 if row["raw"] == previous_raw:
                     row["raw"] = ""  # no consecutives raws, should be left empty
