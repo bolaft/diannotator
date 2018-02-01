@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 # DiAnnotator
 #
 # Author: Soufian Salim <soufi@nsal.im>
@@ -8,6 +11,7 @@
 Annotation methods
 """
 
+from time import time
 from collections import OrderedDict
 from copy import deepcopy
 from datetime import datetime, timedelta
@@ -221,6 +225,9 @@ class Annotator(GraphicalUserInterface):
 
         # show legacy annotations
         self.show_legacy = True  # show legacy annotations by defaults
+  
+        # init last backup time
+        self.backup_time = 0
 
         # show columns
         self.show_participant = config.get_bool("show_participant", True)  # show participant by default
@@ -234,21 +241,29 @@ class Annotator(GraphicalUserInterface):
         if previous_save:
             self.sc = SegmentCollection.load(previous_save)
 
-        if not hasattr(self, "sc"):
+        if not hasattr(self, "sc") or not self.sc:
             # initializing the segment collection
             self.sc = SegmentCollection()  # load command
 
         # colorization
         self.colorize()
 
-        # make a backup of the collection
-        self.sc.save(
-            path="{}backup/auto-{}.pic".format(SegmentCollection.save_dir, datetime.now().strftime("%d-%m-%y_%X")),
-            backup=True
-        )
-
         # display update
         self.update()
+
+    def backup_save(self, interval=600):
+        """
+        If enough time has passed, backs up save file
+        """
+        current_time = time()
+
+        if self.backup_time + interval < current_time:
+            self.sc.save(
+                path="{}/auto-{}.pic".format(SegmentCollection.backup_dir, datetime.now().strftime("%d-%m-%y_%X")),
+                backup=True
+            )
+
+        self.backup_time = current_time  # updates last backup time
 
     ################
     # VIEW METHODS #
@@ -397,25 +412,28 @@ class Annotator(GraphicalUserInterface):
             )
         )
 
-        if path == "":
+        if not path:
             return  # no file selected
 
         sc = SegmentCollection.load(path)
 
         if sc:
+            print(3)
             self.sc = sc
             stack().clear()  # reinitializes undo history
             self.colorize()
             self.update()
 
             return True
-        else:
-            messagebox.showerror(
-                self._("error.title.open_file"),
-                self._("error.text.open_file")
-            )
 
-            return False
+        print(4)
+
+        messagebox.showerror(
+            self._("error.title.open_file"),
+            self._("error.text.open_file")
+        )
+
+        return False
 
     def save_file(self):
         """
@@ -430,7 +448,7 @@ class Annotator(GraphicalUserInterface):
             )
         )
 
-        if path == "":
+        if not path:
             return  # no path selected
 
         success = self.sc.save(path=path)
@@ -442,8 +460,8 @@ class Annotator(GraphicalUserInterface):
             )
 
             return False
-        else:
-            return True
+
+        return True
 
     def import_file(self):
         """
@@ -459,7 +477,7 @@ class Annotator(GraphicalUserInterface):
             )
         )
 
-        if path == "":
+        if not path:
             return  # no file selected
 
         success = self.sc.import_collection(path)
@@ -485,13 +503,13 @@ class Annotator(GraphicalUserInterface):
                 return True
             else:
                 return False
-        else:
-            messagebox.showerror(
-                self._("error.title.open_file"),
-                self._("box.text.wrong_format")
-            )
 
-            return False
+        messagebox.showerror(
+            self._("error.title.open_file"),
+            self._("box.text.wrong_format")
+        )
+
+        return False
 
     def export_file(self):
         """
@@ -506,7 +524,7 @@ class Annotator(GraphicalUserInterface):
             )
         )
 
-        if path == "":
+        if not path:
             return  # no path selected
 
         success = self.sc.export_collection(path)
@@ -518,8 +536,8 @@ class Annotator(GraphicalUserInterface):
             )
 
             return False
-        else:
-            return True
+
+        return True
 
     def close_file(self):
         """
@@ -544,7 +562,7 @@ class Annotator(GraphicalUserInterface):
             )
         )
 
-        if path == "":
+        if not path:
             return False  # no path selected
 
         success = self.sc.import_taxonomy(path)
@@ -575,7 +593,7 @@ class Annotator(GraphicalUserInterface):
             )
         )
 
-        if path == "":
+        if not path:
             return False  # no path selected
 
         success = self.sc.export_taxonomy(path)
@@ -587,8 +605,8 @@ class Annotator(GraphicalUserInterface):
             )
 
             return False
-        else:
-            return True
+
+        return True
 
     #######################
     # NAVIGATION COMMANDS #
@@ -604,10 +622,10 @@ class Annotator(GraphicalUserInterface):
 
         if delta.total_seconds() * 1000 < milliseconds:
             return False
-        else:
-            self.previous_key_press = now
 
-            return True
+        self.previous_key_press = now
+
+        return True
 
     def go_down(self, n):
         """
@@ -853,7 +871,7 @@ class Annotator(GraphicalUserInterface):
         """
         Inputs a link type
         """
-        if len(self.sc.links.keys()) == 0:
+        if self.sc.links.keys():
             messagebox.showwarning(
                 self._("dialog.title.select_link_type"),
                 self._("dialog.text.select_link_type")
@@ -1931,7 +1949,7 @@ class Annotator(GraphicalUserInterface):
 
             link_types = set([lt.title() for ls, lt in self.sc.get_active().links])
 
-            if len(link_types) > 0:
+            if link_types:
                 status = "{} - {}: {}".format(
                     status,
                     self._("active_link_types", "s" if len(link_types) > 1 else ""),
@@ -1954,6 +1972,7 @@ class Annotator(GraphicalUserInterface):
         self.is_annotation_mode = True
 
         self.sc.save()  # autosave
+        self.backup_save(interval=config.get_int("backup_frequency", 600))  # autobackup
 
     def output_segment(self, i, active=False):
         """
@@ -2089,10 +2108,10 @@ class Annotator(GraphicalUserInterface):
     # OVERRIDE METHODS #
     ####################
 
-    def input(self, prompt, commands, action, prompt_params=[], prompt_delay=0, free=False, sort=True, placeholder=""):
+    def input(self, prompt, commands, action, free=False, sort=True, placeholder=""):
         """
         Manages user input
         """
-        super(Annotator, self).input(prompt, commands, action, prompt_params=prompt_params, prompt_delay=prompt_delay, free=free, sort=sort, placeholder=placeholder)
+        super(Annotator, self).input(prompt, commands, action, free=free, sort=sort, placeholder=placeholder)
 
         self.is_annotation_mode = False  # changes action status

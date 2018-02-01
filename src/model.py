@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 # DiAnnotator
 #
 # Author: Soufian Salim <soufi@nsal.im>
@@ -9,7 +12,6 @@ Segment modelisation classes
 """
 
 import codecs
-import collections
 import csv
 import json
 import logging
@@ -17,16 +19,15 @@ import os
 import pickle
 import tempfile
 
-from collections import OrderedDict
+from collections import OrderedDict, Mapping
 from copy import deepcopy
-from datetime import datetime
 from dateutil import parser
 from nltk.tokenize import WhitespaceTokenizer
 
 # check if the current file is in a folder name "src"
 EXEC_FROM_SOURCE = os.path.dirname(os.path.abspath(__file__)).split("/")[-1] == "src"
 
-# symbol for merged original raws
+# symbol for merged original raws
 MERGE_SYMBOL = "<<MERGED<<"
 
 
@@ -63,8 +64,8 @@ class Segment:
 
         if layer in dic and annotation_type in dic[layer] and (not annotation or dic[layer][annotation_type] == annotation):
             return True
-        else:
-            return False
+
+        return False
 
     def get(self, layer, qualifier=False, legacy=False):
         """
@@ -75,8 +76,8 @@ class Segment:
 
         if layer in dic and annotation_type in dic[layer]:
             return dic[layer][annotation_type]
-        else:
-            return False
+
+        return False
 
     def set(self, layer, value, qualifier=False, legacy=False):
         """
@@ -155,22 +156,22 @@ class Segment:
                 # empty qualifier
                 data.update({layer + "-value": ""})
 
-        for layer in legacy_layers:
-            if self.has(layer, legacy=True):
+        for legacy_layer in legacy_layers:
+            if self.has(legacy_layer, legacy=True):
                 # label
-                data.update({"legacy-" + layer: self.get(layer)})
+                data.update({"legacy-" + legacy_layer: self.get(legacy_layer, legacy=True)})
 
-                if self.has(layer, qualifier=True, legacy=True):
+                if self.has(legacy_layer, qualifier=True, legacy=True):
                     # qualifier
-                    data.update({"legacy-" + layer + "-value": self.get(layer, qualifier=True, legacy=True)})
+                    data.update({"legacy-" + legacy_layer + "-value": self.get(legacy_layer, qualifier=True, legacy=True)})
                 else:
                     # empty qualifier
-                    data.update({"legacy-" + layer + "-value": ""})
+                    data.update({"legacy-" + legacy_layer + "-value": ""})
             else:
                 # empty label
-                data.update({"legacy-" + layer: ""})
+                data.update({"legacy-" + legacy_layer: ""})
                 # empty qualifier
-                data.update({"legacy-" + layer + "-value": ""})
+                data.update({"legacy-" + legacy_layer + "-value": ""})
 
         return data
 
@@ -196,6 +197,8 @@ class Segment:
         for ls, lt in self.links:
             if ls == target:
                 return True
+
+        return False
 
     def create_link(self, target, link_type):
         """
@@ -297,7 +300,7 @@ class Segment:
         """
         Merges the segment with another
         """
-        join = "" if len(self.raw) == 0 or self.raw[0] in [",", "."] else " "
+        join = "" if not self.raw or self.raw[0] in [",", "."] else " "
         self.raw = segment.raw + join + self.raw
 
         # preserving original raws, as a list
@@ -345,7 +348,7 @@ class Segment:
         Updates a dictionary with nested values
         """
         for k, v in data2.items():
-            if isinstance(v, collections.Mapping):
+            if isinstance(v, Mapping):
                 r = self.update(data1.get(k, {}), v)
                 data1[k] = r
             else:
@@ -386,6 +389,7 @@ class SegmentCollection:
     """
     # paths
     save_dir = "../sav/" if EXEC_FROM_SOURCE else "sav/"
+    backup_dir = "../sav/backup/" if EXEC_FROM_SOURCE else "sav/backup/"
     taxo_dir = "../tax/" if EXEC_FROM_SOURCE else "tax/"
     csv_dir = "../csv/" if EXEC_FROM_SOURCE else "csv/"
     custom_taxo_dir = "../tax/custom" if EXEC_FROM_SOURCE else "tax/"
@@ -467,8 +471,8 @@ class SegmentCollection:
 
         if segment.has(self.layer):
             return segment.get(self.layer)
-        else:
-            return False
+
+        return False
 
     def get_active_qualifier(self):
         """
@@ -478,8 +482,8 @@ class SegmentCollection:
 
         if segment.has(self.layer, qualifier=True):
             return segment.get(self.layer, qualifier=True)
-        else:
-            return False
+
+        return False
 
     def get_segment_indexes(self, segment):
         """
@@ -636,7 +640,7 @@ class SegmentCollection:
             self.qualifiers[layer].insert(index, new_qualifier)
 
         for segment in self.full_collection:
-            if segment.has(layer, annotation=label, qualifier=True):
+            if segment.has(layer, annotation=qualifier, qualifier=True):
                 segment.set(layer, new_qualifier, qualifier=True)
 
     def change_link_type(self, link_type, new_link_type):
@@ -897,7 +901,6 @@ class SegmentCollection:
             # remove start and end quotes
             row = {k: remove_quotes(v) for k, v in row.items()}
 
-            datetime = parser.parse(row["datetime"]) if row["datetime"] is not None and row["datetime"].strip() != "" else previous_segment.datetime
             span = row["segment"].strip()
 
             if row["raw"] is None or row["raw"].strip() == "":
@@ -928,13 +931,14 @@ class SegmentCollection:
                 # update tokens of the previous segment
                 previous_segment.tokenize()
             else:
+                dt = parser.parse(row["datetime"]) if row["datetime"] is not None and row["datetime"].strip() != "" else previous_segment.datetime
                 raw = row["raw"].strip()
                 participant = row["participant"].strip() if row["participant"].strip() != "\\" else segment.participant
 
                 segment = Segment(
                     raw,
                     participant,
-                    datetime
+                    dt
                 )
 
                 if "id" in row and row["id"] != "":

@@ -12,8 +12,9 @@ Unit test suite
 """
 
 
-import colors
 from unittest import main, TestCase
+
+import colors
 
 from strings import Strings
 

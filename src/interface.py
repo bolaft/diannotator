@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 # DiAnnotator
 #
 # Author: Soufian Salim <soufi@nsal.im>
@@ -489,7 +492,7 @@ class GraphicalUserInterface(Frame):
         # adds style to the text
         self.text.tag_add(GraphicalUserInterface.HIGHLIGHT, start, end)
 
-    def add_text(self, text, added=False, style=None, offset=0):
+    def add_text(self, text, style=None, offset=0):
         """
         Adds text to the text widget
         """
@@ -502,7 +505,7 @@ class GraphicalUserInterface(Frame):
         end = "{}.{}".format(line_number, len(text) + offset)  # end position of the line that was outputted
 
         # adds style to the text
-        if len(text) > 0 and style:
+        if text and style:
             if isinstance(style, list):
                 for s in style:
                     self.text.tag_add(s, start, end)
@@ -519,12 +522,12 @@ class GraphicalUserInterface(Frame):
         Adds text to the end of the previous line
         """
         self.text.config(state=NORMAL)  # makes the text editable
-        self.text.delete("end-1c linestart", self.text.index(END))
-        self.text.config(state=DISABLED)  # makes the text editable
+        self.text.delete("end-2c lineend", self.text.index(END))
+        self.text.config(state=DISABLED)  # makes the text uneditable
 
-        self.add_text(text, added=True, style=style, offset=offset)
+        self.add_text(text, style=style, offset=offset)
 
-    def add_blank_lines(self, n, delay=1.0):
+    def add_blank_lines(self, n):
         """
         Adds blank lines to the text widget
         """
@@ -551,7 +554,7 @@ class GraphicalUserInterface(Frame):
     # IO MANAGEMENT METHODS #
     #########################
 
-    def input(self, prompt, commands, action, prompt_params=[], prompt_delay=0, free=False, sort=True, placeholder=""):
+    def input(self, prompt, commands, action, free=False, sort=True, placeholder=""):
         """
         Manages user input
         """
@@ -572,7 +575,7 @@ class GraphicalUserInterface(Frame):
         self.entry.config(state=NORMAL)
         self.entry.focus_set()  # sets the focus on the input field
 
-    def output(self, message, style=None, params=[], delay=1.0, blank_before=0, blank_after=0):
+    def output(self, message, style=None, blank_before=0, blank_after=0):
         """
         Adds formatted text to the output buffer
         """
@@ -580,8 +583,6 @@ class GraphicalUserInterface(Frame):
         self.add_blank_lines(blank_before)  # blank lines before the output
 
         for line in message.split("\n"):
-            # sleep(self.delay * delay)  # small pause between outputs
-
             self.add_text(line, style=style)
 
-        self.add_blank_lines(blank_after, delay=delay)  # blank lines after the output
+        self.add_blank_lines(blank_after)  # blank lines after the output
