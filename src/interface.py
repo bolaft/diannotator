@@ -207,9 +207,10 @@ class GraphicalUserInterface(Frame):
         self.parent.bind(config.get_string("zoom_out", "<Control-KP_Subtract>"), lambda event: self.zoom_out())
 
         # binding mouse clicks and movement
+        self.clickable_text_tag = "clickable_text_tag"
+
         self.text.bind("<Button-1>", self.record_click)
         self.text.bind("<Button-2>", self.record_click)
-        self.clickable_text_tag = "clickable_text_tag"
         self.text.bind("<ButtonRelease-1>", self.mouse_left_click)
         self.text.bind("<ButtonRelease-3>", self.mouse_right_click)
         self.text.bind("<Motion>", self.mouse_motion)
@@ -507,7 +508,7 @@ class GraphicalUserInterface(Frame):
         # adds style to the text
         if text and style:
             if isinstance(style, list):
-                for s in style:
+                for s in style + [self.clickable_text_tag]:
                     self.text.tag_add(s, start, end)
             else:
                 self.text.tag_add(style, start, end)

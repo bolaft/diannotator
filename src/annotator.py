@@ -418,15 +418,14 @@ class Annotator(GraphicalUserInterface):
         sc = SegmentCollection.load(path)
 
         if sc:
-            print(3)
             self.sc = sc
+
             stack().clear()  # reinitializes undo history
+
             self.colorize()
             self.update()
 
             return True
-
-        print(4)
 
         messagebox.showerror(
             self._("error.title.open_file"),
@@ -1743,7 +1742,7 @@ class Annotator(GraphicalUserInterface):
             except Exception:
                 selection = False
 
-            if not selection and i != self.sc.i:
+            if i != self.sc.i:
                 self.go_to(i)
 
     def manage_right_click(self, start, end, x, y, text):
@@ -2003,9 +2002,6 @@ class Annotator(GraphicalUserInterface):
 
         # offset for displaying addendums
         offset = len(text) + 1
-
-        # clickable text
-        style.append(self.clickable_text_tag)
 
         # display raw text
         self.add_to_last_line(BEGIN_CHAR + segment.raw.strip() + END_CHAR, style=style, offset=offset)

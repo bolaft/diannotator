@@ -11,7 +11,6 @@
 Unit test suite
 """
 
-
 from unittest import main, TestCase
 
 import colors
