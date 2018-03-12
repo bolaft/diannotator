@@ -838,6 +838,12 @@ class SegmentCollection:
 
         return True
 
+    def import_collection_from_text(self, path):
+        """
+        Imports a new collection from a text file
+        """
+        pass
+
     def import_collection_from_json(self, path):
         """
         Imports a new collection from a JSON file

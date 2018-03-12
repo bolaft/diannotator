@@ -20,6 +20,10 @@
 
     Features:
 
+        ☐ .txt input data
+        ☐ auto preprocessing (text, sentence segmentation etc.)
+        ☐ prediction (configurable)
+        ☐ kappa between two data files with different annotations
         ☐ JSON config file to tell which columns are what
         ☐ unit testing
         ☐ click anywhere on line to go_to
